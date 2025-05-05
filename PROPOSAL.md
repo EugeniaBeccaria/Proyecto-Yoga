@@ -41,7 +41,7 @@ Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
 |CRUD |1. CRUD Salones<br>2.CRUD TiposMembresias<br>3. CRUD Dias<br>4. CRUD Horas<br>5. CRUD Membresia. CRUD Precios. CRUD Clases. CRUD Talleres<br>9. CRUD Alumnos<br>10. CRUD Profesores<br>11. CRUD Administradores |
-|CUU/Epic|1. Obtener una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>3. Realizar pago<br>4. Modificar Clase<br>5. Modificar Horarios|
+|CUU/Epic|1. Obtener una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>4. Realizar pago<br>5. Modificar Clase<br>5. Modificar Horarios|
 
 
 ### Alcance Adicional Voluntario
