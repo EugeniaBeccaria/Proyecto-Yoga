@@ -15,7 +15,7 @@
 
 ## Tema
 ### Descripción
-Shanti Yoga es un estudio que ofrece clases semanales de distintos estilos de yoga, dictadas por profesionales certificados. Además, organiza talleres especiales sobre meditación, respiración, posturas y más. Los alumnos pueden inscribirse fácilmente desde la web, accediendo a reservas con pago online. El estudio cuenta con varios salones equipados y ofrece membresías flexibles. Los precios de los talleres varían según la actividad.
+Shanti Yoga es un estudio que ofrece clases semanales y talleres presenciales de yoga, con inscripción online y membresías mensuales flexibles. Los alumnos gestionan sus clases y pagos desde una plataforma digital. El sistema fija las clases por mes, optimizando cupos, espacios y docentes. El estudio cuenta con salones equipados y una grilla horaria organizada. La operación se gestiona mediante un sistema que facilita la administración general del estudio.
 
 ### Modelo: Diagrama Entidad-Relación.
 ![DER-yoga-DER V2 drawio](https://github.com/user-attachments/assets/f7d90eab-58e2-4598-9293-c6a95e6eceef)
