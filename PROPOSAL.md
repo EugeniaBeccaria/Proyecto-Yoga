@@ -32,10 +32,10 @@ Shanti Yoga es un estudio que ofrece clases semanales de distintos estilos de yo
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Tipo Habitacion<br>2. CRUD Membresía<br>3. CRUD Localidad|
-|CRUD dependiente|1. CRUD Habitación {depende de} CRUD Tipo Habitacion<br>2. CRUD Cliente {depende de} CRUD Localidad|
-|Listado<br>+<br>detalle| 1. Listado de habitaciones filtrado por tipo de habitación, muestra nro y tipo de habitación => detalle CRUD Habitacion<br> 2. Listado de reservas filtrado por rango de fecha, muestra nro de habitación, fecha inicio y fin estadía, estado y nombre del cliente => detalle muestra datos completos de la reserva y del cliente|
-|CUU/Epic|1. Reservar una habitación para la estadía<br>2. Realizar el check-in de una reserva|
+|CRUD simple|1. CRUD Usuarios<br>2. CRUD Salones<br>3. CRUD TiposMembresias<br>4. CRUD Dias<br>5. CRUD Horas|
+|CRUD dependiente|1. CRUD Membresia {depende de} CRUD TiposMembresia<br>2. CRUD Precios {depende de} CRUD TiposMembresias<br>3. CRUD Clases {depende de} CRUD Salones|
+|Listado<br>+<br>detalle| 1. Listado de membresías activas, muestra nombre del alumno, tipo de membresía y fecha de inicio => detalle muestra duración restante, estado de pago y acceso a clases.<br> 2. Listado de alumnos registrados inscriptos en una clase, muestra nombre, apellido, email y teléfono => detalle muestra los datos completos del alumno y la clase a la que está inscripto.|
+|CUU/Epic|1. Obtener una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>3. Realizar pago|
 
 
 Adicionales para Aprobación
@@ -51,6 +51,6 @@ Adicionales para Aprobación
 
 |Req|Detalle|
 |:-|:-|
-|Listados |1. Estadía del día filtrado por fecha muestra, cliente, habitaciones y estado <br>2. Reservas filtradas por cliente muestra datos del cliente y de cada reserve fechas, estado cantidad de habitaciones y huespedes|
+|Listados |1. Listado de tipos de membresías, muestra nombre de la membresía, beneficios, duración => detalle CRUD TiposMembresias<br>2. Reservas filtradas por cliente muestra datos del cliente y de cada reserve fechas, estado cantidad de habitaciones y huespedes|
 |CUU/Epic|1. Consumir servicios<br>2. Cancelación de reserva|
 |Otros|1. Envío de recordatorio de reserva por email|
