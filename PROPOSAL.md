@@ -48,5 +48,5 @@ Adicionales para Aprobación
 
 |Req|Detalle|
 |:-|:-|
-|Listados |1. Listado de tipos de membresías, muestra nombre de la membresía, beneficios, duración => detalle CRUD TiposMembresias<br>2. Reservas filtradas por cliente muestra datos del cliente y de cada reserve fechas, estado cantidad de habitaciones y huespedes|
+|Listados |1. Listado de tipos de membresías, muestra nombre de la membresía, beneficios, duración => detalle CRUD TiposMembresias<br>2. Listado de clases programadas, muestra fecha, hora, nombre del profesor y salón asignado => detalle muestra el listado de alumnos inscriptos, tipo de clase y duración.|
 |Otros|1. Envío de mensaje de inscripción exitosa a una membresía o taller y su detalle por mail|
