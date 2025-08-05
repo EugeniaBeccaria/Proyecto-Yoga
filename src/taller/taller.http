@@ -1,0 +1,36 @@
+GET http://localhost:3000/api/talleres
+
+GET http://localhost:3000/api/talleres/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+
+POST http://localhost:3000/api/talleres
+Content-Type: application/json
+
+{
+  "name": "invertidas",
+  "datetime": "jueves 24 a las 18:00",
+  "price": 8000,
+  "description": "taller de invertidas para todas",
+  "cupo": 20
+}
+
+PUT http://localhost:3000/api/talleres/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+  "name": "meditacion",
+  "datetime": "lunes 15 4 de la tarde",
+  "price": 10000,
+  "description": "meditacion para principiantes",
+  "cupo": 25
+}
+
+PATCH http://localhost:3000/api/talleres/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+  "name": "relajacion"
+}
+
+DELETE http://localhost:3000/api/talleres/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+
+GET http://localhost:3000/api/talleres
