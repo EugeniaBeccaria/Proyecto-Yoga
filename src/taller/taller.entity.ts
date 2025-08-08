@@ -7,6 +7,6 @@ export class Taller {
     public price: number,
     public description: string,
     public cupo: number,
-    public id = crypto.randomUUID()
+    public id?: number
   ) {}
 }
