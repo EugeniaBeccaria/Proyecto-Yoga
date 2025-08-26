@@ -1,0 +1,66 @@
+.titulo-registro {
+  margin-bottom: 20px;
+}
+
+.input-contenedor-is {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.input-contenedor-is input {
+  padding: 0.7rem;
+  border: 2px solid gray;
+  border-radius: 0.4rem;
+  outline: none;
+}
+
+.input-contenedor-is label,
+.input-contenedor-is a {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.input-contenedor-is .olvidar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-contenedor-is .olvidar a {
+  align-self: flex-end;
+  font-size: 12px;
+  margin-right: 0px;
+  margin-left: 250px;
+}
+
+.input-contenedor-is a {
+  color: midnightblue;
+  text-decoration: none;
+}
+
+.input-contenedor-is a:hover {
+  text-decoration: underline;
+}
+
+.label-repetir,
+.boton-registro {
+  margin-top: 12px;
+}
+
+.boton-registro {
+  width: 100%;
+  padding: 0.9rem 0;
+  background-color: rgba(207, 123, 173, 0.9);
+  color: black;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.boton-registro:hover {
+  transform: translateY(-6px);
+}

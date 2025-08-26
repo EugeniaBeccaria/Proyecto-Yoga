@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vh;
+}
+.content-container {
+  flex: 1;
+}
+.contenedor-mechi {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #daebfb;
+}
+
+footer {
+  background: #5f5a5add;
+  padding: 60px 0 30px 0;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+
+
+form {
+  /*border: 2px solid rgb(209, 2, 71);*/
+  padding: 1.8rem;
+  background-color: rgb(243, 199, 207);
+}
+
+form p {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: black;
+  margin-top: 0.3rem;
+  margin-bottom: 1.8rem;
+}
+
+form p a {
+  color: midnightblue;
+  font-weight: 700 bold;
+  text-decoration: none;
+}
+
+form p a:hover {
+  text-decoration: underline;
+}
+
+form h2 {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+form button {
+  width: 100%;
+  padding: 0.9rem 0;
+  background-color: rgba(121, 169, 199, 0.845);
+  color: black;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+form button:hover {
+  transform: translateY(-6px);
+}
