@@ -1,0 +1,78 @@
+.body-inicio {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #daebfb;
+}
+
+.contenedor {
+  padding: 60px;
+  width: 90%;
+  max-width: 1000px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.titulo {
+  color: #5F9EA0;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 30px;
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+.cards .card {
+  background-color: #ffe4e1;
+  display: flex;
+  width: 300px;
+  height: 420px;
+  padding: 2rem;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.6);
+}
+
+.cards .card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 3px solid white;
+  border-radius: 50%;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cards .card>.contenido-textos-card {
+  width: 60%;
+  color: black;
+}
+
+.cards .card>.contenido-textos-card p {
+  font-size: 0.95rem;
+  text-align: justify;
+  color: black;
+}
+
+.cards .card>.contenido-textos-card h4 {
+  margin: 0.5rem 0;
+  font-size: 1.2 rem;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.cards>card:nth-child(3) {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+}
