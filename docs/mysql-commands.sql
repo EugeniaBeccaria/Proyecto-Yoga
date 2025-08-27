@@ -9,6 +9,7 @@ create table if not exists `yoga-studio`.`talleres` (
   `price` INT UNSIGNED NULL,
   `description` VARCHAR(255) NULL,
   `cupo` INT UNSIGNED NULL,
+  `room` INT UNSIGNED NULL,
   PRIMARY KEY (`id`));
 
 create table if not exists `yoga-studio`.`tallerAlumns` (
@@ -21,6 +22,6 @@ create table if not exists `yoga-studio`.`tallerAlumns` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE);
 
-insert into yoga-studio.talleres values(1,'meditacion','lunes 13 4 de la tarde',6000,'meditacion para principiantes',25);
+insert into yoga-studio.talleres values(1,'meditacion','lunes 13 4 de la tarde',6000,'meditacion para principiantes',25,1);
 insert into yoga-studio.tallerAlumns values(1,'invertidas');
 insert into yoga-studio.tallerAlumns values(1,'columpios');
