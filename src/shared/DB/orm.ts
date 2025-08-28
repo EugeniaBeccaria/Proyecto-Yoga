@@ -6,9 +6,9 @@ export const orm = await MikroORM.init<MySqlDriver>({
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   dbName: 'yoga-studio',
-  port: 3307,
   clientUrl: 'mysql://dsw:dsw@localhost:3307/yoga-studio',
   highlighter: new SqlHighlighter(),
+  driver: MySqlDriver,
   debug: true,
   schemaGenerator: {
     disableForeignKeys: true,
