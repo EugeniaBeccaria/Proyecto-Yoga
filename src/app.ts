@@ -3,6 +3,7 @@ import express  from 'express'
 import { tallerRouter } from './taller/taller.routes.js'
 import { orm, syncSchema } from './shared/DB/orm.js';
 import { RequestContext } from '@mikro-orm/core';
+import { userRouter } from './user/user.routes.js';
 
 const app = express()
 app.use(express.json())
@@ -13,6 +14,7 @@ app.use((req, res, next)=>{
 
 await syncSchema()
 
+app.use('/api/user', userRouter)
 app.use('/api/talleres', tallerRouter)
 
 app.use((req,res)=> {

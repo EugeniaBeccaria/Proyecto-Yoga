@@ -10,8 +10,7 @@ Content-Type: application/json
   "datetime": "jueves 24 a las 18:00",
   "price": 8000,
   "description": "taller de invertidas para todas",
-  "cupo": 20,
-  "room": 1
+  "cupo": 20
 }
 
 PUT http://localhost:3000/api/talleres/2
@@ -22,8 +21,7 @@ Content-Type: application/json
   "datetime": "lunes 15 4 de la tarde",
   "price": 10000,
   "description": "meditacion para principiantes",
-  "cupo": 25,
-  "room": 2
+  "cupo": 25
 }
 
 PATCH http://localhost:3000/api/talleres/1

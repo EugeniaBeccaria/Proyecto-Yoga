@@ -1,5 +1,5 @@
 import { Entity, Property, ManyToMany, Cascade, ManyToOne, Rel, BeforeCreate, Collection} from '@mikro-orm/core'
-import bcrypt from 'bcrypt'
+//import bcrypt from 'bcryptjs'
 import { BaseEntity } from '../shared/DB/baseEntity.entity.js'
 import { Taller } from '../taller/taller.entity.js'
 
@@ -29,10 +29,10 @@ export class User extends BaseEntity {
     @Property({ nullable: false, hidden: true })
     password!: string;
 
-   @BeforeCreate()
+   /*@BeforeCreate()
     async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
-    }
+    }*/
 
     @ManyToMany(() => Taller, (taller) => taller.users)
     talleres = new Collection<Taller>(this);

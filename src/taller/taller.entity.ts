@@ -21,7 +21,7 @@ export class Taller extends BaseEntity {
   cupo!: number
 
   @ManyToOne(() => Room)
-  salon!: Rel<Room>;
+  room!: Rel<Room>;
 
   @ManyToMany(() => User, (user) => user.talleres, {cascade: [Cascade.ALL], owner: true,})
   users = new Collection <User> (this);
