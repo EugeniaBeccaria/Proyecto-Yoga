@@ -1,4 +1,4 @@
-import AuthBanner from '../components/AuthBanner';
+import AuthBanner from '../components/AuthBanner.tsx';
 import { useEffect } from 'react';
 import './RegisterPage.css'
 import RegisterFields from '../components/RegisterFields.tsx';

@@ -1,6 +1,6 @@
-import LoginSocialButtons from "../components/LoginSocialButtons.tsx";
-import AuthBanner from "../components/AuthBanner.tsx";
-import LoginFields from "../components/LoginFields.tsx";
+import LoginSocialButtons from "../../viejo/components/LoginSocialButtons.tsx";
+import AuthBanner from "../../viejo/components/AuthBanner.tsx";
+import LoginFields from "../../viejo/components/LoginFields.tsx";
 import { useEffect } from 'react';
 import './LoginPage.css'
 import { Link } from "react-router-dom";

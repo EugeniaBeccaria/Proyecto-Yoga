@@ -1,6 +1,6 @@
 import { useEffect }  from 'react';
 import './ChooseRolePage.css';
-import RoleCard from '../components/RoleCard';
+import RoleCard from '../../viejo/components/RoleCard';
 
 function ChooseRolePage() {
 useEffect(() => {
