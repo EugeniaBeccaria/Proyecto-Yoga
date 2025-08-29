@@ -11,6 +11,15 @@ create table if not exists `yoga-studio`.`talleres` (
   `cupo` INT UNSIGNED NULL,
   PRIMARY KEY (`id`));
 
+create table if not exists `yoga-studio`.`tallerAlumns` (
+  `tallerId` INT UNSIGNED NOT NULL,
+  `alumnName` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`tallerId`, `alumnName`),
+  CONSTRAINT `fk_tallerAlumn_taller`
+    FOREIGN KEY (`tallerId`)
+    REFERENCES `yoga-studio`.`talleres` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE);
 
 create table if not exists `yoga-studio`.`user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

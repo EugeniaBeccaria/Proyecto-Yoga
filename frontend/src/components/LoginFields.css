@@ -39,13 +39,13 @@
   text-decoration: underline;
 }
 
-.recordar {
+.input-contenedor-is .recordar {
   display: flex;
   gap: 0.3rem;
   margin-bottom: 1.7rem;
 }
 
-.recordar label {
+.input-contenedor-is .recordar label {
   font-size: 0.8rem;
   font-weight: 500;
   color: black;
