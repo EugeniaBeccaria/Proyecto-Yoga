@@ -1,6 +1,32 @@
 import './AboutUs.css';
+// import { useState, useEffect} from 'react';
+// import axios from 'axios';
 
-function AboutUs() {
+export default function AboutUs() {
+  // ------Prueba de peticion al backend--------
+  // const [data, setData] = useState('');
+  // const [loading, setLoading] = useState<boolean>(true);
+
+  // const obtenerData = async() => {
+  //   try{
+  //     setLoading(true);
+  //     const response = await axios("http://localhost:3000/getData")
+  //     setData(response.data);
+  //   }
+  //   catch(error){
+  //     console.log(error)
+  //   }
+  //   finally{
+  //     setLoading(false);
+  //   }
+  // }
+  //   useEffect(() => {
+  //     obtenerData();
+  //     },[])
+      
+  // -----------------------
+  // <h2>{loading? 'cargando': data }</h2>
+
   return (
     <>
     <section className="contenedor sobre-nosotros">
@@ -17,5 +43,3 @@ function AboutUs() {
     </>
   )
 }
-
-export default AboutUs;

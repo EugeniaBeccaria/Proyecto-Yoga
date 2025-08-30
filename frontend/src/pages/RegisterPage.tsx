@@ -13,15 +13,15 @@ function RegisterPage() {
     };
   }, []);
 
+
+  //etiqueta de form en el componente RegisterFields para manejar el submit mejor
   return (
     <>
     <div className="contenedor-mechi">
       <div className="contenedor-inicio-sesion">
-        <div className="contenedor-formulario-is" id="formulario-is">
-          <form className="formulario-registro" action="" id="formulario-registro">
+        <div className="contenedor-formulario-is" id="formulario-is"> 
             <RegisterFields />
             <LoginSocialButtons />
-          </form>
         </div>
         <AuthBanner
             className="banner-registro"
