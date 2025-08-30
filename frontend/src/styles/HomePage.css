@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    text-align: center;
+    /*box-shadow: var(--shadow);*/
+    /*margin-bottom: 32px;*/
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+    background-image: url(/PaginaPrincipalFondo.webp);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(2, 23, 4, 0.793)
+}
+
+.hero-title {
+    font-size: 8.6rem;
+    margin-top: 250px;
+    color: #d15584;
+    font-weight: 1000;
+    line-height: 1.1;
+    z-index: 2;
+    font-family: "Montserrat";
+}
+
+.hero-title .block {
+    display: block;
+    z-index: 2;
+}
+
+.hero-title .yoga {
+    font-size: 8.4rem;
+    font-weight: 1000;
+    margin-left: 300px;
+    margin-top: -50px;
+    z-index: 2;
+    color: #eb7ba6;
+}
+
+.hero-subtitle {
+    margin: 12px 0 24px;
+    font-size: 1.6rem;
+    margin-top: 10px;
+    margin-left: 650px;
+    color: #f4a1bb;
+    z-index: 2;
+    font-family: "Open Sanz";
+    font-weight: 600;
+}
+
+.florFondoHome {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
+    max-width: 600px;
+}
+
+
+/*.imagenPortada {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}*/
