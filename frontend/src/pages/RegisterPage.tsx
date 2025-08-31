@@ -3,25 +3,27 @@
 import "../styles/LoginPage.css"
 import Navbar from "../components/Navbar";
 
-function Login(){
+function Register(){
     return(
         <>
             <Navbar disable={true}/>
                 <div className="form-box">
                     <form className="form">
-                        <span className="title">INICIAR SESIÓN</span>
-                        <span className="subtitle">Accede para ver tus a clases y talleres</span>
+                        <span className="title">REGISTRARSE</span>
+                        <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>
                         <div className="form-container">
+                            <input type="name" className="input" placeholder="Nombre completo" />                            
                             <input type="email" className="input" placeholder="Email" />
                             <input type="password" className="input" placeholder="Contraseña" />
+                            <input type="password" className="input" placeholder="Repite tu contraseña" />
                         </div>
-                        <button>Sign in</button>
+                        <button>Sign up</button>
                     <div className="form-section">
-                        <p>¿No tienes una cuenta? <a href="/RegisterPage">Registrarse</a> </p>
+                        <p>¿Ya tienes una cuenta? <a href="/LoginPage">Iniciar sesión</a> </p>
                     </div>
                     </form>
                 </div>
         </>
     )
 }
-export default Login
+export default Register
