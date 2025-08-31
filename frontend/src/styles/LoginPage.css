@@ -1,16 +1,27 @@
-    body{
-        background-color: rgb(252, 211, 218);
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+
+    
+body{
+    background-color: pink;
+    background-image: url("/FlorLogo.png");
+    background-repeat: repeat;
         margin: 0;
         padding: 0;
         color: #ffff;
-    }
-    .form-box {
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+}
+.form-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
 }
+
 
     .form {
     min-width: 500px;
@@ -28,11 +39,12 @@
     gap: 16px;
     text-align: center;
     box-shadow: 0px 0 22px rgba(0, 0, 0, 0.466);
+    font-family: "Montserrat";
     }
 
     /*Form text*/
     .title {
-        margin-bottom: 10px;
+    margin-bottom: 10px;
     font-weight: bold;
     font-size: 2rem;
     }
@@ -48,9 +60,9 @@
     overflow: hidden;
     border-radius: 8px;
     background-color: #131b13;
-    margin: 1rem 0 .5rem;
     width: 100%;
-    }
+    display:block
+}
 
     .input {
     color: #000000;
@@ -85,6 +97,7 @@
 
     /*Button*/
     .form button {
+    font-family: "Montserrat";
     margin: 15px 0;
     background-color: rgb(248, 149, 166);
     color: #fff;

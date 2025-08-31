@@ -9,7 +9,7 @@ function Login(){
             <Navbar disable={true}/>
                 <div className="form-box">
                     <form className="form">
-                        <span className="title">Iniciar sesión</span>
+                        <span className="title">INICIAR SESIÓN</span>
                         <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>
                         <div className="form-container">
                             <input type="email" className="input" placeholder="Email" />
