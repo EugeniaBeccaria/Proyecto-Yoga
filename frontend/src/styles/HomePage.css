@@ -21,6 +21,8 @@ html, body {
     position: relative;
     z-index: 2;
     background-image: url(/PaginaPrincipalFondo.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .hero::before {
