@@ -110,3 +110,10 @@ body{
     .form button:hover {
     background-color: rgb(170, 90, 104);
     }
+
+    /* mensaje de error */
+    .mensaje-error{
+        background-color: rgb(196, 85, 85);
+        color: white;
+        border-radius: 5px;
+    }

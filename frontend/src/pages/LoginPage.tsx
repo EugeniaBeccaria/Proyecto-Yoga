@@ -1,6 +1,6 @@
 // import react from 'react'
 // import {useState, useEffect} from 'react'
-import "../styles/LoginPage.css"
+import "../styles/LoginRegisterPage.css"
 import Navbar from "../components/Navbar";
 
 function Login(){
