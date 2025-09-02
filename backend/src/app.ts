@@ -4,17 +4,17 @@ import { tallerRouter } from './taller/taller.routes.js'
 import { orm, syncSchema } from './shared/DB/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { userRouter } from './user/user.routes.js';
-import cors from 'cors'; 
+//import cors from 'cors'; 
 
 const app = express()
 app.use(express.json())
-app.use(cors()); 
+//app.use(cors()); 
 
-// app.use((req, res, next)=>{
-//   RequestContext.create(orm.em, next);
-// })
+app.use((req, res, next)=>{
+  RequestContext.create(orm.em, next);
+ })
 
-// await syncSchema()
+ await syncSchema()
 
 app.use('/api/user', userRouter)
 app.use('/api/talleres', tallerRouter)

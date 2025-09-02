@@ -1,6 +1,8 @@
 GET http://localhost:3000/api/talleres
 
-GET http://localhost:3000/api/talleres/1
+# @name createTaller
+
+GET http://localhost:3000/api/talleres/{{id}}
 
 POST http://localhost:3000/api/talleres
 Content-Type: application/json
@@ -13,7 +15,9 @@ Content-Type: application/json
   "cupo": 20
 }
 
-PUT http://localhost:3000/api/talleres/2
+@id = {{createTaller.response.body.data.id}}
+
+PUT http://localhost:3000/api/talleres/{{id}}
 Content-Type: application/json
 
 {
@@ -24,13 +28,8 @@ Content-Type: application/json
   "cupo": 25
 }
 
-PATCH http://localhost:3000/api/talleres/1
-Content-Type: application/json
+# @name createtallerToDelete
 
-{
-  "name": "relajacion"
-}
+@idToDelete = {{createtallerToDelete.response.body.data.id}}
 
-DELETE http://localhost:3000/api/talleres/1
-
-GET http://localhost:3000/api/talleres
+DELETE http://localhost:3000/api/talleres/{{idToDelete}}
