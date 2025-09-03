@@ -4,6 +4,10 @@ import { tallerRouter } from './taller/taller.routes.js'
 import { orm, syncSchema } from './shared/DB/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { userRouter } from './user/user.routes.js';
+import { membershipRouter } from './membership/membership.routes.js';
+import { membershipTypeRouter } from './membership/membershipType.routes.js';
+import { membershipPriceRouter } from './membership/membershipPrice.routes.js';
+import { doesNotReject } from 'assert';
 //import cors from 'cors'; 
 
 const app = express()
@@ -16,9 +20,11 @@ app.use((req, res, next)=>{
 
  await syncSchema()
 
-app.use('/api/user', userRouter)
+app.use('/api/users', userRouter)
 app.use('/api/talleres', tallerRouter)
-
+app.use('/api/membership', membershipRouter)
+app.use('/api/membershipType', membershipTypeRouter)
+app.use('/api/membershipPrice', membershipPriceRouter)
 
 //app.get('/getData', (req, res) => res.send('enviado desde el back')) prueba de peticion
 

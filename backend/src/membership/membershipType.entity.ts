@@ -1,6 +1,7 @@
 import { Entity, Property, ManyToMany, Cascade, ManyToOne, Rel, BeforeCreate, Collection, OneToMany} from '@mikro-orm/core'
 import { BaseEntity } from '../shared/DB/baseEntity.entity.js'
 import { Membership } from './membership.entity.js'
+import { MembershipPrice } from './membershipPrice.entity.js'
 
 @Entity()
 export class MembershipType extends BaseEntity {
@@ -13,7 +14,6 @@ export class MembershipType extends BaseEntity {
     @OneToMany(() => Membership, membership => membership.membershipType)
     memberships = new Collection<Membership>(this)
 
-   // @OneToMany(() => MembershipPrice, membershipPrice => membershipPrice.membershipType)
-    //membershipPrices = new Collection<MembershipPrice>(this)
-
+    @OneToMany(() => MembershipPrice, membershipPrice => membershipPrice.membershipType)
+    membershipPrices = new Collection<MembershipPrice>(this)
     }

@@ -1,0 +1,32 @@
+
+GET http://localhost:3000/api/membershipType
+
+
+# @name createMembershipType
+POST http://localhost:3000/api/membershipType
+Content-Type: application/json
+
+{
+    "numOfClasses": 4,
+    "description": "membresia valida para 4 clases por semana"
+}
+
+@id = {{createMembershipType.response.body.data.id}}
+
+
+GET http://localhost:3000/api/membershipType/{{id}}
+
+PUT http://localhost:3000/api/membershipType/{{id}}
+Content-Type: application/json
+
+{
+    "numOfClasses": 5,
+    "description": "membresia valida para 5 clases por semana"
+}
+
+
+# @name createmembershipTypeToDelete
+
+
+@idToDelete = {{createmembershipTypeToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/membershipType/{{idToDelete}}

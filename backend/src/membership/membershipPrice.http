@@ -1,0 +1,32 @@
+
+GET http://localhost:3000/api/membershipPrice
+
+
+# @name createMembershipPrice
+POST http://localhost:3000/api/membershipPrice
+Content-Type: application/json
+
+{
+    "price": 25000,
+    "priceDate": "2025-08-07"
+}
+
+@id = {{createMembershipPrice.response.body.data.id}}
+
+
+GET http://localhost:3000/api/membershipPrice/{{id}}
+
+PUT http://localhost:3000/api/membershipPrice/{{id}}
+Content-Type: application/json
+
+{
+    "price": 30000,
+    "priceDate": "2025-08-07"
+}
+
+
+# @name createmembershipPriceToDelete
+
+
+@idToDelete = {{createmembershipPriceToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/membershipPrice/{{idToDelete}}
