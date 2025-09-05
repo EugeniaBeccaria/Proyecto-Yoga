@@ -2,6 +2,7 @@ import { Entity, Property, ManyToMany, Cascade, ManyToOne, Rel, BeforeCreate, Co
 //import bcrypt from 'bcryptjs'
 import { BaseEntity } from '../shared/DB/baseEntity.entity.js'
 import { Taller } from '../taller/taller.entity.js'
+import { Classs } from '../classs/classs.entity.js'
 
 @Entity()
 export class User extends BaseEntity {
@@ -35,8 +36,9 @@ export class User extends BaseEntity {
     }*/
 
     @ManyToMany(() => Taller, (taller) => taller.users)
-    talleres = new Collection<Taller>(this);
+    talleres = new Collection<Taller>(this)
 
-    //falta agregar relaciones 
+    @ManyToMany(() => Classs, (classs) => classs.users)
+    classes = new Collection<Classs>(this);
 
     }
