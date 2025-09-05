@@ -5,7 +5,7 @@ import { Classs } from './classs.entity.js'
 
 const em = orm.em
 
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeClasssInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
     name: req.body.name,
     description: req.body.description,
@@ -77,4 +77,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+export {sanitizeClasssInput, findAll, findOne, add, update, remove}

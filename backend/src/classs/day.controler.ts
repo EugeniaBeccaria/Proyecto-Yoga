@@ -5,7 +5,7 @@ import { Day } from './day.entity.js'
 
 const em = orm.em
 
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeDayInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
     name: req.body.name
   }
@@ -20,7 +20,7 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const days = await em.find(Day, {}, { populate: ['classes'] })
+    const days = await em.find(Day, {})
     res.status(200).json({ message: 'found all days', data: days })
   } 
   catch (error: any) {
@@ -31,7 +31,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const day = await em.findOneOrFail(Day, { id }, { populate: ['classes'] })
+    const day = await em.findOneOrFail(Day, { id })
     res.status(200).json({ message: 'found day', data: day })
   } 
   catch (error: any) {
@@ -75,4 +75,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+export {sanitizeDayInput, findAll, findOne, add, update, remove}

@@ -5,7 +5,7 @@ import { User } from './user.entity.js'
 
 const em = orm.em
 
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
     name: req.body.name,
     lastname: req.body.lastname,
@@ -27,7 +27,7 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const users = await em.find(User, {}, { populate: ['talleres'] })
+    const users = await em.find(User, {}, { populate: ['talleres', 'classes'] })
     res.status(200).json({ message: 'found all users', data: users })
   } 
   catch (error: any) {
@@ -38,7 +38,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const user = await em.findOneOrFail(User, { id }, { populate: ['talleres'] })
+    const user = await em.findOneOrFail(User, { id }, { populate: ['talleres', 'classes'] })
     res.status(200).json({ message: 'found user', data: user })
   } 
   catch (error: any) {
@@ -82,4 +82,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+export {sanitizeUserInput, findAll, findOne, add, update, remove}

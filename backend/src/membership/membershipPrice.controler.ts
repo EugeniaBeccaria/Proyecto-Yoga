@@ -5,7 +5,7 @@ import { MembershipPrice } from './membershipPrice.entity.js'
 
 const em = orm.em
 
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeMembershipPriceInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
     price: req.body.price,
     priceDate: req.body.priceDate
@@ -76,4 +76,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+export {sanitizeMembershipPriceInput, findAll, findOne, add, update, remove}

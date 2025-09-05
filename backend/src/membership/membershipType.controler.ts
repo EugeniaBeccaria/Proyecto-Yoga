@@ -5,7 +5,7 @@ import { MembershipType } from './membershipType.entity.js'
 
 const em = orm.em
 
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeMembershipTypeInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
     numOfClasses: req.body.numOfClasses,
     description: req.body.description
@@ -21,7 +21,7 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const membershipTypes = await em.find(MembershipType, {}, { populate: ['memberships', 'membershipPrices'] })
+    const membershipTypes = await em.find(MembershipType, {}, { populate: ['membershipPrices'] })
     res.status(200).json({ message: 'found all membershipTypes', data: membershipTypes })
   } 
   catch (error: any) {
@@ -32,7 +32,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const membershipType = await em.findOneOrFail(MembershipType, { id }, { populate: ['memberships', 'membershipPrices'] })
+    const membershipType = await em.findOneOrFail(MembershipType, { id }, { populate: ['membershipPrices'] })
     res.status(200).json({ message: 'found membershipType', data: membershipType })
   } 
   catch (error: any) {
@@ -76,4 +76,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+export {sanitizeMembershipTypeInput, findAll, findOne, add, update, remove}

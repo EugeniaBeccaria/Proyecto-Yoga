@@ -5,7 +5,7 @@ import { Time } from './time.entity.js'
 
 const em = orm.em
 
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeTimeInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
     startDate: req.body.startDate,
     endDate: req.body.endDate
@@ -21,7 +21,7 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const times = await em.find(Time, {}, { populate: ['classes'] })
+    const times = await em.find(Time, {})
     res.status(200).json({ message: 'found all times', data: times })
   } 
   catch (error: any) {
@@ -32,7 +32,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const time = await em.findOneOrFail(Time, { id }, { populate: ['classes'] })
+    const time = await em.findOneOrFail(Time, { id })
     res.status(200).json({ message: 'found time', data: time })
   } 
   catch (error: any) {
@@ -76,4 +76,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+export {sanitizeTimeInput, findAll, findOne, add, update, remove}
