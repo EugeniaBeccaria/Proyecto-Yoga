@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+
+    
+body{
+    background-color: pink;
+    background-image: url("/FlorLogo.png");
+    background-repeat: repeat;
+        margin: 0;
+        padding: 0;
+        color: #ffff;
+}
+.form-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+    .form {
+    min-width: 500px;
+    max-width: 650px;
+    min-height: 500px;
+    background: #2b462d;
+    overflow: hidden;
+    border-radius: 16px;
+    color: #ffffff;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 32px 24px 24px;
+    gap: 16px;
+    text-align: center;
+    box-shadow: 0px 0 22px rgba(0, 0, 0, 0.466);
+    font-family: "Montserrat";
+    }
+
+    /*Form text*/
+    .title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 2rem;
+    }
+
+    .subtitle {
+    margin-bottom: 15px;
+    font-size: 1.12rem;
+    color: #e6e6e6;
+    }
+
+    /*Inputs box*/
+    .form-container {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #131b13;
+    width: 100%;
+    display:block
+}
+
+    .input {
+    color: #000000;
+    background: rgb(255, 255, 255);
+    border: 0;
+    outline: 0;
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #285c27;
+    font-size: 1rem;
+    padding: 8px 15px;
+    }
+
+    .form-section {
+    padding: 16px;
+    font-size: .85rem;
+    background-color: rgb(3, 37, 0);
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+    }
+
+    .form-section a {
+    font-weight: bold;
+    color: rgb(252, 164, 178);
+    transition: color .3s ease;
+    }
+
+    .form-section a:hover {
+    color: rgb(190, 94, 110);
+    text-decoration: underline;
+    }
+
+    /*Button*/
+    .form button {
+    font-family: "Montserrat";
+    margin: 15px 0;
+    background-color: rgb(248, 149, 166);
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    }
+
+    .form button:hover {
+    background-color: rgb(170, 90, 104);
+    }
+
+    /* mensaje de error */
+    .mensaje-error{
+        background-color: rgb(196, 85, 85);
+        color: white;
+        border-radius: 5px;
+    }

@@ -1,0 +1,30 @@
+GET http://localhost:3000/api/classes
+
+# @name createClasss
+POST http://localhost:3000/api/classes
+Content-Type: application/json
+
+{
+    "name": "vinyasa yoga",
+    "description": "El vinyasa yoga es un estilo de yoga dinámico que se 
+    caracteriza por la unión intencional de la respiración con el movimiento, 
+    creando una secuencia fluida y continua entre las posturas (asanas)",
+    "capacityLimit": 25
+}
+
+@id = {{createClasss.response.body.data.id}}
+
+GET http://localhost:3000/api/classes/{{id}}
+
+PUT http://localhost:3000/api/classes/{{id}}
+Content-Type: application/json
+
+{
+    "name": "ashtanga yoga",
+    "capacityLimit": 20
+}
+
+# @name createclasssToDelete
+
+@idToDelete = {{createclasssToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/classes/{{idToDelete}}

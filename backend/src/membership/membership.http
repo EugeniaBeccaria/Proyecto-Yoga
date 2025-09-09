@@ -1,0 +1,34 @@
+
+GET http://localhost:3000/api/membership
+
+
+# @name createMembership
+POST http://localhost:3000/api/membership
+Content-Type: application/json
+
+{
+    "startDate": "2025-08-07",
+    "endDate": "2025-09-07",
+    "status": "activa"
+}
+
+@id = {{createMembership.response.body.data.id}}
+
+
+GET http://localhost:3000/api/membership/{{id}}
+
+PUT http://localhost:3000/api/membership/{{id}}
+Content-Type: application/json
+
+{
+    "startDate": "2025-08-07",
+    "endDate": "2025-09-07",
+    "status": "vencida"
+}
+
+
+# @name createmembershipToDelete
+
+
+@idToDelete = {{createmembershipToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/membership/{{idToDelete}}

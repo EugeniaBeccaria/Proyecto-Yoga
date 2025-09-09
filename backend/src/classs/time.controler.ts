@@ -1,20 +1,14 @@
 import {Request, Response, NextFunction} from 'express'
 import { orm } from '../shared/DB/orm.js'
-import { User } from './user.entity.js'
+import { Time } from './time.entity.js'
 
 
 const em = orm.em
 
-function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeTimeInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
-    name: req.body.name,
-    lastname: req.body.lastname,
-    birthdate: req.body.birthdate,
-    email: req.body.email,
-    phone: req.body.phone,
-    dni: req.body.dni,
-    rol: req.body.rol,
-    password: req.body.password
+    startDate: req.body.startDate,
+    endDate: req.body.endDate
   }
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -27,8 +21,8 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const users = await em.find(User, {}, { populate: ['talleres', 'classes'] })
-    res.status(200).json({ message: 'found all users', data: users })
+    const times = await em.find(Time, {})
+    res.status(200).json({ message: 'found all times', data: times })
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -38,8 +32,8 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const user = await em.findOneOrFail(User, { id }, { populate: ['talleres', 'classes'] })
-    res.status(200).json({ message: 'found user', data: user })
+    const time = await em.findOneOrFail(Time, { id })
+    res.status(200).json({ message: 'found time', data: time })
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -48,9 +42,9 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-    const user = em.create(User, req.body.sanitizedInput)
+    const time = em.create(Time, req.body.sanitizedInput)
     await em.flush()
-    res.status(201).json({ message: 'user created', data: user })
+    res.status(201).json({ message: 'time created', data: time })
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -60,10 +54,10 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const userToUpdate = await em.findOneOrFail(User, { id })
-    em.assign(userToUpdate, req.body.sanitizedInput)
+    const timeToUpdate = await em.findOneOrFail(Time, { id })
+    em.assign(timeToUpdate, req.body.sanitizedInput)
     await em.flush()
-    res.status(200).json({ message: 'user updated', data: userToUpdate })
+    res.status(200).json({ message: 'user updated', data: timeToUpdate })
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -73,13 +67,13 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const user = em.getReference(User, id)  //podria ser findOneOrfail
-    await em.removeAndFlush(user)
-    res.status(200).send({ message: 'user deleted' })
+    const time = em.getReference(Time, id) 
+    await em.removeAndFlush(time)
+    res.status(200).send({ message: 'time deleted' })
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
 }
 
-export {sanitizeUserInput, findAll, findOne, add, update, remove}
+export {sanitizeTimeInput, findAll, findOne, add, update, remove}
