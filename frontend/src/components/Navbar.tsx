@@ -1,9 +1,13 @@
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+/*import { Link } from "react-router-dom";*/
 import "../styles/Navbar.css"
+import { useNavigate } from "react-router-dom";
+
 
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <header className="navbar">
       <div className="nav-left">
@@ -11,12 +15,12 @@ function Navbar() {
       </div>
 
       <nav className="nav-right">
-        <Link to="/">NOSOTROS</Link>
-        <Link to="/">CLASES</Link>
-        <Link to="/">TALLERES</Link>
-        <Link to="/">RESEÑAS</Link>
+        <a href="#nosotros">NOSOTROS</a>
+        <a href="#clases">CLASES</a>
+        <a href="#talleres">TALLERES</a>
+        <a href="#reseñas">RESEÑAS</a>
 
-        {<div className="icono-perfil">
+        {<div className="icono-perfil" onClick = {() => navigate("/login")}style={{cursor: "pointer"}}>
             <FaUserCircle size={28}/>
         </div>}
       </nav>

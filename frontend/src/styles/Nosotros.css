@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+
+
+.nosotros {
+    background-color: #e3b9c9;
+    padding-bottom: 60px;
+    min-height: 100vh;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(32, 1fr);
+    gap: 0px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.square {
+    aspect-ratio: 1 / 1;
+}
+
+.square.pink {
+    background-color: #e3b9c9;
+}
+
+.square.green{
+    background-color: #235f3f;
+}
+
+.nosotros-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+    padding: 40px 20px;
+}
+
+.nosotros-texto{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.titulo-nosotros{
+    font-size: 3.6rem;
+    color: #235f3f;
+    margin-bottom: 20px;
+    font-family: "Chango";
+}
+
+.nosotros-texto p{
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #235f3f;
+    font-family: "Open Sanz";
+    font-weight: 600;
+    text-align: justify;
+}
+
+.imagen-nosotros{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-left: -20px;
+}
+
+.imagen-nosotros img{
+    max-width: 100%;
+    height: auto;
+    margin-left: 300px;
+}
