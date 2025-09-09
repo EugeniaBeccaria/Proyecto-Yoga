@@ -7,9 +7,12 @@ import { userRouter } from './user/user.routes.js';
 import { membershipRouter } from './membership/membership.routes.js';
 import { membershipTypeRouter } from './membership/membershipType.routes.js';
 import { membershipPriceRouter } from './membership/membershipPrice.routes.js';
-
-import { doesNotReject } from 'assert';
 import { classsRouter } from './classs/classs.routes.js';
+import { roomRouter } from './room/room.routes.js';
+import { timeRouter } from './classs/time.routes.js';
+import { dayRouter } from './classs/day.routes.js';
+import { doesNotReject } from 'assert';
+
 //import cors from 'cors'; 
 
 const app = express()
@@ -27,8 +30,10 @@ app.use('/api/talleres', tallerRouter)
 app.use('/api/membership', membershipRouter)
 app.use('/api/membershipType', membershipTypeRouter)
 app.use('/api/membershipPrice', membershipPriceRouter)
-app.use('/api/classs', classsRouter)
-
+app.use('/api/classes', classsRouter)
+app.use('/api/rooms', roomRouter)
+app.use('/api/days', dayRouter)
+app.use('/api/times', timeRouter)
 
 //app.get('/getData', (req, res) => res.send('enviado desde el back')) prueba de peticion
 
