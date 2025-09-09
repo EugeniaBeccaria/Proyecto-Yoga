@@ -1,7 +1,8 @@
 import {useState} from 'react'
 import "../styles/LoginRegisterPage.css"
-import Navbar from "../components/Navbar";
+/*import Navbar from "../components/Navbar";*/
 import axios from 'axios';
+import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
 
 interface User {
     name: string;
@@ -58,7 +59,7 @@ function Register(){
 
     return(
         <>
-            <Navbar disable={true}/>
+            {/*<Navbar disable={true}/>*/}
                 <div className="form-box">
                     <form className="form" onSubmit={handleSubmit}>
                         <span className="title">REGISTRARSE</span>
@@ -69,42 +70,70 @@ function Register(){
                             </div>
                         }
                         <div className="form-container">
-                            <input 
-                                type="name"
-                                name='name' 
-                                className="input" 
-                                placeholder="Nombre completo"
-                                value={user.name}
-                                onChange={(e) => setUser({...user, name: e.target.value})}
-                                required
-                                />                            
-                            <input
-                                type="email"
-                                name='mail'
-                                className="input"
-                                placeholder="Email"
-                                value={user.mail}
-                                onChange={(e) => setUser({...user, mail: e.target.value})}                                
-                                required
-                                />
-                            <input 
-                                type="password"
-                                name='password'
-                                className="input" 
-                                placeholder="Contraseña"
-                                value={user.password}
-                                onChange={(e) => setUser({...user, password: e.target.value})}
-                                required
-                                />
-                            <input 
-                                type="password"
-                                name='passwordRepeat'
-                                className="input" 
-                                placeholder="Repite tu contraseña"
-                                value={user.passwordRepeat}
-                                onChange={(e) => setUser({...user, passwordRepeat: e.target.value})}
-                                required
-                                />
+                            <div className="login-input">
+                                <label>NOMBRE COMPLETO</label>
+                                <div className='caja-input'>
+                                    <FaUser className="icon"/>
+                                    <input 
+                                        type="name"
+                                        name='name' 
+                                        className="input" 
+                                        placeholder="Nombre completo"
+                                        value={user.name}
+                                        onChange={(e) => setUser({...user, name: e.target.value})}
+                                        required
+                                    />  
+                                </div>
+                            </div>   
+
+                            <div className="login-input">   
+                                <label>USUARIO</label>
+                                <div className="caja-input">
+                                    <FaEnvelope className="icon"/>
+                                    <input
+                                        type="email"
+                                        name='mail'
+                                        className="input"
+                                        placeholder="usuario@example.com"
+                                        value={user.mail}
+                                        onChange={(e) => setUser({...user, mail: e.target.value})}                                
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="login-input">
+                                <label>CONTRASEÑA</label>
+                                <div className="caja-input">
+                                    <FaLock className="icon"/>
+                                    <input 
+                                        type="password"
+                                        name='password'
+                                        className="input" 
+                                        placeholder="********"
+                                        value={user.password}
+                                        onChange={(e) => setUser({...user, password: e.target.value})}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="login-input">
+                                <label>REPETIR CONTRASEÑA</label>
+                                <div className="caja-input">
+                                    <FaLock className="icon"/>
+                                    <input 
+                                        type="password"
+                                        name='passwordRepeat'
+                                        className="input" 
+                                        placeholder="********"
+                                        value={user.passwordRepeat}
+                                        onChange={(e) => setUser({...user, passwordRepeat: e.target.value})}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
                         </div>
                         <button type='submit'>Sign up</button>
                     <div className="form-section">

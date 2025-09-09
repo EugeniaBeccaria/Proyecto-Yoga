@@ -6,9 +6,10 @@ body{
     background-color: pink;
     background-image: url("/FlorLogo.png");
     background-repeat: repeat;
-        margin: 0;
-        padding: 0;
-        color: #ffff;
+    margin: 0;
+    padding: 0;
+    color: #ffff;
+    background-size: 200px;
 }
 .form-box {
     display: flex;
@@ -19,49 +20,53 @@ body{
     width: 100%;
 }
 
-
-    .form {
-    min-width: 500px;
-    max-width: 650px;
-    min-height: 500px;
+.form {
+    min-width: 400px;
+    max-width: 500px;
+    /*min-height: 500px;*/
     background: #2b462d;
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: 20px;
     color: #ffffff;
     position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 32px 24px 24px;
-    gap: 16px;
+    padding: 40px 32px;
+    gap: 20px;
     text-align: center;
-    box-shadow: 0px 0 22px rgba(0, 0, 0, 0.466);
+    box-shadow: 0px 0 22px rgba(0, 0, 0, 0.4);
     font-family: "Montserrat";
-    }
-
-    /*Form text*/
-    .title {
-    margin-bottom: 10px;
-    font-weight: bold;
-    font-size: 2rem;
-    }
-
-    .subtitle {
-    margin-bottom: 15px;
-    font-size: 1.12rem;
-    color: #e6e6e6;
-    }
-
-    /*Inputs box*/
-    .form-container {
-    overflow: hidden;
-    border-radius: 8px;
-    background-color: #131b13;
-    width: 100%;
-    display:block
 }
 
-    .input {
+/*Form text*/
+.title {
+    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #ffffff;
+}
+
+.subtitle {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #f0f0f0;
+    margin-top: 0px;
+}
+
+/*Inputs box*/
+.form-container {
+    /*overflow: hidden;
+    border-radius: 8px;
+    background-color: #131b13;*/
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: transparent;
+}
+
+/*.input {
     color: #000000;
     background: rgb(255, 255, 255);
     border: 0;
@@ -71,49 +76,94 @@ body{
     border-bottom: 1px solid #285c27;
     font-size: 1rem;
     padding: 8px 15px;
-    }
+}*/
 
-    .form-section {
-    padding: 16px;
-    font-size: .85rem;
-    background-color: rgb(3, 37, 0);
-    border-radius: 5px;
-    box-shadow: rgb(0 0 0 / 8%) 0 -1px;
-    }
-
-    .form-section a {
+.login-input label {
+    font-size: 0.92rem;
     font-weight: bold;
-    color: rgb(252, 164, 178);
-    transition: color .3s ease;
-    }
+    color: #ffffff;
+    margin-bottom: 4px;
+    display: block;
+    text-align: left;
+}
 
-    .form-section a:hover {
-    color: rgb(190, 94, 110);
-    text-decoration: underline;
-    }
+.caja-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    /*margin-bottom: 0.4rem;*/
+    border: 1px solid #ccc;
+}
 
-    /*Button*/
-    .form button {
+.caja-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    /*padding-left: 0.5rem;*/
+    font-size: 0.95rem;
+    color: #2e5939;
+    /*margin-top: 0.6rem;
+    align-items: center;
+    justify-content: center;*/
+}
+
+.caja-input .icon {
+    color: #2e5939;
+    font-size: 1rem;
+}
+
+/*Button*/
+.form button {
     font-family: "Montserrat";
-    margin: 15px 0;
-    background-color: rgb(248, 149, 166);
+    /*margin: 15px 0;*/
+    background-color: #f895a6/*rgb(248, 149, 166)*/;
     color: #fff;
-    border: 0;
-    border-radius: 4px;
-    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color .3s ease;
-    }
+}
 
-    .form button:hover {
-    background-color: rgb(170, 90, 104);
-    }
+.form button:hover {
+    background-color: #b25b6c/*rgb(170, 90, 104)*/;
+}
 
-    /* mensaje de error */
-    .mensaje-error{
-        background-color: rgb(196, 85, 85);
-        color: white;
-        border-radius: 5px;
-    }
+/*Caja Inferior*/
+.form-section {
+    padding: 14px;
+    font-size: 0.9rem;
+    background-color: transparent;
+    border-radius: 5px;
+    /*box-shadow: rgb(0 0 0 / 8%) 0 -1px;*/
+}
+
+.form-section p {
+    margin: 0;
+    color: #fff;
+}
+
+.form-section a {
+    font-weight: bold;
+    color: #f895a6;
+    transition: color .3s ease;
+    text-decoration: none;
+}
+
+.form-section a:hover {
+    color: #b25b6c;
+    text-decoration: underline;
+}
+
+/* Mensaje de error */
+.mensaje-error{
+    background-color: rgb(196, 85, 85);
+    color: white;
+    border-radius: 5px;
+}
+
