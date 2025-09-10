@@ -2,6 +2,7 @@ import { MikroORM } from '@mikro-orm/core';
 import { MySqlDriver } from '@mikro-orm/mysql'; 
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 
+
 export const orm = await MikroORM.init<MySqlDriver>({
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],

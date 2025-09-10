@@ -15,6 +15,7 @@ Content-Type: application/json
     "dni": "12345678"
 }
 
+### ID
 @id = {{createUser.response.body.data.id}}
 
 ### GET one user

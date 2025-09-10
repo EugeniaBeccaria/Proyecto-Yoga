@@ -4,11 +4,11 @@ import { Classs } from './classs.entity.js';
 
 @Entity()
 export class Time extends BaseEntity {
-    @Property({ nullable: false, type:'Date' })
-    startTime!: Date
+    @Property({ nullable: false,  type: 'string', length: 5  })
+    startTime!: string
 
-    @Property({ nullable: false, type:'Date' })
-    endTime!: Date
+    @Property({ nullable: false,  type: 'string', length: 5 })
+    endTime!: string
 
     @OneToMany(() => Classs, classs => classs.time)
     classes = new Collection<Classs>(this);

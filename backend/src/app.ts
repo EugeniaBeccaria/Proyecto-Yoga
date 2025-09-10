@@ -35,7 +35,6 @@ app.use('/api/rooms', roomRouter)
 app.use('/api/days', dayRouter)
 app.use('/api/times', timeRouter)
 
-//app.get('/getData', (req, res) => res.send('enviado desde el back')) prueba de peticion
 
 app.use((req,res)=> {
   return res.status(404).send({message: 'Resource not found'})

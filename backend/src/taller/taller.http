@@ -12,7 +12,8 @@ Content-Type: application/json
   "datetime": "jueves 24 a las 18:00",
   "price": 8000,
   "description": "taller de invertidas para todas",
-  "cupo": 20
+  "cupo": 20,
+  "room": {1}
 }
 
 @id = {{createTaller.response.body.data.id}}
