@@ -12,18 +12,18 @@ import { roomRouter } from './room/room.routes.js';
 import { timeRouter } from './classs/time.routes.js';
 import { dayRouter } from './classs/day.routes.js';
 import { doesNotReject } from 'assert';
-
-//import cors from 'cors'; 
+import { authRouter }  from './auth/auth.routes.js'
+import cors from 'cors'; 
 
 const app = express()
 app.use(express.json())
-//app.use(cors()); 
+app.use(cors()); 
 
 app.use((req, res, next)=>{
   RequestContext.create(orm.em, next);
- })
+})
 
- await syncSchema()
+await syncSchema()
 
 app.use('/api/users', userRouter)
 app.use('/api/talleres', tallerRouter)
@@ -34,6 +34,8 @@ app.use('/api/classes', classsRouter)
 app.use('/api/rooms', roomRouter)
 app.use('/api/days', dayRouter)
 app.use('/api/times', timeRouter)
+
+app.use('/auth', authRouter)
 
 
 app.use((req,res)=> {

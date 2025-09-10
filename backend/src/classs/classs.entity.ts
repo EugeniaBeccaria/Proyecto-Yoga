@@ -9,7 +9,7 @@ import { Time } from './time.entity.js';
 export class Classs extends BaseEntity {
     @Property({ nullable: false })
     name!: string
-  
+
     @Property({ nullable: false })
     description!: string
 
