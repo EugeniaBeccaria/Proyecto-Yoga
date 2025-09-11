@@ -68,7 +68,9 @@ function HomePage(){
             </div>
           </section>
 
-          <section id="clases" className="clases"></section>
+          <section id="clases" className="clases">
+
+          </section>
           <section id="talleres" className="talleres"></section>
           <section id="reseñas" className="reseñas"></section>
         </main>

@@ -6,7 +6,6 @@ import Register from './pages/RegisterPage.tsx'
 import "./styles/HomePage.css"
 
 
-
 function App() {
   return (
     <>

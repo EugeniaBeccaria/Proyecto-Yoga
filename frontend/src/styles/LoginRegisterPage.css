@@ -167,3 +167,65 @@ body{
     border-radius: 5px;
 }
 
+/* Registro con Redes Sociales */
+
+.linea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.linea::before,
+.linea::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ffffff;
+  margin: 0 0.6rem;
+}
+
+.otros-inicios-sesion {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.otros-inicios-sesion a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem;
+  gap: 0.5rem;
+  border-radius: 0.4rem;
+  text-decoration: none;
+  background-color: #ffffffb9;
+
+}
+
+.otros-inicios-sesion img {
+  width: 1rem;
+}
+
+.otros-inicios-sesion .google {
+  border: 1px solid rgb(85, 82, 82);
+  color: red;
+}
+
+.otros-inicios-sesion .facebook {
+  border: 1px solid rgb(85, 82, 82);
+  color: blue;
+}
+
+.otros-inicios-sesion .apple {
+  border: 1px solid rgb(85, 82, 82);
+  color: black;
+}
+
+.otros-inicios-sesion span:hover {
+  text-decoration: underline;
+}

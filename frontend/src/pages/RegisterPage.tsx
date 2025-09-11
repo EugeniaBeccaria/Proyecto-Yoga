@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import "../styles/LoginRegisterPage.css"
-/*import Navbar from "../components/Navbar";*/
+import Navbar from "../components/Navbar";
 import axios from 'axios';
 import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
+import SocialButton from '../components/SocialButton.tsx';
 
 interface User {
     name: string;
@@ -59,7 +60,7 @@ function Register(){
 
     return(
         <>
-            {/*<Navbar disable={true}/>*/}
+            <Navbar disable={true}/>
                 <div className="form-box">
                     <form className="form" onSubmit={handleSubmit}>
                         <span className="title">REGISTRARSE</span>
@@ -136,12 +137,24 @@ function Register(){
 
                         </div>
                         <button type='submit'>Sign up</button>
+
                     <div className="form-section">
                         <p>¿Ya tienes una cuenta? <a href="/LoginPage">Iniciar sesión</a> </p>
                     </div>
+                    
+                     <div className="linea">
+                        <span>O</span>
+                    </div>
+                    <div className="otros-inicios-sesion">
+                        <SocialButton platform="google" logoSrc="/LogoGoogle.png" />
+                        <SocialButton platform="facebook" logoSrc="LogoFacebook.png" />
+                        <SocialButton platform="apple" logoSrc="/LogoApple.png" />
+                    </div>
                     </form>
-                </div>
+                   
+             </div>
         </>
     )
 }
+
 export default Register
