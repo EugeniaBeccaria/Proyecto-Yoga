@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import "../styles/HomePage.css"
 import "../styles/Nosotros.css"
 /*import { useState } from "react";*/
@@ -22,7 +21,6 @@ function HomePage(){
 
   return (
     <>
-      <Navbar/>
         <main>
           <section className="home">
             <div className="hero">

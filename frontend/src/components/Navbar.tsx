@@ -1,6 +1,7 @@
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css"
+import { HashLink } from 'react-router-hash-link';
 
 
 type NavbarProps = {
@@ -16,8 +17,7 @@ function Navbar({disable}:NavbarProps) {
       </div>
 
       <nav className="nav-right">
-
-        {disable ? '' : <Link to="/">NOSOTROS</Link>}
+        <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
         {disable ? '' : <Link to="/">CLASES</Link>}
         {disable ? '' : <Link to="/">TALLERES</Link>}
         {disable ? '' : <Link to="/">RESEÑAS</Link>}

@@ -1,13 +1,11 @@
 // import react from 'react'
 // import {useState, useEffect} from 'react'
 import "../styles/LoginRegisterPage.css"
-/*import Navbar from "../components/Navbar";*/
 import {FaEnvelope, FaLock} from "react-icons/fa";
 
 function Login(){
     return(
         <>
-            {/*<Navbar disable={true}/>*/}
                 <div className="form-box">
                     <form className="form">
                         <span className="title">INICIAR SESIÓN</span>
