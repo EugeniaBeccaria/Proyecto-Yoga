@@ -22,7 +22,7 @@ function HomePage(){
   return (
     <>
         <main>
-          <section className="home">
+          <section id="top" className="home">
             <div className="hero">
               <img className="florFondoHome" src="/FlorLogo.png" alt="" />
               <h1 className="hero-title">SHANTI <span className="block yoga">yoga</span></h1>
