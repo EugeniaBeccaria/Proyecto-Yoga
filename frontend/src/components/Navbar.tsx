@@ -11,13 +11,17 @@ function Navbar({disable}:NavbarProps) {
   return (
     <header className="navbar">
       <div className="nav-left">
-        <Link to={"/"}>
+        <HashLink smooth to="/#top">
         <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
-        </Link>
+        </HashLink>
       </div>
 
       <nav className="nav-right">
-        <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
+
+        <HashLink smooth to="/#nosotros">
+        NOSOTROS</HashLink>
+        
+        
         {disable ? '' : <Link to="/">CLASES</Link>}
         {disable ? '' : <Link to="/">TALLERES</Link>}
         {disable ? '' : <Link to="/">RESEÑAS</Link>}
