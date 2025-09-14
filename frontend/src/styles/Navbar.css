@@ -4,6 +4,7 @@
 
 html{
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 .navbar {
@@ -12,15 +13,18 @@ html{
   align-items:center;
   padding: 2px 40px;
   background: rgba(3, 33, 5, 0.89);
-  position: absolute; /* hace que quede arriba de la imagen */
-  top: 0;
+  /*top: 0;
   left: 0;
-  right: 0;
+  right: 0;*/
   z-index: 10;
+  position: static;
+  width: 100%;
 }
-link{
+
+/*link{
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
+}*/
+
 .nav-left .logo {
   position: relative;
   height: 80px;

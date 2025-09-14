@@ -5,7 +5,6 @@ import Register from './pages/RegisterPage.tsx'
 /*import Footer from './components/Footer.tsx';*/
 import "./styles/HomePage.css"
 
-
 function App() {
   return (
     <>

@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+
+
+.clases {
+    background-color: #1f5132;
+    min-height: 100vh;
+    padding: 30px;
+    text-align: center;
+    color: white;
+    justify-content: center;
+}
+
+.clases h2{
+    font-size: 3.6rem;
+    margin-bottom: 40px;
+    color: #e3b9c9;
+    margin-top: 80px;
+    font-family: "Chango";
+    margin-right: 1000px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    color: #333;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead th {
+    background: #db92ae;
+    padding: 10px;
+    font-weight: bold;
+    color: #333;
+    font-family: "Open Sanz";
+    font-size: 1.2rem;
+}
+
+td, th {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td {
+    font-family: "Montserrat";
+    font-size: 0.9rem;
+}
+
+.horario {
+    font-weight: bold;
+}
+
+/*.horario-dia {
+    font-size: 0.9rem;
+    color: black;
+}
+
+.horario-dia:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}*/
+
+.clase {
+    display: block;
+    font-size: 0.9rem;
+    margin: 3px 0;
+    border-bottom: 1px dashed #bbb;
+    font-family: "Montserrat";
+    color: black;
+}
+
+.clase:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color:#c43267
+}
+
