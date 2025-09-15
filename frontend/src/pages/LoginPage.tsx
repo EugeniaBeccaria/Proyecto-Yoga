@@ -6,8 +6,9 @@ import {FaEnvelope, FaLock} from "react-icons/fa";
 function Login(){
     return(
         <>
+            <div className="login-register">
                 <div id="top" className="form-box">
-                    <form className="form">
+                    <form className="form login">
                         <span className="title">INICIAR SESIÓN</span>
                         <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
                         <div className="form-container">
@@ -15,7 +16,7 @@ function Login(){
                                 <label>USUARIO</label>
                                 <div className="caja-input">
                                     <FaEnvelope className="icon"/>
-                                    <input type="email" className="input" placeholder="usuario@exapmle.com" />
+                                    <input type="email" className="input" placeholder="usuario@example.com" />
                                 </div>
                             </div>
 
@@ -35,6 +36,7 @@ function Login(){
                     </div>
                     </form>
                 </div>
+            </div>
         </>
     )
 }

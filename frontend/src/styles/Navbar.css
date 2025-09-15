@@ -12,13 +12,14 @@ html{
   justify-content: space-between;
   align-items:center;
   padding: 2px 40px;
-  background: rgba(3, 33, 5, 0.89);
+  background: rgb(3, 33, 5);
   /*top: 0;
   left: 0;
   right: 0;*/
   z-index: 10;
   position: static;
   width: 100%;
+  overflow: visible;
 }
 
 /*link{
@@ -33,7 +34,8 @@ html{
 
 .nav-right {
   display: flex;
-  gap: 32px;
+  gap: 40px;
+  align-items: center;
   font-family: "Open Sanz";
 }
 
@@ -51,15 +53,23 @@ html{
 .icono-perfil{
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 30px;
   margin-bottom: 0px;
+  margin-right: 20px; 
+  justify-content: center;
   color: #e0abbf;
   cursor: pointer;
   position: relative;
-  top: -6px;
-  left: -6px;
+  /*top: -6px;
+  left: -6px;*/
+  left: -40px;
 }
 
 .icono-perfil:hover{
   color: #8e4360;
+}
+
+.icono-perfil svg {
+  width: 30px;
+  height: 30px;
 }

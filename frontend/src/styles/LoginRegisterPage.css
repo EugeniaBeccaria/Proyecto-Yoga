@@ -2,68 +2,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 
     
-body{
-    background-color: pink;
-    background-image: url("/FlorLogo.png");
-    background-repeat: repeat;
-    margin: 0;
-    padding: 0;
-    color: #ffff;
-    background-size: 200px;
+body {
+  background-color: pink;
+  background-image: url("/FlorLogo.png");
+  background-repeat: repeat;
+  margin: 0;
+  padding: 0;
+  color: #ffff;
+  background-size: 200px;
 }
+
 .form-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .form {
-    min-width: 400px;
-    max-width: 500px;
-    /*min-height: 500px;*/
-    background: #2b462d;
-    overflow: hidden;
-    border-radius: 20px;
-    color: #ffffff;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 40px 32px;
-    gap: 20px;
-    text-align: center;
-    box-shadow: 0px 0 22px rgba(0, 0, 0, 0.4);
-    font-family: "Montserrat";
+  min-width: 400px;
+  max-width: 500px;
+  /*min-height: 500px;*/
+  background: #2b462d;
+  overflow: hidden;
+  border-radius: 20px;
+  color: #ffffff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px 32px;
+  gap: 20px;
+  text-align: center;
+  box-shadow: 0px 0 22px rgba(0, 0, 0, 0.4);
+  font-family: "Montserrat";
+  top: -80px;
 }
 
 /*Form text*/
 .title {
-    margin-bottom: 4px;
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #ffffff;
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #ffffff;
 }
 
 .subtitle {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: #f0f0f0;
-    margin-top: 0px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #f0f0f0;
+  margin-top: 0px;
 }
 
 /*Inputs box*/
 .form-container {
-    /*overflow: hidden;
-    border-radius: 8px;
-    background-color: #131b13;*/
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    background: transparent;
+  /*overflow: hidden;
+  border-radius: 8px;
+  background-color: #131b13;*/
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: transparent;
 }
 
 /*.input {
@@ -79,92 +81,92 @@ body{
 }*/
 
 .login-input label {
-    font-size: 0.92rem;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 4px;
-    display: block;
-    text-align: left;
+  font-size: 0.92rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 4px;
+  display: block;
+  text-align: left;
 }
 
 .caja-input {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #ffffff;
-    padding: 10px 12px;
-    border-radius: 8px;
-    /*margin-bottom: 0.4rem;*/
-    border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  /*margin-bottom: 0.4rem;*/
+  border: 1px solid #ccc;
 }
 
 .caja-input input {
-    border: none;
-    outline: none;
-    flex: 1;
-    /*padding-left: 0.5rem;*/
-    font-size: 0.95rem;
-    color: #2e5939;
-    /*margin-top: 0.6rem;
-    align-items: center;
-    justify-content: center;*/
+  border: none;
+  outline: none;
+  flex: 1;
+  /*padding-left: 0.5rem;*/
+  font-size: 0.95rem;
+  color: #2e5939;
+  /*margin-top: 0.6rem;
+  align-items: center;
+  justify-content: center;*/
 }
 
 .caja-input .icon {
-    color: #2e5939;
-    font-size: 1rem;
+  color: #2e5939;
+  font-size: 1rem;
 }
 
 /*Button*/
 .form button {
-    font-family: "Montserrat";
-    /*margin: 15px 0;*/
-    background-color: #f895a6/*rgb(248, 149, 166)*/;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color .3s ease;
+  font-family: "Montserrat";
+  /*margin: 15px 0;*/
+  background-color: #f895a6/*rgb(248, 149, 166)*/;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .3s ease;
 }
 
 .form button:hover {
-    background-color: #b25b6c/*rgb(170, 90, 104)*/;
+  background-color: #b25b6c/*rgb(170, 90, 104)*/;
 }
 
 /*Caja Inferior*/
 .form-section {
-    padding: 14px;
-    font-size: 0.9rem;
-    background-color: transparent;
-    border-radius: 5px;
-    /*box-shadow: rgb(0 0 0 / 8%) 0 -1px;*/
+  padding: 14px;
+  font-size: 0.9rem;
+  background-color: transparent;
+  border-radius: 5px;
+  /*box-shadow: rgb(0 0 0 / 8%) 0 -1px;*/
 }
 
 .form-section p {
-    margin: 0;
-    color: #fff;
+  margin: 0;
+  color: #fff;
 }
 
 .form-section a {
-    font-weight: bold;
-    color: #f895a6;
-    transition: color .3s ease;
-    text-decoration: none;
+  font-weight: bold;
+  color: #f895a6;
+  transition: color .3s ease;
+  text-decoration: none;
 }
 
 .form-section a:hover {
-    color: #b25b6c;
-    text-decoration: underline;
+  color: #b25b6c;
+  text-decoration: underline;
 }
 
 /* Mensaje de error */
 .mensaje-error{
-    background-color: rgb(196, 85, 85);
-    color: white;
-    border-radius: 5px;
+  background-color: rgb(196, 85, 85);
+  color: white;
+  border-radius: 5px;
 }
 
 /* Registro con Redes Sociales */

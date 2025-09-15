@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+/*import Navbar from "../components/Navbar";*/
 import "../styles/HomePage.css";
 import "../styles/Nosotros.css";
 import "../styles/Clases.css";
@@ -23,7 +23,6 @@ function HomePage(){
 
   return (
     <>
-      <Navbar/>
         <main>
           <section id="top" className="home">
             <div className="hero">

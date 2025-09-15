@@ -39,7 +39,7 @@ function Navbar({disable}:NavbarProps) {
             </Link>*/}
             {disable ? '' : 
             <a href="/LoginPage">
-              <FaUserCircle size={30}/>
+              <FaUserCircle size={80}/>
             </a>
             }
         </div>
