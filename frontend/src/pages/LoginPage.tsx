@@ -6,8 +6,8 @@ import {FaEnvelope, FaLock} from "react-icons/fa";
 function Login(){
     return(
         <>
-            <div className="login-register">
-                <div id="top" className="form-box">
+            <div id="top" className="login-register">
+                <div className="form-box">
                     <form className="form login">
                         <span className="title">INICIAR SESIÓN</span>
                         <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>

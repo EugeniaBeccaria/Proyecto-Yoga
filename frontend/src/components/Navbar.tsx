@@ -1,7 +1,7 @@
 import { FaUserCircle } from "react-icons/fa";
-/*import { Link } from "react-router-dom";*/
+import { Link } from "react-router-dom";
 import "../styles/Navbar.css"
-/*import { HashLink } from 'react-router-hash-link';*/
+import { HashLink } from 'react-router-hash-link';
 
 
 type NavbarProps = {
@@ -12,36 +12,29 @@ function Navbar({disable}:NavbarProps) {
   return (
     <header className="navbar">
       <div className="nav-left">
-
-        {/*<Link to={"/"}>*/}
-        <a href="/">
+        <HashLink to="/#top">
           <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
-        </a>
-        {/*</div></Link>*/}
+        </HashLink>
       </div>
 
       <nav className="nav-right">
-        {/*
-        {disable ? '' : <Link to="/">NOSOTROS</Link>}
-        {disable ? '' : <Link to="/">CLASES</Link>}
-        {disable ? '' : <Link to="/">TALLERES</Link>}
-        {disable ? '' : <Link to="/">RESEÑAS</Link>}
-        */}
-
-        {disable ? '': <a href="#nosotros">NOSOTROS</a>}
-        {disable ? '': <a href="#clases">CLASES</a>}
-        {disable ? '': <a href="/">TALLERES</a>}
-        {disable ? '': <a href="/">RESEÑAS</a>}
+        <HashLink smooth to="/#nosotros">
+          NOSOTROS
+        </HashLink>
+        <HashLink smooth to="/#clases">
+          CLASES
+        </HashLink>
+        <HashLink smooth to="/#talleres">
+          TALLERES
+        </HashLink>
+        <HashLink smooth to="/#reseñas">
+          RESEÑAS
+        </HashLink>
 
         <div className="icono-perfil">
-            {/*<Link to="/LoginPage">
-            {disable ? '' : <FaUserCircle size={30}/>}
-            </Link>*/}
-            {disable ? '' : 
-            <a href="/LoginPage">
-              <FaUserCircle size={80}/>
-            </a>
-            }
+            <Link to="/LoginPage#top">
+            {disable ? '' : <FaUserCircle size={80}/>}
+            </Link>
         </div>
       </nav>
     </header>
