@@ -25,14 +25,13 @@ function HomePage(){
     <>
       <Navbar/>
         <main>
-          <div className="homepage">
-            <section className="home">
-              <div className="hero">
-                <img className="florFondoHome" src="/FlorLogo.png" alt="" />
-                <h1 className="hero-title">SHANTI <span className="block yoga">yoga</span></h1>
-                <p className="hero-subtitle">Tu espacio para crecer y relajarte.</p>
-              </div>
-            </section>
+          <section id="top" className="home">
+            <div className="hero">
+              <img className="florFondoHome" src="/FlorLogo.png" alt="" />
+              <h1 className="hero-title">SHANTI <span className="block yoga">yoga</span></h1>
+              <p className="hero-subtitle">Tu espacio para crecer y relajarte.</p>
+            </div>
+          </section>
 
             <section id="nosotros" className="nosotros">
               <div className="grid">
@@ -86,7 +85,7 @@ function HomePage(){
                 <tbody>
                   <tr>
                     <td className="horario">07:00 a 08:00</td>
-                    <td>
+                    <td className="horario-dia">
                       <span className="clase fuerte">Respira y Fluye</span>
                       <span className="clase">Fuerza Interior</span>
                       <span className="clase fuego">Fuego Interior</span>
@@ -209,9 +208,8 @@ function HomePage(){
             </section>
             <section id="talleres" className="talleres"></section>
             <section id="reseñas" className="reseñas"></section>
-          </div>
-        </main>
-    </>
+      </main>
+  </>
   )
 }
 

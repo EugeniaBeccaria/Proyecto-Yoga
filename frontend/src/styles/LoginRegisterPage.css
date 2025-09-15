@@ -229,3 +229,8 @@ body{
 .otros-inicios-sesion span:hover {
   text-decoration: underline;
 }
+
+/* Para que el formulario no quede tapado por el Navbar */
+.form-box {
+  margin-top: 100px; /* Ajusta según la altura de tu navbar */
+}
