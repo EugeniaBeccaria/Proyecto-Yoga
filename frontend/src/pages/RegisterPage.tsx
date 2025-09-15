@@ -73,7 +73,7 @@ function Register(){
     return(
         <>
             <div id="top" className="login-register">
-                <div className="form-box">
+                <div className="form-box-register">
                     <form className="form register" onSubmit={handleSubmit}>
                         <span className="title">REGISTRARSE</span>
                         <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>

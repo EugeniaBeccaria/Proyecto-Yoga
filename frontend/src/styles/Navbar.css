@@ -13,11 +13,11 @@ html{
   align-items:center;
   padding: 2px 40px;
   background: rgb(3, 33, 5);
-  /*top: 0;
+  top: 0;
   left: 0;
-  right: 0;*/
+  right: 0;
   z-index: 10;
-  position: static;
+  position: absolute;
   width: 100%;
   overflow: visible;
 }

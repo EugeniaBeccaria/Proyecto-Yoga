@@ -1,5 +1,4 @@
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
 
@@ -12,7 +11,7 @@ function Navbar({disable}:NavbarProps) {
   return (
     <header className="navbar">
       <div className="nav-left">
-        <HashLink to="/#top">
+        <HashLink smooth to="/#top">
           <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
         </HashLink>
       </div>
@@ -32,9 +31,9 @@ function Navbar({disable}:NavbarProps) {
         </HashLink>
 
         <div className="icono-perfil">
-            <Link to="/LoginPage#top">
+            <HashLink smooth to="/LoginPage#top">
             {disable ? '' : <FaUserCircle size={80}/>}
-            </Link>
+            </HashLink>
         </div>
       </nav>
     </header>

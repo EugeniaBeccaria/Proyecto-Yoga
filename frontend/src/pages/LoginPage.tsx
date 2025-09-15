@@ -7,7 +7,7 @@ function Login(){
     return(
         <>
             <div id="top" className="login-register">
-                <div className="form-box">
+                <div className="form-box-login">
                     <form className="form login">
                         <span className="title">INICIAR SESIÓN</span>
                         <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
