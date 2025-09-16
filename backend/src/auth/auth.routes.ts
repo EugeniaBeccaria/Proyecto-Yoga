@@ -3,6 +3,5 @@ import {login, register} from './auth.controller.js'
 
 export const authRouter = express.Router()
 
-authRouter.post('/login',(req,res)=>{login})
-authRouter.post('/register',(req,res)=>{register})
-
+authRouter.post('/login',login)
+authRouter.post('/register',register)

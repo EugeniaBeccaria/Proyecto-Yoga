@@ -2,7 +2,7 @@ import { PrimaryKey } from "@mikro-orm/core";
 
 export abstract class BaseEntity {
     @PrimaryKey()
-    id?: number
+    id?: number //extiende para todas las entidades un id autoincremental
 
     /*
   @Property({ type: DateTimeType })

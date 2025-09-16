@@ -7,7 +7,7 @@ import SocialButton from '../components/SocialButton.tsx';
 
 interface User {
     name: string;
-    mail: string;
+    email: string;
     password: string;
     passwordRepeat:string;
 }
@@ -16,7 +16,7 @@ function Register(){
     const [error, setError] = useState<boolean>(false)
     const [user, setUser] = useState<User>({
         name:'',
-        mail:'',
+        email:'',
         password:'',
         passwordRepeat:''
     })
@@ -26,7 +26,7 @@ function Register(){
         const form = e.target as HTMLFormElement;
         setUser({
             name: (form.elements.namedItem('name') as HTMLInputElement).value,
-            mail:(form.elements.namedItem('mail') as HTMLInputElement).value,
+            email:(form.elements.namedItem('email') as HTMLInputElement).value,
             password:(form.elements.namedItem('password') as HTMLInputElement).value,
             passwordRepeat:(form.elements.namedItem('passwordRepeat') as HTMLInputElement).value            
         });
@@ -39,20 +39,21 @@ function Register(){
 
     async function sendFormRegister(){
         try{
-            const response = await axios.post("http://localhost:3000/api/user",{
-                name: user.name,
-                mail: user.mail,
-                password: user.password
-            })
-                console.log('Usuario creado con exito: ',response.data.userData)
-            }
+            const response = await axios.post("http://localhost:3000/api/users", {
+            name: user.name,
+            email: user.email,  
+            password: user.password })
+
+            // console.log(response.data.message)
+            console.log(response.data.message,'// Datos:',response.data.data)
+        }
             catch(err){
                 console.log('Error: ',err)
             }
             finally{
                 setUser({
                     name: '',
-                    mail: '',
+                    email: '',
                     password: '',
                     passwordRepeat:''})
                 }
@@ -72,8 +73,8 @@ function Register(){
 
     return(
         <>
-            <div id="top" className="login-register">
-                <div className="form-box-register">
+            <div className="login-register">
+                <div id="top" className="form-box">
                     <form className="form register" onSubmit={handleSubmit}>
                         <span className="title">REGISTRARSE</span>
                         <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>
@@ -106,11 +107,11 @@ function Register(){
                                     <FaEnvelope className="icon"/>
                                     <input
                                         type="email"
-                                        name='mail'
+                                        name='email'
                                         className="input"
                                         placeholder="usuario@example.com"
-                                        value={user.mail}
-                                        onChange={(e) => setUser({...user, mail: e.target.value})}                                
+                                        value={user.email}
+                                        onChange={(e) => setUser({...user, email: e.target.value})}                                
                                         required
                                     />
                                 </div>
