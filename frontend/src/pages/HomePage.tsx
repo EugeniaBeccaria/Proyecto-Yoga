@@ -2,6 +2,7 @@
 import "../styles/HomePage.css";
 import "../styles/Nosotros.css";
 import "../styles/Clases.css";
+import "../styles/Reseñas.css";
 /*import { useState } from "react";*/
 /*import { BrowserRouter, Routes, Route } from "react-router-dom";*/
 
@@ -44,7 +45,7 @@ function HomePage(){
 
               <div className="nosotros-contenido">
                 <div className="nosotros-texto">
-                  <h2 className="titulo-nosotros">Nosotros</h2>
+                  <h2 className="titulo-nosotros">Nuestra historia</h2>
                   <p>
                     Hace más de diez años, Shanti Yoga nació de un sueño
                     compartido por un pequeño grupo de amantes del
@@ -205,8 +206,75 @@ function HomePage(){
                 </tbody>
               </table>
             </section>
+
             <section id="talleres" className="talleres"></section>
-            <section id="reseñas" className="reseñas"></section>
+            
+            <section id="reseñas" className="reseñas">
+              <h2 className="titulo-reseñas">Comunidad Shanti</h2>
+              <div className="contenedor-reseñas">
+                <div className="box">
+                  <div className="stars">
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>                    
+                  </div>
+
+                  <p>"Empecé en Shanti Yoga sin tener mucha experiencia y me sorprendió lo acogedor que es el lugar. Las clases están pensadas para todos los niveles y los profesores realmente se preocupan por cada alumno. Salgo de cada sesión relajada y con energía renovada. ¡100% recomendable!"</p>
+                  <div className="user">
+                    <img src="/Persona1.jpg" alt="" />
+                    <div className="user-info">
+                      <h3>Ana Martínez</h3>
+                      <span>Cliente feliz</span>
+                    </div>
+                  </div>
+                  <span className="fas fa-quote-right"></span>
+                </div>
+
+                <div className="box">
+                  <div className="stars">
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>                    
+                  </div>
+
+                  <p>"Lo que más me gusta de Shanti Yoga son los talleres. Cada vez aprendo algo nuevo sobre meditación, respiración y posturas. El ambiente es tranquilo, positivo y sin presión. Es un espacio donde realmente puedo desconectarme del estrés diario y reconectar conmigo mismo."</p>
+                  <div className="user">
+                    <img src="/Persona2.jpg" alt="" />
+                    <div className="user-info">
+                      <h3>Martín López</h3>
+                      <span>Cliente feliz</span>
+                    </div>
+                  </div>
+                  <span className="fas fa-quote-right"></span>
+                </div>
+
+                <div className="box">
+                  <div className="stars">
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>                    
+                  </div>
+
+                  <p>"Me encanta la comunidad de Shanti Yoga. Desde que vine por primera vez me sentí bienvenida, y todos los alumnos y profes hacen que cada clase sea divertida y motivadora. Además, las instalaciones son lindas y luminosas. Para mí, es más que un lugar para practicar yoga; es un espacio de crecimiento personal."</p>
+                  <div className="user">
+                    <img src="/Persona3.webp" alt="" />
+                    <div className="user-info">
+                      <h3>Valentina Gómez</h3>
+                      <span>Cliente feliz</span>
+                    </div>
+                  </div>
+                  <span className="fas fa-quote-right"></span>
+                </div>
+                
+              </div>
+            </section>
+
       </main>
   </>
   )
