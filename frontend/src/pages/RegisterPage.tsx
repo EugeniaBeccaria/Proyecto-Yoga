@@ -90,7 +90,7 @@ function Register(){
                                 <div className='caja-input'>
                                     <FaUser className="icon"/>
                                     <input 
-                                        type="name"
+                                        type="text"
                                         name='name' 
                                         className="input" 
                                         placeholder="Nombre completo"
