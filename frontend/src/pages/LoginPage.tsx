@@ -2,6 +2,7 @@ import {useState} from 'react'
 import "../styles/LoginRegisterPage.css"
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import axios from 'axios';
+// import { redirect } from 'react-router-dom';
 
 interface User {
     email: string;
@@ -9,7 +10,7 @@ interface User {
 }
 
 export default function Login(){
-    // const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false)
     const [formData, setFormData] = useState<User>({email:'',password:''})
     // const [user, setUser] = useState<User>({
     //     email:'',
@@ -26,21 +27,29 @@ export default function Login(){
 
     async function sendForm(email:string,password:string){
         try{
-            const response = await axios.post("http://localhost:3000/auth/login", {
+            setError(false)
+            const response = await axios.post("http://localhost:3000/auth/login", 
+            {
             email: email,  
-            password: password})
-            // console.log(response.data.message)
-            console.log(response.data.message,'// Datos:',response.data.data)
+            password: password
+            },
+            { withCredentials: true })
+
+            if (response.status !== 200){
+                setError(true)
+                throw new Error(response.data.message || 'Error al iniciar sesión')}        
+            console.log('Usuario logueado, nombre: ',response.data.userValidation.name)
             
+
+
         }
-            catch(err){
-                console.log('Error: ',err)
-            }
-            finally{
-                setFormData({
-                    email: '',
-                    password: ''})
-                }
+        catch(err){
+            setError(true)
+            console.log('Error: ',err)
+        }
+        finally{
+            setFormData({email: '',password: ''})
+        }
     }
         
     return(
@@ -50,6 +59,12 @@ export default function Login(){
                     <form className="form login" onSubmit={handleSubmit}>
                         <span className="title">INICIAR SESIÓN</span>
                         <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
+                        {error  &&
+                            <div className='mensaje-error'>
+                                Error de inicio de sesion
+                            </div>
+                        }
+
                         <div className="form-container">
                             <div className="login-input">
                                 <label>USUARIO</label>

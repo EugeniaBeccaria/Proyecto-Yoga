@@ -5,16 +5,11 @@ import { findOne } from '../taller/taller.controler.js';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv' //libreria para variables de entorno
+import { redirect } from 'react-router-dom';
 
 dotenv.config()
 
 const em = orm.em
-
-async function register(req:Request,res:Response){
-    console.log(req.body)
-
-}
-
 
 async function login(req:Request,res:Response){
     try{
@@ -36,20 +31,27 @@ async function login(req:Request,res:Response){
             return res.status(404).json({status:'Error',message:'Error durante login'})
 
         //generar jsw
-        const jwtSecret = process.env.JWT_SECRET;
+        const jwtSecret = process.env.JWT_SECRET || 'clave_por_defecto_solo_desarrollo';
         if (!jwtSecret) {
             throw new Error('JWT_SECRET no está definido en las variables de entorno');
         }
         const token = jwt.sign(
             { id:userValidation.id, email:userValidation.email },
             jwtSecret,
-            { expiresIn: (process.env.JWT_EXPIRATION || '2h') as jwt.SignOptions['expiresIn'] });
-            const cookieOptions = process.env.JWT_COOKIE_EXPIRES || 1 * 24 * 60 * 60 *1000
+            { expiresIn: '2h'});
+            
+        res.cookie('access-token',token,{
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 1 día
+            path: '/'
+        })
+        .json({userValidation,token})
     }
     catch(e){
-
+        console.log(e)
+        res.status(500).json({message:'Error en el servidor'})
     }    
 
 }
 
-export {register,login}
+export {login}

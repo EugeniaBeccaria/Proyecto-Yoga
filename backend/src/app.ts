@@ -17,7 +17,10 @@ import cors from 'cors';
 
 const app = express()
 app.use(express.json())
-app.use(cors()); 
+app.use(cors({
+  origin: 'http://localhost:5173', // URL de frontend
+  credentials: true 
+}));
 
 app.use((req, res, next)=>{
   RequestContext.create(orm.em, next);
