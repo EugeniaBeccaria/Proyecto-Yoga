@@ -11,7 +11,7 @@ dotenv.config()
 
 const em = orm.em
 
-async function login(req:Request,res:Response){
+async function login(req:Request,res:Response, next:NextFunction){
     try{
         // console.log(req.body)
         const email = req.body.email
@@ -36,16 +36,25 @@ async function login(req:Request,res:Response){
             throw new Error('JWT_SECRET no está definido en las variables de entorno');
         }
         const token = jwt.sign(
-            { id:userValidation.id, email:userValidation.email },
+            { id:userValidation.id, email:userValidation.email, role:userValidation.role },
             jwtSecret,
             { expiresIn: '2h'});
             
-        res.cookie('access-token',token,{
+        res.cookie('accessToken',token,{
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000, // 1 día
             path: '/'
         })
-        .json({userValidation,token})
+
+        res.json({
+            success: true,
+            user: {
+                id: userValidation.id,
+                email: userValidation.email,
+                role: userValidation.role,
+                name: userValidation.name
+            }
+    });
     }
     catch(e){
         console.log(e)

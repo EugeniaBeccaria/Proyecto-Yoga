@@ -154,11 +154,19 @@ body {
 }
 
 /* Mensaje de error */
-.mensaje-error{
+.error-message{
   background-color: rgb(196, 85, 85);
   color: white;
   border-radius: 5px;
 }
+
+/* Mensaje de exito */
+.success-message{
+  background-color: rgb(85, 196, 109);
+  color: white;
+  border-radius: 5px;
+}
+
 
 /* Registro con Redes Sociales */
 

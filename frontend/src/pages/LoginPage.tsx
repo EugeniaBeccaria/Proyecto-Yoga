@@ -1,8 +1,10 @@
-import {useState} from 'react'
 import "../styles/LoginRegisterPage.css"
+
+import {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import axios from 'axios';
-// import { redirect } from 'react-router-dom';
+
 
 interface User {
     email: string;
@@ -10,8 +12,11 @@ interface User {
 }
 
 export default function Login(){
+    const navigate = useNavigate()
+
     const [error, setError] = useState<boolean>(false)
     const [formData, setFormData] = useState<User>({email:'',password:''})
+    const [success, setSuccess] = useState<boolean>(false)
     // const [user, setUser] = useState<User>({
     //     email:'',
     //     password:''
@@ -22,11 +27,13 @@ export default function Login(){
         const formElements = e.currentTarget.elements;
         const email = (formElements.namedItem('email') as HTMLInputElement).value;
         const password = (formElements.namedItem('password') as HTMLInputElement).value;
-        if(email && password) sendForm(email,password)       
+        if(email && password) 
+            sendForm(email,password)       
     }
 
     async function sendForm(email:string,password:string){
         try{
+            setSuccess(false)
             setError(false)
             const response = await axios.post("http://localhost:3000/auth/login", 
             {
@@ -35,17 +42,31 @@ export default function Login(){
             },
             { withCredentials: true })
 
+            const userData = response.data.user
             if (response.status !== 200){
                 setError(true)
                 throw new Error(response.data.message || 'Error al iniciar sesión')}        
-            console.log('Usuario logueado, nombre: ',response.data.userValidation.name)
+                console.log('Usuario logueado, nombre: ',userData.name)
             
-
-
+            localStorage.setItem('user',JSON.stringify(userData))
+            setSuccess(true)
+            setTimeout(()=>{
+                if(userData.role === 'admin')
+                    navigate('/')
+                if(userData.role === 'profesor')
+                    navigate('/')
+                else
+                    navigate('/')
+            },2000)
         }
+        
         catch(err){
             setError(true)
-            console.log('Error: ',err)
+            if (axios.isAxiosError(err)) {
+                console.log('Error del servidor:', err.response?.data?.message || err.message);
+            } else {
+                console.log('Error inesperado:', err);
+            }
         }
         finally{
             setFormData({email: '',password: ''})
@@ -60,7 +81,7 @@ export default function Login(){
                         <span className="title">INICIAR SESIÓN</span>
                         <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
                         {error  &&
-                            <div className='mensaje-error'>
+                            <div className='error-message'>
                                 Error de inicio de sesion
                             </div>
                         }
@@ -100,7 +121,11 @@ export default function Login(){
                         </div>
 
                         <button>Sign in</button>
-
+                        {success  &&
+                            <div className='success-message'>
+                                Logueado con exito
+                            </div>
+                        }                        
                         <div className="form-section">
                             <p>¿No tienes una cuenta? <a href="/RegisterPage">Registrarse</a> </p>
                         </div>

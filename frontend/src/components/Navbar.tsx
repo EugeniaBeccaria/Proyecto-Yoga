@@ -4,10 +4,13 @@ import { HashLink } from 'react-router-hash-link';
 
 
 type NavbarProps = {
-  disable?: boolean;
+  disable?: boolean,
+  isAdmin?:boolean
+  isProfessor?:boolean
 };
 
-function Navbar({disable}:NavbarProps) {
+function Navbar({disable,isAdmin,isProfessor}:NavbarProps) {
+  
   return (
     <header className="navbar">
       <div className="nav-left">
@@ -17,6 +20,16 @@ function Navbar({disable}:NavbarProps) {
       </div>
 
       <nav className="nav-right">
+        {isAdmin &&
+          <HashLink smooth to="/crearClases">
+            CREAR CLASES
+          </HashLink>
+        }
+        {isProfessor &&
+          <HashLink smooth to="/professorDashboard">
+            VER ALUMNOS
+          </HashLink>
+        }
         <HashLink smooth to="/#nosotros">
           NOSOTROS
         </HashLink>

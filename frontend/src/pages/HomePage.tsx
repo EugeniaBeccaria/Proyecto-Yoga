@@ -3,12 +3,8 @@ import "../styles/HomePage.css";
 import "../styles/Nosotros.css";
 import "../styles/Clases.css";
 import "../styles/Reseñas.css";
-/*import { useState } from "react";*/
-/*import { BrowserRouter, Routes, Route } from "react-router-dom";*/
-
 
 function HomePage(){
-
   const rows = 3;
   const cols = 32;
   const total = rows * cols;

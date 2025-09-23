@@ -14,6 +14,7 @@ import { dayRouter } from './classs/day.routes.js';
 import { doesNotReject } from 'assert';
 import { authRouter }  from './auth/auth.routes.js'
 import cors from 'cors'; 
+import cookieParser from 'cookie-parser';
 
 const app = express()
 app.use(express.json())
@@ -21,6 +22,8 @@ app.use(cors({
   origin: 'http://localhost:5173', // URL de frontend
   credentials: true 
 }));
+
+app.use(cookieParser())
 
 app.use((req, res, next)=>{
   RequestContext.create(orm.em, next);
