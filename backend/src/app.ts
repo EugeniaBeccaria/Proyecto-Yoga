@@ -11,6 +11,7 @@ import { classsRouter } from './classs/classs.routes.js';
 import { roomRouter } from './room/room.routes.js';
 import { timeRouter } from './classs/time.routes.js';
 import { dayRouter } from './classs/day.routes.js';
+import { seedInitialData } from './scripts/seedInitialData.js';
 import { doesNotReject } from 'assert';
 import { authRouter }  from './auth/auth.routes.js'
 import cors from 'cors'; 
@@ -30,6 +31,7 @@ app.use((req, res, next)=>{
 })
 
 await syncSchema()
+await seedInitialData();
 
 app.use('/api/users', userRouter)
 app.use('/api/talleres', tallerRouter)
