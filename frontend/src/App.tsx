@@ -33,17 +33,21 @@ function App() {
   console.log(user)
   let isAdmin = false
   let isProfessor = false
+  let isClient = false
   if(user.role === 'admin'){
     isAdmin = true
   }
   if(user.role === "professor"){
     isProfessor = true
   }
+  if(user.role === "client"){
+    isClient = true
+  }
 
 
   return (
     <>
-      <Navbar isAdmin={isAdmin} isProfessor={isProfessor}/>
+      <Navbar isAdmin={isAdmin} isProfessor={isProfessor} isClient={isClient}/>
       <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/LoginPage" element={<LoginPage />} />

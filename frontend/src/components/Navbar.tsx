@@ -7,9 +7,10 @@ type NavbarProps = {
   disable?: boolean,
   isAdmin?:boolean
   isProfessor?:boolean
+  isClient?:boolean
 };
 
-function Navbar({disable,isAdmin,isProfessor}:NavbarProps) {
+function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
   
   return (
     <header className="navbar">
@@ -20,16 +21,38 @@ function Navbar({disable,isAdmin,isProfessor}:NavbarProps) {
       </div>
 
       <nav className="nav-right">
+        {/* ADMIN MENU */}
         {isAdmin &&
+        (<>
           <HashLink smooth to="/crearClases">
             CREAR CLASES
           </HashLink>
+          <HashLink smooth to="/crearTalleres">
+            CREAR TALLERES
+          </HashLink>
+          <HashLink smooth to="/manageMembershipPage">
+            GESTIONAR MEMBRESÍAS
+          </HashLink>
+        </>)
         }
+        {/* PROFESSOR MENU */}
         {isProfessor &&
           <HashLink smooth to="/professorDashboard">
             VER ALUMNOS
           </HashLink>
         }
+
+        {/* CLIENT MENU (default menu will also be showed)*/}
+        {isClient &&
+          <HashLink smooth to="/myClassesPage">
+            MIS CLASES
+          </HashLink>
+        }
+
+
+        {/* DEFAULT MENU */}
+        {isProfessor === false && isAdmin === false &&
+        (<>
         <HashLink smooth to="/#nosotros">
           NOSOTROS
         </HashLink>
@@ -42,6 +65,8 @@ function Navbar({disable,isAdmin,isProfessor}:NavbarProps) {
         <HashLink smooth to="/#reseñas">
           RESEÑAS
         </HashLink>
+        </>)
+        }
 
         <div className="icono-perfil">
             <HashLink smooth to="/LoginPage#top">
