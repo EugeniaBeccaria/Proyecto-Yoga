@@ -7,8 +7,6 @@ export class Time extends BaseEntity {
     @Property({ nullable: false,  type: 'string', length: 5  })
     startTime!: string
 
-    @Property({ nullable: false,  type: 'string', length: 5 })
-    endTime!: string
 
     @OneToMany(() => Classs, classs => classs.time)
     classes = new Collection<Classs>(this);

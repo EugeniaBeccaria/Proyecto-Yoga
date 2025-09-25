@@ -17,9 +17,10 @@ function sanitizeRoomInput(req: Request, res: Response, next: NextFunction) {
   next()
 }
 
+// solo vamos a usar esto 
 async function findAll(req: Request, res: Response) {
   try {
-    const rooms = await em.find(Room, {}, { populate: ['talleres', 'classes'] })
+    const rooms = await em.find(Room, {},)
     res.status(200).json({ message: 'found all rooms', data: rooms })
   } 
   catch (error: any) {
