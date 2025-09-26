@@ -28,7 +28,7 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
           <HashLink smooth to="/createClassPage">
             CREAR CLASES
           </HashLink>
-          <HashLink smooth="/#crearTalleres">
+          <HashLink smooth to="/CreateTallerPage">
             CREAR TALLERES
           </HashLink>
           <HashLink smooth to="/manageMembershipPage">
