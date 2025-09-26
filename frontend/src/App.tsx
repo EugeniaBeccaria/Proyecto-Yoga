@@ -6,6 +6,7 @@ import CreateClassPage from './pages/admin/CreateClassPage.tsx';
 import Footer from './components/Footer.tsx';
 import Navbar from './components/Navbar.tsx';
 import { useState, useEffect } from "react";
+import CreateTallerPage from './pages/admin/CreateTallerPage.tsx';
 
 interface User{
   id: number,
@@ -32,7 +33,7 @@ function App() {
   }},[])
   
   console.log(user)
-  let isAdmin = false
+  let isAdmin = true
   let isProfessor = false
   let isClient = false
   if(user.role === 'admin'){
@@ -54,6 +55,7 @@ function App() {
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegisterPage" element={<RegisterPage />}/>
           <Route path="/CreateClassPage" element={<CreateClassPage />}/>
+          <Route path="/CreateTallerPage" element={<CreateTallerPage />} />
       </Routes>
       <Footer/>
     </>
