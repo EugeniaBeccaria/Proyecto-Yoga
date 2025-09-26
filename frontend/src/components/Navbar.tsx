@@ -13,6 +13,7 @@ type NavbarProps = {
 function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
   
   return (
+    <>
     <header className="navbar">
       <div className="nav-left">
         <HashLink smooth to="/#top">
@@ -75,6 +76,7 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         </div>
       </nav>
     </header>
+    </>
   )
 }
 
