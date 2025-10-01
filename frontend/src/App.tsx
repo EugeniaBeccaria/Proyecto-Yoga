@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import Footer from './components/Footer.tsx';
+import Navbar from './components/Navbar.tsx';
 import HomePage from './pages/HomePage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx'
 import CreateClassPage from './pages/admin/CreateClassPage.tsx';
-import Footer from './components/Footer.tsx';
-import Navbar from './components/Navbar.tsx';
-import { useState, useEffect } from "react";
 import CreateTallerPage from './pages/admin/CreateTallerPage.tsx';
+//import MembershipPage from './pages/admin/MembershipPage.tsx';
 
 interface User{
   id: number,
@@ -56,6 +57,7 @@ function App() {
           <Route path="/RegisterPage" element={<RegisterPage />}/>
           <Route path="/CreateClassPage" element={<CreateClassPage />}/>
           <Route path="/CreateTallerPage" element={<CreateTallerPage />} />
+          {/*<Route path="/MembershipPage" element={<MembershipPage />} />*/}
       </Routes>
       <Footer/>
     </>

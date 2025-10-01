@@ -25,27 +25,27 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         {/* ADMIN MENU */}
         {isAdmin &&
         (<>
-          <HashLink smooth to="/createClassPage">
+          <HashLink smooth to="/CreateClassPage">
             CREAR CLASES
           </HashLink>
           <HashLink smooth to="/CreateTallerPage">
             CREAR TALLERES
           </HashLink>
-          <HashLink smooth to="/manageMembershipPage">
+          <HashLink smooth to="/MembershipPage">
             GESTIONAR MEMBRESÍAS
           </HashLink>
         </>)
         }
         {/* PROFESSOR MENU */}
         {isProfessor &&
-          <HashLink smooth to="/professorDashboard">
+          <HashLink smooth to="/ProfessorDashboard">
             VER ALUMNOS
           </HashLink>
         }
 
         {/* CLIENT MENU (default menu will also be showed)*/}
         {isClient &&
-          <HashLink smooth to="/myClassesPage">
+          <HashLink smooth to="/MyClassesPage">
             MIS CLASES
           </HashLink>
         }
