@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+
+
+
+.crearTalleres {
+    padding-top: 140px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 80px;
+    background-color: pink;
+    background-image: url("/FlorLogo.png");
+    background-repeat: repeat;
+    background-size: 200px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.crear-taller-container {
+    background-color: #2b462d;
+    border-radius: 20px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.crear-taller-titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.crear-taller-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.crear-taller-input, 
+.crear-taller-textarea, 
+.crear-taller-select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    color: #2e5939;
+    outline: none;
+    margin-left: -12px;
+    font-family: "Montserrat";
+}
+
+.crear-taller-select {
+    width: 530px
+}
+
+.crear-taller-input:focus, 
+.crear-taller-textarea:focus, 
+.crear-taller-select:focus {
+    border-color: #f895a6;
+    box-shadow: 0 0 5px rgba(248, 149, 166, 0.5);
+}
+
+.crear-taller-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.crear-taller-boton {
+    background-color: #f895a6;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: "Montserrat";
+}
+
+.crear-taller-boton:hover {
+    background-color: #b25b6c;
+    transform: translateY(-2px);
+}
+
+.success-message {
+    background-color: rgb(85, 196, 109);
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    text-align: center;
+}
+
+.error-message {
+    background-color: rgb(196, 85, 85);
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    text-align: center;
+}
