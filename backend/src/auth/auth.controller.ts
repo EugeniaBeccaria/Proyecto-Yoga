@@ -6,6 +6,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv' //libreria para variables de entorno
 import { redirect } from 'react-router-dom';
+import { log } from 'console';
 
 dotenv.config()
 
@@ -42,8 +43,10 @@ async function login(req:Request,res:Response, next:NextFunction){
             
         res.cookie('accessToken',token,{
             httpOnly: true,
+            sameSite: 'lax',
+            path: '/',
             maxAge: 24 * 60 * 60 * 1000, // 1 día
-            path: '/'
+            secure:false
         })
 
         res.json({
@@ -63,4 +66,30 @@ async function login(req:Request,res:Response, next:NextFunction){
 
 }
 
-export {login}
+async function logout(req:Request,res:Response){
+    try{
+        
+        res.clearCookie('accessToken', {
+            httpOnly: true,
+            sameSite: 'lax',
+            path: '/'
+        });
+        
+        res.cookie('accessToken', '', {
+            httpOnly: true,
+            sameSite: 'lax',
+            path: '/',
+            expires: new Date(0), // ← Expira inmediatamente
+            maxAge: 0             // ← Cero segundos de vida
+        });
+
+        res.status(200).json({success:true,message:'Sesión cerrada'})
+        console.log(res)
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).json({message:'Error en el servidor'})
+    }
+}
+
+export {login,logout}

@@ -1,9 +1,10 @@
 import "../styles/LoginRegisterPage.css"
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import axios from 'axios';
+import { HashLink } from "react-router-hash-link";
 
 
 interface User {
@@ -14,13 +15,40 @@ interface User {
 export default function Login(){
     const navigate = useNavigate()
 
+    const [login, setLogin] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [formData, setFormData] = useState<User>({email:'',password:''})
     const [success, setSuccess] = useState<boolean>(false)
-    // const [user, setUser] = useState<User>({
-    //     email:'',
-    //     password:''
-    //     })
+    const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
+
+    useEffect(()=>{
+        const userSerializado = localStorage.getItem('user')
+        if(userSerializado){
+            const user = JSON.parse(userSerializado)
+            setLogin(true)
+            setFormData({email: user.email, password: ''})
+        }
+    },[])
+
+    function handleClickCloseSession(){
+        localStorage.removeItem('user')
+        setErrCloseSession(false)
+        setLogin(false)
+        setFormData({email: '', password: ''})
+        deleteCookies()
+    }
+    async function deleteCookies(){
+        try{
+            const resp = await axios.post('http://localhost:3000/auth/logout',{},{
+                withCredentials:true
+            })
+            console.log(resp.data.message)
+        }
+        catch(err){
+            setErrCloseSession(true)
+            console.log('Error al cerrar sesión: ',err)
+        }
+    }
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
@@ -57,7 +85,7 @@ export default function Login(){
                     navigate('/')
                 else
                     navigate('/')
-            },2000)
+            },1300)
         }
         
         catch(err){
@@ -78,57 +106,70 @@ export default function Login(){
             <div id="top" className="login-register">
                 <div className="form-box-login">
                     <form className="form login" onSubmit={handleSubmit}>
-                        <span className="title">INICIAR SESIÓN</span>
-                        <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
-                        {error  &&
-                            <div className='error-message'>
-                                Error de inicio de sesion
-                            </div>
-                        }
-
-                        <div className="form-container">
-                            <div className="login-input">
-                                <label>USUARIO</label>
-                                <div className="caja-input">
-                                    <FaEnvelope className="icon"/>
-                                    <input 
-                                        type="email"
-                                        name = 'email'
-                                        className="input" 
-                                        placeholder="usuario@example.com"
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({...formData, email: e.target.value})}                                
-                                        required
-                                    />
+                        {login? 
+                            <>
+                                <div className="profile">
+                                    <h1>Sesion iniciada</h1>
+                                    <button onClick={handleClickCloseSession} className="button">Cerrar sesión</button>
                                 </div>
-                            </div>
+                                {errCloseSession  &&
+                                    <div className='error-message'>
+                                        Error al cerrar sesión
+                                    </div>
+                                }
+                            </>
+                        :<>
+                                <span className="title">INICIAR SESIÓN</span>
+                                <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
+                                {error  &&
+                                    <div className='error-message'>
+                                    Error de inicio de sesion
+                                    </div>
+                                }
 
-                            <div className="login-input">
-                                <label>CONTRASEÑA</label>
-                                <div className="caja-input">
-                                    <FaLock className="icon"/>
-                                    <input 
-                                        type="password"
-                                        name="password"
-                                        className="input" 
-                                        placeholder="********" 
-                                        value={formData.password}
-                                        onChange={(e) => setFormData({...formData, password: e.target.value})}
-                                        required
-                                    />
+                                <div className="form-container">
+                                    <div className="login-input">
+                                        <label>USUARIO</label>
+                                        <div className="caja-input">
+                                            <FaEnvelope className="icon"/>
+                                            <input 
+                                                type="email"
+                                                name = 'email'
+                                                className="input" 
+                                                placeholder="usuario@example.com"
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({...formData, email: e.target.value})}                                
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="login-input">
+                                        <label>CONTRASEÑA</label>
+                                        <div className="caja-input">
+                                            <FaLock className="icon"/>
+                                            <input 
+                                                type="password"
+                                                name="password"
+                                                className="input" 
+                                                placeholder="********" 
+                                                value={formData.password}
+                                                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <button>Sign in</button>
-                        {success  &&
-                            <div className='success-message'>
-                                Logueado con exito
-                            </div>
-                        }                        
-                        <div className="form-section">
-                            <p>¿No tienes una cuenta? <a href="/RegisterPage">Registrarse</a> </p>
-                        </div>
+                                <button>Sign in</button>
+                                {success  &&
+                                    <div className='success-message'>
+                                    Logueado con exito
+                                    </div>
+                                }                        
+                                <div className="form-section">
+                                    <p>¿No tienes una cuenta? <HashLink smooth to = "/RegisterPage">Registrarse</HashLink></p>
+                                </div>
+                        </>}
                     </form>
                 </div>
             </div>
