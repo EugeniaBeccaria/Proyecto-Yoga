@@ -66,7 +66,7 @@ function CreateClassPage() {
   };
 
   return (
-    <div className="create-class-page">
+    <div id="top" className="create-class-page">
       <div className="background-grid">
         <div className="top-button">CREAR CLASE</div>
 

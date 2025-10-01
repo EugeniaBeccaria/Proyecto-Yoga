@@ -25,13 +25,13 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         {/* ADMIN MENU */}
         {isAdmin &&
         (<>
-          <HashLink smooth to="/CreateClassPage">
+          <HashLink smooth to="/CreateClassPage#top">
             CREAR CLASES
           </HashLink>
-          <HashLink smooth to="/CreateTallerPage">
+          <HashLink smooth to="/CreateTallerPage#crearTalleres">
             CREAR TALLERES
           </HashLink>
-          <HashLink smooth to="/MembershipPage">
+          <HashLink smooth to="/MembershipPage#top">
             GESTIONAR MEMBRESÍAS
           </HashLink>
         </>)

@@ -7,7 +7,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx'
 import CreateClassPage from './pages/admin/CreateClassPage.tsx';
 import CreateTallerPage from './pages/admin/CreateTallerPage.tsx';
-//import MembershipPage from './pages/admin/MembershipPage.tsx';
+import MembershipPage from './pages/admin/MembershipPage.tsx';
 
 interface User{
   id: number,
@@ -57,7 +57,7 @@ function App() {
           <Route path="/RegisterPage" element={<RegisterPage />}/>
           <Route path="/CreateClassPage" element={<CreateClassPage />}/>
           <Route path="/CreateTallerPage" element={<CreateTallerPage />} />
-          {/*<Route path="/MembershipPage" element={<MembershipPage />} />*/}
+          <Route path="/MembershipPage" element={<MembershipPage />} />
       </Routes>
       <Footer/>
     </>
