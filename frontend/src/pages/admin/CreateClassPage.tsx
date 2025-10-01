@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/admin/CreateClassPage.css";
+import { FaPen } from "react-icons/fa"; 
 
 function CreateClassPage() {
   const [title, setTitle] = useState("Nombre Clase");
@@ -12,15 +13,20 @@ function CreateClassPage() {
       titleRef.current.contentEditable = "true";
       titleRef.current.classList.add("editing");
 
+      // 👇 limpiar el texto cuando empieza la edición
+      titleRef.current.textContent = "";
+
+      // Poner el cursor al inicio
       const range = document.createRange();
       range.selectNodeContents(titleRef.current);
-      range.collapse(false);
+      range.collapse(true);
 
       const sel = window.getSelection();
       sel?.removeAllRanges();
       sel?.addRange(range);
     }
   };
+
 
   // Maneja terminar la edición
   const stopEditing = () => {
@@ -64,20 +70,22 @@ function CreateClassPage() {
       <div className="top-button">CREAR CLASE</div>
 
       <div className="form-container">
-        <div className="form-inner">
-          <div
-            id="titleEditable"
-            className="title-bar"
-            role="button"
-            tabIndex={0}
-            aria-label="Editar nombre de la clase"
-            title="Click para editar"
-            ref={titleRef}
-            onClick={handleTitleClick}
-          >
-            {title}
-          </div>
+        <div className="form-inner"> 
 
+         <div className="title-bar-container">
+            <div
+              id="titleEditable"
+              className="title-bar"
+              role="button"
+              tabIndex={0}
+              aria-label="Editar nombre de la clase"
+              title="Click para editar"
+              ref={titleRef}
+              onClick={handleTitleClick}
+            >
+              {title} <FaPen className="edit-icon" />
+            </div>
+          </div>
           {/* Valor oculto */}
           <input type="hidden" id="nombreClase" name="nombreClase" value={title} />
 
@@ -138,7 +146,7 @@ function CreateClassPage() {
                 ></textarea>
               </div>
             </div>
-
+          
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
                 ✔ Crear Clase

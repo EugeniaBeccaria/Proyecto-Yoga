@@ -11,19 +11,37 @@
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
     }
-
-    /* Fondo cuadriculado */
     .background-grid {
+    position: relative;
     width: 100%;
-    min-height: 100vh; /* nunca se corta */
-    background:
-        conic-gradient(var(--green) 25%, var(--pink) 0 50%, var(--green) 0 75%, var(--pink) 0)
-        0 0 / var(--tile) var(--tile);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    overflow: hidden; /* evita que se desborde */
     }
+
+    /* Tablero */
+    .background-grid::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        conic-gradient(var(--green) 25%, var(--pink) 0 50%, var(--green) 0 75%, var(--pink) 0)
+        0 0 / var(--tile) var(--tile);
+    z-index: -2; /* tablero al fondo */
+    }
+
+    /* Velo blanco que aclara el tablero */
+    .background-grid::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.3); 
+    z-index: -1; /* entre tablero y contenido */
+    }
+
 
     /* Botón superior */
     .top-button {
@@ -69,6 +87,10 @@
     margin-bottom: 12px;
     cursor: text;
     transition: background 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     }
     .title-bar:hover {
     background: #244234;
@@ -78,7 +100,8 @@
     outline: 2px dashed var(--pink);
     outline-offset: 3px;
     }
-
+    
+    
     /* Panel verde */
     .panel-verde {
     background: var(--green);
@@ -160,3 +183,20 @@
     .btn-secondary:hover {
     background: #244234;
     }
+.title-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* espacio entre texto y lápiz */
+}
+
+.edit-icon {
+  font-size: 20px;
+  color: var(--green);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.edit-icon:hover {
+  color: #244234; /* verde más oscuro */
+}
