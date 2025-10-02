@@ -11,7 +11,7 @@
 
 .membresias-window {
   margin: 110px;
-  background-color: transparent;
+  background-color: pink;
   border: 3px solid #2b462d;
   border-radius: 15px;
   padding: 0px;
@@ -22,7 +22,7 @@
 
 .membresias-header-wrapper {
   background-color: #2b462d;
-  color: #ffffff;
+  color: white;
   padding: 0;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -35,7 +35,7 @@
 .membresias-header {
   margin: 0;
   padding: 10px;
-  font-size: 28px;
+  font-size: 29px;
   font-family: 'Montserrat';
 }
 
@@ -50,7 +50,7 @@
 }
 
 .membresia-card {
-  background-color: #f5c4c4;
+  background-color: #fbdfe3;
   border: 3px solid #2b462d;
   border-radius: 15px;
   padding: 20px;
@@ -64,7 +64,7 @@
 
 .membresia-card h2 {
   color: #2b462d;
-  font-size: 25px;
+  font-size: 26px;
   margin-top: 0;
   font-family: 'Montserrat';
 }
@@ -74,6 +74,7 @@
   font-size: 17px;
   margin: 10px 0;
   font-family: 'Montserrat';
+  font-weight: bolder;
 }
 
 .membresia-card label {
@@ -81,6 +82,7 @@
   font-size: 17px;
   margin: 10px 0;
   font-family: 'Montserrat';
+  font-weight: bolder;
 }
 
 .price-container {
@@ -94,8 +96,37 @@
 .price-input {
   width: 60px;
   padding: 5px;
+  background-color: pink;
   border: 1px solid #2b462d;
   border-radius: 5px;
   text-align: right;
   font-family: 'Montserrat';
+}
+
+.button-cont-save-memb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0 15px 0;
+  width: 100%;
+}
+
+.button-save-memb {
+  margin: auto;
+  background-color: #2b462d;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Montserrat";
+  font-size: 17px;
+}
+
+.button-save-memb:hover {
+  background-color: #496b4b;
+  transform: translateY(-2px);
 }

@@ -51,6 +51,11 @@ function MembershipPage() {
             </div>
           ))}
         </div>
+        <div className="button-cont-save-memb">
+          <button type="submit" className="button-save-memb">
+              Guardar
+          </button>
+        </div>
       </div>
     </div>
     </>
