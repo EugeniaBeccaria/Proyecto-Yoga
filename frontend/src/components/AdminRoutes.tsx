@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useEffect, useRef,type JSX } from "react";
+import { useEffect, useRef,useState,type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 
 
 
 export default function AdminRoutes({children}: {children: JSX.Element}){
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate()
     const hasFetched = useRef(false); //  Para evitar doble fetch
     const verifyUser = async ()=>{
@@ -14,7 +15,7 @@ export default function AdminRoutes({children}: {children: JSX.Element}){
     })
 
         console.log(response)
-        return (response.status === 200) ? children : navigate("/", {replace:true})
+        return (response.status === 200) ? setIsAdmin(true) :navigate("/", {replace:true})
         }
         catch(err){
             console.log(err)
@@ -27,5 +28,5 @@ export default function AdminRoutes({children}: {children: JSX.Element}){
         hasFetched.current = true;
         verifyUser()
     },[])
-return <></>
+return <>{isAdmin ? children : null}</>
 }
