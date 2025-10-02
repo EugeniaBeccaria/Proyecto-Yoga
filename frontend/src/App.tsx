@@ -33,7 +33,7 @@ function App() {
   }},[])
   
   console.log(user)
-  let isAdmin = true
+  let isAdmin = false
   let isProfessor = false
   let isClient = false
   if(user.role === 'admin'){
