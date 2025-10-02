@@ -1,12 +1,12 @@
-import { useState, useEffect} from "react";
+import { useState} from "react";
 import "../../styles/admin/CreateTaller.css";
 
 
-type Room = {
-    id: number;
-    name: string;
-    capacity: number;
-};
+// type Room = {
+//     id: number;
+//     name: string;
+//     capacity: number;
+// };
 
 type TallerForm = {
     name: string;
@@ -27,15 +27,15 @@ export default function CrearTaller() {
         roomId: ""
     });
 
-    const [rooms, setRooms] = useState<Room[]>([]);
+    // const [rooms, setRooms] = useState<Room[]>([]);
 
     // Fetch rooms from the backend
-    useEffect(() => {
-        fetch("http://localhost:3000/rooms")
-        .then((res) => res.json())
-        .then((data) => setRooms(data))
-        .catch((error) => console.error("Error al buscar salones:", error));
-    }, []); 
+    // useEffect(() => {
+    //     fetch("http://localhost:3000/rooms")
+    //     .then((res) => res.json())
+    //     .then((data) => setRooms(data))
+    //     .catch((error) => console.error("Error al buscar salones:", error));
+    // }, []); 
 
     // Handle form input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -47,26 +47,26 @@ export default function CrearTaller() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // try{
-        //     const res = await fetch("http://localhost:3000/talleres", {
-        //         method: "POST",
-        //         headers: {"Content-Type": "application/json" },
-        //         body: JSON.stringify({...formData,
-        //             price: Number(formData.price),
-        //             cupo: Number(formData.cupo)
-        //         }),
-        //     });
+        try{
+            const res = await fetch("http://localhost:3000/talleres", {
+                method: "POST",
+                headers: {"Content-Type": "application/json" },
+                body: JSON.stringify({...formData,
+                    price: Number(formData.price),
+                    cupo: Number(formData.cupo)
+                }),
+            });
         
-        //     if(res.ok) {
-        //         alert ("Taller creado con éxito");
-        //         setFormData({ name: "", datetime: "", price: "", description: "", cupo: "", roomId: ""})
-        //     } else {
-        //         alert("Error al crear el taller");
-        //     }
-        // } catch (error) {
-        //     console.error("Error al crear el taller:", error);
-        //     alert("Error al crear el taller");
-        // }
+            if(res.ok) {
+                alert ("Taller creado con éxito");
+                setFormData({ name: "", datetime: "", price: "", description: "", cupo: "", roomId: ""})
+            } else {
+                alert("Error al crear el taller");
+            }
+        } catch (error) {
+            console.error("Error al crear el taller:", error);
+            alert("Error al crear el taller");
+        }
     };
 
     return (
@@ -131,11 +131,11 @@ export default function CrearTaller() {
                         required
                     >
                         <option value="">Seleccione un salón</option>
-                        {rooms.map((room) => (
+                        {/* {rooms.map((room) => (
                             <option key = {room.id} value = {room.id}>
                                 {room.name} - Capacidad: {room.capacity}
                             </option>
-                        ))}
+                        ))} */}
                     </select>
 
                     <button

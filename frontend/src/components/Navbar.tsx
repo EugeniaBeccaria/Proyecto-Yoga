@@ -12,10 +12,7 @@ type NavbarProps = {
 
 function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
   const dft = (isProfessor === false && isAdmin === false && isClient === false) === true;
-  console.log('navbar client',isClient)
-  console.log('navbar dft',dft)
-  console.log('navbar admin',isAdmin)
-  console.log('navbar prof',isProfessor)
+
 
   return (
     <>
@@ -28,7 +25,7 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
 
       <nav className="nav-right">
         {/* ADMIN MENU */}
-        {isAdmin &&
+        {isAdmin && !disable &&
         (<>
           <HashLink smooth to="/CreateClassPage#top">
             CREAR CLASES
@@ -42,14 +39,14 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         </>)
         }
         {/* PROFESSOR MENU */}
-        {isProfessor &&
+        {isProfessor && !disable &&
           <HashLink smooth to="/ProfessorDashboard">
             VER ALUMNOS
           </HashLink>
         }
 
         {/* CLIENT MENU (default menu will also be showed)*/}
-        {isClient &&
+        {isClient && !disable &&
           <HashLink smooth to="/MyClassesPage">
             MIS CLASES
           </HashLink>
@@ -57,7 +54,7 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
 
 
         {/* DEFAULT MENU */}
-        {dft &&
+        {dft && !disable &&
         (<>
         <HashLink smooth to="/#nosotros">
           NOSOTROS

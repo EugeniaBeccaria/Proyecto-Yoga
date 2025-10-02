@@ -6,4 +6,8 @@ export const authRouter = express.Router()
 
 authRouter.post('/login',login)
 authRouter.post('/logout',logout)
-authRouter.post('/authorized',verifyCookie,isAdmin)
+
+authRouter.get('/authorized',verifyCookie)
+authRouter.get('/isAdmin',verifyCookie,isAdmin, (req,res)=>{
+    res.status(200).json({message: 'Autorizado'})
+})

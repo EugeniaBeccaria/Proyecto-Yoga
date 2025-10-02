@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import axios from 'axios';
 import { HashLink } from "react-router-hash-link";
+import Navbar from "../components/Navbar";
 
 
 interface User {
@@ -108,6 +109,7 @@ export default function Login(){
         
     return(
         <>
+            <Navbar disable={true} />
             <div id="top" className="form-box-login">
                 <form className="form login" onSubmit={handleSubmit}>
                     {login? 

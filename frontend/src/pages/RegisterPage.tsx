@@ -6,6 +6,7 @@ import SocialButton from '../components/SocialButton.tsx';
 /*import { GoogleLogin } from '@react-oauth/google';*/
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar.tsx';
 
 
 interface User {
@@ -96,6 +97,7 @@ function Register(){
 
     return(
         <>
+            <Navbar disable={true} />
             <div id="top" className="login-register">
                 <div  className="form-box-register">
                     <form className="form register" onSubmit={handleSubmit}>
