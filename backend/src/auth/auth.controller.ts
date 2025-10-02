@@ -43,7 +43,7 @@ async function login(req:Request,res:Response, next:NextFunction){
             
         res.cookie('accessToken',token,{
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'strict',
             path: '/',
             maxAge: 24 * 60 * 60 * 1000, // 1 día
             secure:false
@@ -68,20 +68,20 @@ async function login(req:Request,res:Response, next:NextFunction){
 
 async function logout(req:Request,res:Response){
     try{
-        
+
         res.clearCookie('accessToken', {
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'strict',
             path: '/'
         });
         
-        res.cookie('accessToken', '', {
-            httpOnly: true,
-            sameSite: 'lax',
-            path: '/',
-            expires: new Date(0), // ← Expira inmediatamente
-            maxAge: 0             // ← Cero segundos de vida
-        });
+        // res.cookie('accessToken', '', {
+        //     httpOnly: true,
+        //     sameSite: 'lax',
+        //     path: '/',
+        //     expires: new Date(0), 
+        //     maxAge: 0             
+        // });
 
         res.status(200).json({success:true,message:'Sesión cerrada'})
         console.log(res)

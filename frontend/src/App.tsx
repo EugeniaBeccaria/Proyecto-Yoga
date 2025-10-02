@@ -21,20 +21,28 @@ function App() {
     id: 0,
     email:'',
     role:''})
+
+  async function loadUser(){
+    const userSerializado = localStorage.getItem('user')
+    if (userSerializado){
+      const userSave = JSON.parse(userSerializado)
+      setUser({
+        id:userSave.id,
+        email:userSave.email,
+        role:userSave.role
+      });
+    }
+  }
   
   useEffect(()=>{
-  const userSerializado = localStorage.getItem('user')
-  if (userSerializado){
-    const userSave = JSON.parse(userSerializado)
-    setUser({
-      id:userSave.id,
-      email:userSave.email,
-      role:userSave.role
-    });
-  }},[])
+    loadUser()
+  },[])
+
+  useEffect(()=>{
+    console.log(user)
+  },[user])
   
-  console.log(user)
-  let isAdmin = true
+  let isAdmin = false
   let isProfessor = false
   let isClient = false
   if(user.role === 'admin'){

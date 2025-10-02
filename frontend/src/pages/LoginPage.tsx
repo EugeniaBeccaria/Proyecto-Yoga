@@ -17,6 +17,7 @@ export default function Login(){
 
     const [login, setLogin] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState<User>({email:'',password:''})
     const [success, setSuccess] = useState<boolean>(false)
     const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
@@ -38,7 +39,7 @@ export default function Login(){
         deleteCookies()
     }
     async function deleteCookies(){
-        try{
+        try{ // las cookies se envian en cada request
             const resp = await axios.post('http://localhost:3000/auth/logout',{},{
                 withCredentials:true
             })
@@ -51,6 +52,7 @@ export default function Login(){
     }
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+        setLoading(true)
         e.preventDefault()
         const formElements = e.currentTarget.elements;
         const email = (formElements.namedItem('email') as HTMLInputElement).value;
@@ -72,6 +74,7 @@ export default function Login(){
 
             const userData = response.data.user
             if (response.status !== 200){
+                setLoading(false)
                 setError(true)
                 throw new Error(response.data.message || 'Error al iniciar sesión')}        
                 console.log('Usuario logueado, nombre: ',userData.name)
@@ -81,6 +84,7 @@ export default function Login(){
             setTimeout(()=>{
                 if(userData.role === 'admin')
                     navigate('/')
+                    window.location.reload()
                 if(userData.role === 'profesor')
                     navigate('/')
                 else
@@ -89,6 +93,7 @@ export default function Login(){
         }
         
         catch(err){
+            setLoading(false)
             setError(true)
             if (axios.isAxiosError(err)) {
                 console.log('Error del servidor:', err.response?.data?.message || err.message);
@@ -120,12 +125,16 @@ export default function Login(){
                     :<>
                             <span className="title">INICIAR SESIÓN</span>
                             <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
+                            {success  &&
+                                <div className='success-message'>
+                                Logueado con exito
+                                </div>
+                            }                        
                             {error  &&
                                 <div className='error-message'>
                                 Error de inicio de sesion
                                 </div>
                             }
-
                             <div className="form-container">
                                 <div className="login-input">
                                     <label>USUARIO</label>
@@ -155,16 +164,16 @@ export default function Login(){
                                             value={formData.password}
                                             onChange={(e) => setFormData({...formData, password: e.target.value})}
                                             required
-                                        />
+                                            />
                                     </div>
                                 </div>
                             </div>
                             <button>Sign in</button>
-                            {success  &&
-                                <div className='success-message'>
-                                Logueado con exito
+                            {loading &&
+                                <div className='loading-message'>
+                                Cargando...
                                 </div>
-                            }                        
+                            }
                             <div className="form-section">
                                 <p>¿No tienes una cuenta? <HashLink smooth to = "/RegisterPage">Registrarse</HashLink></p>
                             </div>

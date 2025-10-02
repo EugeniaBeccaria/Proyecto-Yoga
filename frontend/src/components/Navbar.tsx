@@ -11,7 +11,12 @@ type NavbarProps = {
 };
 
 function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
-  
+  const dft = (isProfessor === false && isAdmin === false && isClient === false) === true;
+  console.log('navbar client',isClient)
+  console.log('navbar dft',dft)
+  console.log('navbar admin',isAdmin)
+  console.log('navbar prof',isProfessor)
+
   return (
     <>
     <header className="navbar">
@@ -52,7 +57,7 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
 
 
         {/* DEFAULT MENU */}
-        {isProfessor === false && isAdmin === false &&
+        {dft &&
         (<>
         <HashLink smooth to="/#nosotros">
           NOSOTROS
