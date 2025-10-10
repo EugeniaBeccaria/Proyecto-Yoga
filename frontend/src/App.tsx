@@ -19,7 +19,7 @@ interface User{
 }
 
 function App() {
-  const hasFetched = useRef(false); // ← Para evitar doble fetch
+  const hasFetched = useRef(false); // ← Para evitar doble fetch debido al strict mode 
   const [user ,setUser] = useState<User>({  
     id: 0,
     email:'',

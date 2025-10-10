@@ -26,9 +26,21 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
   next()
 }
 
+interface FilterParameters {
+  role?: string;
+}
+
 async function findAll(req: Request, res: Response) {
   try {
-    const users = await em.find(User, {}, { populate: ['talleres', 'classes'] })
+    const userRoleFilter = req.query.role;
+    console.log("Filtro de rol recibido:", userRoleFilter);
+    const filterParameters: FilterParameters = {}; 
+
+      if (userRoleFilter) {
+        filterParameters.role = (userRoleFilter) as string;
+      }
+
+    const users = await em.find(User, filterParameters, { populate: ['talleres', 'classes'] })
     res.status(200).json({ message: 'found all users', data: users })
   } 
   catch (error: any) {

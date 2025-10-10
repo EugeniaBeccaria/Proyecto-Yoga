@@ -22,7 +22,7 @@ function sanitizeClasssInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const classes = await em.find(Classs, {}, { populate: ['day', 'time', 'room'] })
+    const classes = await em.find(Classs, {}, { populate: ['day', 'time', 'room'] }) //populate indica a MikroORM que haga joins con las tablas relacionadas
     res.status(200).json({ message: 'found all classes', data: classes })
   } 
   catch (error: any) {
