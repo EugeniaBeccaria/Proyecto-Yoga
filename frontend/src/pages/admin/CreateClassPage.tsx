@@ -6,11 +6,11 @@ import axios from "axios";
 interface classProps {
   name: string;
   description: string;
-  // capacityLimit: number;
-  day: string;
-  time: string;
-  room: string;
-  profesor: string | null;
+  capacityLimit: number;
+  day: number;
+  time: number;
+  room: number;
+  profesor: number | null;
 }
 interface fetchDataProps {
   rooms: Array<{id:number, name:string}>;
@@ -26,16 +26,17 @@ function CreateClassPage() {
     professors: []
   });
 
-  const [classData, setClassData] = useState<classProps>({
-    name: "",
-    description: "",
-    // capacityLimit: 0,
-    day: "",
-    time: "",
-    room: "",
-    profesor: "",
-  });
-
+  // const [classData, setClassData] = useState<classProps>({
+  //   name: "",
+  //   description: "",
+  //   // capacityLimit: 0,
+  //   day: 0,
+  //   time: 0,
+  //   room: 0,
+  //   profesor: 0,
+  // });
+  const [classCreated, setClassCreated] = useState<boolean>(false);
+  const [count, setCount] = useState(0); 
   const [title, setTitle] = useState("Nombre Clase");
   const [descripcion, setDescripcion] = useState("");
   const titleRef = useRef<HTMLDivElement>(null);
@@ -119,24 +120,41 @@ function CreateClassPage() {
     const classFormData = e.currentTarget.elements;
     const name  = (classFormData.namedItem("nombreClase") as HTMLInputElement).value;
     const description = (classFormData.namedItem("descripcion") as HTMLInputElement).value;
-    const idDay = (classFormData.namedItem("dia") as HTMLInputElement).value;
-    const idTime = (classFormData.namedItem("hora") as HTMLInputElement).value;
-    const idRoom = (classFormData.namedItem("salon") as HTMLInputElement).value;
-    const idProfesor = (classFormData.namedItem("profesor") as HTMLInputElement).value;
-    // console.log(name, description, idDay, idTime, idRoom, idProfesor)
+    const capacityLimit = parseInt((classFormData.namedItem("capacityLimit") as HTMLInputElement).value);
+    const idDay = Number((classFormData.namedItem("dia") as HTMLInputElement).value);
+    const idTime = Number((classFormData.namedItem("hora") as HTMLInputElement).value);
+    const idRoom = Number((classFormData.namedItem("salon") as HTMLInputElement).value);
+    const idProfesor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
 
-    setClassData({
+    const classData: classProps = ({
       name: name,
       description: description,
+      capacityLimit: capacityLimit,
       day: idDay,
       time: idTime,
       room: idRoom,
       profesor: idProfesor,
-    });  
-    sendFormClass()
+    });
+    sendFormClass(classData);
   };
 
-  async function sendFormClass(){}
+  async function sendFormClass(classData: classProps){
+    try{
+      const response = await axios.post('http://localhost:3000/api/classes', {classData}, {withCredentials: true})
+      console.log(response)
+      if(response.status === 201){
+        setClassCreated(true);
+        setTimeout(()=>{
+          setClassCreated(false);
+          window.location.href = "#top"; 
+          window.location.reload(); 
+        }, 2000);
+      }
+    }
+    catch(error){
+      console.error(error);
+    }
+  }
 
   return (
     <div id="top" className="create-class-page">
@@ -167,17 +185,13 @@ function CreateClassPage() {
             <div className="panel-verde">
               <div className="form-group">
                 <label htmlFor="dia">Día:</label>
-                <select id="dia" name="dia">
-
-
-
+                <select id="dia" name="dia"> 
                   <option value="">Seleccione un día</option>
                   {
                     fetchData.days.map((day) => (
-                    <option key={day.id} value={day.id}>{day.name}</option>
+                      <option key={day.id} value={day.id}>{day.name}</option>
                     ))
                   }
-
                 </select>
               </div>
 
@@ -217,8 +231,22 @@ function CreateClassPage() {
                   <option value="3">Laura Sánchez</option>
                 </select>
               </div>
+            <div className="form-group">
+              <label htmlFor="capacityLimit">Límite de Capacidad:</label>
+              <input
+                type="number"
+                id="capacityLimit"
+                name="capacityLimit"
+                value={count}
+                min={0}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setCount(isNaN(value) ? 0 : value);
+                }}
+                />
             </div>
-
+          
+          </div> 
             <div className="panel-descripcion">
               <div className="form-group">
                 <label htmlFor="descripcion">Descripción:</label>
@@ -228,9 +256,16 @@ function CreateClassPage() {
                   rows={3}
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
-                ></textarea>
+                  ></textarea>
               </div>
             </div>
+                  {
+                    classCreated && (
+                      <div className="success-message">
+                        Clase creada exitosamente.
+                      </div>
+                    )
+                  }
           
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
