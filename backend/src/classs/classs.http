@@ -1,28 +1,13 @@
-GET http://localhost:3000/api/classes
+GET http://localhost:3000/api/users
 
-# @name createClasss
-POST http://localhost:3000/api/classes
+###
+ http://localhost:3000/api/classes/professor/classes
+###
+
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "name": "vinyasa yoga",
-    "description": "El vinyasa yoga es un estilo de yoga dinamico",
-    "capacityLimit": 25
+    "email": "profezarah@yoga.com",
+    "password": "profe001"
 }
-
-@id = {{createClasss.response.body.data.id}}
-
-GET http://localhost:3000/api/classes/{{id}}
-
-PUT http://localhost:3000/api/classes/{{id}}
-Content-Type: application/json
-
-{
-    "name": "ashtanga yoga",
-    "capacityLimit": 20
-}
-
-# @name createclasssToDelete
-
-@idToDelete = {{createclasssToDelete.response.body.data.id}}
-DELETE http://localhost:3000/api/classes/{{idToDelete}}

@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from 'express'
 import { orm } from '../shared/DB/orm.js'
 import { Classs } from './classs.entity.js' 
+import { User } from '../user/user.entity.js'
 
 
 const em = orm.em
@@ -77,4 +78,27 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeClasssInput, findAll, findOne, add, update, remove}
+async function findClassesByProfessorId(req: Request, res: Response) {
+  try {
+    const professorId = Number(req.user?.id);
+    if (!professorId) {
+      return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
+    }
+    const classes = await orm.em.find(Classs, { professor: professorId }, 
+      { populate: ['day', 'time', 'room', 'users'] });
+
+    if (classes.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron clases para este profesor' });
+    }
+
+    return res.status(200).json(classes);
+  } 
+  
+  catch (error: any) {
+    console.error('Error al obtener clases del profesor:', error);
+    return res.status(500).json({ message: 'Error' });
+  }
+}
+
+
+export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId}

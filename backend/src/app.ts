@@ -42,7 +42,6 @@ app.use('/api/classes', classsRouter)
 app.use('/api/rooms', roomRouter)
 app.use('/api/days', dayRouter)
 app.use('/api/times', timeRouter)
-
 app.use('/auth', authRouter)
 
 

@@ -40,8 +40,8 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         }
         {/* PROFESSOR MENU */}
         {isProfessor && !disable &&
-          <HashLink smooth to="/ProfessorDashboard">
-            VER ALUMNOS
+          <HashLink smooth to="/professor/dashboard#top">
+            MI PANEL
           </HashLink>
         }
 

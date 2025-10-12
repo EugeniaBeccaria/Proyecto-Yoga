@@ -24,6 +24,9 @@ export class Classs extends BaseEntity {
 
     @ManyToOne(() => Day)
     day!: Rel<Day>;
+   
+    @ManyToOne(() => User)
+    professor!: Rel<User>;
 
     @ManyToOne(() => Time)
     time!: Rel<Time>;

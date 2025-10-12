@@ -46,3 +46,10 @@ export async function isAdmin(req:Request, res:Response, next:NextFunction){
     else return res.status(403).json({ error: 'No autorizado' });
     
 }
+
+export async function isProfessor(req:Request, res:Response, next:NextFunction){
+    if(req.user?.role === 'professor')
+        next();
+    else return res.status(403).json({ error: 'No autorizado' });
+    
+}
