@@ -167,6 +167,12 @@ body {
   border-radius: 5px;
 }
 
+/* Mensaje de cargando */
+.loading-message{ 
+  background-color: rgb(85, 173, 196);
+  color: white;
+  border-radius: 5px;
+}
 
 /* Registro con Redes Sociales */
 

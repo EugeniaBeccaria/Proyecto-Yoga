@@ -1,22 +1,78 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/admin/CreateClassPage.css";
 import { FaPen } from "react-icons/fa"; 
+import axios from "axios";
 
+interface classProps {
+  name: string;
+  description: string;
+  capacityLimit: number;
+  day: number;
+  time: number;
+  room: number;
+  profesor: number | null;
+}
+interface fetchDataProps {
+  rooms: Array<{id:number, name:string}>;
+  days: Array<{id:number, name:string}>;
+  times: Array<{id:number, startTime:string}>;
+  professors: Array<{id:number, name:string, email:string}>;
+}
 function CreateClassPage() {
+  const [fetchData, setFetchData] = useState<fetchDataProps>({
+    rooms: [],
+    days: [],
+    times: [],
+    professors: []
+  });
+
+  // const [classData, setClassData] = useState<classProps>({
+  //   name: "",
+  //   description: "",
+  //   // capacityLimit: 0,
+  //   day: 0,
+  //   time: 0,
+  //   room: 0,
+  //   profesor: 0,
+  // });
+  const [classCreated, setClassCreated] = useState<boolean>(false);
+  const [count, setCount] = useState(0); 
   const [title, setTitle] = useState("Nombre Clase");
   const [descripcion, setDescripcion] = useState("");
   const titleRef = useRef<HTMLDivElement>(null);
 
-  // Maneja activar la edición
+  useEffect(() => {
+    LoadData()
+  }, []);
+
+  async function LoadData(){
+    try{
+      const response = await axios('http://localhost:3000/api/rooms')
+      const rooms = response.data.data
+
+      const responseDays = await axios('http://localhost:3000/api/days')
+      const days = responseDays.data.data
+
+      const responseTimes = await axios('http://localhost:3000/api/times')
+      const times = responseTimes.data.data
+
+      const responseProfessors = await axios('http://localhost:3000/api/users?role=professor')
+      const professors = responseProfessors.data.data
+
+      //no hay ningun profesor creado - implementar creacion de profesores en el admin
+
+      setFetchData({...fetchData, rooms:rooms, days:days, times:times, professors:professors})
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleTitleClick = () => {
     if (titleRef.current) {
       titleRef.current.contentEditable = "true";
       titleRef.current.classList.add("editing");
-
-      // limpiar el texto cuando empieza la edición
       titleRef.current.textContent = "";
 
-      // Poner el cursor al inicio
       const range = document.createRange();
       range.selectNodeContents(titleRef.current);
       range.collapse(true);
@@ -27,8 +83,7 @@ function CreateClassPage() {
     }
   };
 
-
-  // Maneja terminar la edición
+  
   const stopEditing = () => {
     if (titleRef.current) {
       titleRef.current.contentEditable = "false";
@@ -38,7 +93,7 @@ function CreateClassPage() {
     }
   };
 
-  // Eventos de teclado y blur
+  
   useEffect(() => {
     const el = titleRef.current;
     if (!el) return;
@@ -59,105 +114,168 @@ function CreateClassPage() {
     };
   }, []);
 
-  // Submit del formulario
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(`Clase creada: ${title}`);
+    const classFormData = e.currentTarget.elements;
+    const name  = (classFormData.namedItem("nombreClase") as HTMLInputElement).value;
+    const description = (classFormData.namedItem("descripcion") as HTMLInputElement).value;
+    const capacityLimit = parseInt((classFormData.namedItem("capacityLimit") as HTMLInputElement).value);
+    const idDay = Number((classFormData.namedItem("dia") as HTMLInputElement).value);
+    const idTime = Number((classFormData.namedItem("hora") as HTMLInputElement).value);
+    const idRoom = Number((classFormData.namedItem("salon") as HTMLInputElement).value);
+    const idProfesor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
+
+    const classData: classProps = ({
+      name: name,
+      description: description,
+      capacityLimit: capacityLimit,
+      day: idDay,
+      time: idTime,
+      room: idRoom,
+      profesor: idProfesor,
+    });
+    sendFormClass(classData);
   };
+
+  async function sendFormClass(classData: classProps){
+    try{
+      const response = await axios.post('http://localhost:3000/api/classes', {classData}, {withCredentials: true})
+      console.log(response)
+      if(response.status === 201){
+        setClassCreated(true);
+        setTimeout(()=>{
+          setClassCreated(false);
+          window.location.href = "#top"; 
+          window.location.reload(); 
+        }, 2000);
+      }
+    }
+    catch(error){
+      console.error(error);
+    }
+  }
 
   return (
     <div id="top" className="create-class-page">
-      <div className="background-grid">
-        <div className="top-button">CREAR CLASE</div>
+      
+      <div className="page-title">CREAR CLASE</div>
 
-        <div className="form-container">
-          <div className="form-inner"> 
-
+      <div className="form-container">
+        <div className="form-inner"> 
+          <form id="formClase" onSubmit={handleSubmit}>
           <div className="title-bar-container">
-              <div
-                id="titleEditable"
-                className="title-bar"
-                role="button"
-                tabIndex={0}
-                aria-label="Editar nombre de la clase"
-                title="Click para editar"
-                ref={titleRef}
-                onClick={handleTitleClick}
-              >
-                {title} <FaPen className="edit-icon" />
+            <div
+              id="titleEditable"
+              className="title-bar"
+              role="button"
+              tabIndex={0}
+              aria-label="Editar nombre de la clase"
+              title="Click para editar"
+              ref={titleRef}
+              onClick={handleTitleClick}
+            >
+              {title} <FaPen className="edit-icon" />
+            </div>
+          </div>
+
+          
+          <input type="hidden" id="nombreClase" name="nombreClase" value={title} />
+
+            <div className="panel-verde">
+              <div className="form-group">
+                <label htmlFor="dia">Día:</label>
+                <select id="dia" name="dia"> 
+                  <option value="">Seleccione un día</option>
+                  {
+                    fetchData.days.map((day) => (
+                      <option key={day.id} value={day.id}>{day.name}</option>
+                    ))
+                  }
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="hora">Hora:</label>
+                <select id="hora" name="hora">
+                  <option value="">Seleccione un horario</option>
+                  {
+                    fetchData.times.map((time) => (
+                      <option key={time.id} value={time.id}>{time.startTime}</option>
+                    ))
+                  }
+
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="salon">Salón:</label>
+                <select id="salon" name="salon">
+                  <option value="">Seleccione un salón</option>
+                  {
+                    fetchData.rooms.map((room) =>{
+                      return(
+                        <option key={room.id} value={room.id}>{room.name}</option>
+                      )
+                    })
+                  }
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="profesor">Profesor:</label>
+                <select id="profesor" name="profesor">
+                  <option value="">Seleccione un profesor</option>
+                  <option value="1">Mariana López</option>
+                  <option value="2">Juan Pérez</option>
+                  <option value="3">Laura Sánchez</option>
+                </select>
+              </div>
+            <div className="form-group">
+              <label htmlFor="capacityLimit">Límite de Capacidad:</label>
+              <input
+                type="number"
+                id="capacityLimit"
+                name="capacityLimit"
+                value={count}
+                min={0}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setCount(isNaN(value) ? 0 : value);
+                }}
+                />
+            </div>
+          
+          </div> 
+            <div className="panel-descripcion">
+              <div className="form-group">
+                <label htmlFor="descripcion">Descripción:</label>
+                <textarea
+                  id="descripcion"
+                  name="descripcion"
+                  rows={3}
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                  ></textarea>
               </div>
             </div>
-            {/* Valor oculto */}
-            <input type="hidden" id="nombreClase" name="nombreClase" value={title} />
-
-            <form id="formClase" onSubmit={handleSubmit}>
-              <div className="panel-verde">
-                <div className="form-group">
-                  <label htmlFor="dia">Día:</label>
-                  <select id="dia" name="dia">
-                    <option value="">Seleccione un día</option>
-                    <option value="lunes">Lunes</option>
-                    <option value="martes">Martes</option>
-                    <option value="miercoles">Miércoles</option>
-                    <option value="jueves">Jueves</option>
-                    <option value="viernes">Viernes</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="hora">Hora:</label>
-                  <select id="hora" name="hora">
-                    <option value="">Seleccione un horario</option>
-                    <option value="10:00">10:00</option>
-                    <option value="14:00">14:00</option>
-                    <option value="16:30">16:30</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="salon">Salón:</label>
-                  <select id="salon" name="salon">
-                    <option value="">Seleccione un salón</option>
-                    <option value="a">Salón A</option>
-                    <option value="b">Salón B</option>
-                    <option value="c">Salón C</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="profesor">Profesor:</label>
-                  <select id="profesor" name="profesor">
-                    <option value="">Seleccione un profesor</option>
-                    <option value="1">Mariana López</option>
-                    <option value="2">Juan Pérez</option>
-                    <option value="3">Laura Sánchez</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="panel-descripcion">
-                <div className="form-group">
-                  <label htmlFor="descripcion">Descripción:</label>
-                  <textarea
-                    id="descripcion"
-                    name="descripcion"
-                    rows={3}
-                    value={descripcion}
-                    onChange={(e) => setDescripcion(e.target.value)}
-                  ></textarea>
-                </div>
-              </div>
-            
-              <div className="form-actions">
-                <button type="submit" className="btn btn-primary">
-                  ✔ Crear Clase
-                </button>
-                <button type="reset" className="btn btn-secondary">
-                  ✘ Cancelar
-                </button>
-              </div>
-            </form>
-          </div>
+                  {
+                    classCreated && (
+                      <div className="success-message">
+                        Clase creada exitosamente.
+                      </div>
+                    )
+                  }
+          
+            <div className="form-actions">
+              <button type="submit" className="btn btn-primary">
+                ✔ Crear Clase
+              </button>
+              <button type="reset" className="btn btn-secondary">
+                ✘ Cancelar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

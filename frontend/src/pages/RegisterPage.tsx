@@ -7,6 +7,9 @@ import axios from 'axios';
 import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
 /*import { GoogleLogin } from '@react-oauth/google';*/
 import { HashLink } from 'react-router-hash-link';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar.tsx';
+
 
 interface User {
     name: string;
@@ -15,17 +18,27 @@ interface User {
     passwordRepeat:string;
 }
 
+interface Error {
+    act: boolean;
+    message: string;
+}
+
 function Register(){
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<Error>({act:false, message:''})
+    const [loading, setLoading] = useState<boolean>(false)
+    const [success, setSuccess] = useState<boolean>(false)
     const [user, setUser] = useState<User>({
         name:'',
         email:'',
         password:'',
         passwordRepeat:''
     })
+    
+    const Navigate = useNavigate()
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
+        setLoading(true)
         const form = e.target as HTMLFormElement;
         setUser({
             name: (form.elements.namedItem('name') as HTMLInputElement).value,
@@ -34,10 +47,10 @@ function Register(){
             passwordRepeat:(form.elements.namedItem('passwordRepeat') as HTMLInputElement).value            
         });
     if(user.password === user.passwordRepeat){
-        setError(false)
+        setError({act:false, message:''})
         sendFormRegister()
         }
-    else setError(true)
+    else setError({ act:true, message:'Las contraseñas no coinciden'})
     }
 
     async function sendFormRegister(){
@@ -48,12 +61,22 @@ function Register(){
             password: user.password })
 
             // console.log(response.data.message)
+            setLoading(false)
+            setSuccess(true)
             console.log(response.data.message,'// Datos:',response.data.data)
+            Navigate('/LoginPage')
         }
             catch(err){
+                setLoading(false)
+                setSuccess(false)
+                if(axios.isAxiosError(err) && err.response?.status === 400){
+                    setError({act:true, message:'Ya existe una cuenta con este email'})
+                }
+                else setError({act:true, message:'Error del servidor, intente más tarde'})
                 console.log('Error: ',err)
             }
             finally{
+                setLoading(false)
                 setUser({
                     name: '',
                     email: '',
@@ -76,17 +99,22 @@ function Register(){
 
     return(
         <>
+            <Navbar disable={true} />
             <div id="top" className="login-register">
                 <div  className="form-box-register">
                     <form className="form register" onSubmit={handleSubmit}>
                         <span className="title">REGISTRARSE</span>
                         <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>
-                        {error && 
-                            <div className='mensaje-error'>
-                                <p>Error: las contraseñas no coinciden</p>
+                        {error.act && 
+                            <div className='error-message'>
+                                <p>{error.message}</p>
                             </div>
                         }
-
+                        {success  && 
+                            <div className='success-message'>
+                                <p>Usuario Registrado</p>
+                            </div>
+                        }
                         <div className="form-container">
                             <div className="login-input">
                                 <label>NOMBRE COMPLETO</label>
@@ -148,12 +176,17 @@ function Register(){
                                         value={user.passwordRepeat}
                                         onChange={(e) => setUser({...user, passwordRepeat: e.target.value})}
                                         required
-                                    />
+                                        />
                                 </div>
                             </div>
 
                         </div>
                         <button type='submit'>Sign up</button>
+                        {loading &&
+                            <div className='loading-message'>
+                            Cargando...
+                            </div>
+                        }
 
                     <div className="form-section">
                         <p>¿Ya tienes una cuenta? <HashLink smooth to = "/LoginPage">Iniciar sesión</HashLink></p>
