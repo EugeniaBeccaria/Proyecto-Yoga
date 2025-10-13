@@ -1,10 +1,11 @@
 import "../styles/LoginRegisterPage.css"
+import Profile from "../components/Profile";
 
 import {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import {FaEnvelope, FaLock} from "react-icons/fa";
-import axios from 'axios';
 import { HashLink } from "react-router-hash-link";
+import axios from 'axios';
 import Navbar from "../components/Navbar";
 
 
@@ -27,6 +28,7 @@ export default function Login(){
         const userSerializado = localStorage.getItem('user')
         if(userSerializado){
             const user = JSON.parse(userSerializado)
+            setLoading(false)
             setLogin(true)
             setFormData({email: user.email, password: ''})
         }
@@ -81,6 +83,7 @@ export default function Login(){
                 console.log('Usuario logueado, nombre: ',userData.name)
             
             localStorage.setItem('user',JSON.stringify(userData))
+            setLoading(false)
             setSuccess(true)
             setTimeout(()=>{
                 if(userData.role === 'admin')
@@ -112,18 +115,19 @@ export default function Login(){
             <Navbar disable={true} />
             <div id="top" className="form-box-login">
                 <form className="form login" onSubmit={handleSubmit}>
-                    {login? 
-                        <>
-                            <div className="profile">
-                                <h1>Sesion iniciada</h1>
-                                <button onClick={handleClickCloseSession} className="button">Cerrar sesión</button>
-                            </div>
-                            {errCloseSession  &&
-                                <div className='error-message'>
-                                    Error al cerrar sesión
-                                </div>
-                            }
-                        </>
+                    {login?
+                        <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
+                        // <>
+                        //     <div className="profile">
+                        //         <h1>Sesion iniciada</h1>
+                        //         <button onClick={handleClickCloseSession} className="button">Cerrar sesión</button>
+                        //     </div>
+                        //     {errCloseSession  &&
+                        //         <div className='error-message'>
+                        //             Error al cerrar sesión
+                        //         </div>
+                        //     }
+                        // </>
                     :<>
                             <span className="title">INICIAR SESIÓN</span>
                             <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>

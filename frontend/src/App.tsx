@@ -46,7 +46,6 @@ function App() {
   useEffect(()=>{
     if (hasFetched.current) return;
     hasFetched.current = true;
-    console.log(user)
     },[user])
   
   let isAdmin = false

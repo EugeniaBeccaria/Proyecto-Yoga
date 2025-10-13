@@ -14,7 +14,6 @@ export default function AdminRoutes({children}: {children: JSX.Element}){
         withCredentials: true
     })
 
-        console.log(response)
         return (response.status === 200) ? setIsAdmin(true) :navigate("/", {replace:true})
         }
         catch(err){
