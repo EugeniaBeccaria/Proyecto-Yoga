@@ -1,0 +1,132 @@
+.page-background {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: pink;
+  background-image: url("/FlorLogo.png");
+  background-repeat: repeat;
+  background-size: 200px;
+}
+
+.membresias-window {
+  margin: 110px;
+  background-color: pink;
+  border: 3px solid #2b462d;
+  border-radius: 15px;
+  padding: 0px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 900px;
+}
+
+.membresias-header-wrapper {
+  background-color: #2b462d;
+  color: white;
+  padding: 0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  text-align: center;
+  box-shadow: none;
+}
+
+.membresias-header {
+  margin: 0;
+  padding: 10px;
+  font-size: 29px;
+  font-family: 'Montserrat';
+}
+
+.membresias-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px 0;
+}
+
+.membresia-card {
+  background-color: #fbdfe3;
+  border: 3px solid #2b462d;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.membresia-card h2 {
+  color: #2b462d;
+  font-size: 26px;
+  margin-top: 0;
+  font-family: 'Montserrat';
+}
+
+.membresia-card p {
+  color: #2b462d;
+  font-size: 17px;
+  margin: 10px 0;
+  font-family: 'Montserrat';
+  font-weight: bolder;
+}
+
+.membresia-card label {
+  color: #2b462d;
+  font-size: 17px;
+  margin: 10px 0;
+  font-family: 'Montserrat';
+  font-weight: bolder;
+}
+
+.price-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.price-input {
+  width: 60px;
+  padding: 5px;
+  background-color: pink;
+  border: 1px solid #2b462d;
+  border-radius: 5px;
+  text-align: right;
+  font-family: 'Montserrat';
+}
+
+.button-cont-save-memb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0 15px 0;
+  width: 100%;
+}
+
+.button-save-memb {
+  margin: auto;
+  background-color: #2b462d;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Montserrat";
+  font-size: 17px;
+}
+
+.button-save-memb:hover {
+  background-color: #496b4b;
+  transform: translateY(-2px);
+}

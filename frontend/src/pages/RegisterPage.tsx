@@ -1,9 +1,12 @@
-import {useState} from 'react'
 import "../styles/LoginRegisterPage.css"
+/*import FacebookAuth from "../components/FacebookAuth";*/
+import SocialButton from '../components/SocialButton';
+
+import {useState} from 'react'
 import axios from 'axios';
 import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
-import SocialButton from '../components/SocialButton.tsx';
 /*import { GoogleLogin } from '@react-oauth/google';*/
+import { HashLink } from 'react-router-hash-link';
 
 interface User {
     name: string;
@@ -153,7 +156,7 @@ function Register(){
                         <button type='submit'>Sign up</button>
 
                     <div className="form-section">
-                        <p>¿Ya tienes una cuenta? <a href="/LoginPage">Iniciar sesión</a> </p>
+                        <p>¿Ya tienes una cuenta? <HashLink smooth to = "/LoginPage">Iniciar sesión</HashLink></p>
                     </div>
                     
                         <div className="linea">
@@ -172,6 +175,7 @@ function Register(){
                         />*/}
                         <SocialButton platform="google" logoSrc="/LogoGoogle.png" />
                         <SocialButton platform="facebook" logoSrc="LogoFacebook.png" />
+                        {/*<FacebookAuth />*/}
                         <SocialButton platform="apple" logoSrc="/LogoApple.png" />
                     </div>
                     </form>

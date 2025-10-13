@@ -29,7 +29,7 @@ body {
   text-align: center;
   box-shadow: 0px 0 22px rgba(0, 0, 0, 0.4);
   font-family: "Montserrat";
-  top: -80px;
+  /*top: -80px;*/
 }
 
 /*Form text*/
@@ -249,5 +249,6 @@ body {
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  margin-top: 200px;
+  margin-top: 140px;
+  margin-bottom: 80px;
 }
