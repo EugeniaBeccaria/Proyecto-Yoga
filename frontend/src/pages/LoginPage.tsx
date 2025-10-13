@@ -112,7 +112,6 @@ export default function Login(){
         
     return(
         <>
-            <Navbar disable={true} />
             <div id="top" className="form-box-login">
                 <form className="form login" onSubmit={handleSubmit}>
                     {login?

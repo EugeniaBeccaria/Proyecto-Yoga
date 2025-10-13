@@ -56,7 +56,7 @@ async function findOne(req: Request, res: Response) {
 }
 
 async function add(req: Request, res: Response) {
-  try {
+  /*try {
     console.log("Cuerpo de la solicitud:", req.body.classData);
     const {
             name, 
@@ -105,7 +105,7 @@ async function add(req: Request, res: Response) {
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
-  }
+  }*/
 }
 
 async function update(req: Request, res: Response) {

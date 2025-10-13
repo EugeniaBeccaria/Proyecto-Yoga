@@ -97,7 +97,6 @@ function Register(){
 
     return(
         <>
-            <Navbar disable={true} />
             <div id="top" className="login-register">
                 <div  className="form-box-register">
                     <form className="form register" onSubmit={handleSubmit}>
