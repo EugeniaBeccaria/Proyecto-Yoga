@@ -20,16 +20,13 @@ export class Classs extends BaseEntity {
     @ManyToMany(() => User, (user) => user.classes, {cascade: [Cascade.ALL], owner: true,})
     users = new Collection <User> (this)
     
-    // Relacion con profesor (user)
-    @ManyToOne(() => User)
-    profesor!: Rel<User>; 
-
     @ManyToOne(() => Room) // Muchas clases pueden estar en la misma sala, crea una CF room_id en la tabla classs
     room!: Rel<Room>; // Rel<Room> referencia el objeto completo cargado desde la tabla Room
-
+    
     @ManyToOne(() => Day)
     day!: Rel<Day>;
-   
+    
+    // Relacion con profesor (user)
     @ManyToOne(() => User)
     professor!: Rel<User>;
 

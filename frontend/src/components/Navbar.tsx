@@ -1,6 +1,7 @@
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
+import LogoIcon from './LogoIcon';
 
 
 type NavbarProps = {
@@ -11,7 +12,7 @@ type NavbarProps = {
 };
 
 function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
-  const dft = (isProfessor === false && isAdmin === false && isClient === false) === true;
+  const dft = (isProfessor === false && isAdmin === false) === true;
 
 
   return (
@@ -19,7 +20,7 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
     <header className="navbar">
       <div className="nav-left">
         <HashLink smooth to="/#top">
-          <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
+          <LogoIcon size={100} className="logo" />
         </HashLink>
       </div>
 
