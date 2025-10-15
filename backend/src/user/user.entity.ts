@@ -33,7 +33,7 @@ export class User extends BaseEntity {
     @ManyToMany(() => Taller, (taller) => taller.users)
     talleres = new Collection<Taller>(this)
 
-    @OneToMany(() => Classs, (classs) => classs.profesor)
+    @OneToMany(() => Classs, (classs) => classs.professor)
     taughtClasses = new Collection<Classs>(this);
 
     @ManyToMany(() => Classs, (classs) => classs.users)

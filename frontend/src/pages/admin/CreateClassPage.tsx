@@ -10,7 +10,7 @@ interface classProps {
   day: number;
   time: number;
   room: number;
-  profesor: number | null;
+  professor: number | null;
 }
 interface fetchDataProps {
   rooms: Array<{id:number, name:string}>;
@@ -124,7 +124,7 @@ function CreateClassPage() {
     const idDay = Number((classFormData.namedItem("dia") as HTMLInputElement).value);
     const idTime = Number((classFormData.namedItem("hora") as HTMLInputElement).value);
     const idRoom = Number((classFormData.namedItem("salon") as HTMLInputElement).value);
-    const idProfesor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
+    const idProfessor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
 
     const classData: classProps = ({
       name: name,
@@ -133,7 +133,7 @@ function CreateClassPage() {
       day: idDay,
       time: idTime,
       room: idRoom,
-      profesor: idProfesor,
+      professor: idProfessor,
     });
     sendFormClass(classData);
   };
@@ -146,8 +146,8 @@ function CreateClassPage() {
         setClassCreated(true);
         setTimeout(()=>{
           setClassCreated(false);
-          window.location.href = "#top"; 
-          window.location.reload(); 
+          // window.location.href = "#top"; 
+          // window.location.reload(); 
         }, 2000);
       }
     }
@@ -204,7 +204,6 @@ function CreateClassPage() {
                       <option key={time.id} value={time.id}>{time.startTime}</option>
                     ))
                   }
-
                 </select>
               </div>
 

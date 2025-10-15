@@ -45,7 +45,7 @@ async function login(req:Request,res:Response, next:NextFunction){
             httpOnly: true,
             sameSite: 'strict',
             path: '/',
-            maxAge: 24 * 60 * 60 * 1000, // 1 día
+            maxAge: 60 * 60 * 1000,
             secure:false
         })
 
@@ -75,14 +75,6 @@ async function logout(req:Request,res:Response){
             path: '/'
         });
         
-        // res.cookie('accessToken', '', {
-        //     httpOnly: true,
-        //     sameSite: 'lax',
-        //     path: '/',
-        //     expires: new Date(0), 
-        //     maxAge: 0             
-        // });
-
         res.status(200).json({success:true,message:'Sesión cerrada'})
         console.log(res)
     }

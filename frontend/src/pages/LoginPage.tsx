@@ -116,17 +116,6 @@ export default function Login(){
                 <form className="form login" onSubmit={handleSubmit}>
                     {login?
                         <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
-                        // <>
-                        //     <div className="profile">
-                        //         <h1>Sesion iniciada</h1>
-                        //         <button onClick={handleClickCloseSession} className="button">Cerrar sesión</button>
-                        //     </div>
-                        //     {errCloseSession  &&
-                        //         <div className='error-message'>
-                        //             Error al cerrar sesión
-                        //         </div>
-                        //     }
-                        // </>
                     :<>
                             <span className="title">INICIAR SESIÓN</span>
                             <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
