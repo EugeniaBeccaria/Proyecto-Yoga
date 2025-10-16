@@ -64,147 +64,91 @@ function HomePage(){
                 </div>
               </div>
             </section>
+          {/* ====== NUESTRAS CLASES ====== */}
+          <section id="nuestras-clases" className="seccion-catalogo verde">
+            <h2 className="titulo-seccion">
+              Nuestras Clases
+            </h2>
 
-            <section id="clases" className="clases">
-              <h2 className="titulo-clases">Clases</h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th>HORA</th>
-                    <th>LUNES</th>
-                    <th>MARTES</th>
-                    <th>MIÉRCOLES</th>
-                    <th>JUEVES</th>
-                    <th>VIERNES</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="horario">07:00 a 08:00</td>
-                    <td className="horario-dia">
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                      <span className="clase fuego">Fuego Interior</span>
-                    </td>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
+            <p className="subtitulo-seccion">
+              En Shanti Yoga te ofrecemos clases pensadas para que encuentres tu equilibrio y bienestar. 
+              Cada clase combina técnicas de respiración, movimiento y conexión interior, adaptadas a todos los niveles.
+            </p>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                      <span className="clase fuego">Fuego Interior</span>
-                    </td>
+            <div className="grid-cards">
+              <div className="card-catalogo verde">
+                <div className="badge">
+                  <img src="/logo-verde.png" alt="Logo clase verde" />
+                </div>
+                <h3>Respiración y Gripe</h3>
+                <p>Una clase suave que combina respiración consciente y movimiento fluido para liberar tensiones.</p>
+              </div>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
+              <div className="card-catalogo verde">
+                <div className="badge">
+                  <img src="/logo-verde.png" alt="Logo clase verde" />
+                </div>
+                <h3>Fuerza Interior</h3>
+                <p>Potencia tu energía y estabilidad con posturas de fuerza, alineación y concentración.</p>
+              </div>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                      <span className="clase fuego">Fuego Interior</span>
-                    </td>
-                  </tr>
+              <div className="card-catalogo verde">
+                <div className="badge">
+                  <img src="/logo-verde.png" alt="Logo clase verde" />
+                </div>
+                <h3>Fluir y Equilibrar</h3>
+                <p>Una práctica equilibrada que combina relajación y fuerza para un bienestar integral.</p>
+              </div>
+            </div>
 
-                  <tr>
-                    <td className="horario">08:00 a 09:00</td>
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
+            <div className="acciones-catalogo">
+              <a className="btn-outline" href="/clases">Ver calendario de clases</a>
+            </div>
+          </section>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                      <span className="clase fuego">Fuego Interior</span>
-                    </td>
+          {/* ====== NUESTROS TALLERES ====== */}
+          <section id="nuestros-talleres" className="seccion-catalogo rosado">
+            <h2 className="titulo-seccion">
+              Nuestros Talleres
+            </h2>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
+            <p className="subtitulo-seccion">
+              En Shanti Yoga te ofrecemos talleres temáticos para profundizar en técnicas de meditación, respiración y bienestar. 
+              Cada encuentro está diseñado para ayudarte a reconectar con vos mismo y con tu entorno.
+            </p>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                      <span className="clase fuego">Fuego Interior</span>
-                    </td>
+            <div className="grid-cards">
+              <div className="card-catalogo rosado">
+                <div className="badge">
+                  <img src="/logo-rosa.png" alt="Logo taller rosa" />
+                </div>
+                <h3>Equilibrio Emocional</h3>
+                <p>Un espacio de introspección y calma para reconectar con tu centro interior.</p>
+              </div>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-                  </tr>
+              <div className="card-catalogo rosado">
+                <div className="badge">
+                  <img src="/logo-rosa.png" alt="Logo taller rosa" />
+                </div>
+                <h3>Respiración Consciente</h3>
+                <p>Técnicas para mejorar tu respiración y liberar tensiones acumuladas.</p>
+              </div>
 
-                  <tr>
-                    <td className="horario">09:00 a 10:00</td>
-                    <td></td>
+              <div className="card-catalogo rosado">
+                <div className="badge">
+                  <img src="/logo-rosa.png" alt="Logo taller rosa" />
+                </div>
+                <h3>Yoga y Energía</h3>
+                <p>Explorá el poder del movimiento consciente para potenciar tu energía vital.</p>
+              </div>
+            </div>
 
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
+            <div className="acciones-catalogo">
+              <a className="btn-outline" href="/talleres">Ver calendario de talleres</a>
+            </div>
+          </section>
 
-                    <td></td>
-
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td className="horario">10:00 A 11:00</td>
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-
-                    <td></td>
-
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-
-                    <td></td>
-
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-                  </tr> 
-
-                  <tr>
-                    <td className="horario">11:00 A 12:00</td>
-                    <td></td>
-
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-
-                    <td></td>
-
-                    <td>
-                      <span className="clase fuerte">Respira y Fluye</span>
-                      <span className="clase">Fuerza Interior</span>
-                    </td>
-
-                    <td></td>
-                    </tr>
-                </tbody>
-              </table>
-            </section>
-
-            <section id="talleres" className="talleres"></section>
-            
             <section id="reseñas" className="reseñas">
               <h2 className="titulo-reseñas">Comunidad Shanti</h2>
               <div className="contenedor-reseñas">

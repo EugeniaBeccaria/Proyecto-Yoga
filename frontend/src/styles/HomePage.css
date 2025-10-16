@@ -83,6 +83,151 @@ html, body {
     pointer-events: none;
     max-width: 600px;
 }
+    /* ==== SECCIONES DE CLASES Y TALLERES ==== */
+    .seccion-catalogo {
+    text-align: center;
+    background-color: #fff;
+    padding: 100px 0;
+    }
+
+    .titulo-seccion {
+    font-family: "Playfair Display", serif;
+    font-size: 46px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    }
+
+    .titulo-seccion .flor-icono {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: contain;
+    margin-bottom: 10px;
+    }
+
+    .verde .titulo-seccion {
+    color: #2f5b46;
+    }
+
+    .rosado .titulo-seccion {
+    color: #d08383;
+    }
+
+    .subtitulo-seccion {
+    font-family: "Open Sans", sans-serif;
+    color: #000;
+    font-size: 17px;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    line-height: 1.6;
+    }
+
+    /* GRID DE TARJETAS */
+    .grid-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 35px;
+    }
+
+    /* TARJETAS */
+    .card-catalogo {
+    width: 300px;
+    border-radius: 25px;
+    padding: 40px 25px;
+    background-color: #eef3ef; /* verde claro */
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-catalogo.rosado {
+    background-color: #fce9ea; /* rosa claro */
+    }
+
+    .card-catalogo:hover {
+    transform: translateY(-6px);
+    }
+
+    .badge {
+    background-color: #fff;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px;
+    }
+
+    .badge img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    }
+
+    /* TÍTULOS Y TEXTOS DENTRO DE TARJETAS */
+    .card-catalogo h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    }
+
+    .card-catalogo.verde h3 {
+    color: #2f5b46;
+    }
+
+    .card-catalogo.rosado h3 {
+    color: #d08383;
+    }
+
+    .card-catalogo p {
+    font-family: "Open Sans", sans-serif;
+    color: #000;
+    font-size: 15px;
+    line-height: 1.6;
+    }
+
+    /* === BOTONES DE CATALOGO === */
+    .acciones-catalogo {
+    margin-top: 60px;
+    }
+
+    .btn-outline {
+    display: inline-block;
+    font-family: "Open Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #2f5b46;
+    border: 2px solid #2f5b46;
+    border-radius: 30px;
+    padding: 12px 36px;
+    background-color: transparent;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+    background-color: #2f5b46;
+    color: #fff;
+    transform: translateY(-2px);
+    }
+
+    .rosado .btn-outline {
+    border-color: #d08383;
+    color: #d08383;
+    }
+
+    .rosado .btn-outline:hover {
+    background-color: #d08383;
+    color: #fff;
+    }
+
 
 
 /*.imagenPortada {

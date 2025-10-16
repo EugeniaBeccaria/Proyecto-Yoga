@@ -54,23 +54,16 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         }
 
 
-        {/* DEFAULT MENU */}
-        {dft && !disable &&
-        (<>
-        <HashLink smooth to="/#nosotros">
-          NOSOTROS
-        </HashLink>
-        <HashLink smooth to="/#clases">
-          CLASES
-        </HashLink>
-        <HashLink smooth to="/#talleres">
-          TALLERES
-        </HashLink>
-        <HashLink smooth to="/#reseñas">
-          RESEÑAS
-        </HashLink>
-        </>)
-        }
+            {/* DEFAULT MENU */}
+            {dft && !disable && (
+              <>
+                <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
+                <HashLink to="/clases">CLASES</HashLink>
+                <HashLink to="/talleres">TALLERES</HashLink>
+                <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
+              </>
+            )}
+
 
         <div className="icono-perfil">
             <HashLink smooth to="/LoginPage#top">
