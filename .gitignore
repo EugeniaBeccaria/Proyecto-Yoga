@@ -29,7 +29,8 @@ dist/**/*
 *.vsix
 
 tsconfig.json
-tsconfig.tsbuildinfo
+backend/tsconfig.tsbuildinfo
+
 
 # Logs
 logs

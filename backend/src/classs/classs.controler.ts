@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from 'express'
 import { orm } from '../shared/DB/orm.js'
 import { Classs } from './classs.entity.js' 
-import { Room } from '../room/room.entity.js'
 import { User } from '../user/user.entity.js'
+import { Room } from '../room/room.entity.js'
 import { Day } from './day.entity.js'
 import { Time } from './time.entity.js'
 
@@ -31,7 +31,7 @@ interface ClassInput {
   day: number;
   time: number;
   room: number; 
-  profesor: number;
+  professor: number;
 }
 
 async function findAll(req: Request, res: Response) {
@@ -65,43 +65,60 @@ async function add(req: Request, res: Response) {
             day, 
             time, 
             room, 
-            profesor
+            professor
         } = req.body.classData as ClassInput; 
 
-    if (!name || !description || !day || !time || !room || !profesor) {
+    if (!name || !description || !day || !time || !room || !professor) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    // Si no existe alguna de las referencias lanza un error
-    const roomRef = em.getReference(Room, room);
-    const dayRef = em.getReference(Day, day);
-    const timeRef = em.getReference(Time, time);
-    const profesorRef = em.getReference(User, profesor);
+    const roomEntity = await em.findOne(Room, { id: room });
+    const dayEntity = await em.findOne(Day, { id: day });
+    const timeEntity = await em.findOne(Time, { id: time });
+    const professorEntity = await em.findOne(User, { id: professor, role: 'professor' });
 
+    if (!roomEntity || !dayEntity || !timeEntity || !professorEntity) {
+      return res.status(400).json({ message: 'Invalid foreign key references' });
+    }
+
+    // const roomRef = em.getReference(Room, room);
+    // const dayRef = em.getReference(Day, day);
+    // const timeRef = em.getReference(Time, time);
+    // const professorRef = em.getReference(User, professor);
+
+    // getReference crea un marcador de posición si no encuentra la entidad con el mismo id, esto puede causar errores con la CF
     console.log("Creating class with data:", {
       name, 
       description,
       capacityLimit,
-      dayRef,
-      timeRef,
-      roomRef,
-      profesorRef
+      dayEntity,
+      timeEntity,
+      roomEntity,
+      professorEntity
     });
+
+
 
     const classs = em.create(Classs, {
       name: name,
       description: description,
       capacityLimit: capacityLimit,
       users: [],
-      profesor: profesorRef,
-      room: roomRef,
-      day: dayRef,
-      time: timeRef,
+      professor: professorEntity,
+      room: roomEntity,
+      day: dayEntity,
+      time: timeEntity,
     })
     //posteriormente se usara add() para agregar alumnos a la clase
-    
+
+    const existingClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, room: roomEntity });
+    if (existingClass) {
+      return res.status(409).json({ message: 'Class with the same day, time, and room already exists' });
+    }
+
+    await em.persistAndFlush(classs)
+
     res.status(201).json({ message: 'class created', data: classs })
-    // await em.flush()
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -124,7 +141,7 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const classs = em.getReference(Classs, id)  
+    const classs = em.getReference(Classs, id)
     await em.removeAndFlush(classs)
     res.status(200).send({ message: 'class deleted' })
   } 
@@ -133,4 +150,26 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeClasssInput, findAll, findOne, add, update, remove}
+
+async function findClassesByProfessorId(req: Request, res: Response) {
+  try {
+    const professorId = Number(req.user?.id);
+
+    if (!professorId) {
+      return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
+    }
+
+    const classes = await orm.em.find(Classs, { professor: professorId }, 
+      { populate: ['day', 'time', 'room', 'users'] });
+
+    // Devolvemos siempre un 200 OK con la estructura de "sobre",
+    // incluso si la lista de clases está vacía.
+    res.status(200).json({ message: 'Clases del profesor encontradas', data: classes });
+
+  } catch (error: any) {
+    console.error('Error al obtener clases del profesor:', error);
+    return res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId}

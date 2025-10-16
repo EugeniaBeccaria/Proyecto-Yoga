@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 html{
@@ -12,12 +13,12 @@ html{
   justify-content: space-between;
   align-items:center;
   padding: 2px 40px;
-  background: rgb(3, 33, 5);
+  background: #ffa0be;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  position:absolute;
+  position:relative;
   width: 100%;
   overflow: visible;
 }
@@ -26,29 +27,78 @@ html{
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }*/
 
-.nav-left .logo {
+.nav-left a {
   position: relative;
-  height: 80px;
-  left: -8px;
+  display: inline-block;
+  color: white;
+  transition: color 0.8s ease;
+  top: -15px;
+  left: -30px;
+}
+.nav-left a:hover {
+  color: #ff16b1;
+}
+
+.nav-left .logo {
+  height: 85px;
 }
 
 .nav-right {
   display: flex;
   gap: 40px;
   align-items: center;
-  font-family: "Open Sanz";
+  font-family: "Roboto";
+  font-size: 18px;
 }
 
 .nav-right a {
   text-decoration: none;
-  font-weight: 600;
-  color: #e0abbf;
-  transition: color 0.3s;
+  font-weight: 800;
+  color: white;
+  transition: color 0.8s;
+  position: relative;
+  padding-bottom: 5px;
 }
 
 .nav-right a:hover {
-  color: #8e4360;
+  color: #ff16b1;
+  transition-duration: 0.8s;
 }
+
+.nav-right a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: #ff41c0;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-right a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-left a::after {
+  content: '';
+  position: absolute;
+  height: 3px;
+  background-color: #ff41c0;
+  width: 70%;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-left a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
 
 .icono-perfil{
   display: flex;
@@ -57,7 +107,7 @@ html{
   margin-bottom: 0px;
   margin-right: 20px; 
   justify-content: center;
-  color: #e0abbf;
+  color: white;
   cursor: pointer;
   position: relative;
   /*top: -6px;
@@ -72,4 +122,9 @@ html{
 .icono-perfil svg {
   width: 30px;
   height: 30px;
+}
+
+.nav-left a::after {
+  width: 70%;
+  bottom: 15px;
 }

@@ -11,9 +11,8 @@ export default function PrivateRoutes({children}: {children: JSX.Element}){
     const verifyUser = async ()=>{
         try{
         const response = await axios("http://localhost:3000/auth/authorized", {
-        withCredentials: true
-    })
-
+        withCredentials: true})
+        
         console.log(response)
         return (response.status === 200) ? setIsUser(true) : navigate("/LoginPage", {replace:true})
         }

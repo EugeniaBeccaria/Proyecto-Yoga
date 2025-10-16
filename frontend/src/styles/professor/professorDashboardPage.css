@@ -1,0 +1,90 @@
+/* ===== Estilos generales ===== */
+.dashboard-prof-container {
+  min-height: 100vh;
+  background-color: #f8f9f4;
+  padding: 60px 80px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+/* ===== Títulos ===== */
+.dashboard-prof-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1d3c34; /* verde oscuro tipo yoga */
+  margin-bottom: 10px;
+}
+
+.dashboard-prof-subtitle {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #5a5a5a;
+  margin-bottom: 40px;
+}
+
+/* ===== Carga ===== */
+.loading-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* ===== Cards ===== */
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 0 10px;
+}
+
+.class-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 5px solid #a3c9a8; /* verde pastel */
+}
+
+.class-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* ===== Texto dentro de las cards ===== */
+.class-card h3 {
+  font-size: 1.3rem;
+  color: #1d3c34;
+  margin-bottom: 8px;
+}
+
+.class-card p {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 4px 0;
+}
+
+/* ===== Mensaje cuando no hay clases ===== */
+.empty-classes-message {
+  text-align: center;
+  color: #777;
+  margin-top: 60px;
+  font-size: 1.1rem;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 600px) {
+  .dashboard-container {
+    padding: 40px 20px;
+  }
+
+  .dashboard-prof-title {
+    font-size: 2rem;
+  }
+
+  .dashboard-prof-subtitle {
+    font-size: 1.2rem;
+  }
+}

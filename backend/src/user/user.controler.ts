@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from 'express'
 import { orm } from '../shared/DB/orm.js'
 import { User } from './user.entity.js'
 import { ValidationError } from '@mikro-orm/core'
-import bcryptjs, { genSalt } from 'bcryptjs'
+import bcrypt, { genSalt } from 'bcrypt'
 
 const em = orm.em
 
@@ -76,7 +76,7 @@ async function add(req: Request, res: Response) {
 
       //Encriptar contraseña
       const salt = await genSalt()
-      const hashPassword = await bcryptjs.hash(userData.password,salt)
+      const hashPassword = await bcrypt.hash(userData.password,salt)
 
       console.log("Instanciando el objeto....")
 

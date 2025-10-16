@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import 'reflect-metadata'
 import express  from 'express'
 import { tallerRouter } from './taller/taller.routes.js'
@@ -42,7 +43,6 @@ app.use('/api/classes', classsRouter)
 app.use('/api/rooms', roomRouter)
 app.use('/api/days', dayRouter)
 app.use('/api/times', timeRouter)
-
 app.use('/auth', authRouter)
 
 

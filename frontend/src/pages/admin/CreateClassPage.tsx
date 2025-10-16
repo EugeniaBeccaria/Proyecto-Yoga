@@ -10,7 +10,7 @@ interface classProps {
   day: number;
   time: number;
   room: number;
-  profesor: number | null;
+  professor: number | null;
 }
 interface fetchDataProps {
   rooms: Array<{id:number, name:string}>;
@@ -47,23 +47,24 @@ function CreateClassPage() {
 
   async function LoadData(){
     try{
-      const response = await axios('http://localhost:3000/api/rooms')
-      const rooms = response.data.data
+      const [roomsRes, daysRes, timesRes, professorsRes] = await Promise.all([
+      axios('http://localhost:3000/api/rooms'),
+      axios('http://localhost:3000/api/days'),
+      axios('http://localhost:3000/api/times'),
+      axios('http://localhost:3000/api/users?role=professor')
+    ]);
 
-      const responseDays = await axios('http://localhost:3000/api/days')
-      const days = responseDays.data.data
+      console.log(roomsRes.data.data ,daysRes.data.data,timesRes.data.data, professorsRes.data.data)
 
-      const responseTimes = await axios('http://localhost:3000/api/times')
-      const times = responseTimes.data.data
+      setFetchData({
+        rooms:roomsRes.data.data, 
+        days:daysRes.data.data, 
+        times:timesRes.data.data, 
+        professors:professorsRes.data.data
+      })
 
-      const responseProfessors = await axios('http://localhost:3000/api/users?role=professor')
-      const professors = responseProfessors.data.data
-
-      //no hay ningun profesor creado - implementar creacion de profesores en el admin
-
-      setFetchData({...fetchData, rooms:rooms, days:days, times:times, professors:professors})
     } catch (error) {
-      console.error(error);
+      console.error('Error al cargar los datos iniciales ',error);
     }
   }
 
@@ -124,7 +125,7 @@ function CreateClassPage() {
     const idDay = Number((classFormData.namedItem("dia") as HTMLInputElement).value);
     const idTime = Number((classFormData.namedItem("hora") as HTMLInputElement).value);
     const idRoom = Number((classFormData.namedItem("salon") as HTMLInputElement).value);
-    const idProfesor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
+    const idProfessor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
 
     const classData: classProps = ({
       name: name,
@@ -133,7 +134,7 @@ function CreateClassPage() {
       day: idDay,
       time: idTime,
       room: idRoom,
-      profesor: idProfesor,
+      professor: idProfessor,
     });
     sendFormClass(classData);
   };
@@ -146,8 +147,8 @@ function CreateClassPage() {
         setClassCreated(true);
         setTimeout(()=>{
           setClassCreated(false);
-          window.location.href = "#top"; 
-          window.location.reload(); 
+          // window.location.href = "#top"; 
+          // window.location.reload(); 
         }, 2000);
       }
     }
@@ -204,7 +205,6 @@ function CreateClassPage() {
                       <option key={time.id} value={time.id}>{time.startTime}</option>
                     ))
                   }
-
                 </select>
               </div>
 
@@ -226,9 +226,13 @@ function CreateClassPage() {
                 <label htmlFor="profesor">Profesor:</label>
                 <select id="profesor" name="profesor">
                   <option value="">Seleccione un profesor</option>
-                  <option value="1">Mariana López</option>
-                  <option value="2">Juan Pérez</option>
-                  <option value="3">Laura Sánchez</option>
+                  {
+                    fetchData.professors.map((professor) =>{
+                      return(
+                        <option key={professor.id} value={professor.id}>{professor.name}</option>
+                      )
+                    })
+                  }
                 </select>
               </div>
             <div className="form-group">

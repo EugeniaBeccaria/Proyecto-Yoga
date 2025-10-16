@@ -5,7 +5,7 @@ import { User } from '../user/user.entity.js'
 import { Room } from '../room/room.entity.js'
 import { Day } from '../classs/day.entity.js';
 import { Time } from '../classs/time.entity.js';
-import bcryptjs, { genSalt, hash } from 'bcryptjs'
+import bcrypt, { genSalt, hash } from 'bcrypt'
 
 
 async function seedInitialData() {
@@ -19,7 +19,7 @@ async function seedInitialData() {
             email: 'admin@yoga.com'})
         if(!existingAdmin){
             const salt = await genSalt()
-            const hashPassword = await bcryptjs.hash('admin123',salt)
+            const hashPassword = await bcrypt.hash('admin123',salt)
 
             const userAdmin = em.create(User, {
                 email:'admin@yoga.com',
@@ -35,6 +35,27 @@ async function seedInitialData() {
     } catch (error) {
         console.error('Error:', error);
     }
+    // ================== USUARIO PROFESSOR ==================
+     try {
+    const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
+    if (!existingProfessor) {
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash('profe001', salt);
+
+      const userProfessor = em.create(User, {
+        email: 'profezarah@yoga.com',
+        name: 'Zarah',
+        password: hashPassword,
+        role: 'professor',
+      });
+
+      await em.persistAndFlush(userProfessor);
+      console.log(' Usuario profesor creado exitosamente');
+    } else {
+      console.log(' Ese profesor ya existe, se omite su creación.');
+    }
+  } catch (error) {
+    console.error(' Error creando profesor:', error)}
 
     // ================== ROOMS ==================
     try {
@@ -98,4 +119,4 @@ async function seedInitialData() {
 }
 
 export { seedInitialData }
-seedInitialData();
+// seedInitialData();

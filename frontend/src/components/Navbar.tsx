@@ -1,31 +1,70 @@
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
+import LogoIcon from './LogoIcon';
+import { useEffect, useState, useRef } from "react";
 
+interface User{
+  id: number,
+  email:string,
+  role:string
+}
 
-type NavbarProps = {
-  disable?: boolean,
-  isAdmin?:boolean
-  isProfessor?:boolean
-  isClient?:boolean
-};
+function Navbar() {
+  const hasFetched = useRef(false); // ← Para evitar doble fetch debido al strict mode 
+  const [user ,setUser] = useState<User>({  
+    id: 0,
+    email:'',
+    role:''})
 
-function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
+  async function loadUser(){
+    const userSerializado = localStorage.getItem('user')
+    if (userSerializado){
+      const userSave = JSON.parse(userSerializado)
+      setUser({
+        id:userSave.id,
+        email:userSave.email,
+        role:userSave.role
+      });
+    }
+  }
+  
+  useEffect(()=>{
+    loadUser()
+  },[])
+  
+  useEffect(()=>{
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+  },[user])
+  
+  let isAdmin = false
+  let isProfessor = false
+  let isClient = false
+  if(user.role === 'admin'){
+    isAdmin = true
+  }
+  if(user.role === "professor"){
+    isProfessor = true
+  }
+  if(user.role === "client"){
+    isClient = true
+  }
+  
   const dft = (isProfessor === false && isAdmin === false && isClient === false) === true;
-
 
   return (
     <>
     <header className="navbar">
       <div className="nav-left">
         <HashLink smooth to="/#top">
-          <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
+          <LogoIcon size={100} className="logo" />
         </HashLink>
       </div>
 
       <nav className="nav-right">
         {/* ADMIN MENU */}
-        {isAdmin && !disable &&
+        {isAdmin &&
         (<>
           <HashLink smooth to="/CreateClassPage#top">
             CREAR CLASES
@@ -39,41 +78,40 @@ function Navbar({disable,isAdmin,isProfessor,isClient}:NavbarProps) {
         </>)
         }
         {/* PROFESSOR MENU */}
-        {isProfessor && !disable &&
-          <HashLink smooth to="/ProfessorDashboard">
-            VER ALUMNOS
+        {isProfessor &&
+          <HashLink smooth to="/professor/dashboard#top">
+            MI PANEL
           </HashLink>
         }
 
         {/* CLIENT MENU (default menu will also be showed)*/}
-        {isClient && !disable &&
-          <HashLink smooth to="/MyClassesPage">
-            MIS CLASES
-          </HashLink>
+        {isClient &&
+            <>
+              <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
+              <HashLink to="/clases">CLASES</HashLink>
+              <HashLink to="/talleres">TALLERES</HashLink>
+              <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
+              <HashLink smooth to="/MyClassesPage">
+              MIS CLASES
+              </HashLink>
+            </>
         }
 
 
-        {/* DEFAULT MENU */}
-        {dft && !disable &&
-        (<>
-        <HashLink smooth to="/#nosotros">
-          NOSOTROS
-        </HashLink>
-        <HashLink smooth to="/#clases">
-          CLASES
-        </HashLink>
-        <HashLink smooth to="/#talleres">
-          TALLERES
-        </HashLink>
-        <HashLink smooth to="/#reseñas">
-          RESEÑAS
-        </HashLink>
-        </>)
-        }
+            {/* DEFAULT MENU */}
+            {dft && (
+              <>
+                <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
+                <HashLink to="/clases">CLASES</HashLink>
+                <HashLink to="/talleres">TALLERES</HashLink>
+                <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
+              </>
+            )}
+
 
         <div className="icono-perfil">
             <HashLink smooth to="/LoginPage#top">
-            {disable ? '' : <FaUserCircle size={80}/>}
+            <FaUserCircle size={80}/>
             </HashLink>
         </div>
       </nav>

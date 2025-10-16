@@ -11,6 +11,12 @@ import MembershipPage from './pages/admin/MembershipPage.tsx';
 import PrivateRoutes from './components/PrivateRoutes.tsx';
 import AdminRoutes from './components/AdminRoutes.tsx';
 import MyClassesPage from './pages/MyClassesPage.tsx';
+import ProfessorRoutes from './components/professorRoutes.tsx';
+import ProfessorDashboardPage from './pages/professor/professorDashboardPage.tsx';
+import ClasesPage from "./pages/user/ClasesPage.tsx";
+import TalleresPage from "./pages/user/TalleresPage.tsx";
+
+
 
 interface User{
   id: number,
@@ -68,8 +74,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegisterPage" element={<RegisterPage />}/>
-
-            <Route path='/MyClassesPage' element={
+        <Route path="/clases" element={<ClasesPage />} />
+        <Route path="/talleres" element={<TalleresPage />} />
+          <Route path='/MyClassesPage' element={
               <PrivateRoutes>
                 <MyClassesPage />
               </PrivateRoutes>
@@ -93,6 +100,12 @@ function App() {
             <AdminRoutes>
               <MembershipPage />
             </AdminRoutes>
+            } />
+
+          <Route path="/professor/dashboard" element={
+            <ProfessorRoutes>
+              <ProfessorDashboardPage />
+            </ProfessorRoutes>
             } />
 
       </Routes>

@@ -1,5 +1,4 @@
 import { Entity, Property, ManyToMany, Cascade, ManyToOne, Rel, BeforeCreate, Collection, OneToMany} from '@mikro-orm/core'
-import bcrypt from 'bcryptjs'
 import { BaseEntity } from '../shared/DB/baseEntity.entity.js'
 import { Taller } from '../taller/taller.entity.js'
 import { Classs } from '../classs/classs.entity.js'
@@ -33,7 +32,7 @@ export class User extends BaseEntity {
     @ManyToMany(() => Taller, (taller) => taller.users)
     talleres = new Collection<Taller>(this)
 
-    @OneToMany(() => Classs, (classs) => classs.profesor)
+    @OneToMany(() => Classs, (classs) => classs.professor)
     taughtClasses = new Collection<Classs>(this);
 
     @ManyToMany(() => Classs, (classs) => classs.users)
