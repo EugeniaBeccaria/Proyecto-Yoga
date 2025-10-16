@@ -1,5 +1,4 @@
 import { Entity, Property, ManyToMany, Cascade, ManyToOne, Rel, BeforeCreate, Collection, OneToMany} from '@mikro-orm/core'
-import bcrypt from 'bcryptjs'
 import { BaseEntity } from '../shared/DB/baseEntity.entity.js'
 import { Taller } from '../taller/taller.entity.js'
 import { Classs } from '../classs/classs.entity.js'
