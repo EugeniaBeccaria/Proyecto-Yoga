@@ -4,6 +4,8 @@ import "../styles/Nosotros.css";
 import "../styles/Clases.css";
 import "../styles/Reseñas.css";
 
+import { HashLink } from "react-router-hash-link";
+
 function HomePage(){
   const rows = 3;
   const cols = 32;
@@ -29,7 +31,8 @@ function HomePage(){
 
             <p className="hero-subtitle">Tu espacio para crecer y relajarte.</p>
 
-            <a href="#nosotros" className="scroll-arrow"></a>
+            {/* <a href="#nosotros" className="scroll-arrow"></a> */}
+            <HashLink smooth to="#nosotros" className="scroll-arrow"></HashLink>
           </section>
 
 

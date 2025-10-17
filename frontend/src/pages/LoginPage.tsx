@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from "react-router-hash-link";
 import axios from 'axios';
-import Navbar from "../components/Navbar";
 
 
 interface User {
@@ -40,6 +39,7 @@ export default function Login(){
         setLogin(false)
         setFormData({email: '', password: ''})
         deleteCookies()
+        window.location.reload()
     }
     async function deleteCookies(){
         try{ // las cookies se envian en cada request
@@ -86,13 +86,18 @@ export default function Login(){
             setLoading(false)
             setSuccess(true)
             setTimeout(()=>{
-                if(userData.role === 'admin')
+                if(userData.role === 'admin'){
                     navigate('/')
                     window.location.reload()
-                if(userData.role === 'profesor')
+                }
+                if(userData.role === 'profesor'){
+                    window.location.reload()
                     navigate('/')
-                else
+                }
+                else{
+                    window.location.reload()
                     navigate('/')
+                }
             },1300)
         }
         

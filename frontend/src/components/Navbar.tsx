@@ -77,10 +77,10 @@ function Navbar() {
                       <HashLink id="top" smooth to="/CreateClassPage#top" >
                           CREAR CLASES
                       </HashLink>                
-                      <HashLink id="middle" smooth to="/CreateClassPage#top">
+                      <HashLink id="middle" smooth to="/UpdateClassPage#top">
                           ACTUALIZAR CLASES
                       </HashLink>            
-                      <HashLink id="bottom" smooth to="/CreateClassPage#top">
+                      <HashLink id="bottom" smooth to="/DeleteClassPage#top">
                           ELIMINAR CLASES
                       </HashLink>   
                     </>
@@ -109,8 +109,8 @@ function Navbar() {
         {isClient &&
             <>
               <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-              <HashLink to="/clases">CLASES</HashLink>
-              <HashLink to="/talleres">TALLERES</HashLink>
+              <HashLink smooth to="/clases">CLASES</HashLink>
+              <HashLink smooth to="/talleres">TALLERES</HashLink>
               <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
               <HashLink smooth to="/MyClassesPage">
               MIS CLASES
@@ -123,8 +123,8 @@ function Navbar() {
             {dft && (
               <>
                 <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-                <HashLink to="/clases">CLASES</HashLink>
-                <HashLink to="/talleres">TALLERES</HashLink>
+                <HashLink smooth to="/clases">CLASES</HashLink>
+                <HashLink smooth to="/talleres">TALLERES</HashLink>
                 <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
               </>
             )}

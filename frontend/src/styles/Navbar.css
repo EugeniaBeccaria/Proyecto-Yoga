@@ -34,7 +34,7 @@ html{
   color: white;
   transition: color 0.8s ease;
   top: -0px;
-  left: -30px;
+  /* left: -30px; */
 }
 .nav-left a:hover {
   color: #ff16b1;
@@ -93,7 +93,7 @@ html{
   height: 3px;
   background-color: #ff41c0;
   width: 70%;
-  top: 90px;
+  /* top: 90px; */
   left: 50%;
   transform: translateX(-50%) scaleX(0);
   transform-origin: center;
@@ -163,7 +163,7 @@ html{
 }
 
     .dropdown-content a {
-    color: #ff41c0;
+    color: #2f5b46;
     font-size: 15px;
     padding: 8px 10px;
     text-decoration: none;
