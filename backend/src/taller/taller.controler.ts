@@ -42,7 +42,6 @@ async function findOne(req: Request, res: Response) {
     res.status(500).json({ message: error.message })
   }
 }
-
 async function add(req: Request, res: Response) {
   try {
     const taller = em.create(Taller, req.body.sanitizedInput)

@@ -4,6 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 import LogoIcon from './LogoIcon';
 import { useEffect, useState, useRef } from "react";
 
+
 interface User{
   id: number,
   email:string,
@@ -12,6 +13,7 @@ interface User{
 
 function Navbar() {
   const hasFetched = useRef(false); // ← Para evitar doble fetch debido al strict mode 
+  const [showed, setShowed] = useState<boolean>(false)
   const [user ,setUser] = useState<User>({  
     id: 0,
     email:'',
@@ -64,17 +66,37 @@ function Navbar() {
 
       <nav className="nav-right">
         {/* ADMIN MENU */}
-        {isAdmin &&
-        (<>
-          <HashLink smooth to="/CreateClassPage#top">
-            CREAR CLASES
-          </HashLink>
+        {isAdmin && (
+          <>
+          <div className="paste-button">
+            <HashLink className="button" onClick = {()=>{setShowed(!showed)}}>
+              ▼ GESTIONAR CLASES 
+            </HashLink>
+            <div className="dropdown-content">
+            {showed &&
+                    <>
+                      <HashLink id="top" smooth to="/CreateClassPage#top" >
+                          CREAR CLASES
+                      </HashLink>                
+                      <HashLink id="middle" smooth to="/CreateClassPage#top">
+                          ACTUALIZAR CLASES
+                      </HashLink>            
+                      <HashLink id="bottom" smooth to="/CreateClassPage#top">
+                          ELIMINAR CLASES
+                      </HashLink>   
+                    </>
+              }
+            </div>
+          </div>
+
           <HashLink smooth to="/CreateTallerPage#crearTalleres">
             CREAR TALLERES
           </HashLink>
           <HashLink smooth to="/MembershipPage#top">
             GESTIONAR MEMBRESÍAS
           </HashLink>
+
+
         </>)
         }
         {/* PROFESSOR MENU */}
