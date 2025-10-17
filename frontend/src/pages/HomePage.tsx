@@ -45,7 +45,9 @@ function HomePage(){
 
               <div className="nosotros-contenido">
                 <div className="nosotros-texto">
-                  <h2 className="titulo-nosotros">Nuestra historia</h2>
+                  <h2 className="titulo-nosotros">
+                    Nuestra<br />Historia
+                  </h2>
                   <p>
                     Hace más de diez años, Shanti Yoga nació de un sueño
                     compartido por un pequeño grupo de amantes del
@@ -64,7 +66,7 @@ function HomePage(){
                 </div>
 
                 <div className="imagen-nosotros">
-                  <img src="/Nosotros.png" alt="Nosotros Shanti Yoga" />
+                  <img src="/nosotrosfoto.jpg" alt="Equipo Shanti Yoga" />
                 </div>
               </div>
             </section>
