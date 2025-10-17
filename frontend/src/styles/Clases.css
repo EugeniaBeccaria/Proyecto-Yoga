@@ -4,37 +4,42 @@
 
 
 .clases {
-    background-color: #1f5132;
+    background-color: #ffffff;
     min-height: 100vh;
     padding: 30px;
     text-align: center;
-    color: white;
+    color: #d08383;
     justify-content: center;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
 }
 
-.clases h2{
-    font-size: 3.6rem;
-    margin-bottom: 40px;
-    color: #e3b9c9;
-    margin-top: 80px;
-    font-family: "Chango";
-    margin-right: 1000px;
-}
+.tableDescription {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    color: #2f5b46;
+    margin: 10px auto 25px;
+    max-width: 900px; 
+    line-height: 1.4;
+    text-align: center;
+    }
+
 
 table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
     background: white;
-    color: #333;
+    color: #2f5b46;
     border-radius: 8px;
     overflow: hidden;
+    margin: 0 auto;
 }
 
 thead th {
-    background: #db92ae;
+    background: #ffffff;
     padding: 10px;
     font-weight: bold;
-    color: #333;
+    color: #2f5b46;
     font-family: "Open Sanz";
     font-size: 1.2rem;
 }
@@ -77,6 +82,6 @@ td {
 .clase:hover {
     text-decoration: underline;
     cursor: pointer;
-    color:#c43267
+    color:#2f5b46
 }
 

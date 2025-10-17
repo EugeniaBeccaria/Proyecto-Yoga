@@ -4,92 +4,99 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 
 
-.reseñas {
-    background-color: #1f5132;
-    min-height: 100vh;
-    padding: 30px;
+    .reseñas {
+    background-color: #fff;
+    padding: 100px 0;
     text-align: center;
-    color: white;
+    }
+
+    .titulo-reseñas {
+    font-family: "Playfair Display", serif;
+    font-size: 45px;
+    font-weight: 700;
+    color: #2f5b46;
+    margin-bottom: 60px;
+    }
+
+    /*  CONTENEDOR SCROLL HORIZONTAL  */
+    .contenedor-reseñas {
+    display: flex;
     justify-content: center;
-}
+    gap: 35px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0 40px;
+    scrollbar-width: none;
+    }
+    .contenedor-reseñas::-webkit-scrollbar {
+    display: none;
+    }
 
-.reseñas h2{
+    /*  TARJETAS  */
+    .reseña-card {
+    flex: 0 0 310px;
+    background-color: #fdfdfd;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    padding: 45px 35px 35px 35px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 340px; 
     display: flex;
-    align-items: center;
-    font-size: 3.6rem;
-    margin-bottom: 40px;
-    color: #e3b9c9;
-    margin-top: 80px;
-    font-family: "Chango";
-    margin-right: 1000px;
-}
+    flex-direction: column;
+    justify-content: space-between;
+    }
 
-.reseñas .contenedor-reseñas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
+    .reseña-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
 
-.reseñas .contenedor-reseñas .box {
-    flex: 1 1 30rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(248, 247, 247, 0.1);
-    border-radius: 1rem;
-    padding: 2rem 2rem;
+    /*  ESTRELLAS */
+    .stars {
+    color: #cf8a8a;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    justify-content: center;
+    }
+
+    /*  TEXTO DE LA RESEÑA  */
+    .reseña-texto {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 30px;
     position: relative;
-    border-radius: 0.1rem solid rgba(255, 255, 255, 0.1);
-    background-color: hwb(334 76% 10%);
-}
+    }
 
-.reseñas .contenedor-reseñas .box .fa-quote-right {
-    position: absolute;
-    bottom: 3rem;
-    right: 3rem;
-    font-size: 6rem;
-    color: #7772725f;
-}
-
-.reseñas .contenedor-reseñas .box .stars i{
-    color: rgba(139, 1, 49, 0.544);
-    font-size: 2rem;
-    margin-top: 10px;
-    margin-bottom: -30px;
-}
-
-.reseñas .contenedor-reseñas .box p{
-    color: #052010;
-    font-size: 1.5rem;
-    line-height: 1.5;
-    padding-top: 2rem;
-    font-family: "Open Sanz";
-}
-
-.reseñas .contenedor-reseñas .box .user {
+    /*  PERFIL  */
+    .reseña-user {
     display: flex;
     align-items: center;
-    padding-top: 2rem;
-}
+    gap: 15px;
+    margin-top: auto;
+    }
 
-.reseñas .contenedor-reseñas .box .user img{
-    height: 6rem;
-    width: 6rem;
+    .reseña-user img {
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 1rem;
-}
+    }
 
-.reseñas .contenedor-reseñas .box .user h3{
-    font-size: 1.5rem;
-    color: #073018;
-    font-family: "Montserrat";
-    margin-bottom: 6px;
-}
+    .reseña-user h3 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2f5b46;
+    margin: 0;
+    }
 
-.reseñas .contenedor-reseñas .box .user span{
-    font-size: 1rem;
-    color: #073018;
-    font-family: "Open Sanz";
-    margin-right: 80px;
-}
-
-
-
+    .reseña-user span {
+    display: block;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    color: #888;
+    margin-top: 3px;
+    }

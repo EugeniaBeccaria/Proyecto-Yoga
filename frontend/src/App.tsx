@@ -1,11 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState, useEffect, useRef } from "react";
 import Footer from './components/Footer.tsx';
 import Navbar from './components/Navbar.tsx';
 import HomePage from './pages/HomePage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx'
 import CreateClassPage from './pages/admin/CreateClassPage.tsx';
+import { UpdateClassPage } from './pages/admin/UpdateClassPage.tsx';
+import { DeleteClassPage } from './pages/admin/DeleteClassPage.tsx';
 import CreateTallerPage from './pages/admin/CreateTallerPage.tsx';
 import MembershipPage from './pages/admin/MembershipPage.tsx';
 import PrivateRoutes from './components/PrivateRoutes.tsx';
@@ -17,14 +18,8 @@ import ClasesPage from "./pages/user/ClasesPage.tsx";
 import TalleresPage from "./pages/user/TalleresPage.tsx";
 
 
-
-interface User{
-  id: number,
-  email:string,
-  role:string
-}
-
 function App() {
+<<<<<<< HEAD
   const hasFetched = useRef(false); // ← Para evitar doble fetch debido al strict mode 
   const [user ,setUser] = useState<User>({  
     id: 0,
@@ -66,10 +61,12 @@ function App() {
     isClient = true
   }
 
+=======
+>>>>>>> 6f8d58f25c21392376d38767491a44492fcfd24d
 
   return (
     <>
-      <Navbar isAdmin={isAdmin} isProfessor={isProfessor} isClient={isClient}/>
+      <Navbar />
       <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
@@ -89,6 +86,19 @@ function App() {
             </AdminRoutes>
             }/>
 
+          <Route path="/UpdateClassPage" 
+          element={
+            <AdminRoutes>
+              <UpdateClassPage />
+            </AdminRoutes>
+            }/>
+
+          <Route path="/DeleteClassPage" 
+          element={
+            <AdminRoutes>
+              <DeleteClassPage />
+            </AdminRoutes>
+            }/>          
           
           <Route path="/CreateTallerPage" element={
             <AdminRoutes>

@@ -1,8 +1,8 @@
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
-import LogoIcon from './LogoIcon';
 import { useEffect, useState, useRef } from "react";
+
 
 interface User{
   id: number,
@@ -12,6 +12,7 @@ interface User{
 
 function Navbar() {
   const hasFetched = useRef(false); // ← Para evitar doble fetch debido al strict mode 
+  const [showed, setShowed] = useState<boolean>(false)
   const [user ,setUser] = useState<User>({  
     id: 0,
     email:'',
@@ -58,23 +59,43 @@ function Navbar() {
     <header className="navbar">
       <div className="nav-left">
         <HashLink smooth to="/#top">
-          <LogoIcon size={100} className="logo" />
+          <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
         </HashLink>
       </div>
 
       <nav className="nav-right">
         {/* ADMIN MENU */}
-        {isAdmin &&
-        (<>
-          <HashLink smooth to="/CreateClassPage#top">
-            CREAR CLASES
-          </HashLink>
+        {isAdmin && (
+          <>
+          <div className="paste-button">
+            <HashLink className="button" onClick = {()=>{setShowed(!showed)}}>
+              ▼ GESTIONAR CLASES 
+            </HashLink>
+            <div className="dropdown-content">
+            {showed &&
+                    <>
+                      <HashLink id="top" smooth to="/CreateClassPage#top" >
+                          CREAR CLASES
+                      </HashLink>                
+                      <HashLink id="middle" smooth to="/UpdateClassPage#top">
+                          ACTUALIZAR CLASES
+                      </HashLink>            
+                      <HashLink id="bottom" smooth to="/DeleteClassPage#top">
+                          ELIMINAR CLASES
+                      </HashLink>   
+                    </>
+              }
+            </div>
+          </div>
+
           <HashLink smooth to="/CreateTallerPage#crearTalleres">
             CREAR TALLERES
           </HashLink>
           <HashLink smooth to="/MembershipPage#top">
             GESTIONAR MEMBRESÍAS
           </HashLink>
+
+
         </>)
         }
         {/* PROFESSOR MENU */}
@@ -88,8 +109,8 @@ function Navbar() {
         {isClient &&
             <>
               <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-              <HashLink to="/clases">CLASES</HashLink>
-              <HashLink to="/talleres">TALLERES</HashLink>
+              <HashLink smooth to="/clases">CLASES</HashLink>
+              <HashLink smooth to="/talleres">TALLERES</HashLink>
               <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
               <HashLink smooth to="/MyClassesPage">
               MIS CLASES
@@ -102,8 +123,8 @@ function Navbar() {
             {dft && (
               <>
                 <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-                <HashLink to="/clases">CLASES</HashLink>
-                <HashLink to="/talleres">TALLERES</HashLink>
+                <HashLink smooth to="/clases">CLASES</HashLink>
+                <HashLink smooth to="/talleres">TALLERES</HashLink>
                 <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
               </>
             )}

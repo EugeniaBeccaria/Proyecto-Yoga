@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import "../../styles/professor/professorDashboardPage.css";
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
 interface Day {
   id: number;
@@ -20,15 +25,18 @@ interface Classs {
   id: number;
   name: string;
   description: string;
+  capacityLimit: number;
   day: Day;       // Una clase tiene un objeto Día
   time: Time;     
-  room: Room;     
+  room: Room;
+  users: User[];     
 }
 
 function ProfessorDashboardPage() {
 
   const [classes, setClasses] = useState<Classs[]>([]);
   const [isLoading, setIsLoading] = useState(true); 
+  const [expandedClassId, setExpandedClassId] = useState<number | null>(null);
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -43,28 +51,62 @@ function ProfessorDashboardPage() {
 
     fetchClasses();
   }, []); 
+  
+  const handleToggleStudents = (classId: number) => {
+  if (expandedClassId === classId) {
+    setExpandedClassId(null);
+  } else {
+    setExpandedClassId(classId);
+  }
+    };
 
-
-  return (
+ return (
     <div className="dashboard-prof-container"> 
       <h1 className="dashboard-prof-title"> Panel de Profesor</h1>
       <h2 className="dashboard-prof-subtitle"> Mis Próximas Clases</h2>
-      <div> {isLoading ? (<p className="loading-message"> Cargando tus clases...</p>): 
-        classes.length > 0 ? (
+      
+      <div> 
+        {isLoading ? (
+          <p className="loading-message"> Cargando tus clases...</p>
+        ) : classes.length > 0 ? (
           <div className="classes-grid">
-          {classes.map((classItem) => (
-            <div key={classItem.id} className="class-card">
-              <h3>{classItem.name}</h3>
-              <p>{classItem.day.name} - {classItem.time.startTime}</p>
-              <p>Salón: {classItem.room.name}</p>
-            </div>
-          ))}
-        </div> ): 
-      ( <div className="empty-classes-message">
-          <p>Aún no tienes ninguna clase asignada.</p>
-          <p>Cuando se te asigne una, aparecerá aquí.</p>
-        </div>
-      )}
+            {classes.map((classItem) => (
+              <div key={classItem.id} className="class-card">
+                <h3>{classItem.name}</h3>
+                <p>{classItem.day.name} - {classItem.time.startTime}</p>
+                <p>Salón: {classItem.room.name}</p>
+                <p className="student-count">
+                  Inscriptos: {classItem.users.length} / {classItem.capacityLimit}
+                </p>
+                <button 
+                  className="toggle-students-btn" 
+                  onClick={() => handleToggleStudents(classItem.id)}
+                >
+                  {expandedClassId === classItem.id ? 'Ocultar Alumnos' : 'Ver Alumnos'}
+                </button>
+                {expandedClassId === classItem.id && (
+                  <div className="student-list">
+                    <h4>Alumnos Inscriptos:</h4>
+                    {classItem.users.length > 0 ? (
+                      <ul>
+                        {classItem.users.map(user => (
+                          <li key={user.id}>{user.name} - ({user.email})</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>No hay alumnos inscriptos en esta clase.</p>
+                    )}
+                  </div>
+                )} 
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-classes-message">
+            <p>Aún no tienes ninguna clase asignada.</p>
+            <p>Cuando se te asigne una, aparecerá aquí.</p>
+          </div>
+        )}
       </div>
     </div>
   );

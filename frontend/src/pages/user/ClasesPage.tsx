@@ -4,9 +4,12 @@
     return (
         <main className="clases">
         <h1 className="titulo-clases">Calendario de Clases</h1>
+        <p className="tableDescription">
+        Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito. Una vez agregada,
+        podrás ver el detalle antes de confirmar tu inscripción.
+        </p>
 
             <section id="clases" className="clases">
-                <h2 className="titulo-clases">Clases</h2>
                 <table>
                     <thead>
                     <tr>

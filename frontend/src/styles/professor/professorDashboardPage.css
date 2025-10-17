@@ -1,4 +1,3 @@
-/* ===== Estilos generales ===== */
 .dashboard-prof-container {
   min-height: 100vh;
   background-color: #f8f9f4;
@@ -7,12 +6,11 @@
   color: #333;
 }
 
-/* ===== Títulos ===== */
 .dashboard-prof-title {
   text-align: center;
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1d3c34; /* verde oscuro tipo yoga */
+  color: #1d3c34; 
   margin-bottom: 10px;
 }
 
@@ -24,14 +22,12 @@
   margin-bottom: 40px;
 }
 
-/* ===== Carga ===== */
 .loading-message {
   text-align: center;
   font-size: 1.2rem;
   color: #888;
 }
 
-/* ===== Cards ===== */
 .classes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -45,7 +41,9 @@
   padding: 25px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-top: 5px solid #a3c9a8; /* verde pastel */
+  border-top: 5px solid #a3c9a8; 
+  display: flex; 
+  flex-direction: column; 
 }
 
 .class-card:hover {
@@ -53,7 +51,6 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 }
 
-/* ===== Texto dentro de las cards ===== */
 .class-card h3 {
   font-size: 1.3rem;
   color: #1d3c34;
@@ -66,7 +63,57 @@
   margin: 4px 0;
 }
 
-/* ===== Mensaje cuando no hay clases ===== */
+.student-count {
+  font-weight: 600; 
+  color: #1d3c34;
+}
+
+
+.toggle-students-btn {
+  background-color: #1d3c34; 
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-top: 15px; 
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.toggle-students-btn:hover {
+  background-color: #2a5a4a; 
+}
+
+.student-list {
+  margin-top: 20px; 
+  border-top: 1px solid #eee; 
+  padding-top: 15px;
+}
+
+.student-list h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #1d3c34;
+  font-size: 1rem;
+}
+
+.student-list ul {
+  list-style-type: none; 
+  padding-left: 0;
+  margin: 0;
+}
+
+.student-list li {
+  background-color: #f8f9f4; 
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
 .empty-classes-message {
   text-align: center;
   color: #777;
@@ -74,9 +121,8 @@
   font-size: 1.1rem;
 }
 
-/* ===== Responsivo ===== */
 @media (max-width: 600px) {
-  .dashboard-container {
+  .dashboard-prof-container {
     padding: 40px 20px;
   }
 
