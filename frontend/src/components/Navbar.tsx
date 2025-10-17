@@ -1,7 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
-import LogoIcon from './LogoIcon';
 import { useEffect, useState, useRef } from "react";
 
 
@@ -60,7 +59,7 @@ function Navbar() {
     <header className="navbar">
       <div className="nav-left">
         <HashLink smooth to="/#top">
-          <LogoIcon size={100} className="logo" />
+          <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
         </HashLink>
       </div>
 

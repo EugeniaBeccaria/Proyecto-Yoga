@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
 
 html, body {
     margin: 0;
@@ -9,80 +9,105 @@ html, body {
     height: 100vh;
 }
 
-.hero {
+    .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 20px;
-    text-align: center;
-    /*box-shadow: var(--shadow);*/
-    /*margin-bottom: 32px;*/
     height: 100vh;
     position: relative;
-    z-index: 2;
     background-image: url(/PaginaPrincipalFondo.webp);
-    min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-}
+    background-position: center;
+    text-align: center;
+    overflow: hidden;
+    }
 
 .hero::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(4, 47, 8, 0.793);
-}
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.7); /* capa blanca translúcida */
+    z-index: 0;
+    }
 
 .hero-title {
-    font-size: 8.6rem;
-    margin-top: 250px;
-    color: #ad5879;
-    font-weight: 1000;
-    line-height: 1.1;
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+    color: #CF8A8A;
+    margin: 0;
     z-index: 2;
-    font-family: "Montserrat";
-}
+    text-align: center;
+    }
 
-.hero-title .block {
-    display: block;
-    z-index: 2;
-}
+.hero-title .shanti {
+    align-self: center; 
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 9rem;
+    margin: 0 0 -0.35em 0; 
+    }
+
 
 .hero-title .yoga {
-    font-size: 8.4rem;
-    font-weight: 1000;
-    margin-left: 300px;
-    margin-top: -50px;
-    z-index: 2;
-    color: #e4a3bc;
-}
+    align-self: flex-end; 
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-style: italic;
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    font-size: 8rem;
+    margin: 0;
+    }
 
 .hero-subtitle {
-    margin: 12px 0 24px;
+    margin-top: 4.5rem;
     font-size: 1.6rem;
-    margin-top: 10px;
-    margin-bottom: 80px;
-    margin-left: 650px;
-    color: #e0abbf;
+    color: #2f5b46; 
     z-index: 2;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
     font-weight: 600;
-}
+    text-align: center;
+    }
 
-.florFondoHome {
-    position: absolute;
-    top: 52%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2);
-    opacity: 0.3;
-    z-index: 0;
-    pointer-events: none;
-    max-width: 600px;
-}
+/* ====== FLECHA VERDE DEBAJO ====== */
+.scroll-arrow {
+    margin-top: 17px; 
+    width: 38px;
+    height: 38px;
+    border-left: 3px solid #2f5b46;
+    border-bottom: 3px solid #2f5b46;
+    transform: rotate(-45deg);
+    opacity: 0.9;
+    animation: bounce 2.2s infinite ease-in-out;
+    transition: all 0.3s ease;
+    z-index: 2;
+    background: none;
+    box-shadow: none;
+    }
+
+    .scroll-arrow:hover {
+    opacity: 1;
+    transform: rotate(-45deg) scale(1.08);
+    }
+
+    /* animación rebote suave */
+    @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: rotate(-45deg) translateY(0);
+    }
+    40% {
+        transform: rotate(-45deg) translateY(-6px);
+    }
+    60% {
+        transform: rotate(-45deg) translateY(-3px);
+    }
+    }
+
     /* ==== SECCIONES DE CLASES Y TALLERES ==== */
     .seccion-catalogo {
     text-align: center;

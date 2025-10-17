@@ -21,13 +21,17 @@ function HomePage(){
   return (
     <>
         <main>
-          <section id="top" className="home">
-            <div className="hero">
-              <img className="florFondoHome" src="/FlorLogo.png" alt="" />
-              <h1 className="hero-title">SHANTI <span className="block yoga">yoga</span></h1>
-              <p className="hero-subtitle">Tu espacio para crecer y relajarte.</p>
-            </div>
+          <section className="hero" id="top">
+            <h1 className="hero-title">
+              <span className="shanti">SHANTI</span>
+              <span className="yoga">yoga</span>
+            </h1>
+
+            <p className="hero-subtitle">Tu espacio para crecer y relajarte.</p>
+
+            <a href="#nosotros" className="scroll-arrow"></a>
           </section>
+
 
             <section id="nosotros" className="nosotros">
               <div className="grid">
