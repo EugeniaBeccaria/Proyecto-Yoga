@@ -43,7 +43,7 @@ import "../../styles/Catalogo.css";
                 <img src={taller.imagen} alt={taller.nombre} />
                 <h2>{taller.nombre}</h2>
                 <p>{taller.descripcion}</p>
-                <button>Más información</button>
+                <button>Agregar</button>
             </div>
             ))}
         </section>
