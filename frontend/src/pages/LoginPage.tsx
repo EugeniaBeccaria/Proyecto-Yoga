@@ -123,6 +123,7 @@ export default function Login(){
                     {login?
                         <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
                     :<>
+                            <img src="/logo-verde.png" alt="Logo Shanti Yoga" className="login-logo" />
                             <span className="title">INICIAR SESIÓN</span>
                             <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
                             {success  &&

@@ -102,6 +102,7 @@ function Register(){
             <div id="top" className="login-register">
                 <div  className="form-box-register">
                     <form className="form register" onSubmit={handleSubmit}>
+                        <img src="/logo-verde.png" alt="Logo Shanti Yoga" className="login-logo" />
                         <span className="title">REGISTRARSE</span>
                         <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>
                         {error.act && 
