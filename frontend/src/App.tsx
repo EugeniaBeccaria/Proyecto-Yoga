@@ -16,6 +16,8 @@ import ProfessorRoutes from './components/professorRoutes.tsx';
 import ProfessorDashboardPage from './pages/professor/professorDashboardPage.tsx';
 import ClasesPage from './pages/user/ClasesPage.tsx';
 import TalleresPage from './pages/user/TalleresPage.tsx';
+import MyMembershipPage from "./pages/user/MyMembershipPage.tsx";
+
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/RegisterPage" element={<RegisterPage />} />
         <Route path="/clases" element={<ClasesPage />} />
         <Route path="/talleres" element={<TalleresPage />} />
+        <Route path="/MembershipPage" element={<MyMembershipPage />} />
+
         <Route
           path="/MyClassesPage"
           element={
