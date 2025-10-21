@@ -196,3 +196,15 @@ html{
   #top #middle #bottom{
     margin: 10px;
   }
+
+  .link-membresia {
+  font-weight: 600;
+  color: #2f5233; 
+  margin-left: 15px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-membresia:hover {
+  color: #a8795d; 
+}

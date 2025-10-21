@@ -3,7 +3,6 @@ import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
 import { useEffect, useState, useRef } from "react";
 
-
 interface User{
   id: number,
   email:string,
@@ -125,10 +124,13 @@ function Navbar() {
                 <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
                 <HashLink smooth to="/clases">CLASES</HashLink>
                 <HashLink smooth to="/talleres">TALLERES</HashLink>
-                <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
+                <HashLink smooth to="/MembershipPage#top" className="link-membresia">
+                  MI MEMBRESÍA
+                </HashLink>
+
+
               </>
             )}
-
 
         <div className="icono-perfil">
             <HashLink smooth to="/LoginPage#top">
