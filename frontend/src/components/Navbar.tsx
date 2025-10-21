@@ -94,6 +94,9 @@ function Navbar() {
           <HashLink smooth to="/MembershipPage#top">
             GESTIONAR MEMBRESÍAS
           </HashLink>
+          <HashLink smooth to="/MembershipPage#top">
+            CREAR PROFESOR
+          </HashLink>
 
 
         </>)
