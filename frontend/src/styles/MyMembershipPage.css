@@ -54,14 +54,12 @@
     color: #2f5233;
     }
 
-    /* Filas */
     .membership-table td {
     padding: 1.3rem 0;
     vertical-align: middle;
     border-bottom: 1px solid #a5b49a;
     }
 
-    /* Quita bordes verticales */
     .membership-table td,
     .membership-table th {
     border-right: 1px solid #ffffff;
@@ -73,12 +71,10 @@
     text-align: left;
     }
 
-    /* Quita borde superior de la primera fila */
     .membership-table tr:first-child td {
     border-top: none;
     }
 
-    /* Quita borde izquierdo de la primera columna */
     .membership-table th:first-child,
     .membership-table td:first-child {
     border-left: 1px solid #ffffff;
@@ -127,6 +123,7 @@
     align-items: flex-start;
     gap: 4rem;
     margin-top: 2rem;
+    margin-bottom: 4rem;
     }
 
 
@@ -151,6 +148,7 @@
     font-size: 1.6rem;
     margin-bottom: 0.1rem;
     color: #2f5233;
+    text-align: center;
     transform: translateY(15px);
     }
 
@@ -182,8 +180,8 @@
     padding: 0.3rem 1rem;
     margin-top: -1rem;
     margin-bottom: 1rem;
-    border-radius: 0; /*  sin bordes redondeados */
-    width: 100%; /*  ocupa todo el ancho del contenedor */
+    border-radius: 0; 
+    width: 100%; 
     box-sizing: border-box;
     }
 
@@ -227,6 +225,6 @@
     }
 
     .summary-info p:last-child {
-    margin-top: 1.5rem; /* probá entre 0.5 y 1rem según el espacio que quieras */
+    margin-top: 1.5rem; 
     }
 

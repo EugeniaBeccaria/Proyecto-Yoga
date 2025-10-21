@@ -71,7 +71,7 @@ import "../../styles/MyMembershipPage.css";
 
             {/*  COLUMNA DERECHA (RESUMEN)  */}
             <div className="membership-summary">
-            <h3>Resumen de tu membresía</h3>
+            <h3>Resumen de mi membresía</h3>
             <hr className="summary-line" />
 
             <div className="summary-info">
