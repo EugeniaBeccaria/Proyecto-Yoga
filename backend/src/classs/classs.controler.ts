@@ -115,7 +115,8 @@ async function add(req: Request, res: Response) {
       time: timeEntity,
     })
     //posteriormente se usara add() para agregar alumnos a la clase
-
+    // a consultar -- se tendrian 
+    console.log(classs)
     await em.persistAndFlush(classs)
 
     res.status(201).json({ message: 'class created', data: classs })

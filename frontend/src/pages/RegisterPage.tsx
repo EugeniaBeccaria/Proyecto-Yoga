@@ -8,7 +8,6 @@ import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
 /*import { GoogleLogin } from '@react-oauth/google';*/
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar.tsx';
 
 
 interface User {
@@ -55,7 +54,7 @@ function Register(){
 
     async function sendFormRegister(){
         try{
-            const response = await axios.post("http://localhost:3000/api/users", {
+            const response = await axios.post("http://localhost:3000/api/users?role=client", {
             name: user.name,
             email: user.email,  
             password: user.password })

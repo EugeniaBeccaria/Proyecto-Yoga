@@ -1,4 +1,5 @@
 import { useState} from "react";
+import axios from "axios";
 
 type ProfesorForm = {
     name: string;
@@ -6,18 +7,23 @@ type ProfesorForm = {
     email: string;
     phone: string;
     dni: string;
-    rol: string;
     password: string;
 }
-
+interface error {
+    error: boolean
+    message:string
+}
 export default function CreateProfesor() {
+    const [messageError,setMessageError] = useState<error>({
+        error:false,
+        message:''
+    })
     const [ProfesorData, setProfesorData] = useState<ProfesorForm>({
         name: '',
         lastname: '',
         email: '',
         phone: '',
         dni: '',
-        rol: 'professor',
         password: ''
     });
 
@@ -31,35 +37,47 @@ const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-        const res = await fetch('http://localhost:3000/profesores', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(ProfesorData)
-    });
+        const res = await axios.post('http://localhost:3000/api/users?role=professor', ProfesorData);
 
-        if (res.ok) {
+        if (res.status === 201) {
             alert('Profesor creado con éxito');
+            setMessageError({error:false,message:''})
             setProfesorData ({
                 name: '',
                 lastname: '',
                 email: '',
                 phone: '',
                 dni: '',
-                rol: 'professor',
                 password: '',
             });
         } else {
             alert('Error al crear el profesor');
         }
-    } catch (error) {
-        console.error('Error al crear el profesor:', error);
-        alert('Error al crear el profesor');
+    }
+    catch(error){
+        if (axios.isAxiosError(error)){
+            if (error.response){
+                if(error.response.status === 400){
+                    setMessageError({error:true,message:'Ya existe una cuenta con este email'})
+                    }
+                if(error.response.status === 500){
+                    setMessageError({error:true,message:'Error de servidor'})
+                }
+            }
+        }
+        else setMessageError({error:true, message:'Error inesperado'})
     }
 };
 
 return (
     <section id="crearProfesor" className="crearProfesor">
         <h2 className="crear-profesor-titulo">Crear Profesor</h2>
+        {
+            messageError.error &&
+            <div className="message-error">
+                {messageError.message}
+            </div>
+        }
         <form onSubmit={handleSubmit} className="crear-profesor-form">
             <input
                 type="text"

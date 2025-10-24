@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express'
 import { orm } from '../shared/DB/orm.js'
 import { User } from './user.entity.js'
-import { ValidationError } from '@mikro-orm/core'
+import { IntegerType, ValidationError } from '@mikro-orm/core'
 import bcrypt, { genSalt } from 'bcrypt'
 
 const em = orm.em
@@ -61,13 +61,14 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-      const userData = req.body
-      console.log(userData)
-
+      const {name, lastname, email, phone, dni, password} = req.body
+      const role = (req.query.role) as string;
+      
+      console.log("Filtro de rol recibido:", role);
+      console.log(name, lastname, email, phone, dni, password)
       console.log("Buscando usuarios existentes....")
 
       //validar que no exista un mismo email
-      const email = userData.email
       const exist = await em.findOne(User,{email:email})
       if (exist) 
         return res.status(400).json({error:'Ya existe una cuenta con este email'})
@@ -76,16 +77,21 @@ async function add(req: Request, res: Response) {
 
       //Encriptar contraseña
       const salt = await genSalt()
-      const hashPassword = await bcrypt.hash(userData.password,salt)
+      const hashPassword = await bcrypt.hash(password,salt)
 
       console.log("Instanciando el objeto....")
 
       const user = em.create(User, {
-        name: userData.name,
-        email: userData.email,
+        name: name,
+        lastname: lastname,
+        email: email,
+        phone:phone,
+        dni:dni,
+        role: role,
         password: hashPassword
       });
       
+      console.log("Persistiendo....")
       //Persistir en BD
       await em.persistAndFlush(user);
 
@@ -95,9 +101,6 @@ async function add(req: Request, res: Response) {
       } })
     } 
     catch (error: any) {
-      if (error instanceof ValidationError)
-        return res.status(400).json({message: 'Datos invalidos', error:error})
-
       res.status(500).json({ message: error.message })
     }
 }

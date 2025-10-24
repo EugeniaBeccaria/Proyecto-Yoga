@@ -77,7 +77,7 @@ function App() {
         />
 
         <Route
-          path="/CreateProfessorPage"
+          path="/CreateProfesorPage"
           element={
             <AdminRoutes>
               <CreateProfesorPage />
