@@ -17,6 +17,7 @@ import ProfessorDashboardPage from './pages/professor/professorDashboardPage.tsx
 import ClasesPage from './pages/user/ClasesPage.tsx';
 import TalleresPage from './pages/user/TalleresPage.tsx';
 import MyMembershipPage from "./pages/user/MyMembershipPage.tsx";
+import CreateProfesorPage from './pages/admin/CreateProfesorPage.tsx';
 
 
 function App() {
@@ -81,6 +82,15 @@ function App() {
           element={
             <AdminRoutes>
               <MembershipPage />
+            </AdminRoutes>
+          }
+        />
+
+        <Route
+          path="/CreateProfessorPage"
+          element={
+            <AdminRoutes>
+              <CreateProfesorPage />
             </AdminRoutes>
           }
         />

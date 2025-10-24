@@ -5,20 +5,23 @@
 
 .crearTalleres {
     padding-top: 140px;
-    padding-left: 20px;
-    padding-right: 20px;
     padding-bottom: 80px;
-    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /*padding-left: 20px;
+    padding-right: 20px;
     background-image: url("/FlorLogo.png");
     background-repeat: repeat;
     background-size: 200px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    color: #fff;*/
+
 }
 
-.crear-taller-container {
+/*.crear-taller-container {
     background-color: #2b462d;
     border-radius: 20px;
     padding: 40px 30px;
@@ -30,47 +33,55 @@
     align-items: center;
     gap: 20px;
     font-family: 'Montserrat', sans-serif;
-}
+}*/
 
 .crear-taller-titulo {
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 700;
-    margin-bottom: 10px;
-    color: #ffffff;
+    margin-bottom: 20px;
+    color: #2b462d;
     text-align: center;
+    font-family: "Montserrat";
+    margin-top: -20px;
 }
 
 .crear-taller-form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
     width: 100%;
+    /*max-width: 600px;*/
 }
 
 .crear-taller-input, 
 .crear-taller-textarea, 
 .crear-taller-select {
-    width: 100%;
+    width: 90%;
+    /*max-width: 580px;*/
     padding: 12px 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1rem;
-    color: #2e5939;
+    color: #2b462d;
     outline: none;
-    margin-left: -12px;
+    background-color: #fff;
+    transition: all 0.2s ease;
     font-family: "Montserrat";
-}
-
-.crear-taller-select {
-    width: 530px
+    color: grey;
+    /*margin-left: -12px;*/
 }
 
 .crear-taller-input:focus, 
 .crear-taller-textarea:focus, 
 .crear-taller-select:focus {
-    border-color: #f895a6;
-    box-shadow: 0 0 5px rgba(248, 149, 166, 0.5);
+    border-color: #ea9ca9;
+    box-shadow: 0 0 5px rgba(248, 149, 166, 0.4);
 }
+
+/*.crear-taller-select {
+    width: 1000px;
+}*/
 
 .crear-taller-textarea {
     resize: vertical;
@@ -87,6 +98,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    transition: all 0.3 ease;
     font-family: "Montserrat";
 }
 

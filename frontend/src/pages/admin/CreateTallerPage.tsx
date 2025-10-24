@@ -71,7 +71,7 @@ export default function CrearTaller() {
 
     return (
         <section id="crearTalleres" className="crearTalleres">
-            <div className="crear-taller-container">
+            {/*<div className="crear-taller-card">*/}
                 <h2 className="crear-taller-titulo">Crear Taller</h2>
                 <form onSubmit={handleSubmit} className="crear-taller-form">
                     <input 
@@ -145,7 +145,7 @@ export default function CrearTaller() {
                         Crear Taller
                     </button>
                 </form>
-            </div>
+            {/*</div>*/}
         </section>
     )
 }

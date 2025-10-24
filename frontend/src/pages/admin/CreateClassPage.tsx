@@ -160,11 +160,12 @@ function CreateClassPage() {
   return (
     <div id="top" className="create-class-page">
       
-      <div className="page-title">CREAR CLASE</div>
+      <h1 className="title-class-page">Crear Clase</h1>
+      {/*<div className="page-title">CREAR CLASE</div>*/}
 
-      <div className="form-container">
-        <div className="form-inner"> 
-          <form id="formClase" onSubmit={handleSubmit}>
+      {/*<div className="form-container">*/}
+        {/*<div className="form-inner"> */}
+        <form id="formClase" className="form-create-class" onSubmit={handleSubmit}>
           <div className="title-bar-container">
             <div
               id="titleEditable"
@@ -184,6 +185,18 @@ function CreateClassPage() {
           <input type="hidden" id="nombreClase" name="nombreClase" value={title} />
 
             <div className="panel-verde">
+
+              {/*<div className="form-group">
+                <label htmlFor="nombre">Nombre:</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="name"
+                  value={classCreated.name}
+                  onChange={handleChange}
+                  placeholder="Ingrese el nombre de la"
+                />
+              </div>*/}
               <div className="form-group">
                 <label htmlFor="dia">Día:</label>
                 <select id="dia" name="dia"> 
@@ -280,8 +293,8 @@ function CreateClassPage() {
               </button>
             </div>
           </form>
-        </div>
-      </div>
+        {/*</div>*/}
+      {/*</div>*/}
     </div>
   );
 }
