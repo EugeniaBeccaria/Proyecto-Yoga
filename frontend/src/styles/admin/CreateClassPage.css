@@ -126,3 +126,9 @@
   margin-bottom: 20px;
   animation: fadeInOut 3s forwards; /* Animation for fade in and out */
 }
+
+.error-message{
+  background-color: #d08383;
+  color: white;
+  border-radius: 5px;
+}

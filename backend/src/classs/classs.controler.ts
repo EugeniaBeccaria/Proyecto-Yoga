@@ -68,7 +68,7 @@ async function add(req: Request, res: Response) {
             professor
         } = req.body.classData as ClassInput; 
 
-    if (!name || !description || !day || !time || !room || !professor) {
+    if (!name || !description || !day || !time || !room || !professor || !capacityLimit) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
@@ -78,7 +78,7 @@ async function add(req: Request, res: Response) {
     const professorEntity = await em.findOne(User, { id: professor, role: 'professor' });
 
     if (!roomEntity || !dayEntity || !timeEntity || !professorEntity) {
-      return res.status(400).json({ message: 'Invalid foreign key references' });
+      return res.status(404).json({ message: 'Invalid foreign key references' });
     }
 
     // const roomRef = em.getReference(Room, room);
@@ -97,6 +97,11 @@ async function add(req: Request, res: Response) {
       professorEntity
     });
 
+    
+    const existingClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, room: roomEntity });
+    if (existingClass) {
+      return res.status(409).json({ message: 'Class with the same day, time, and room already exists' });
+    }
 
 
     const classs = em.create(Classs, {
@@ -110,11 +115,6 @@ async function add(req: Request, res: Response) {
       time: timeEntity,
     })
     //posteriormente se usara add() para agregar alumnos a la clase
-
-    const existingClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, room: roomEntity });
-    if (existingClass) {
-      return res.status(409).json({ message: 'Class with the same day, time, and room already exists' });
-    }
 
     await em.persistAndFlush(classs)
 

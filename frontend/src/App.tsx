@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx';
 import CreateClassPage from './pages/admin/CreateClassPage.tsx';
-import { UpdateClassPage } from './pages/admin/UpdateClassPage.tsx';
 import { DeleteClassPage } from './pages/admin/DeleteClassPage.tsx';
 import CreateTallerPage from './pages/admin/CreateTallerPage.tsx';
 import MembershipPage from './pages/admin/MembershipPage.tsx';
@@ -46,15 +45,6 @@ function App() {
           element={
             <AdminRoutes>
               <CreateClassPage />
-            </AdminRoutes>
-          }
-        />
-
-        <Route
-          path="/UpdateClassPage"
-          element={
-            <AdminRoutes>
-              <UpdateClassPage />
             </AdminRoutes>
           }
         />

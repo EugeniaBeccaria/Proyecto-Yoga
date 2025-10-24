@@ -76,9 +76,6 @@ function Navbar() {
                       <HashLink id="top" smooth to="/CreateClassPage#top" >
                           CREAR CLASES
                       </HashLink>                
-                      <HashLink id="middle" smooth to="/UpdateClassPage#top">
-                          ACTUALIZAR CLASES
-                      </HashLink>            
                       <HashLink id="bottom" smooth to="/DeleteClassPage#top">
                           ELIMINAR CLASES
                       </HashLink>   

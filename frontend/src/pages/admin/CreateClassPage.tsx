@@ -18,6 +18,11 @@ interface fetchDataProps {
   times: Array<{id:number, startTime:string}>;
   professors: Array<{id:number, name:string, email:string}>;
 }
+interface error {
+  error: boolean,
+  message:string
+}
+
 function CreateClassPage() {
   const [fetchData, setFetchData] = useState<fetchDataProps>({
     rooms: [],
@@ -36,6 +41,10 @@ function CreateClassPage() {
   //   profesor: 0,
   // });
   const [classCreated, setClassCreated] = useState<boolean>(false);
+  const [messageError, setMessageError] = useState<error>({
+    error:false,
+    message:''
+  })
   const [count, setCount] = useState(0); 
   const [title, setTitle] = useState("Nombre Clase");
   const [descripcion, setDescripcion] = useState("");
@@ -142,20 +151,39 @@ function CreateClassPage() {
   async function sendFormClass(classData: classProps){
     try{
       const response = await axios.post('http://localhost:3000/api/classes', {classData}, {withCredentials: true})
-      console.log(response)
+      
       if(response.status === 201){
+        console.log("class created")
+        setMessageError({error:false, message:''})
         setClassCreated(true);
         setTimeout(()=>{
           setClassCreated(false);
           // window.location.href = "#top"; 
           // window.location.reload(); 
-        }, 2000);
+        }, 2500);
       }
+
     }
     catch(error){
-      console.error(error);
+      if (axios.isAxiosError(error)){
+        if (error.response){
+
+          if(error.response.status === 400){
+            console.log('flag')
+            setMessageError({error:true,message:'Campos incompletos'})
+          }
+          if(error.response.status === 404){
+            setMessageError({error:true,message:'Error de servidor'})
+          }
+          if(error.response.status === 409){
+            setMessageError({error:true,message:'Clase existente'})
+          }
+        }
+      }
+      else setMessageError({error:true, message:'Error inesperado'})
     }
   }
+
 
   return (
     <div id="top" className="create-class-page">
@@ -283,7 +311,13 @@ function CreateClassPage() {
                       </div>
                     )
                   }
-          
+                  {
+                    messageError.error && (
+                      <div className="error-message">
+                        {messageError.message}
+                      </div>
+                    )
+                  }
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
                 ✔ Crear Clase
