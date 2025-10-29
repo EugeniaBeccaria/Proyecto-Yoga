@@ -162,7 +162,7 @@ html{
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-    .dropdown-content a {
+  .dropdown-content a {
     color: #2f5b46;
     font-size: 15px;
     padding: 8px 10px;
@@ -172,12 +172,12 @@ html{
     margin:10px;
     transition: 1s;
     }
-
+/* 
     .dropdown-content a:focus {
     background-color: #212121;
-    }
+    } */
 
-    .dropdown-content #top:hover {
+    /* .dropdown-content #top:hover {
     border-radius: 0px 13px 0px 0px;
     }
 
@@ -187,7 +187,7 @@ html{
 
     .paste-button:hover button {
     border-radius: 15px 15px 0px 0px;
-    }
+    } */
 
 .paste-button:hover .dropdown-content {
   display: block;

@@ -17,7 +17,7 @@ import ClasesPage from './pages/user/ClasesPage.tsx';
 import TalleresPage from './pages/user/TalleresPage.tsx';
 import MyMembershipPage from "./pages/user/MyMembershipPage.tsx";
 import CreateProfesorPage from './pages/admin/CreateProfesorPage.tsx';
-
+import ClassCalendar from './pages/user/ClassCalendar.tsx';
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
         <Route path="/clases" element={<ClasesPage />} />
         <Route path="/talleres" element={<TalleresPage />} />
         <Route path="/MembershipPage" element={<MyMembershipPage />} />
+        <Route path="/ClassCalendar" element={<ClassCalendar />} />
 
         <Route
           path="/MyClassesPage"

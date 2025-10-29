@@ -121,7 +121,9 @@ export default function Login(){
             <div id="top" className="form-box-login">
                 <form className="form login" onSubmit={handleSubmit}>
                     {login?
-                        <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
+                        <div className="profile">
+                            <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
+                        </div>
                     :<>
                             <img src="/logo-verde.png" alt="Logo Shanti Yoga" className="login-logo" />
                             <span className="title">INICIAR SESIÓN</span>

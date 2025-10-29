@@ -71,16 +71,15 @@ function Navbar() {
               ▼ GESTIONAR CLASES 
             </HashLink>
             <div className="dropdown-content">
-            {showed &&
-                    <>
-                      <HashLink id="top" smooth to="/CreateClassPage#top" >
-                          CREAR CLASES
-                      </HashLink>                
-                      <HashLink id="bottom" smooth to="/DeleteClassPage#top">
-                          ELIMINAR CLASES
-                      </HashLink>   
-                    </>
-              }
+              <HashLink smooth to="/ClassCalendar">
+                VER CLASES
+              </HashLink>
+              <HashLink id="top" smooth to="/CreateClassPage" >
+                  CREAR CLASES
+              </HashLink>                
+              <HashLink id="bottom" smooth to="/DeleteClassPage">
+                ELIMINAR CLASES
+              </HashLink>   
             </div>
           </div>
 
@@ -108,7 +107,7 @@ function Navbar() {
         {isClient &&
             <>
               <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-              <HashLink smooth to="/clases">CLASES</HashLink>
+              <HashLink smooth to="/ClassCalendar">CLASES</HashLink>
               <HashLink smooth to="/talleres">TALLERES</HashLink>
               <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
               <HashLink smooth to="/MyClassesPage">
@@ -122,7 +121,7 @@ function Navbar() {
             {dft && (
               <>
                 <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-                <HashLink smooth to="/clases">CLASES</HashLink>
+                <HashLink smooth to="/ClassCalendar">CLASES</HashLink>
                 <HashLink smooth to="/talleres">TALLERES</HashLink>
                 <HashLink smooth to="/MembershipPage#top" className="link-membresia">
                   MI MEMBRESÍA
