@@ -2,6 +2,7 @@ import { FaUserCircle } from "react-icons/fa";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
 import { useEffect, useState, useRef } from "react";
+import LogoIcon from './LogoIcon';
 
 interface User{
   id: number,
@@ -51,14 +52,14 @@ function Navbar() {
     isClient = true
   }
   
-  const dft = (isProfessor === false && isAdmin === false && isClient === false) === true;
+  const dft = (isProfessor === false && isAdmin === false) === true;
 
   return (
     <>
     <header className="navbar">
       <div className="nav-left">
         <HashLink smooth to="/#top">
-          <img src="/LogoShantiYoga.png" alt="Logo Shanti Yoga" className="logo" />
+          <LogoIcon size={100} className="logo" />
         </HashLink>
       </div>
 
@@ -106,13 +107,8 @@ function Navbar() {
         {/* CLIENT MENU (default menu will also be showed)*/}
         {isClient &&
             <>
-              <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
-              <HashLink smooth to="/ClassCalendar">CLASES</HashLink>
-              <HashLink smooth to="/talleres">TALLERES</HashLink>
-              <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
-              <HashLink smooth to="/MyClassesPage">
-              MIS CLASES
-              </HashLink>
+              <HashLink smooth to="/MyClassesPage">MIS CLASES</HashLink>
+              <HashLink smooth to="/MembershipPage#top" className="link-membresia">MI MEMBRESÍA</HashLink>
             </>
         }
 
@@ -123,11 +119,7 @@ function Navbar() {
                 <HashLink smooth to="/#nosotros">NOSOTROS</HashLink>
                 <HashLink smooth to="/ClassCalendar">CLASES</HashLink>
                 <HashLink smooth to="/talleres">TALLERES</HashLink>
-                <HashLink smooth to="/MembershipPage#top" className="link-membresia">
-                  MI MEMBRESÍA
-                </HashLink>
-
-
+                <HashLink smooth to="/#reseñas">RESEÑAS</HashLink>
               </>
             )}
 
