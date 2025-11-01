@@ -60,30 +60,46 @@ function ProfessorDashboardPage() {
   }
     };
 
- return (
+return (
     <div className="dashboard-prof-container"> 
-      <h1 className="dashboard-prof-title"> Panel de Profesor</h1>
-      <h2 className="dashboard-prof-subtitle"> Mis Próximas Clases</h2>
+      
+      <div className="dashboard-prof-header">
+        <h1 className="dashboard-prof-title"> Panel de Profesor</h1>
+        <h2 className="dashboard-prof-subtitle"> Mis Próximas Clases</h2>
+      </div>
       
       <div> 
         {isLoading ? (
           <p className="loading-message"> Cargando tus clases...</p>
         ) : classes.length > 0 ? (
-          <div className="classes-grid">
+          <div className="classes-list">
             {classes.map((classItem) => (
-              <div key={classItem.id} className="class-card">
-                <h3>{classItem.name}</h3>
-                <p>{classItem.day.name} - {classItem.time.startTime}</p>
-                <p>Salón: {classItem.room.name}</p>
-                <p className="student-count">
-                  Inscriptos: {classItem.users.length} / {classItem.capacityLimit}
-                </p>
-                <button 
-                  className="toggle-students-btn" 
-                  onClick={() => handleToggleStudents(classItem.id)}
-                >
-                  {expandedClassId === classItem.id ? 'Ocultar Alumnos' : 'Ver Alumnos'}
-                </button>
+              <div key={classItem.id} className="class-list-item">
+                
+                <div className="class-item-header">
+                  
+                  <div className="class-item-info">
+                    <h3>{classItem.name}</h3>
+                    <p>{classItem.day.name} - {classItem.time.startTime} | Salón: {classItem.room.name}</p>
+                  </div>
+
+                  <div className="class-item-details">
+                    <p className="student-count">
+                      Inscriptos: 
+                      <strong> {classItem.users.length} / {classItem.capacityLimit}</strong>
+                    </p>
+                  </div>
+                  
+                  <div className="class-item-actions">
+                    <button 
+                      className="toggle-students-btn" 
+                      onClick={() => handleToggleStudents(classItem.id)}
+                    >
+                      {expandedClassId === classItem.id ? 'Ocultar' : 'Ver Alumnos'}
+                    </button>
+                  </div>
+                </div>
+
                 {expandedClassId === classItem.id && (
                   <div className="student-list">
                     <h4>Alumnos Inscriptos:</h4>
