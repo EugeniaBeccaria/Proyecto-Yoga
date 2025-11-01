@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../styles/ClassCalendar.css'; // Este archivo CSS no cambia
+import '../../styles/ClassCalendar.css'; 
 
-// --- 1. Definición de Tipos y Constantes ---
-
-// --- CAMBIO AQUÍ ---
-// Actualizamos la interfaz para que coincida EXACTAMENTE
-// con la estructura de objetos que viene en tu array 'data'.
 interface ClaseHorario {
     id: number;
     name: string; 
@@ -52,7 +47,7 @@ export default function ClassCalendar() {
 
     const fetchClases = async () => {
     try {
-        const response = await axios('http://localhost:3000/api/classes');
+        const response = await axios('http://localhost:3000/api/classes',{withCredentials: true});
         console.log('Datos de clases recibidos:', response.data.data);
         setClases(response.data.data);
         setLoading(false);

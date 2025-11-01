@@ -57,10 +57,10 @@ function CreateClassPage() {
   async function LoadData(){
     try{
       const [roomsRes, daysRes, timesRes, professorsRes] = await Promise.all([
-      axios('http://localhost:3000/api/rooms'),
-      axios('http://localhost:3000/api/days'),
-      axios('http://localhost:3000/api/times'),
-      axios('http://localhost:3000/api/users?role=professor')
+      axios('http://localhost:3000/api/rooms', { withCredentials: true }),
+      axios('http://localhost:3000/api/days', { withCredentials: true }),
+      axios('http://localhost:3000/api/times', { withCredentials: true }),
+      axios('http://localhost:3000/api/users?role=professor', { withCredentials: true })
     ]);
 
       console.log(roomsRes.data.data ,daysRes.data.data,timesRes.data.data, professorsRes.data.data)
