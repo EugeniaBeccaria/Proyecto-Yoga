@@ -1,28 +1,54 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/MyMembershipPage.css";
+import "../../styles/ClassCart.css";
+import { useNavigate } from "react-router-dom";
 
-    interface SelectedClass {
+interface SelectedClass {
     id: number;
-    name: string;
-    day: string;
-    time: string;
-    }
+    name: string; 
+    description: string;
+    capacityLimit: number;
+    room: {
+        id: number;
+        name: string;
+        };
+    day: { 
+        id: number;
+        name: string;
+    };
+    professor: number;
+    time: { 
+        id: number;
+        startTime: string;
+    };
+}
 
-    const MembershipPage: React.FC = () => {
-    const [selectedClasses, setSelectedClasses] = useState<SelectedClass[]>([
-        { id: 1, name: "Respira y Fluye", day: "Lunes", time: "16:00" },
-        { id: 2, name: "Fuerza Interior", day: "Martes", time: "17:00" },
-        { id: 3, name: "Fuego Interior", day: "Viernes", time: "10:00" },
-    ]);
-
+    const ClassCart: React.FC = () => {
+    
+    const [selectedClasses, setSelectedClasses] = useState<SelectedClass[]>([]);
     const [membershipType, setMembershipType] = useState<string>("");
+
+    const navigate = useNavigate();
+
+    async function loadSelectedClasses() {
+        const storedClasses = localStorage.getItem("clases");
+        if (storedClasses) {
+            const parsedClasses: SelectedClass[] = JSON.parse(storedClasses);
+            setSelectedClasses(parsedClasses);
+            console.log("Clases cargadas desde el almacenamiento local:", parsedClasses);
+        }
+        else console.log("No hay clases seleccionadas en el almacenamiento local.");
+    }
+    useEffect(() => {
+        loadSelectedClasses();
+    }, []);
 
     useEffect(() => {
         const count = selectedClasses.length;
-        if (count <= 2) setMembershipType("Membresía Básica");
-        else if (count <= 4) setMembershipType("Membresía tipo 1");
-        else setMembershipType("Membresía Full");
+        if (count <= 2) setMembershipType("Membresía Básica (1-2 clases)");
+        else if (count <= 4) setMembershipType("Membresía tipo 1 (2-4 clases)");
+        else setMembershipType("Membresía Full (4-6 clases)");
     }, [selectedClasses]);
+
 
     const total = "$6000";
 
@@ -30,8 +56,15 @@ import "../../styles/MyMembershipPage.css";
         setSelectedClasses(selectedClasses.filter((c) => c.id !== id));
     };
 
+    const handleClickCompra = () => {
+        localStorage.removeItem("clases");
+        setSelectedClasses([]);
+        alert("¡Compra realizada con éxito!");
+        navigate("/");
+    }
     return (
         <div className="container">
+        <button onClick={() => window.history.back()}>Volver</button>
         <h2 className="page-title">Mi membresía</h2>
 
         <div className="membership-content">
@@ -52,8 +85,8 @@ import "../../styles/MyMembershipPage.css";
                         <strong>{clase.name}</strong>
                     </td>
                     <td className="class-info">
-                        <div>Día: {clase.day}</div>
-                        <div>Hora: {clase.time}hs</div>
+                        <div>Día: {clase.day.name}</div>
+                        <div>Hora: {clase.time.startTime}hs</div>
                     </td>
                     <td className="remove-col">
                         <button
@@ -88,11 +121,11 @@ import "../../styles/MyMembershipPage.css";
                 <div className="summary-total-box">{total}</div>
             </div>
 
-            <button className="summary-btn">Aceptar</button>
+            <button onClick={handleClickCompra} className="summary-btn">Aceptar</button>
             </div>
         </div>
         </div>
     );
     };
 
-    export default MembershipPage;
+    export default ClassCart;

@@ -87,9 +87,10 @@ function Navbar() {
           <HashLink smooth to="/CreateTallerPage#crearTalleres">
             CREAR TALLERES
           </HashLink>
-          <HashLink smooth to="/MembershipPage#top">
+          {/* FALTA IMPLEMENTAR */}
+          {/* <HashLink smooth to="/MembershipPage#top">
             GESTIONAR MEMBRESÍAS
-          </HashLink>
+          </HashLink> */}
           <HashLink smooth to="/CreateProfesorPage#top">
             CREAR PROFESOR
           </HashLink>
@@ -108,7 +109,8 @@ function Navbar() {
         {isClient &&
             <>
               <HashLink smooth to="/MyClassesPage">MIS CLASES</HashLink>
-              <HashLink smooth to="/MembershipPage#top" className="link-membresia">MI MEMBRESÍA</HashLink>
+              {/* FALTA IMPLEMENTAR */}
+              {/* <HashLink smooth to="/MyMembershipPage#top" className="link-membresia">MI MEMBRESÍA</HashLink>*/}
             </>
         }
 

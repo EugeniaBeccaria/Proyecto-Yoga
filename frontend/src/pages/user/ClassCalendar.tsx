@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/ClassCalendar.css'; 
+import { useNavigate } from 'react-router-dom';
 
 interface ClaseHorario {
     id: number;
@@ -41,7 +42,9 @@ const DIAS_SEMANA = [
 
 export default function ClassCalendar() {
     const [clases, setClases] = useState<ClaseHorario[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [selectedClasses, setSelectedClasses] = useState<ClaseHorario[]>([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {fetchClases()}, []);
 
@@ -50,21 +53,34 @@ export default function ClassCalendar() {
         const response = await axios('http://localhost:3000/api/classes',{withCredentials: true});
         console.log('Datos de clases recibidos:', response.data.data);
         setClases(response.data.data);
-        setLoading(false);
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error al cargar las clases:', error);
-        setLoading(false);
         }
     };
+
+    function handleSelectClass(clase: ClaseHorario) {
+        const exist = selectedClasses?.find((c)=> c.id === clase.id)
+        if (exist){
+            setSelectedClasses(selectedClasses?.filter((c)=> c.id !== clase.id ) || null)
+        }
+        if(!exist && selectedClasses){
+            setSelectedClasses([...selectedClasses,clase])
+        }}
+
+    function handleSendClasses(){
+        //falta - VALIDACIONES para que no seleccionen el mismo horario y dia 
+        //falta - VALIDACIONES para que no seleccionen mas de 6 clases
+        console.log('Clases seleccionadas para agregar:', selectedClasses);
+        localStorage.setItem('clases',JSON.stringify(selectedClasses));
+        setSelectedClasses([]);
+        navigate('/ClassCart');
+    }
 
     // filtra las clases que coinciden con una celda (día y hora)
     const getClasesParaCelda = (diaId: number, horaInicio: string) => {
         return clases.filter((clase) => clase.day.id === diaId && clase.time.startTime === horaInicio);
     };
-
-    if (loading) {
-    return <div>Cargando horario...</div>;
-    }
 
     return (
         <div className="container-calendar">
@@ -73,8 +89,16 @@ export default function ClassCalendar() {
             Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito. Una vez agregada,
             podrás ver el detalle antes de confirmar tu inscripción.
         </p>
+        {
+            selectedClasses.length > 0 && (
+            <div className="footer-calendar">
+                <button className="btn-agregar" onClick={handleSendClasses}>
+                    Agregar Clases
+                </button>
+            </div>
+            )
+        }
         <div className="horario-grid">
-            {/* Fila de Encabezados (Días) */}
             <div className="celda-header celda-hora">HORA</div>
             {DIAS_SEMANA.map((dia) => (
                 <div key={dia.id} className="celda-header">
@@ -82,23 +106,31 @@ export default function ClassCalendar() {
                 </div>
             ))}
 
-            {/* Filas de Contenido (Horas + Clases) */}
             {FRANJAS_HORARIAS.map((franja) => (
                 <React.Fragment key={franja.horaInicio}>
                     <div className="celda-hora">{franja.label}</div>
 
                     {DIAS_SEMANA.map((dia) => {
                         const clasesEnCelda = getClasesParaCelda(dia.id, franja.horaInicio);
-                        
-                        return (
+
+                        //IMPORTANTE --- HAY QUE MOSTRAR SOLO LAS CLASES QUE SIGAN TENIENDO CAPACIDAD DISPONIBLE
+                        return ( 
                             <div key={dia.id} className="celda-clase">
-                                {clasesEnCelda.length > 0 && (
+                                {clasesEnCelda?.length > 0 && (
                                     <div className="lista-clases">
-                                        {clasesEnCelda.map((clase) => ( //lista cada clase que encontro en getClasesParaCelda
-                                            <div key={clase.id} className="clase-item">
+                                        {clasesEnCelda?.map((clase) => {
+                                            // verifica si la clase está seleccionada
+                                            const isSelected = selectedClasses.find(item => item.id === clase.id);
+                                            return (
+                                                <div 
+                                                key={clase.id} 
+                                                // asignacion de clase condicional para resaltar la seleccion
+                                                className={`clase-item ${isSelected ? 'selected' : ''}`} 
+                                                onClick={() => handleSelectClass(clase)}>
                                                 {clase.name}
-                                            </div>
-                                        ))}
+                                                </div>
+                                            );
+                                            })}
                                     </div>
                                 )}
                             </div>
