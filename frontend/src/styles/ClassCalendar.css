@@ -3,7 +3,7 @@
     color: #d08383;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     flex-grow: 1;
     padding-bottom: 50px;}
 
@@ -18,7 +18,7 @@
     font-family: "Open Sans", sans-serif;
     font-size: 1rem;
     color: #2f5b46;
-    margin: 10px auto 25px;
+    margin: 25px auto;
     max-width: 900px; 
     line-height: 1.4;
     text-align: center;
@@ -29,13 +29,16 @@
     grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
     border: 1px solid #e0e0e0;
     border-radius: 8px; 
-    overflow: hidden; 
+    overflow: hidden;
     max-width: 1200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     font-family: Arial, sans-serif;
 }
 
 .horario-grid > div {
-    padding: 12px;
+    padding: 8px;
     border-bottom: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
 }
@@ -69,7 +72,7 @@
 }
 
 .celda-clase {
-    min-height: 80px; 
+    min-height: 70px; 
     padding: 10px; 
     background-color: #fff;
 }
@@ -100,9 +103,6 @@
     border-radius: 4px;
 }
 
-.footer-calendar {
-    margin-bottom: 1rem;
-}
 
 .btn-agregar {
     background-color: #d08383;
@@ -115,5 +115,44 @@
     transition: background-color 0.3s ease;
 }
 .btn-agregar:hover {
+    transition: background-color 0.3s ease, transform 0.2s ease;
     background-color: #b56565;
+    transform: translateY(-1px);
+}
+
+.btn-agregar.disabled {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor:text;
+}
+
+.container-elements-calendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 20px 0;
+}
+
+.toggle-turno {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    color: #2f5b46;
+}
+
+.select-turno {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #ff4d4d;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
 }

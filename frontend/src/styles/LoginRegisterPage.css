@@ -1,23 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 
-    
-/*body {
-  background-color: pink;
-  background-image: url("/FlorLogo.png");
-  background-repeat: repeat;
-  margin: 0;
-  padding: 0;
-  color: #ffff;
-  background-size: 200px;
-}*/
-
-/* #2f5b46 verde , #d08383 rosa*/
-
 .form {
   min-width: 400px;
   max-width: 400px;
-  /*min-height: 500px;*/
   background: #ffffff;
   overflow: hidden;
   border-radius: 20px;
@@ -248,7 +234,7 @@
   display: flex;
   justify-content: center;   
   align-items: flex-start;      
-  height: 100vh;             
+  height: 90vh;             
   width: 100%;
   margin: 0;                 
   padding-top: 40px;           

@@ -56,15 +56,22 @@ interface SelectedClass {
         setSelectedClasses(selectedClasses.filter((c) => c.id !== id));
     };
 
-    const handleClickCompra = () => {
-        localStorage.removeItem("clases");
-        setSelectedClasses([]);
-        alert("¡Compra realizada con éxito!");
-        navigate("/");
+    const handleClickCompra = async() => {
+        const user = localStorage.getItem("user");
+        if(!user){
+            console.log("Usuario no autenticado, redirigiendo al login...");
+            navigate("/LoginPage");
+            return;
+        }
+        if (user){
+            alert("Compra realizada con éxito");
+            localStorage.removeItem("clases");
+            navigate("/MyClassesPage");
+        }
     }
     return (
         <div className="container">
-        <button onClick={() => window.history.back()}>Volver</button>
+        <button onClick={() => window.history.back()} className="btn-back">Volver</button>
         <h2 className="page-title">Mi membresía</h2>
 
         <div className="membership-content">
@@ -87,15 +94,19 @@ interface SelectedClass {
                     <td className="class-info">
                         <div>Día: {clase.day.name}</div>
                         <div>Hora: {clase.time.startTime}hs</div>
+                        <div>Aula: {clase.room.name}</div>
                     </td>
-                    <td className="remove-col">
+                    {selectedClasses.length > 1 && (
+                        <td className="remove-col">
                         <button
-                        aria-label={`Eliminar ${clase.name}`}
-                        onClick={() => handleRemove(clase.id)}
-                        >
-                        X
+                            aria-label={`Eliminar ${clase.name}`}
+                            onClick={() => handleRemove(clase.id)}
+                            >
+                            X
                         </button>
-                    </td>
+                        </td>
+                    )}
+
                     </tr>
                 ))}
                 </tbody>

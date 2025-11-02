@@ -23,12 +23,27 @@ interface ClaseHorario {
     };
 }
 
-const FRANJAS_HORARIAS = [
+interface errorState {
+    error: boolean;
+    message: string;
+}
+
+const FRANJAS_HORARIAS_MAÑANA = [
     { label: '07:00 a 08:00', horaInicio: '07:00' },
     { label: '08:00 a 09:00', horaInicio: '08:00' },
     { label: '09:00 a 10:00', horaInicio: '09:00' },
     { label: '10:00 a 11:00', horaInicio: '10:00' },
     { label: '11:00 a 12:00', horaInicio: '11:00' },
+    { label: '12:00 a 13:00', horaInicio: '12:00' },
+];
+const FRANJAS_HORARIAS_TARDE = [
+    { label: '13:00 a 14:00', horaInicio: '13:00' },
+    { label: '14:00 a 15:00', horaInicio: '14:00' },
+    { label: '15:00 a 16:00', horaInicio: '15:00' },
+    { label: '16:00 a 17:00', horaInicio: '16:00' },
+    { label: '17:00 a 18:00', horaInicio: '17:00' },
+    { label: '18:00 a 19:00', horaInicio: '18:00' },
+    { label: '19:00 a 20:00', horaInicio: '19:00' },
 ];
 
 const DIAS_SEMANA = [
@@ -43,6 +58,8 @@ const DIAS_SEMANA = [
 export default function ClassCalendar() {
     const [clases, setClases] = useState<ClaseHorario[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<ClaseHorario[]>([]);
+    const [turnoMañana, setTurnoMañana] = useState<boolean>(true);
+    const [error, setError] = useState<errorState>({error: false, message: ''});
 
     const navigate = useNavigate();
 
@@ -70,7 +87,10 @@ export default function ClassCalendar() {
 
     function handleSendClasses(){
         //falta - VALIDACIONES para que no seleccionen el mismo horario y dia 
-        //falta - VALIDACIONES para que no seleccionen mas de 6 clases
+        if(selectedClasses.length > 6){
+            setError({error: true, message: 'No se pueden seleccionar más de 6 clases.'});
+            return;
+        }
         console.log('Clases seleccionadas para agregar:', selectedClasses);
         localStorage.setItem('clases',JSON.stringify(selectedClasses));
         setSelectedClasses([]);
@@ -85,19 +105,24 @@ export default function ClassCalendar() {
     return (
         <div className="container-calendar">
         <h1 className="titulo-clases">Calendario de Clases</h1>
-        <p className="tableDescription">
-            Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito. Una vez agregada,
-            podrás ver el detalle antes de confirmar tu inscripción.
-        </p>
-        {
-            selectedClasses.length > 0 && (
+
+        <div className="container-elements-calendar">
+                <select
+                    className='select-turno' 
+                    value={turnoMañana ? "mañana" : "tarde"} 
+                    onChange={(e) => setTurnoMañana(e.target.value === "mañana")}>
+                    <option value="mañana">Mañana</option>
+                    <option value="tarde">Tarde</option>
+                </select>
             <div className="footer-calendar">
-                <button className="btn-agregar" onClick={handleSendClasses}>
+                <button 
+                className={selectedClasses.length > 0 ? "btn-agregar" : "btn-agregar disabled"} 
+                onClick={selectedClasses.length > 0 ? handleSendClasses : undefined}>
                     Agregar Clases
                 </button>
             </div>
-            )
-        }
+        </div>
+        {error.error && <p className="error-message">{error.message}</p>}
         <div className="horario-grid">
             <div className="celda-header celda-hora">HORA</div>
             {DIAS_SEMANA.map((dia) => (
@@ -105,8 +130,8 @@ export default function ClassCalendar() {
                     {dia.nombre}
                 </div>
             ))}
-
-            {FRANJAS_HORARIAS.map((franja) => (
+            {(
+                turnoMañana ? FRANJAS_HORARIAS_MAÑANA : FRANJAS_HORARIAS_TARDE).map((franja) => (
                 <React.Fragment key={franja.horaInicio}>
                     <div className="celda-hora">{franja.label}</div>
 
@@ -139,6 +164,10 @@ export default function ClassCalendar() {
                 </React.Fragment>
             ))}
         </div>
-        </div>
-    );
+        <p className="tableDescription">
+            Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito. Una vez agregada,
+            podrás ver el detalle antes de confirmar tu inscripción.
+        </p>
+    </div>
+    )  
 };
