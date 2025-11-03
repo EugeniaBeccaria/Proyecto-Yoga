@@ -69,7 +69,7 @@ function Register(){
                 setLoading(false)
                 setSuccess(false)
                 if(axios.isAxiosError(err) && err.response?.status === 400){
-                    setError({act:true, message:'Ya existe una cuenta con este email'})
+                    setError({act:true, message: err.response?.data.errors[0].msg})
                 }
                 else setError({act:true, message:'Error del servidor, intente más tarde'})
                 console.log('Error: ',err)

@@ -3,7 +3,6 @@ import Profile from "../components/Profile";
 
 
 import {useEffect, useState} from 'react'
-import { useNavigate } from 'react-router-dom';
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from "react-router-hash-link";
 import axios from 'axios';
@@ -15,7 +14,6 @@ interface User {
 }
 
 export default function Login(){
-    const navigate = useNavigate()
 
     const [login, setLogin] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
@@ -87,18 +85,7 @@ export default function Login(){
             setLoading(false)
             setSuccess(true)
             setTimeout(()=>{
-                if(userData.role === 'admin'){
-                    navigate('/')
-                    window.location.reload()
-                }
-                if(userData.role === 'profesor'){
-                    window.location.reload()
-                    navigate('/')
-                }
-                else{
-                    window.location.reload()
-                    navigate('/')
-                }
+                window.location.reload()
             },1300)
         }
         

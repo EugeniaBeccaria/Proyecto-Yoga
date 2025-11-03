@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/ClassCart.css";
 import { useNavigate } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 interface SelectedClass {
     id: number;
@@ -21,11 +22,20 @@ interface SelectedClass {
         startTime: string;
     };
 }
+// interface errorState {
+//     error: boolean;
+//     message: string;
+// }
 
     const ClassCart: React.FC = () => {
     
     const [selectedClasses, setSelectedClasses] = useState<SelectedClass[]>([]);
     const [membershipType, setMembershipType] = useState<string>("");
+    const [redirect, setRedirect] = useState<boolean>(false);
+    // const [error, setError] = useState<errorState>({
+    //     error: false,
+    //     message: "",
+    // });
 
     const navigate = useNavigate();
 
@@ -59,8 +69,8 @@ interface SelectedClass {
     const handleClickCompra = async() => {
         const user = localStorage.getItem("user");
         if(!user){
+            setRedirect(true);
             console.log("Usuario no autenticado, redirigiendo al login...");
-            navigate("/LoginPage");
             return;
         }
         if (user){
@@ -135,6 +145,12 @@ interface SelectedClass {
             <button onClick={handleClickCompra} className="summary-btn">Aceptar</button>
             </div>
         </div>
+            {redirect && (
+                <div className="redirect">
+                    <p className="text-redirect">Inicia Sesión para completar la compra,</p>
+                    <HashLink smooth to="/LoginPage" className="link-redirect">Iniciar sesión</HashLink>
+                </div>
+            )}
         </div>
     );
     };

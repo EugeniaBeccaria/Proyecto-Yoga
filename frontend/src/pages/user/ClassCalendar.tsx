@@ -86,11 +86,26 @@ export default function ClassCalendar() {
         }}
 
     function handleSendClasses(){
-        //falta - VALIDACIONES para que no seleccionen el mismo horario y dia 
+        const hasArray = new Set<string>();
+        let hasConflict = false;
+        for(const clase of selectedClasses){
+            if(hasArray.has(`${clase.day.id}-${clase.time.id}`)){
+                setError({error: true, message: 'No se pueden seleccionar dos clases en el mismo día y horario'});
+                hasConflict = true;
+                break;
+            }
+            else{
+                hasArray.add(`${clase.day.id}-${clase.time.id}`);
+            }
+        }
+        if(hasConflict) return;
+        else setError({error: false, message: ''});
+
         if(selectedClasses.length > 6){
-            setError({error: true, message: 'No se pueden seleccionar más de 6 clases.'});
+            setError({error: true, message: 'No se pueden seleccionar más de 6 clases'});
             return;
         }
+        setError({error: false, message: ''});
         console.log('Clases seleccionadas para agregar:', selectedClasses);
         localStorage.setItem('clases',JSON.stringify(selectedClasses));
         setSelectedClasses([]);
