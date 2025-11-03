@@ -1,8 +1,9 @@
 import "../styles/LoginRegisterPage.css"
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext.tsx";
+
 import Profile from "../components/Profile";
-
-
-import {useEffect, useState} from 'react'
+import { useState } from 'react'
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from "react-router-hash-link";
 import axios from 'axios';
@@ -14,32 +15,33 @@ interface User {
 }
 
 export default function Login(){
+    const { login, logout } = useContext(AuthContext);
 
-    const [login, setLogin] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
-    const [loading, setLoading] = useState<boolean>(false)
+    const [userLogin, setUserLogin] = useState<boolean>(false)
     const [formData, setFormData] = useState<User>({email:'',password:''})
+    
+    const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
+    
+    const [error, setError] = useState<boolean>(false)
     const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
 
-    useEffect(()=>{
-        const userSerializado = localStorage.getItem('user')
-        if(userSerializado){
-            const user = JSON.parse(userSerializado)
-            setLoading(false)
-            setLogin(true)
-            setFormData({email: user.email, password: ''})
+    useEffect(() => {
+        const userStoraged = localStorage.getItem('user')
+        if(userStoraged){
+            setUserLogin(true)
         }
-    },[])
+    }, [])
 
     function handleClickCloseSession(){
-        localStorage.removeItem('user')
         setErrCloseSession(false)
-        setLogin(false)
-        setFormData({email: '', password: ''})
         deleteCookies()
-        window.location.reload()
+        setSuccess(false)
+        setUserLogin(false)
+        setFormData({email: '', password: ''})
+        logout()
     }
+
     async function deleteCookies(){
         try{ // las cookies se envian en cada request
             const resp = await axios.post('http://localhost:3000/auth/logout',{},{
@@ -79,13 +81,14 @@ export default function Login(){
                 setLoading(false)
                 setError(true)
                 throw new Error(response.data.message || 'Error al iniciar sesión')}        
+            
                 console.log('Usuario logueado, nombre: ',userData.name)
             
-            localStorage.setItem('user',JSON.stringify(userData))
             setLoading(false)
             setSuccess(true)
             setTimeout(()=>{
-                window.location.reload()
+                login(userData)
+                setUserLogin(true)
             },1300)
         }
         
@@ -107,7 +110,7 @@ export default function Login(){
         <>
             <div id="top" className="form-box-login">
                 <form className="form login" onSubmit={handleSubmit}>
-                    {login?
+                    {userLogin?
                         <div className="profile">
                             <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
                         </div>

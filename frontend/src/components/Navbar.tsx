@@ -1,54 +1,26 @@
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/Navbar.css"
 import { HashLink } from 'react-router-hash-link';
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import LogoIcon from './LogoIcon';
-
-interface User{
-  id: number,
-  email:string,
-  role:string
-}
+import { AuthContext } from '../context/AuthContext.tsx';
+import { useContext } from 'react';
 
 function Navbar() {
-  const hasFetched = useRef(false); // ← Para evitar doble fetch debido al strict mode 
   const [showed, setShowed] = useState<boolean>(false)
-  const [user ,setUser] = useState<User>({  
-    id: 0,
-    email:'',
-    role:''})
 
-  async function loadUser(){
-    const userSerializado = localStorage.getItem('user')
-    if (userSerializado){
-      const userSave = JSON.parse(userSerializado)
-      setUser({
-        id:userSave.id,
-        email:userSave.email,
-        role:userSave.role
-      });
-    }
-  }
-  
-  useEffect(()=>{
-    loadUser()
-  },[])
-  
-  useEffect(()=>{
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-  },[user])
+  const {user} = useContext(AuthContext);
   
   let isAdmin = false
   let isProfessor = false
   let isClient = false
-  if(user.role === 'admin'){
+  if(user?.role === 'admin'){
     isAdmin = true
   }
-  if(user.role === "professor"){
+  if(user?.role === "professor"){
     isProfessor = true
   }
-  if(user.role === "client"){
+  if(user?.role === "client"){
     isClient = true
   }
   

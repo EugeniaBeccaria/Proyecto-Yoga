@@ -81,7 +81,14 @@ interface SelectedClass {
     }
     return (
         <div className="container">
-        <button onClick={() => window.history.back()} className="btn-back">Volver</button>
+        <button 
+            onClick={() => {
+                window.history.back();
+                localStorage.removeItem("clases");
+                }} 
+            className="btn-back">
+            Volver
+        </button>
         <h2 className="page-title">Mi membresía</h2>
 
         <div className="membership-content">
