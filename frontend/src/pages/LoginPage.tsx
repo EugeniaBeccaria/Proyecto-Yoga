@@ -6,6 +6,9 @@ import Profile from "../components/Profile";
 import { useState } from 'react'
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from "react-router-hash-link";
+import { useGoogleLogin } from '@react-oauth/google';
+import SocialButton from '../components/SocialButton';
+import googleLogo from '/LogoGoogle.png';
 import axios from 'axios';
 
 
@@ -105,6 +108,55 @@ export default function Login(){
             setFormData({email: '',password: ''})
         }
     }
+
+const handleGoogleLogin = useGoogleLogin({
+        flow: 'auth-code', // Usamos el 'code' flow para que el backend lo verifique
+        onSuccess: async (codeResponse) => {
+            console.log('Google login code:', codeResponse.code);
+            setLoading(true);
+            setError(false);
+            setSuccess(false);
+
+            try {
+                const response = await axios.post("http://localhost:3000/auth/google/login",
+                    {
+                        code: codeResponse.code
+                    },
+                    { withCredentials: true });
+
+                const userData = response.data.user;
+                if (response.status !== 200) {
+                    setLoading(false);
+                    setError(true);
+                    throw new Error(response.data.message || 'Error al iniciar sesión con Google');
+                }
+
+                console.log('Usuario logueado con Google, nombre: ', userData.name);
+                
+                // lo mismo que el login normal
+                setLoading(false);
+                setSuccess(true);
+                setTimeout(() => {
+                    login(userData); //  Del AuthContext
+                    setUserLogin(true);
+                }, 1300);
+
+            } catch (err) {
+                setLoading(false);
+                setError(true);
+                if (axios.isAxiosError(err)) {
+                    console.log('Error del servidor (Google):', err.response?.data?.message || err.message);
+                } else {
+                    console.log('Error inesperado (Google):', err);
+                }
+            }
+        },
+        onError: (error) => {
+            console.error('Google login error:', error);
+            setError(true);
+            alert('Error al iniciar sesión con Google');
+        }
+    });    
         
     return(
         <>
@@ -167,6 +219,17 @@ export default function Login(){
                                 Cargando...
                                 </div>
                             }
+
+                            <div className="social-login-divider">
+                                <span>o</span>
+                            </div>
+
+                            <SocialButton
+                                platform="google"
+                                logoSrc={googleLogo}
+                                onClick={() => handleGoogleLogin()} // Llamamos a la función del hook
+                            />
+                            
                             <div className="form-section">
                                 <p>¿No tienes una cuenta? <HashLink smooth to = "/RegisterPage">Registrarse</HashLink></p>
                             </div>

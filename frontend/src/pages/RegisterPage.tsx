@@ -1,13 +1,14 @@
 import "../styles/LoginRegisterPage.css"
 /*import FacebookAuth from "../components/FacebookAuth";*/
 import SocialButton from '../components/SocialButton';
-
-import {useState} from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios';
 import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
-/*import { GoogleLogin } from '@react-oauth/google';*/
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import googleLogo from '/LogoGoogle.png';
+import { AuthContext } from "../context/AuthContext.tsx";
 
 
 interface User {
@@ -23,6 +24,7 @@ interface Error {
 }
 
 function Register(){
+    const { login } = useContext(AuthContext);
     const [error, setError] = useState<Error>({act:false, message:''})
     const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
@@ -35,66 +37,110 @@ function Register(){
     
     const Navigate = useNavigate()
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         setLoading(true)
+        setError({ act: false, message: '' }) 
+
         const form = e.target as HTMLFormElement;
-        setUser({
-            name: (form.elements.namedItem('name') as HTMLInputElement).value,
-            email:(form.elements.namedItem('email') as HTMLInputElement).value,
-            password:(form.elements.namedItem('password') as HTMLInputElement).value,
-            passwordRepeat:(form.elements.namedItem('passwordRepeat') as HTMLInputElement).value            
+        const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+        const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+        const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+        const passwordRepeat = (form.elements.namedItem('passwordRepeat') as HTMLInputElement).value;
+        setUser({ // Actualizo el estado 'user' DESPUÉS de leer los valores
+            name: name,
+            email: email,
+            password: password,
+            passwordRepeat: passwordRepeat
         });
-    if(user.password === user.passwordRepeat){
-        setError({act:false, message:''})
-        sendFormRegister()
+        
+        if (password === passwordRepeat) { 
+            sendFormRegister(name, email, password) 
+        } else {
+            setError({ act: true, message: 'Las contraseñas no coinciden' })
+            setLoading(false); 
         }
-    else setError({ act:true, message:'Las contraseñas no coinciden'})
     }
 
-    async function sendFormRegister(){
-        try{
+async function sendFormRegister(name:string, email:string, password:string) {
+        try {
             const response = await axios.post("http://localhost:3000/api/users?role=client", {
-            name: user.name,
-            email: user.email,  
-            password: user.password })
+                name: name,
+                email: email,
+                password: password
+            })
 
-            // console.log(response.data.message)
             setLoading(false)
             setSuccess(true)
-            console.log(response.data.message,'// Datos:',response.data.data)
+            console.log(response.data.message, '// Datos:', response.data.data)
             Navigate('/LoginPage')
         }
-            catch(err){
-                setLoading(false)
-                setSuccess(false)
-                if(axios.isAxiosError(err) && err.response?.status === 400){
-                    setError({act:true, message: err.response?.data.errors[0].msg})
-                }
-                else setError({act:true, message:'Error del servidor, intente más tarde'})
-                console.log('Error: ',err)
+        catch (err) {
+            setLoading(false)
+            setSuccess(false)
+            if (axios.isAxiosError(err) && err.response?.status === 400) {
+                setError({ act: true, message: err.response?.data.errors[0].msg })
             }
-            finally{
-                setLoading(false)
-                setUser({
-                    name: '',
-                    email: '',
-                    password: '',
-                    passwordRepeat:''})
-                }
+            else setError({ act: true, message: 'Error del servidor, intente más tarde' })
+            console.log('Error: ', err)
         }
+        finally {
+            setLoading(false)
+            setUser({
+                name: '',
+                email: '',
+                password: '',
+                passwordRepeat: ''
+            })
+        }
+    }
 
-    /*async function handleGoogleLogin(credential: string) {
-        try {
-            const response = await axios.post("http://localhost:3000/api/user/google", {
-                token: credential
-            });
-            console.log("Usuario de Google registrado: ", response.data);
-        } catch (err) {
-            console.log("Error con Google Sign-In: ", err)
+const handleGoogleLogin = useGoogleLogin({
+        flow: 'auth-code',
+        onSuccess: async (codeResponse) => {
+            console.log('Google login code:', codeResponse.code);
+            setLoading(true);
+            setError({ act: false, message: '' }); 
+            setSuccess(false);
+
+            try {
+                const response = await axios.post("http://localhost:3000/auth/google/login",
+                    {
+                        code: codeResponse.code
+                    },
+                    { withCredentials: true });
+
+                const userData = response.data.user;
+                if (response.status !== 200) {
+                    setLoading(false);
+                    setError({ act: true, message: response.data.message || 'Error con Google' }); 
+                    throw new Error(response.data.message || 'Error al iniciar sesión con Google');
+                }
+
+                console.log('Usuario logueado/registrado con Google, nombre: ', userData.name);
+
+                setLoading(false);
+                setSuccess(true);
+                setTimeout(() => {
+                    login(userData); 
+                }, 1300);
+
+            } catch (err) {
+                setLoading(false);
+                if (axios.isAxiosError(err)) {
+                    setError({ act: true, message: err.response?.data?.message || err.message }); 
+                    console.log('Error del servidor (Google):', err.response?.data?.message || err.message);
+                } else {
+                    setError({ act: true, message: 'Error inesperado de Google' }); 
+                    console.log('Error inesperado (Google):', err);
+                }
+            }
+        },
+        onError: (error) => {
+            console.error('Google login error:', error);
+            setError({ act: true, message: 'Error al iniciar sesión con Google' }); 
         }
-    }*/
-    
+    });
 
     return(
         <>
@@ -195,20 +241,21 @@ function Register(){
                         <span>O</span>
                     </div>
                     <div className="otros-inicios-sesion">
-                        {/*<GoogleLogin
-                            onSuccess={(credentialResponse) => {
-                                if (credentialResponse.credential) {
-                                    handleGoogleLogin(credentialResponse.credential);
-                                }
-                            }}
-                            onError={() => {
-                                console.log("Error al inciar sesión con Google.");
-                            }}
-                        />*/}
-                        <SocialButton platform="google" logoSrc="/LogoGoogle.png" />
-                        <SocialButton platform="facebook" logoSrc="LogoFacebook.png" />
-                        {/*<FacebookAuth />*/}
-                        <SocialButton platform="apple" logoSrc="/LogoApple.png" />
+                        <SocialButton 
+                                platform="google" 
+                                logoSrc="/LogoGoogle.png" 
+                                onClick={() => handleGoogleLogin()} // <-- SOLUCIÓN AL ERROR
+                            />
+                            <SocialButton 
+                                platform="facebook" 
+                                logoSrc="LogoFacebook.png" 
+                                onClick={() => alert('Facebook no implementado')} // <-- Añadido para evitar error
+                            />
+                            <SocialButton 
+                                platform="apple" 
+                                logoSrc="/LogoApple.png" 
+                                onClick={() => alert('Apple no implementado')} // <-- Añadido para evitar error
+                            />
                     </div>
                     </form>
                     

@@ -47,6 +47,49 @@ async function login(req:Request,res:Response, next:NextFunction){
 
 }
 
+async function loginWithGoogle(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { code } = req.body; 
+        const loginData = await authService.loginWithGoogle(code);
+        const { token, refreshToken, user: userValidation } = loginData;
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 1 * 24 * 60 * 60 * 1000, //1 dia
+            secure: true
+        })
+
+        res.cookie('accessToken', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 60 * 60 * 1000, //1 hora
+            secure: true
+        })
+
+        res.json({
+            success: true,
+            user: {
+                id: userValidation.id,
+                email: userValidation.email,
+                role: userValidation.role,
+                name: userValidation.name,
+            }
+        });
+
+    } catch (e) {
+        console.log(e)
+        if (e instanceof AuthError) {
+            return res.status(401).json({ message: e.message })
+        }
+        else {
+            res.status(500).json({ message: 'Error en el servidor' })
+        }
+    }
+}
+
 async function logout(req:Request,res:Response){
     try{
 
@@ -69,4 +112,4 @@ async function logout(req:Request,res:Response){
     }
 }
 
-export {login,logout}
+export {login,logout, loginWithGoogle}

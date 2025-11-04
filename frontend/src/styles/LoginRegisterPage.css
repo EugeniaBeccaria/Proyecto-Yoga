@@ -272,3 +272,50 @@
 .profile{
   color: #2f5b46;
 }
+
+.social-login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #888;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.social-login-divider span {
+  padding: 0 10px;
+  font-size: 0.9em;
+}
+
+.social-login-divider::before,
+.social-login-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para SocialButton */
+.form .google {
+  background-color: #ffffff;
+  color: #757575;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.form .google:hover {
+  background-color: #f5f5f5;
+}
+
+.form .google img {
+  width: 20px;
+  height: 20px;
+}
