@@ -1,15 +1,19 @@
+### (Prueba 1) Verificar que el servidor responde
+GET http://localhost:3000/api/classes
 
 
-GET http://localhost:3000/api/days
-###
- http://localhost:3000/api/classes/professor/classes
-###
-
-POST http://localhost:3000/api/classs
+### (Prueba 2) Crear la clase para el profesor Zarah
+POST http://localhost:3000/api/classes
 Content-Type: application/json
 
 {
-    "name": "Clase de Yoga Avanzado",
-    "description": "Una clase para estudiantes avanzados que buscan profundizar en su práctica de yoga.",
-    "professorId": 1
-    }
+  "classData": {
+    "name": "Yoga Restaurativo",
+    "description": "Una clase suave para relajar el cuerpo y la mente.",
+    "capacityLimit": 15,
+    "day": 1, 
+    "time": 2, 
+    "room": 3, 
+    "professor": 3
+  }
+}

@@ -17,11 +17,12 @@ export class User extends BaseEntity {
     @Property({ nullable: false })
     email!: string
     
+    // se cambian phone y dni a string ya que son numeros demasiado grandes para tratar como enteros
     @Property({ nullable: true })
-    phone?: number
+    phone?: string
 
     @Property({ nullable: true })
-    dni?: number
+    dni?: string
 
     @Property({ nullable: true })
     role?: string = 'client'

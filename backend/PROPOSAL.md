@@ -10,8 +10,7 @@
 
 
 ### Repositorios (A definir)
-* [frontend app](http://hyperlinkToGihubOrGitlab)
-* [backend app](http://hyperlinkToGihubOrGitlab)
+* [fullstackapp](http://hyperlinkToGihubOrGitlab)
 
 ## Tema
 ### Descripción
@@ -19,8 +18,7 @@ Shanti Yoga es un estudio que ofrece clases semanales y talleres presenciales de
 La operación se gestiona mediante un sistema que facilita la administración general del estudio.
 
 ### Modelo: Diagrama Entidad-Relación.
-![DER-yoga-DER V2 drawio](https://github.com/user-attachments/assets/56004bc0-fb75-4173-9c72-f8955166bd77)
-
+<img width="826" height="744" alt="image" src="https://github.com/user-attachments/assets/05cf4216-6e21-4af5-80c6-075a419de085" />
 
 
 ## Alcance Funcional 
@@ -31,16 +29,16 @@ La operación se gestiona mediante un sistema que facilita la administración ge
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Profesores<br>2. CRUD Salones<br>3. CRUD TiposMembresias<br>4. CRUD Dias<br>5. CRUD Horas|
-|CRUD dependiente|1. CRUD Membresia {depende de} CRUD TiposMembresia<br>2. CRUD Precios {depende de} CRUD TiposMembresias<br>3. CRUD Clases {depende de} CRUD Salones|
-|Listado<br>+<br>detalle| 1. Listado de membresías activas, muestra nombre del alumno, tipo de membresía y fecha de inicio => detalle muestra duración restante, estado de pago y acceso a clases.<br> 2. Listado de alumnos registrados inscriptos en una clase, muestra nombre, apellido, email y teléfono => detalle muestra los datos completos del alumno y la clase a la que está inscripto.|
-|CUU/Epic|1. Obtener una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>4. Realizar pago|
+|CRUD simple|1. CRUD User<br>2. CRUD Room<br>3. CRUD MembershipType<br>4. CRUD Class<br>5. CRUD Taller|
+|CRUD dependiente|1. CRUD Membership {depende de} CRUD MembershipType<br>2. CRUD MembershipPrice {depende de} CRUD MembershipType<br>3. CRUD Class {depende de} CRUD Room|
+|Listado<br>+<br>detalle| 1. Listado de membresías activas, muestra nombre del alumno, tipo de membresía y fecha de inicio => detalle muestra duración restante, estado de pago y acceso a clases.<br> 2. Listado de alumnos registrados inscriptos en una clase para un profesor determinado, muestra nombre, apellido del alumno y cantidad de inscriptos=> detalle muestra los datos completos del alumno y la clase a la que está inscripto.|
+|CUU/Epic|1. Inscribirse una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>4. Crear clases|
 
 
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Salones<br>2. CRUD TiposMembresias<br>3. CRUD Dias<br>4. CRUD Horas<br>5. CRUD Membresia<br>6. CRUD Precios<br>7. CRUD Clases<br>8. CRUD Talleres<br>9. CRUD Alumnos<br>10. CRUD Profesores<br>11. CRUD Administradores |
+|CRUD |1. CRUD Room<br>2. CRUD MembershipType<br>3. CRUD Day<br>4. CRUD Time<br>5. CRUD Membership<br>6. CRUD MembershipPrice<br>7. CRUD Taller<br>8. CRUD Class<br>9. CRUD User<br>
 |CUU/Epic|1. Obtener una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>4. Realizar pago<br>5. Modificar Clase<br>6. Modificar Horarios|
 
 

@@ -1,23 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 
-    
-/*body {
-  background-color: pink;
-  background-image: url("/FlorLogo.png");
-  background-repeat: repeat;
-  margin: 0;
-  padding: 0;
-  color: #ffff;
-  background-size: 200px;
-}*/
-
-/* #2f5b46 verde , #d08383 rosa*/
-
 .form {
   min-width: 400px;
   max-width: 400px;
-  /*min-height: 500px;*/
   background: #ffffff;
   overflow: hidden;
   border-radius: 20px;
@@ -248,7 +234,7 @@
   display: flex;
   justify-content: center;   
   align-items: flex-start;      
-  height: 100vh;             
+  height: 90vh;             
   width: 100%;
   margin: 0;                 
   padding-top: 40px;           
@@ -281,4 +267,55 @@
 .login-logo:hover {
   transform: scale(1.05);
   opacity: 1;
+}
+
+.profile{
+  color: #2f5b46;
+}
+
+.social-login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #888;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.social-login-divider span {
+  padding: 0 10px;
+  font-size: 0.9em;
+}
+
+.social-login-divider::before,
+.social-login-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para SocialButton */
+.form .google {
+  background-color: #ffffff;
+  color: #757575;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.form .google:hover {
+  background-color: #f5f5f5;
+}
+
+.form .google img {
+  width: 20px;
+  height: 20px;
 }

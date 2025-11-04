@@ -1,11 +1,14 @@
 import "../styles/LoginRegisterPage.css"
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext.tsx";
+
 import Profile from "../components/Profile";
-
-
-import {useEffect, useState} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from "react-router-hash-link";
+import { useGoogleLogin } from '@react-oauth/google';
+import SocialButton from '../components/SocialButton';
+import googleLogo from '/LogoGoogle.png';
 import axios from 'axios';
 
 
@@ -15,33 +18,33 @@ interface User {
 }
 
 export default function Login(){
-    const navigate = useNavigate()
+    const { login, logout } = useContext(AuthContext);
 
-    const [login, setLogin] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
-    const [loading, setLoading] = useState<boolean>(false)
+    const [userLogin, setUserLogin] = useState<boolean>(false)
     const [formData, setFormData] = useState<User>({email:'',password:''})
+    
+    const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
+    
+    const [error, setError] = useState<boolean>(false)
     const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
 
-    useEffect(()=>{
-        const userSerializado = localStorage.getItem('user')
-        if(userSerializado){
-            const user = JSON.parse(userSerializado)
-            setLoading(false)
-            setLogin(true)
-            setFormData({email: user.email, password: ''})
+    useEffect(() => {
+        const userStoraged = localStorage.getItem('user')
+        if(userStoraged){
+            setUserLogin(true)
         }
-    },[])
+    }, [])
 
     function handleClickCloseSession(){
-        localStorage.removeItem('user')
         setErrCloseSession(false)
-        setLogin(false)
-        setFormData({email: '', password: ''})
         deleteCookies()
-        window.location.reload()
+        setSuccess(false)
+        setUserLogin(false)
+        setFormData({email: '', password: ''})
+        logout()
     }
+
     async function deleteCookies(){
         try{ // las cookies se envian en cada request
             const resp = await axios.post('http://localhost:3000/auth/logout',{},{
@@ -81,24 +84,14 @@ export default function Login(){
                 setLoading(false)
                 setError(true)
                 throw new Error(response.data.message || 'Error al iniciar sesión')}        
+            
                 console.log('Usuario logueado, nombre: ',userData.name)
             
-            localStorage.setItem('user',JSON.stringify(userData))
             setLoading(false)
             setSuccess(true)
             setTimeout(()=>{
-                if(userData.role === 'admin'){
-                    navigate('/')
-                    window.location.reload()
-                }
-                if(userData.role === 'profesor'){
-                    window.location.reload()
-                    navigate('/')
-                }
-                else{
-                    window.location.reload()
-                    navigate('/')
-                }
+                login(userData)
+                setUserLogin(true)
             },1300)
         }
         
@@ -115,13 +108,64 @@ export default function Login(){
             setFormData({email: '',password: ''})
         }
     }
+
+const handleGoogleLogin = useGoogleLogin({
+        flow: 'auth-code', // Usamos el 'code' flow para que el backend lo verifique
+        onSuccess: async (codeResponse) => {
+            console.log('Google login code:', codeResponse.code);
+            setLoading(true);
+            setError(false);
+            setSuccess(false);
+
+            try {
+                const response = await axios.post("http://localhost:3000/auth/google/login",
+                    {
+                        code: codeResponse.code
+                    },
+                    { withCredentials: true });
+
+                const userData = response.data.user;
+                if (response.status !== 200) {
+                    setLoading(false);
+                    setError(true);
+                    throw new Error(response.data.message || 'Error al iniciar sesión con Google');
+                }
+
+                console.log('Usuario logueado con Google, nombre: ', userData.name);
+                
+                // lo mismo que el login normal
+                setLoading(false);
+                setSuccess(true);
+                setTimeout(() => {
+                    login(userData); //  Del AuthContext
+                    setUserLogin(true);
+                }, 1300);
+
+            } catch (err) {
+                setLoading(false);
+                setError(true);
+                if (axios.isAxiosError(err)) {
+                    console.log('Error del servidor (Google):', err.response?.data?.message || err.message);
+                } else {
+                    console.log('Error inesperado (Google):', err);
+                }
+            }
+        },
+        onError: (error) => {
+            console.error('Google login error:', error);
+            setError(true);
+            alert('Error al iniciar sesión con Google');
+        }
+    });    
         
     return(
         <>
             <div id="top" className="form-box-login">
                 <form className="form login" onSubmit={handleSubmit}>
-                    {login?
-                        <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
+                    {userLogin?
+                        <div className="profile">
+                            <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
+                        </div>
                     :<>
                             <img src="/logo-verde.png" alt="Logo Shanti Yoga" className="login-logo" />
                             <span className="title">INICIAR SESIÓN</span>
@@ -175,6 +219,17 @@ export default function Login(){
                                 Cargando...
                                 </div>
                             }
+
+                            <div className="social-login-divider">
+                                <span>o</span>
+                            </div>
+
+                            <SocialButton
+                                platform="google"
+                                logoSrc={googleLogo}
+                                onClick={() => handleGoogleLogin()} // Llamamos a la función del hook
+                            />
+                            
                             <div className="form-section">
                                 <p>¿No tienes una cuenta? <HashLink smooth to = "/RegisterPage">Registrarse</HashLink></p>
                             </div>

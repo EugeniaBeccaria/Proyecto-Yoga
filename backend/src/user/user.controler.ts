@@ -1,10 +1,11 @@
 import {Request, Response, NextFunction} from 'express'
 import { orm } from '../shared/DB/orm.js'
 import { User } from './user.entity.js'
-import { ValidationError } from '@mikro-orm/core'
+import { IntegerType, ValidationError } from '@mikro-orm/core'
 import bcrypt, { genSalt } from 'bcrypt'
+import { userService } from './user.service.js'
 
-const em = orm.em
+const em = orm.em;
 
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
@@ -61,43 +62,13 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-      const userData = req.body
-      console.log(userData)
+      const {name, lastname, email, phone, dni, password} = req.body
+      const role = (req.query.role) as string;
+      const registerDataUser = await userService.register(name, lastname, email, phone, dni, password, role)
 
-      console.log("Buscando usuarios existentes....")
-
-      //validar que no exista un mismo email
-      const email = userData.email
-      const exist = await em.findOne(User,{email:email})
-      if (exist) 
-        return res.status(400).json({error:'Ya existe una cuenta con este email'})
-      
-      console.log("Encriptando la contraseña....")
-
-      //Encriptar contraseña
-      const salt = await genSalt()
-      const hashPassword = await bcrypt.hash(userData.password,salt)
-
-      console.log("Instanciando el objeto....")
-
-      const user = em.create(User, {
-        name: userData.name,
-        email: userData.email,
-        password: hashPassword
-      });
-      
-      //Persistir en BD
-      await em.persistAndFlush(user);
-
-      res.status(201).json({ message: 'user created', data: {
-        name: user.name,
-        email: user.email
-      } })
+      res.status(201).json({ message: 'user created', data: registerDataUser })
     } 
     catch (error: any) {
-      if (error instanceof ValidationError)
-        return res.status(400).json({message: 'Datos invalidos', error:error})
-
       res.status(500).json({ message: error.message })
     }
 }

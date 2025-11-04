@@ -5,6 +5,7 @@ import { User } from '../user/user.entity.js'
 import { Room } from '../room/room.entity.js'
 import { Day } from '../classs/day.entity.js';
 import { Time } from '../classs/time.entity.js';
+import { MembershipType } from '../membership/membershipType.entity.js';
 import bcrypt, { genSalt, hash } from 'bcrypt'
 
 
@@ -36,26 +37,27 @@ async function seedInitialData() {
         console.error('Error:', error);
     }
     // ================== USUARIO PROFESSOR ==================
-     try {
-    const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
-    if (!existingProfessor) {
-      const salt = await bcrypt.genSalt();
-      const hashPassword = await bcrypt.hash('profe001', salt);
+    try {
+        const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
+        if (!existingProfessor) {
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash('profe001', salt);
 
-      const userProfessor = em.create(User, {
-        email: 'profezarah@yoga.com',
-        name: 'Zarah',
-        password: hashPassword,
-        role: 'professor',
-      });
+        const userProfessor = em.create(User, {
+            email: 'profezarah@yoga.com',
+            name: 'Zarah',
+            password: hashPassword,
+            role: 'professor',
+        });
 
-      await em.persistAndFlush(userProfessor);
-      console.log(' Usuario profesor creado exitosamente');
-    } else {
-      console.log(' Ese profesor ya existe, se omite su creación.');
+        await em.persistAndFlush(userProfessor);
+        console.log(' Usuario profesor creado exitosamente');
+        } else {
+        console.log(' Ese profesor ya existe, se omite su creación.');
+        }
+    } catch (error) {
+        console.error(' Error creando profesor:', error);
     }
-  } catch (error) {
-    console.error(' Error creando profesor:', error)}
 
     // ================== ROOMS ==================
     try {
@@ -115,6 +117,23 @@ async function seedInitialData() {
         console.log("Times created successfully");
     } else {
         console.log("Times already created, skipping.");
+    }
+    
+    // ================== MEMBERSHIP TYPES ==================
+    const existingMembershipTypes = await em.find(MembershipType, {});
+    if (existingMembershipTypes.length === 0) {
+        const membershipTypes = [
+            em.create(MembershipType, { numOfClasses:1, description: "Membresía Básica (1-2 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses:2, description: "Membresía Básica (1-2 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses:3, description: "Membresía tipo 1 (2-4 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses:4, description: "Membresía tipo 1 (2-4 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses:5, description: "Membresía Full (4-6 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses:6, description: "Membresía Full (4-6 clases por semana)" }),
+        ];
+        await em.persistAndFlush(membershipTypes);
+        console.log("Membership types created successfully");
+    } else {
+        console.log("Membership types already created, skipping.");
     }
 }
 

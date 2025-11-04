@@ -1,62 +1,21 @@
 import {Request, Response, NextFunction} from 'express';
-import { orm } from '../shared/DB/orm.js';
-import { User } from '../user/user.entity.js';
-import { findOne } from '../taller/taller.controler.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv' //libreria para variables de entorno
-import { redirect } from 'react-router-dom';
-import { log } from 'console';
-
-dotenv.config()
-
-const em = orm.em
+import { AuthError,authService } from './auth.service.js';
 
 async function login(req:Request,res:Response, next:NextFunction){
     try{
-        // console.log(req.body)
         const email = req.body.email
         const password = req.body.password
-        if(!email || !password) 
-            return res.status(400).json({status:'Error',message:'Campos incompletos'})
 
-        //Validar existencia de email
-        const userValidation = await em.findOne(User,{email:email})
-        if (!userValidation)
-            return res.status(401).json({status:'Error',message:'Error durante login'})
-        console.log(userValidation)
-        
-        //hashea la password plana y la compara con la password hasheada (y sin la sal) almacenada en la bd
-        const correctLogin = await bcrypt.compare(password,userValidation.password)
-        if(!correctLogin) 
-            return res.status(401).json({status:'Error',message:'Error durante login'})
+        const loginData = await authService.login(email,password)
+        const { token, refreshToken, user: userValidation } = loginData;
 
-        //generar jsw
-        const jwtSecret = process.env.JWT_SECRET;
-        if (!jwtSecret) {
-            throw new Error('JWT_SECRET no está definido en las variables de entorno');
-        }
-
-        const refreshJwtSecret = process.env.REFRESH_JWT_SECRET 
-        if(!refreshJwtSecret)
-            throw new Error('REFRESH_JWT_SECRET no está definido en las variables de entorno');
-        
-        const refreshToken = jwt.sign(
-            {id:userValidation.id, email:userValidation.email, role:userValidation.role},
-            refreshJwtSecret,
-            {expiresIn: '7d'}
-        )
-        const token = jwt.sign(
-            { id:userValidation.id, email:userValidation.email, role:userValidation.role },
-            jwtSecret,
-            { expiresIn: '1h'});
-        
+         // Configurar las cookies        
         res.cookie('refreshToken',refreshToken,{
             httpOnly:true,
             sameSite: 'strict',
             path: '/',
-            maxAge: 7 * 24 * 60 * 60 * 1000, //7dias
-            secure:false            
+            maxAge: 1 * 24 * 60 * 60 * 1000, //1 dia
+            secure:true            
         })
 
         res.cookie('accessToken',token,{
@@ -64,7 +23,50 @@ async function login(req:Request,res:Response, next:NextFunction){
             sameSite: 'strict',
             path: '/',
             maxAge: 60 * 60 * 1000, //1 hora
-            secure:false
+            secure:true
+        })
+
+        res.json({success: true, 
+            user: {
+                id: userValidation.id,
+                email: userValidation.email,
+                role: userValidation.role,
+                name: userValidation.name
+            }
+        });
+    }
+    catch(e){
+        console.log(e)
+        if(e instanceof AuthError){
+            return res.status(401).json({message: e.message})
+        }
+        else {
+            res.status(500).json({message:'Error en el servidor'})
+        }
+    }
+
+}
+
+async function loginWithGoogle(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { code } = req.body; 
+        const loginData = await authService.loginWithGoogle(code);
+        const { token, refreshToken, user: userValidation } = loginData;
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 1 * 24 * 60 * 60 * 1000, //1 dia
+            secure: true
+        })
+
+        res.cookie('accessToken', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 60 * 60 * 1000, //1 hora
+            secure: true
         })
 
         res.json({
@@ -73,15 +75,19 @@ async function login(req:Request,res:Response, next:NextFunction){
                 id: userValidation.id,
                 email: userValidation.email,
                 role: userValidation.role,
-                name: userValidation.name
+                name: userValidation.name,
             }
-    });
-    }
-    catch(e){
-        console.log(e)
-        res.status(500).json({message:'Error en el servidor'})
-    }    
+        });
 
+    } catch (e) {
+        console.log(e)
+        if (e instanceof AuthError) {
+            return res.status(401).json({ message: e.message })
+        }
+        else {
+            res.status(500).json({ message: 'Error en el servidor' })
+        }
+    }
 }
 
 async function logout(req:Request,res:Response){
@@ -106,4 +112,4 @@ async function logout(req:Request,res:Response){
     }
 }
 
-export {login,logout}
+export {login,logout, loginWithGoogle}

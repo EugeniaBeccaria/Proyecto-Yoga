@@ -35,7 +35,7 @@ export async function verifyCookie(req:Request, res:Response,next:NextFunction){
     const refreshCookie = req.cookies.refreshToken
 
     if (!cookie && !refreshCookie){
-        return res.status(401).json({ error: 'No token' });
+        return res.status(401).json({ error: 'No autorizado' });
     }
     try{
         if(!cookie && refreshCookie){
