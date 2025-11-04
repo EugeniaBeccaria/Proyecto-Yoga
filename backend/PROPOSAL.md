@@ -9,8 +9,8 @@
 * 53275 Eugenia Beccaria
 
 
-### Repositorios (A definir)
-* [fullstackapp](http://hyperlinkToGihubOrGitlab)
+### Repositorio
+* [fullstack app](https://github.com/EugeniaBeccaria/Proyecto-Yoga)
 
 ## Tema
 ### Descripción
@@ -31,7 +31,7 @@ Regularidad:
 |:-|:-|
 |CRUD simple|1. CRUD User<br>2. CRUD Room<br>3. CRUD MembershipType<br>4. CRUD Class<br>5. CRUD Taller|
 |CRUD dependiente|1. CRUD Membership {depende de} CRUD MembershipType<br>2. CRUD MembershipPrice {depende de} CRUD MembershipType<br>3. CRUD Class {depende de} CRUD Room|
-|Listado<br>+<br>detalle| 1. Listado de membresías activas, muestra nombre del alumno, tipo de membresía y fecha de inicio => detalle muestra duración restante, estado de pago y acceso a clases.<br> 2. Listado de alumnos registrados inscriptos en una clase para un profesor determinado, muestra nombre, apellido del alumno y cantidad de inscriptos=> detalle muestra los datos completos del alumno y la clase a la que está inscripto.|
+|Listado<br>+<br>detalle|1. Listado de membresías activas, muestra nombre del alumno, tipo de membresía y fecha de inicio => detalle muestra duración restante, estado de pago y clases a las que está inscripto.<br>2. Listado de clases para un profesor determinado, muestra nombre de la clase, fecha, hora, salón y cantidad de inscriptos => detalle muestra los datos de los alumnos.|
 |CUU/Epic|1. Inscribirse una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>4. Crear clases|
 
 
@@ -44,8 +44,7 @@ Adicionales para Aprobación
 
 ### Alcance Adicional Voluntario
 
-
 |Req|Detalle|
 |:-|:-|
-|Listados |1. Listado de tipos de membresías, muestra nombre de la membresía, beneficios, duración => detalle CRUD TiposMembresias<br>2. Listado de clases programadas, muestra fecha, hora, nombre del profesor y salón asignado => detalle muestra el listado de alumnos inscriptos, tipo de clase y duración.|
-|Otros|1. Envío de mensaje de inscripción exitosa a una membresía o taller y su detalle por mail|
+|Listados |1. Listado de talleres programados, muestra nombre del taller, nombre del profesor, fecha, hora y salón asignado => detalle muestra el listado de alumnos inscriptos.<br>2. Listado de clases programadas, muestra nombre de la clase, fecha, hora, nombre del profesor y salón asignado => detalle muestra el listado de alumnos inscriptos.|
+|Otros|1. Envío de mensaje de inscripción exitosa a una clase o taller y su detalle por mail|
