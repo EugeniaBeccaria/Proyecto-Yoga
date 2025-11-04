@@ -15,6 +15,7 @@ type TallerForm = {
     description: string;
     cupo: number | "";
     roomId: string;
+    profesorId: string;
 }
 
 export default function CrearTaller() {
@@ -24,7 +25,8 @@ export default function CrearTaller() {
         price: "",
         description: "",
         cupo: "",
-        roomId: ""
+        roomId: "",
+        profesorId: ""
     });
 
     // const [rooms, setRooms] = useState<Room[]>([]);
@@ -59,7 +61,7 @@ export default function CrearTaller() {
         
             if(res.ok) {
                 alert ("Taller creado con éxito");
-                setFormData({ name: "", datetime: "", price: "", description: "", cupo: "", roomId: ""})
+                setFormData({ name: "", datetime: "", price: "", description: "", cupo: "", roomId: "", profesorId: "" });
             } else {
                 alert("Error al crear el taller");
             }
@@ -131,6 +133,21 @@ export default function CrearTaller() {
                         required
                     >
                         <option value="">Seleccione un salón</option>
+                        {/* {rooms.map((room) => (
+                            <option key = {room.id} value = {room.id}>
+                                {room.name} - Capacidad: {room.capacity}
+                            </option>
+                        ))} */}
+                    </select>
+
+                    <select
+                        name="profesorID"
+                        value={formData.profesorId}
+                        onChange={handleChange}
+                        className="crear-taller-select"
+                        required
+                    >
+                        <option value="">Seleccione un profesor</option>
                         {/* {rooms.map((room) => (
                             <option key = {room.id} value = {room.id}>
                                 {room.name} - Capacidad: {room.capacity}
