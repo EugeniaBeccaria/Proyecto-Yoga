@@ -19,8 +19,7 @@ Shanti Yoga es un estudio que ofrece clases semanales y talleres presenciales de
 La operación se gestiona mediante un sistema que facilita la administración general del estudio.
 
 ### Modelo: Diagrama Entidad-Relación.
-![DER-yoga-DER V2 drawio](https://github.com/user-attachments/assets/56004bc0-fb75-4173-9c72-f8955166bd77)
-
+<img width="826" height="744" alt="image" src="https://github.com/user-attachments/assets/05cf4216-6e21-4af5-80c6-075a419de085" />
 
 
 ## Alcance Funcional 
