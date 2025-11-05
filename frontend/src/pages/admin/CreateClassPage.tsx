@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import "../../styles/admin/CreateClassPage.css";
 import axios from "axios";
+import type { User } from "../../types/user.type";
+import type { Class, Rooms, Day, Time } from "../../types/class.type";
 
-
-
-interface classProps {
-  name: string;
-  description: string;
-  capacityLimit: number;
-  day: number;
-  time: number;
-  room: number;
-  professor: number | null;
-}
+// interface classProps {
+//   name: string;
+//   description: string;
+//   capacityLimit: number;
+//   day: number;
+//   time: number;
+//   room: number;
+//   professor: number | null;
+// }
 interface fetchDataProps {
-  rooms: Array<{id:number, name:string}>;
-  days: Array<{id:number, name:string}>;
-  times: Array<{id:number, startTime:string}>;
-  professors: Array<{id:number, name:string, email:string}>;
+  rooms: Array<Rooms>;
+  days: Array<Day>;
+  times: Array<Time>;
+  professors: Array<User>;
 }
+
 interface error {
   error: boolean,
   message:string
@@ -32,22 +33,14 @@ function CreateClassPage() {
     professors: []
   });
 
-  // const [classData, setClassData] = useState<classProps>({
-  //   name: "",
-  //   description: "",
-  //   // capacityLimit: 0,
-  //   day: 0,
-  //   time: 0,
-  //   room: 0,
-  //   profesor: 0,
-  // });
+
   const [classCreated, setClassCreated] = useState<boolean>(false);
   const [messageError, setMessageError] = useState<error>({
     error:false,
     message:''
   })
   const [count, setCount] = useState(0); 
-  const [title, setTitle] = useState("Nombre Clase");
+  const [title, setTitle] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
   useEffect(() => {
@@ -88,7 +81,7 @@ function CreateClassPage() {
     const idRoom = Number((classFormData.namedItem("salon") as HTMLInputElement).value);
     const idProfessor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
 
-    const classData: classProps = ({
+    const classData: Class = ({
       name: name,
       description: description,
       capacityLimit: capacityLimit,
@@ -100,7 +93,7 @@ function CreateClassPage() {
     sendFormClass(classData);
   };
 
-  async function sendFormClass(classData: classProps){
+  async function sendFormClass(classData: Class){
     try{
       const response = await axios.post('http://localhost:3000/api/classes', {classData}, {withCredentials: true})
       

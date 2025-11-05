@@ -11,6 +11,7 @@
     background-color: #ffffff;
     flex-direction: column;
     margin-top: -40px;
+    font-family: "Raleway", sans-serif;
 }
 
     /*padding-left: 20px;
@@ -102,14 +103,16 @@
     border-radius: 5px;
     padding: 8px;
     text-align: center;
+    margin:15px 0 0 0;
 }
 
-.error-message {
+.error-message-taller {
     background-color: rgb(196, 85, 85);
     color: white;
     border-radius: 5px;
     padding: 8px;
     text-align: center;
+    margin:15px 0 0 0;
 }
 
 .crear-taller-card {

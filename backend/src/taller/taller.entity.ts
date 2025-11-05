@@ -23,6 +23,9 @@ export class Taller extends BaseEntity {
   @ManyToOne(() => Room)
   room!: Rel<Room>;
 
+  @ManyToOne(() => User)
+  professor!: Rel<User>;
+
   @ManyToMany(() => User, (user) => user.talleres, {cascade: [Cascade.ALL], owner: true,})
   users = new Collection <User> (this);
 
