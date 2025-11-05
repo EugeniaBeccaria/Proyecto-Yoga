@@ -75,87 +75,95 @@ return (
     <section id="crearTalleres" className="crearTalleres">
         <div className="crear-taller-card">
         <h2 className="crear-taller-titulo">Crear Taller</h2>
-        <form onSubmit={handleSubmit} className="crear-taller-form">
+            <form onSubmit={handleSubmit} className="crear-taller-form">
 
             <label>Nombre del taller:</label>
             <input
-            type="text"
-            name="name"
-            placeholder="Nombre del taller"
-            value={formData.name}
-            onChange={handleChange}
-            className="crear-taller-input"
-            required
+                type="text"
+                name="name"
+                placeholder="Nombre del taller"
+                value={formData.name}
+                onChange={handleChange}
+                className="crear-taller-input"
+                required
             />
 
             <label>Fecha y hora:</label>
             <input
-            type="datetime-local"
-            name="datetime"
-            value={formData.datetime}
-            onChange={handleChange}
-            className="crear-taller-input"
-            required
+                type="datetime-local"
+                name="datetime"
+                value={formData.datetime}
+                onChange={handleChange}
+                className="crear-taller-input"
+                required
             />
+
+            <label>Profesor:</label>
+            <select
+                name="profesorId"
+                value={formData.profesorId}
+                onChange={handleChange}
+                className="crear-taller-select"
+                required
+            >
+                <option value="">Seleccione un profesor</option>
+            </select>
+
+            <div className="crear-taller-row">
+            <div className="crear-taller-column">
+                <label>Cupo:</label>
+                <input
+                type="number"
+                name="cupo"
+                placeholder="Cupo"
+                value={formData.cupo}
+                onChange={handleChange}
+                className="crear-taller-input"
+                required
+                />
+            </div>
+
+            <div className="crear-taller-column">
+                <label>Salón:</label>
+                <select
+                name="roomId"
+                value={formData.roomId}
+                onChange={handleChange}
+                className="crear-taller-select"
+                required
+                >
+                <option value="">Seleccione un salón</option>
+                </select>
+            </div>
+            </div>
+
 
             <label>Precio:</label>
             <input
-            type="number"
-            name="price"
-            placeholder="Precio"
-            value={formData.price}
-            onChange={handleChange}
-            className="crear-taller-input"
-            required
+                type="number"
+                name="price"
+                placeholder="Precio"
+                value={formData.price}
+                onChange={handleChange}
+                className="crear-taller-input"
+                required
             />
 
             <label>Descripción:</label>
             <textarea
-            name="description"
-            placeholder="Descripción"
-            value={formData.description}
-            onChange={handleChange}
-            className="crear-taller-textarea"
-            required
+                name="description"
+                placeholder="Descripción"
+                value={formData.description}
+                onChange={handleChange}
+                className="crear-taller-textarea"
+                required
             />
-
-            <label>Cupo:</label>
-            <input
-            type="number"
-            name="cupo"
-            placeholder="Cupo"
-            value={formData.cupo}
-            onChange={handleChange}
-            className="crear-taller-input"
-            required
-            />
-
-            <label>Salón:</label>
-            <select
-            name="roomId"
-            value={formData.roomId}
-            onChange={handleChange}
-            className="crear-taller-select"
-            required
-            >
-            <option value="">Seleccione un salón</option>
-            </select>
-
-            <label>Profesor:</label>
-            <select
-            name="profesorId"
-            value={formData.profesorId}
-            onChange={handleChange}
-            className="crear-taller-select"
-            required
-            >
-            <option value="">Seleccione un profesor</option>
-            </select>
 
             <button type="submit" className="crear-taller-boton">
-            Crear Taller
+                Crear Taller
             </button>
-        </form>
+            </form>
+
         </div>
     </section>
 );
