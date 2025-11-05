@@ -1,77 +1,102 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import "../../styles/admin/CreateTaller.css";
-
-
-// type Room = {
-//     id: number;
-//     name: string;
-//     capacity: number;
-// };
+import axios from "axios";
+import type { Rooms } from "../../types/class.type";
+import type { User } from "../../types/user.type";
 
 type TallerForm = {
     name: string;
     datetime: string;
-    price: number | "";
+    price: number;
     description: string;
-    cupo: number | "";
+    cupo: number ;
     roomId: string;
     profesorId: string;
+}
+interface Error {
+    error: boolean,
+    message: string
 }
 
 export default function CrearTaller() {
     const [formData, setFormData] = useState<TallerForm> ({
         name: "",
         datetime: "",
-        price: "",
+        price: 0,
         description: "",
-        cupo: "",
+        cupo: 0,
         roomId: "",
         profesorId: ""
     });
-
-    // const [rooms, setRooms] = useState<Room[]>([]);
+    const [errors, setErrors] = useState<Error | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [rooms, setRooms] = useState<Rooms[]>([]);
+    const [professors, setProfessors] = useState<User[]>([]);
 
     // Fetch rooms from the backend
-    // useEffect(() => {
-    //     fetch("http://localhost:3000/rooms")
-    //     .then((res) => res.json())
-    //     .then((data) => setRooms(data))
-    //     .catch((error) => console.error("Error al buscar salones:", error));
-    // }, []); 
+    const loadData = async () => {
+    try{
+        const [roomsRes, professorsRes] = await Promise.all([
+        axios('http://localhost:3000/api/rooms', { withCredentials: true }),
+        axios('http://localhost:3000/api/users?role=professor', { withCredentials: true })
+        ]);
+        setRooms(roomsRes.data.data);
+        setProfessors(professorsRes.data.data);
+        } catch (error) {
+            console.error("Error al cargar las habitaciones:", error);
+        }
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     // Handle form input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
-        setFormData({ ...formData, [name]: type === "number" ? (value === "" ? "" : Number(value)) : value });
+        setFormData({...formData, [name]: type === "number" ? (value === "" ? null : Number(value)) : value });
     };
 
     // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        try{
-            const res = await fetch("http://localhost:3000/talleres", {
-                method: "POST",
-                headers: {"Content-Type": "application/json" },
-                body: JSON.stringify({...formData,
-                    price: Number(formData.price),
-                    cupo: Number(formData.cupo)
-                }),
-            });
-        
-            if(res.ok) {
-                alert ("Taller creado con éxito");
-                setFormData({ name: "", datetime: "", price: "", description: "", cupo: "", roomId: "", profesorId: "" });
-            } else {
-                alert("Error al crear el taller");
-            }
-        } catch (error) {
-            console.error("Error al crear el taller:", error);
-            alert("Error al crear el taller");
+        const tallerData = {
+            name: formData.name,
+            datetime: formData.datetime,
+            price: formData.price,
+            description: formData.description,
+            cupo: formData.cupo,
+            roomId: parseInt(formData.roomId, 10) as number,
+            profesorId: parseInt(formData.profesorId, 10) as number
+        };
+        console.log("Taller Data to submit:", tallerData);
+        setFormData({
+            name: "",
+            datetime: "",
+            price: 0,
+            description: "",
+            cupo: 0,
+            roomId: "",
+            profesorId: ""
+        });
+        try {
+            const response = await axios.post('http://localhost:3000/api/talleres', tallerData, { withCredentials: true });
+            console.log("Taller creado con éxito:", response.data);
+            setSuccessMessage("Taller creado con éxito");
+            setErrors(null);
         }
+        catch (error) {
+            setSuccessMessage(null);
+            console.log("Error al crear el taller:", error);
+            if (axios.isAxiosError(error)) {
+                setErrors({ error: true, message: error.response?.data.message || error.response?.data.errors[0].msg });
+                return;
+            }
+        }
+        console.log("Submitting Taller Data:", tallerData);
     };
 
-return (
+    return (
     <section id="crearTalleres" className="crearTalleres">
         <div className="crear-taller-card">
         <h2 className="crear-taller-titulo">Crear Taller</h2>
@@ -107,6 +132,11 @@ return (
                 required
             >
                 <option value="">Seleccione un profesor</option>
+                {professors.map((professor) => (
+                    <option key={professor.id} value={professor.id}>
+                        {professor.name}
+                    </option>
+                ))}
             </select>
 
             <div className="crear-taller-row">
@@ -126,13 +156,18 @@ return (
             <div className="crear-taller-column">
                 <label>Salón:</label>
                 <select
-                name="roomId"
-                value={formData.roomId}
-                onChange={handleChange}
-                className="crear-taller-select"
-                required
-                >
-                <option value="">Seleccione un salón</option>
+                    name="roomId"
+                    value={formData.roomId}
+                    onChange={handleChange}
+                    className="crear-taller-select"
+                    required
+                    >
+                    <option value="">Seleccione un salón</option>
+                    {rooms.map((room) => (
+                        <option key={room.id} value={room.id}>
+                            {room.name}
+                        </option>
+                    ))}
                 </select>
             </div>
             </div>
@@ -159,11 +194,22 @@ return (
                 required
             />
 
+            {errors?.error && (
+            <div className="error-message-taller">
+                {errors.message}
+            </div>
+            )}
+
+            {successMessage && (
+            <div className="success-message">
+                {successMessage}
+            </div>
+            )}
+            
             <button type="submit" className="crear-taller-boton">
                 Crear Taller
             </button>
             </form>
-
         </div>
     </section>
 );
