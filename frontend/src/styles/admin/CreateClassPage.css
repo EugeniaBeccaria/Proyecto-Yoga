@@ -1,56 +1,77 @@
 .create-class-page {
-  background-color: pink;
-  background-image: url("/FlorLogo.png");
-  background-repeat: repeat;
+  background-color: rgb(255, 255, 255);
+  background-repeat: no-repeat;
+  background-position: top right;
   background-size: 200px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   font-family: "Montserrat", sans-serif;
+  padding-top: 10px;
 }
 
 
-.create-class-page .page-title {
+.create-class-page .title-class-page {
   width: 100%;
-  text-align: left;
-  padding: 20px 40px 0 40px;
-  font-size: 36.5px; 
-  font-weight: 800;
-  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 40px; 
+  font-weight: 700;
+  color: #2f5b46; 
   font-family: 'Raleway', sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
 }
-
 
 .create-class-page .form-container {
-  background: #2b462d;
+  background: #ffffff;
   border-radius: 20px;
-  padding: 30px;
-  width: 100%;
-  max-width: 600px;   
-  margin: 40px auto;  
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  padding: 25px 30px;
+  width: 90%;
+  max-width: 650px;   
+  margin: 10 auto 40px;  
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  justify-content: center;
+  transform: none;
+  }
 
 
 .create-class-page .form-inner {
   width: 100%;
 }
 
+.create-class-page .panel-verde {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 25px;
+  width: 100%;
+}
+
+.create-class-page .panel-descripcion {
+  margin-top: 20px;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.create-class-page input:focus,
+.create-class-page select:focus,
+.create-class-page textarea:focus {
+  border-color: #8AAE92;
+  box-shadow: 0 0 0 3px rgba(138,174,146,0.2);
+}
 
 .create-class-page .title-bar {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: white;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #2f5b46;
+  margin-bottom: 25px;
   gap: 8px;
-  cursor: text;
+  text-align: center;
 }
 
 .create-class-page .title-bar.editing {
@@ -60,75 +81,114 @@
 
 
 .create-class-page .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+  width: 100%;
 }
 
 .create-class-page label {
-  color: #fff;
+  color: #2f5b46;
   font-weight: 600;
   margin-bottom: 6px;
   display: block;
+  font-size: 0.95rem;
 }
 
 .create-class-page select,
-.create-class-page textarea {
+.create-class-page textarea,
+.create-class-page input[type="number"],
+.create-class-page input[type="text"] {
   width: 100%;            
   padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #cdd7c4;
   font-size: 1rem;
-  color: #2e5939;
+  color: #2f5b46;
   outline: none;
   font-family: "Montserrat";
   box-sizing: border-box;
+  transition:border-color 0.3s ease;
 }
 
-.create-class-page textarea {
-  resize: vertical;
-  min-height: 100px;
+.create-class-page select:focus,
+.create-class-page textarea:focus {
+  border-color: #8AAE92;
+  box-shadow: 0 0 0 2px rgba(138,174,146,0.2);
 }
 
 
 .create-class-page .form-actions {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 15px;
 }
 
 .create-class-page .btn {
-  background-color: #f895a6;
+  background-color: #2f5b46;
   color: #fff;
   font-weight: 600;
-  font-size: 1rem;
-  padding: 12px 20px;
+  font-size: 0.95rem;
+  padding: 10px 22px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s;
-  font-family: "Montserrat";
-  min-width: 150px;
+  transition: ALL 0.3S EASE;
+  min-width: 130px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .create-class-page .btn:hover {
-  background-color: #b25b6c;
-  transform: translateY(-2px);
+  background-color: #274a39;
+}
+
+.create-class-page .btn-secondary {
+  background-color: #ffffff;
+  color: #2f5b46;
+  border: 2px solid #2f5b46;
+  font-weight: 600;
+}
+.create-class-page .btn-secondary:hover {
+  background-color: #f3f7f4;
 }
 
 /*Succes message*/
 .success-message {
-  background-color: #4BB543; /* Green background */
-  color: white; /* White text */
-  padding: 15px 20px;
-  border-radius: 8px;
+  background-color: #CF8A8A;
+  color: white; 
+  padding: 12px 16px;
+  border-radius: 6px;
   text-align: center;
-  font-weight: 600;
-  margin-bottom: 20px;
-  animation: fadeInOut 3s forwards; /* Animation for fade in and out */
+  font-weight: 500;
 }
 
 .error-message{
-  background-color: #d08383;
+  background-color: #CF8A8A;
   color: white;
   border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .create-class-page {
+    padding-top: 20px;
+  }
+
+  .create-class-page .panel-verde {
+    grid-template-columns: 1fr;
+  }
+
+  .create-class-page .form-container {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .create-class-page .title-class-page {
+    font-size: 32px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .create-class-page .panel-verde {
+    grid-template-columns: 1fr;
+  }
 }
