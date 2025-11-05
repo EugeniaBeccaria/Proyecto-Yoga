@@ -1,5 +1,6 @@
 import { useState} from "react";
 import axios from "axios";
+import "../../styles/admin/CreateProfesor.css";
 
 type ProfesorForm = {
     name: string;
@@ -79,18 +80,23 @@ return (
             </div>
         }
         <form onSubmit={handleSubmit} className="crear-profesor-form">
+            <label htmlFor="name">Nombre:</label>
             <input
                 type="text"
-                    name="name"
-                    placeholder="Nombre"
-                    value={ProfesorData.name}
-                    onChange={handleChange}
-                    className="crear-profesor-input"
-                    required
+                id="name"
+                name="name"
+                placeholder="Nombre"
+                value={ProfesorData.name}
+                onChange={handleChange}
+                className="crear-profesor-input"
+                required
             />
 
+            
+            <label htmlFor="lastname">Apellido:</label>
             <input
                 type="text"
+                id="lastname"
                 name="lastname"
                 placeholder="Apellido"
                 value={ProfesorData.lastname}
@@ -99,48 +105,72 @@ return (
                 required
             />
 
-            <input
-                type="text"
-                name="dni"
-                placeholder="DNI"
-                value={ProfesorData.dni}
-                onChange={handleChange}
-                className="crear-profesor-input"
-                required
-            />
+            
+            <div className="row">
+                <div className="field">
+                <label htmlFor="email">Correo electrónico:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    value={ProfesorData.email}
+                    onChange={handleChange}
+                    className="crear-profesor-input"
+                    required
+                />
+                </div>
 
-            <input
-                type="email"                    
-                name="email"
-                placeholder="Email"
-                value={ProfesorData.email}
-                onChange={handleChange}
-                className="crear-profesor-input"
-                required
-            />
+                <div className="field">
+                <label htmlFor="phone">Teléfono:</label>
+                <input
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    placeholder="Teléfono"
+                    value={ProfesorData.phone}
+                    onChange={handleChange}
+                    className="crear-profesor-input"
+                    required
+                />
+                </div>
+            </div>
 
-            <input
-                type="text"
-                name="phone"
-                placeholder="Teléfono"
-                value={ProfesorData.phone}
-                onChange={handleChange}
-                className="crear-profesor-input"
-                required
-            />
+            
+            <div className="row">
+                <div className="field">
+                <label htmlFor="dni">DNI:</label>
+                <input
+                    type="text"
+                    id="dni"
+                    name="dni"
+                    placeholder="DNI"
+                    value={ProfesorData.dni}
+                    onChange={handleChange}
+                    className="crear-profesor-input"
+                    required
+                />
+                </div>
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                value={ProfesorData.password}
-                onChange={handleChange}
-                className="crear-profesor-input"
-                required
-            />
+                <div className="field">
+                <label htmlFor="password">Contraseña:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    value={ProfesorData.password}
+                    onChange={handleChange}
+                    className="crear-profesor-input"
+                    required
+                />
+                </div>
+            </div>
 
-            <button type="submit" className="crear-profesor-button">Crear Profesor</button>
-        </form>
+            <button type="submit" className="crear-profesor-button">
+                Crear Profesor
+            </button>
+            </form>
     </section>
 )
 }

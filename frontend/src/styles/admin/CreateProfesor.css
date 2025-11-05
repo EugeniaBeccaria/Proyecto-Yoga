@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+    .crearProfesor {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    font-family: "Montserrat", sans-serif;
+    transform: translateY(-60px);
+    }
+
+    .crear-profesor-titulo {
+    color: #2f5b46;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+    }
+
+    .crear-profesor-form {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px 50px;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    }
+
+    .crear-profesor-form label {
+    font-weight: 600;
+    color: #2f5b46;
+    font-size: 0.95rem;
+    width: 100%;
+    display: block;
+    margin-bottom: 4px;
+    font-family: "Montserrat", sans-serif;
+    text-align: left;
+    }
+
+    .crear-profesor-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #a9b8aa;
+    font-size: 0.95rem;
+    font-family: "Montserrat", sans-serif;
+    color: #2f5b46;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    }
+
+    .crear-profesor-input:focus {
+    border-color: #2f5b46;
+    box-shadow: 0 0 4px rgba(47, 91, 70, 0.25);
+    }
+
+    .crear-profesor-form label[for="name"],
+    .crear-profesor-form label[for="lastname"] {
+        padding-left: 54px; 
+    }
+
+    .crear-profesor-form input[name="name"],
+    .crear-profesor-form input[name="lastname"] {
+    max-width: 450px;
+    width: 90%;
+    align-self: center;
+    }
+
+    .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+    max-width: 450px;
+    }
+
+    .row .field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    }
+
+    .crear-profesor-button {
+    background-color: #2f5b46;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    align-self: center;
+    }
+
+    .crear-profesor-button:hover {
+    background-color: #234a39;
+    transform: translateY(-2px);
+    }
+
+    .message-error {
+    background-color: rgb(196, 85, 85);
+    color: white;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    width: 90%;
+    max-width: 500px;
+    }
