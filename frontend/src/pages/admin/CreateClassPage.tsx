@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/admin/CreateClassPage.css";
-import { FaPen } from "react-icons/fa"; 
 import axios from "axios";
+
+
 
 interface classProps {
   name: string;
@@ -48,7 +49,6 @@ function CreateClassPage() {
   const [count, setCount] = useState(0); 
   const [title, setTitle] = useState("Nombre Clase");
   const [descripcion, setDescripcion] = useState("");
-  const titleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     LoadData()
@@ -76,54 +76,6 @@ function CreateClassPage() {
       console.error('Error al cargar los datos iniciales ',error);
     }
   }
-
-  const handleTitleClick = () => {
-    if (titleRef.current) {
-      titleRef.current.contentEditable = "true";
-      titleRef.current.classList.add("editing");
-      titleRef.current.textContent = "";
-
-      const range = document.createRange();
-      range.selectNodeContents(titleRef.current);
-      range.collapse(true);
-
-      const sel = window.getSelection();
-      sel?.removeAllRanges();
-      sel?.addRange(range);
-    }
-  };
-
-  
-  const stopEditing = () => {
-    if (titleRef.current) {
-      titleRef.current.contentEditable = "false";
-      titleRef.current.classList.remove("editing");
-      const value = titleRef.current.textContent?.trim() || "Nombre Clase";
-      setTitle(value);
-    }
-  };
-
-  
-  useEffect(() => {
-    const el = titleRef.current;
-    if (!el) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        el.blur();
-      }
-    };
-
-    el.addEventListener("keydown", handleKeyDown);
-    el.addEventListener("blur", stopEditing);
-
-    return () => {
-      el.removeEventListener("keydown", handleKeyDown);
-      el.removeEventListener("blur", stopEditing);
-    };
-  }, []);
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -187,32 +139,24 @@ function CreateClassPage() {
 
   return (
     <div id="top" className="create-class-page">
-      
-      <h1 className="title-class-page">Crear Clase</h1>
-      {/*<div className="page-title">CREAR CLASE</div>*/}
+        <h1 className="title-class-page">Crear Clase</h1>
+        <form id="formClase" className="form-container" onSubmit={handleSubmit}>
+          <div className="panel-verde">
 
-      {/*<div className="form-container">*/}
-        {/*<div className="form-inner"> */}
-        <form id="formClase" className="form-create-class" onSubmit={handleSubmit}>
-          <div className="title-bar-container">
-            <div
-              id="titleEditable"
-              className="title-bar"
-              role="button"
-              tabIndex={0}
-              aria-label="Editar nombre de la clase"
-              title="Click para editar"
-              ref={titleRef}
-              onClick={handleTitleClick}
-            >
-              {title} <FaPen className="edit-icon" />
+            <div className="form-group">
+              <label htmlFor="nombreClaseInput">Nombre de la Clase:</label>
+              <input
+                type="text"
+                id="nombreClaseInput"
+                name="nombreClaseInput"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Ej: Fuerza Interior"
+              />
             </div>
-          </div>
 
-          
-          <input type="hidden" id="nombreClase" name="nombreClase" value={title} />
+            <input type="hidden" id="nombreClase" name="nombreClase" value={title} />
 
-            <div className="panel-verde">
 
               {/*<div className="form-group">
                 <label htmlFor="nombre">Nombre:</label>
@@ -320,10 +264,10 @@ function CreateClassPage() {
                   }
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
-                ✔ Crear Clase
+                Crear Clase
               </button>
               <button type="reset" className="btn btn-secondary">
-                ✘ Cancelar
+                Cancelar
               </button>
             </div>
           </form>
@@ -332,5 +276,6 @@ function CreateClassPage() {
     </div>
   );
 }
+
 
 export default CreateClassPage;
