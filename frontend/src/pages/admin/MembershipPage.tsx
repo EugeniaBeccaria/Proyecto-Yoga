@@ -1,7 +1,7 @@
 import { useState, useRef  } from 'react';
 import '../../styles/admin/MembershipPage.css';
 
-//Hay q cambiar el css
+//Hay q cambiar el diseño
 //Acá hay q traer de la bdd los datos de las membresías. y dps hacer q el botón guarde los cambios en la bdd
 const initialPlans =[
     { id: 1, description: 'Membresía Básica (1-2 clases por semana)', price: 4000 },

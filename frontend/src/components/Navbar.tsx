@@ -59,7 +59,7 @@ function Navbar() {
           <HashLink smooth to="/CreateTallerPage#crearTalleres">
             CREAR TALLERES
           </HashLink>
-          <HashLink smooth to="/MyMembershipPage#top">
+          <HashLink smooth to="/MembershipPage#top">
             GESTIONAR MEMBRESÍAS
           </HashLink>
           <HashLink smooth to="/CreateProfesorPage#top">
