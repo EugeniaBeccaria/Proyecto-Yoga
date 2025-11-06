@@ -61,7 +61,7 @@ export function DeleteClassPage(){
     const [turnoMañana, setTurnoMañana] = useState<boolean>(true);
     const [error, setError] = useState<errorState>({error: false, message: ''});
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {fetchClases()}, []);
 
@@ -98,8 +98,8 @@ export function DeleteClassPage(){
             fetchClases();
             setSelectedClasses([]);
 
-        } catch (err) {
-            console.error('Error al eliminar las clases:', err);
+        } catch (error) {
+            console.error('Error al eliminar las clases:', error);
             alert('Hubo un error al eliminar las clases. Por favor, intenta nuevamente.');
         }
     }
