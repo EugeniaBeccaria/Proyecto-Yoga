@@ -72,11 +72,8 @@ function App() {
                 />
 
               <Route
-<<<<<<< HEAD
-                path="/MyMembershipPage"
-=======
+                //path="/MyMembershipPage"
                 path="/MembershipPage"
->>>>>>> 9c5396d1041a1937a41387787006ccbcf133ba04
                 element={
                   <AdminRoutes>
                     <MembershipPage />

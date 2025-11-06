@@ -38,14 +38,14 @@ html{
 }
 
 .nav-left a:hover {
-  color: #fbb0f3;
+  color: #eaabab;
 }
 
 .nav-left a::after {
   content: '';
   position: absolute;
   height: 3px;
-  background-color: #fbb0f3;
+  background-color: #eaabab;
   width: 70%;
   top: 90px;
   left: 50%;
