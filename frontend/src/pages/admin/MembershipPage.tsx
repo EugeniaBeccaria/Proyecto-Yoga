@@ -28,7 +28,7 @@ function MembershipPage() {
     <div id="top" className="page-background">
       <div className="membresias-window">
         <div className="membresias-header-wrapper">
-          <h1 className="membresias-header">MEMBRESÍAS</h1>
+          <h1 className="membresias-header">Membresías</h1>
         </div>
         <div className="membresias-grid">
           {plans.map((plan) => (

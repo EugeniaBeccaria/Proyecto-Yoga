@@ -3,40 +3,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: pink;
-  background-image: url("/FlorLogo.png");
-  background-repeat: repeat;
-  background-size: 200px;
+  background-color: #ffffff;
+  flex-direction: column;
+  margin-top: -40px;
+  font-family: "Raleway", sans-serif;
 }
 
 .membresias-window {
   margin: 110px;
-  background-color: pink;
-  border: 3px solid #2b462d;
+  background-color: #ffffff;
+  /*border: 1px solid #2b462d;*/
   border-radius: 15px;
   padding: 0px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  width: 90%;
+  width: 40%;
   max-width: 900px;
 }
 
 .membresias-header-wrapper {
-  background-color: #2b462d;
-  color: white;
+  background-color: #ffffff;
+  color: #d08383;
   padding: 0;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   text-align: center;
   box-shadow: none;
+  margin-bottom: 10px;
 }
 
 .membresias-header {
   margin: 0;
   padding: 10px;
-  font-size: 29px;
-  font-family: 'Montserrat';
+  font-size: 2rem;
+  font-family: "Playfair Display", serif;
 }
 
 .membresias-grid {
@@ -50,12 +47,12 @@
 }
 
 .membresia-card {
-  background-color: #fbdfe3;
-  border: 3px solid #2b462d;
+  background-color: #ffffff;
+  border: 1.6px solid #2b462d;
   border-radius: 15px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,7 +61,7 @@
 
 .membresia-card h2 {
   color: #2b462d;
-  font-size: 26px;
+  font-size: 20px;
   margin-top: 0;
   font-family: 'Montserrat';
 }
@@ -74,7 +71,7 @@
   font-size: 17px;
   margin: 10px 0;
   font-family: 'Montserrat';
-  font-weight: bolder;
+  /*font-weight: bolder;*/
 }
 
 .membresia-card label {
@@ -82,7 +79,7 @@
   font-size: 17px;
   margin: 10px 0;
   font-family: 'Montserrat';
-  font-weight: bolder;
+  /*font-weight: bolder;*/
 }
 
 .price-container {
@@ -96,7 +93,7 @@
 .price-input {
   width: 60px;
   padding: 5px;
-  background-color: pink;
+  background-color: rgba(251, 205, 213, 0.864);
   border: 1px solid #2b462d;
   border-radius: 5px;
   text-align: right;
