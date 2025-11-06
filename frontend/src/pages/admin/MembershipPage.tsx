@@ -1,12 +1,12 @@
 import { useState, useRef  } from 'react';
 import '../../styles/admin/MembershipPage.css';
 
+//Hay q cambiar el css
+//Acá hay q traer de la bdd los datos de las membresías. y dps hacer q el botón guarde los cambios en la bdd
 const initialPlans =[
-    { id: 1, name: 'TIPO A', classes: '1', price: 4000 },
-    { id: 2, name: 'TIPO B', classes: '2', price: 7500 },
-    { id: 3, name: 'TIPO C', classes: '3', price: 11000 },
-    { id: 4, name: 'TIPO D', classes: '4', price: 14500 },
-    { id: 5, name: 'TIPO E', classes: '5', price: 18000 },
+    { id: 1, description: 'Membresía Básica (1-2 clases por semana)', price: 4000 },
+    { id: 2, description: 'Membresía tipo 1 (2-4 clases por semana)', price: 11000 },
+    { id: 3, description: 'Membresía Full (4-6 clases por semana)', price: 18000 },
   ];
 
 function MembershipPage() {
@@ -33,8 +33,7 @@ function MembershipPage() {
         <div className="membresias-grid">
           {plans.map((plan) => (
             <div key={plan.id} className="membresia-card">
-              <h2>{plan.name}</h2>
-              <p>Cantidad de clases: {plan.classes}</p>
+              <h2>{plan.description}</h2>
               <p>Precio actual: ${originalPlan.current.find(p => p.id === plan.id)?.price}</p>
               <div className="price-container">
                 <label htmlFor={`price-${plan.id}`}>Nuevo precio:  $</label>
