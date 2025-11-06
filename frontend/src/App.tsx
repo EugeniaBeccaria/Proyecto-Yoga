@@ -7,7 +7,7 @@ import RegisterPage from './pages/RegisterPage.tsx';
 import CreateClassPage from './pages/admin/CreateClassPage.tsx';
 import { DeleteClassPage } from './pages/admin/DeleteClassPage.tsx';
 import CreateTallerPage from './pages/admin/CreateTallerPage.tsx';
-// import MembershipPage from './pages/admin/MembershipPage.tsx';
+import MembershipPage from './pages/admin/MembershipPage.tsx';
 import PrivateRoutes from './components/PrivateRoutes.tsx';
 import AdminRoutes from './components/AdminRoutes.tsx';
 import MyClassesPage from './pages/MyClassesPage.tsx';
@@ -35,7 +35,6 @@ function App() {
               <Route path="/talleres" element={<TalleresPage />} />
               <Route path="/ClassCart" element={<ClassCart />} />
               <Route path="/ClassCalendar" element={<ClassCalendar />} />
-
               <Route
                 path="/MyClassesPage"
                 element={
@@ -72,15 +71,14 @@ function App() {
                 }
                 />
 
-              {/* IMPLEMENTAR PAGINA PARA EDITAR MEMBRESIAS EN ADMIN */}
-              {/* <Route
+              <Route
                 path="/MyMembershipPage"
                 element={
                   <AdminRoutes>
                     <MembershipPage />
                   </AdminRoutes>
                 }
-                /> */}
+                />
 
               <Route
                 path="/CreateProfesorPage"

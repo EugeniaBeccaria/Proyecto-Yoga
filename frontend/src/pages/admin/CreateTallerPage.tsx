@@ -3,6 +3,8 @@ import "../../styles/admin/CreateTaller.css";
 import axios from "axios";
 import type { Rooms } from "../../types/class.type";
 import type { User } from "../../types/user.type";
+import type { Error } from "../../types/error.type";
+import { classService } from "../../service/class.service";
 
 type TallerForm = {
     name: string;
@@ -12,10 +14,6 @@ type TallerForm = {
     cupo: number ;
     roomId: string;
     profesorId: string;
-}
-interface Error {
-    error: boolean,
-    message: string
 }
 
 export default function CrearTaller() {
@@ -33,21 +31,17 @@ export default function CrearTaller() {
     const [rooms, setRooms] = useState<Rooms[]>([]);
     const [professors, setProfessors] = useState<User[]>([]);
 
-    // Fetch rooms from the backend
-    const loadData = async () => {
-    try{
-        const [roomsRes, professorsRes] = await Promise.all([
-        axios('http://localhost:3000/api/rooms', { withCredentials: true }),
-        axios('http://localhost:3000/api/users?role=professor', { withCredentials: true })
-        ]);
-        setRooms(roomsRes.data.data);
-        setProfessors(professorsRes.data.data);
-        } catch (error) {
-            console.error("Error al cargar las habitaciones:", error);
-        }
-    };
-
     useEffect(() => {
+        const loadData = async () => {
+            try{
+                const rooms = await classService.getRooms();
+                const professors = await classService.getProfessors();
+                setRooms(rooms);
+                setProfessors(professors);
+            } catch (error) {
+                console.error("Error al cargar los datos:", error);
+            }
+        }
         loadData();
     }, []);
 
@@ -81,6 +75,7 @@ export default function CrearTaller() {
         });
         try {
             const response = await axios.post('http://localhost:3000/api/talleres', tallerData, { withCredentials: true });
+            
             console.log("Taller creado con éxito:", response.data);
             setSuccessMessage("Taller creado con éxito");
             setErrors(null);

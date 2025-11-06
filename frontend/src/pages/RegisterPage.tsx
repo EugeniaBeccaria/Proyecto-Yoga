@@ -1,15 +1,16 @@
 import "../styles/LoginRegisterPage.css"
-/*import FacebookAuth from "../components/FacebookAuth";*/
-import SocialButton from '../components/SocialButton';
-import { useState, useContext } from 'react'
 import axios from 'axios';
+
+import { useState, useContext } from 'react'
+import { AuthContext } from "../context/AuthContext.tsx";
 import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
+import SocialButton from '../components/SocialButton';
 import { useGoogleLogin } from '@react-oauth/google';
 import googleLogo from '/LogoGoogle.png';
-import { AuthContext } from "../context/AuthContext.tsx";
 
+import type { Error } from "../types/error.type";
 
 interface User {
     name: string;
@@ -18,14 +19,9 @@ interface User {
     passwordRepeat:string;
 }
 
-interface Error {
-    act: boolean;
-    message: string;
-}
-
 function Register(){
     const { login } = useContext(AuthContext);
-    const [error, setError] = useState<Error>({act:false, message:''})
+    const [error, setError] = useState<Error | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
     const [user, setUser] = useState<User>({
@@ -40,14 +36,14 @@ function Register(){
 function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         setLoading(true)
-        setError({ act: false, message: '' }) 
+        setError(null)
 
         const form = e.target as HTMLFormElement;
         const name = (form.elements.namedItem('name') as HTMLInputElement).value;
         const email = (form.elements.namedItem('email') as HTMLInputElement).value;
         const password = (form.elements.namedItem('password') as HTMLInputElement).value;
         const passwordRepeat = (form.elements.namedItem('passwordRepeat') as HTMLInputElement).value;
-        setUser({ // Actualizo el estado 'user' DESPUÉS de leer los valores
+        setUser({
             name: name,
             email: email,
             password: password,
@@ -57,7 +53,7 @@ function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         if (password === passwordRepeat) { 
             sendFormRegister(name, email, password) 
         } else {
-            setError({ act: true, message: 'Las contraseñas no coinciden' })
+            setError({ error: true, message: 'Las contraseñas no coinciden' })
             setLoading(false); 
         }
     }
@@ -73,16 +69,19 @@ async function sendFormRegister(name:string, email:string, password:string) {
             setLoading(false)
             setSuccess(true)
             console.log(response.data.message, '// Datos:', response.data.data)
-            Navigate('/LoginPage')
+            setTimeout(() => {
+                Navigate('/LoginPage')
+            }, 1500);
         }
         catch (err) {
             setLoading(false)
             setSuccess(false)
-            if (axios.isAxiosError(err) && err.response?.status === 400) {
-                setError({ act: true, message: err.response?.data.errors[0].msg })
-            }
-            else setError({ act: true, message: 'Error del servidor, intente más tarde' })
             console.log('Error: ', err)
+            if (axios.isAxiosError(err)) {
+                setError({ error: true, message: err.response?.data.errors[0].msg || err.message })
+            } else {
+                setError({ error: true, message: 'Error del servidor, intente más tarde' })
+            }
         }
         finally {
             setLoading(false)
@@ -100,7 +99,7 @@ const handleGoogleLogin = useGoogleLogin({
         onSuccess: async (codeResponse) => {
             console.log('Google login code:', codeResponse.code);
             setLoading(true);
-            setError({ act: false, message: '' }); 
+            setError(null); 
             setSuccess(false);
 
             try {
@@ -111,11 +110,6 @@ const handleGoogleLogin = useGoogleLogin({
                     { withCredentials: true });
 
                 const userData = response.data.user;
-                if (response.status !== 200) {
-                    setLoading(false);
-                    setError({ act: true, message: response.data.message || 'Error con Google' }); 
-                    throw new Error(response.data.message || 'Error al iniciar sesión con Google');
-                }
 
                 console.log('Usuario logueado/registrado con Google, nombre: ', userData.name);
 
@@ -128,17 +122,17 @@ const handleGoogleLogin = useGoogleLogin({
             } catch (err) {
                 setLoading(false);
                 if (axios.isAxiosError(err)) {
-                    setError({ act: true, message: err.response?.data?.message || err.message }); 
+                    setError({ error: true, message: err.response?.data?.message || err.message }); 
                     console.log('Error del servidor (Google):', err.response?.data?.message || err.message);
                 } else {
-                    setError({ act: true, message: 'Error inesperado de Google' }); 
+                    setError({ error: true, message: 'Error inesperado de Google' }); 
                     console.log('Error inesperado (Google):', err);
                 }
             }
         },
         onError: (error) => {
             console.error('Google login error:', error);
-            setError({ act: true, message: 'Error al iniciar sesión con Google' }); 
+            setError({ error: true, message: 'Error al iniciar sesión con Google' }); 
         }
     });
 
@@ -150,7 +144,7 @@ const handleGoogleLogin = useGoogleLogin({
                         <img src="/logo-verde.png" alt="Logo Shanti Yoga" className="login-logo" />
                         <span className="title">REGISTRARSE</span>
                         <span className="subtitle">Crea tu cuenta para acceder a clases y talleres</span>
-                        {error.act && 
+                        {error?.error && 
                             <div className='error-message'>
                                 <p>{error.message}</p>
                             </div>

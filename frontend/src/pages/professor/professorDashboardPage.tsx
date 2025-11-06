@@ -1,24 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import "../../styles/professor/professorDashboardPage.css";
+import type { Day, Time, Rooms } from "../../types/class.type";
+import { classService } from "../../service/class.service";
 
 interface User {
   id: number;
   name: string;
   email: string;
-}
-
-interface Day {
-  id: number;
-  name: string; }
-
-interface Time {
-  id: number;
-  startTime: string; 
-}
-interface Room {
-  id: number;
-  name: string; 
 }
 
 interface Classs {
@@ -28,7 +16,7 @@ interface Classs {
   capacityLimit: number;
   day: Day;       // Una clase tiene un objeto Día
   time: Time;     
-  room: Room;
+  room: Rooms;
   users: User[];     
 }
 
@@ -40,11 +28,11 @@ function ProfessorDashboardPage() {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/classes/professor/classes', { withCredentials: true });        
-        setClasses(response.data.data);
-      } 
-      catch (error) {console.error("Error al obtener las clases:", error);}
-      finally { 
+        const classes = await classService.getClasses();        
+        setClasses(classes);
+      } catch (error) {
+        console.error("Error al obtener las clases:", error);
+      } finally {
       setIsLoading(false); 
     }
     };

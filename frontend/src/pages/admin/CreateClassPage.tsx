@@ -3,16 +3,8 @@ import "../../styles/admin/CreateClassPage.css";
 import axios from "axios";
 import type { User } from "../../types/user.type";
 import type { Class, Rooms, Day, Time } from "../../types/class.type";
+import { classService } from "../../service/class.service";
 
-// interface classProps {
-//   name: string;
-//   description: string;
-//   capacityLimit: number;
-//   day: number;
-//   time: number;
-//   room: number;
-//   professor: number | null;
-// }
 interface fetchDataProps {
   rooms: Array<Rooms>;
   days: Array<Day>;
@@ -44,31 +36,27 @@ function CreateClassPage() {
   const [descripcion, setDescripcion] = useState("");
 
   useEffect(() => {
-    LoadData()
+    const loadData = async () => {
+      try {
+        const rooms = await classService.getRooms();
+        const days = await classService.getDays();
+        const times = await classService.getTimes();
+        const professors = await classService.getProfessors();
+
+        setFetchData({
+          rooms: rooms,
+          days: days,
+          times: times,
+          professors: professors
+        });
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    loadData();
   }, []);
 
-  async function LoadData(){
-    try{
-      const [roomsRes, daysRes, timesRes, professorsRes] = await Promise.all([
-      axios('http://localhost:3000/api/rooms', { withCredentials: true }),
-      axios('http://localhost:3000/api/days', { withCredentials: true }),
-      axios('http://localhost:3000/api/times', { withCredentials: true }),
-      axios('http://localhost:3000/api/users?role=professor', { withCredentials: true })
-    ]);
-
-      console.log(roomsRes.data.data ,daysRes.data.data,timesRes.data.data, professorsRes.data.data)
-
-      setFetchData({
-        rooms:roomsRes.data.data, 
-        days:daysRes.data.data, 
-        times:timesRes.data.data, 
-        professors:professorsRes.data.data
-      })
-
-    } catch (error) {
-      console.error('Error al cargar los datos iniciales ',error);
-    }
-  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -250,7 +238,7 @@ function CreateClassPage() {
                   }
                   {
                     messageError.error && (
-                      <div className="error-message">
+                      <div className="error-message-create-class">
                         {messageError.message}
                       </div>
                     )

@@ -146,6 +146,7 @@
 .error-message{
   background-color: #d08383;
   color: white;
+  padding: 3px;
   border-radius: 5px;
 }
 

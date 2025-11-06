@@ -10,7 +10,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import SocialButton from '../components/SocialButton';
 import googleLogo from '/LogoGoogle.png';
 import axios from 'axios';
-
+import type { Error } from "../types/error.type";
 
 interface User {
     email: string;
@@ -25,8 +25,8 @@ export default function Login(){
     
     const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
-    
-    const [error, setError] = useState<boolean>(false)
+
+    const [error, setError] = useState<Error | null>(null)
     const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
 
     useEffect(() => {
@@ -71,7 +71,7 @@ export default function Login(){
     async function sendForm(email:string,password:string){
         try{
             setSuccess(false)
-            setError(false)
+            setError(null)
             const response = await axios.post("http://localhost:3000/auth/login", 
             {
             email: email,  
@@ -80,10 +80,10 @@ export default function Login(){
             { withCredentials: true })
 
             const userData = response.data.user
-            if (response.status !== 200){
-                setLoading(false)
-                setError(true)
-                throw new Error(response.data.message || 'Error al iniciar sesión')}        
+            // if (response.status !== 200){
+            //     setLoading(false)
+            //     setError(true)
+            //     throw new Error(response.data.message || 'Error al iniciar sesión')}        
             
                 console.log('Usuario logueado, nombre: ',userData.name)
             
@@ -97,12 +97,10 @@ export default function Login(){
         
         catch(err){
             setLoading(false)
-            setError(true)
             if (axios.isAxiosError(err)) {
-                console.log('Error del servidor:', err.response?.data?.message || err.message);
-            } else {
-                console.log('Error inesperado:', err);
-            }
+                setError({ error: true, message: err.response?.data.message || err.response?.data.errors[0].msg || err.message});
+                return;
+                }
         }
         finally{
             setFormData({email: '',password: ''})
@@ -114,7 +112,7 @@ const handleGoogleLogin = useGoogleLogin({
         onSuccess: async (codeResponse) => {
             console.log('Google login code:', codeResponse.code);
             setLoading(true);
-            setError(false);
+            setError(null);
             setSuccess(false);
 
             try {
@@ -125,11 +123,11 @@ const handleGoogleLogin = useGoogleLogin({
                     { withCredentials: true });
 
                 const userData = response.data.user;
-                if (response.status !== 200) {
-                    setLoading(false);
-                    setError(true);
-                    throw new Error(response.data.message || 'Error al iniciar sesión con Google');
-                }
+                // if (response.status !== 200) {
+                //     setLoading(false);
+                //     setError(true);
+                //     throw new Error(response.data.message || 'Error al iniciar sesión con Google');
+                // }
 
                 console.log('Usuario logueado con Google, nombre: ', userData.name);
                 
@@ -141,20 +139,17 @@ const handleGoogleLogin = useGoogleLogin({
                     setUserLogin(true);
                 }, 1300);
 
-            } catch (err) {
-                setLoading(false);
-                setError(true);
+            } 
+            catch(err){
+                setLoading(false)
                 if (axios.isAxiosError(err)) {
-                    console.log('Error del servidor (Google):', err.response?.data?.message || err.message);
-                } else {
-                    console.log('Error inesperado (Google):', err);
+                    setError({ error: true, message: err.response?.data.message || err.response?.data.errors[0].msg || err.message});
+                    return;}
                 }
-            }
         },
         onError: (error) => {
             console.error('Google login error:', error);
-            setError(true);
-            alert('Error al iniciar sesión con Google');
+            setError({ error: true, message: 'Error al iniciar sesión con Google' });
         }
     });    
         
@@ -175,9 +170,9 @@ const handleGoogleLogin = useGoogleLogin({
                                 Logueado con exito
                                 </div>
                             }                        
-                            {error  &&
+                            {error?.error  &&
                                 <div className='error-message'>
-                                Error de inicio de sesion
+                                    {error.message}
                                 </div>
                             }
                             <div className="form-container">

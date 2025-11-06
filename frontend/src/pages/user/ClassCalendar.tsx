@@ -137,7 +137,7 @@ export default function ClassCalendar() {
                 </button>
             </div>
         </div>
-        {error.error && <p className="error-message">{error.message}</p>}
+        {error.error && <p className="error-message-calendar">{error.message}</p>}
         <div className="horario-grid">
             <div className="celda-header celda-hora">HORA</div>
             {DIAS_SEMANA.map((dia) => (
