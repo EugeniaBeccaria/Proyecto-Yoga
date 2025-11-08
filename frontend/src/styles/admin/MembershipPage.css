@@ -127,3 +127,21 @@
   background-color: #496b4b;
   transform: translateY(-2px);
 }
+
+.error-message-memb {
+  background-color: rgb(196, 85, 85);
+  color: white;
+  border-radius: 5px;
+  padding: 8px;
+  text-align: center;
+  margin: 15px 0 0 0;
+}
+
+.success-message-memb {
+  background-color: rgb(85, 196, 109);
+  color: white;
+  border-radius: 5px;
+  padding: 8px;
+  text-align: center;
+  margin: 15px 0 0 0;
+}

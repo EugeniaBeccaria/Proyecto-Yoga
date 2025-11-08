@@ -5,7 +5,7 @@ function Footer() {
     <footer className="footer">
         
         <div className="footer-top">
-            <img src="/public/LogoBlanco.png" alt="Shanti Yoga Logo" className="footer-logo"/>
+            <img src="/LogoBlanco.png" alt="Shanti Yoga Logo" className="footer-logo"/>
             <h3 className="footer-title">Shanti Yoga</h3>
             {/*<p className="footer-subtitle">Respirá, conectá, equilibrá tu energía</p>*/}
         </div>
