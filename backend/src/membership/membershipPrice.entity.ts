@@ -8,7 +8,7 @@ export class MembershipPrice extends BaseEntity {
     @Property({ nullable: false})
     price!: number
   
-    @Property({ nullable: false, type : 'date' })
+    @Property({ nullable: false, type : 'datetime' })
     priceDate!: Date
 
     @ManyToOne(() => MembershipType)

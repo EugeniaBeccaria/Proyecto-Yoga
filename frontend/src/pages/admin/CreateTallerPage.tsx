@@ -141,6 +141,7 @@ export default function CrearTaller() {
                 type="number"
                 name="cupo"
                 placeholder="Cupo"
+                min="0"
                 value={formData.cupo}
                 onChange={handleChange}
                 className="crear-taller-input"
@@ -173,6 +174,8 @@ export default function CrearTaller() {
                 type="number"
                 name="price"
                 placeholder="Precio"
+                min="0"
+                step="100"
                 value={formData.price}
                 onChange={handleChange}
                 className="crear-taller-input"
