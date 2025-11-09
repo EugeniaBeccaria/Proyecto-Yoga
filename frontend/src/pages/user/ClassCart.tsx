@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../styles/ClassCart.css";
 import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { membershipPriceService } from "../../service/membershipPrice.service.ts";
+import type { IPlanGroup } from "../../service/membershipPrice.service";
 
 interface SelectedClass {
     id: number;
@@ -27,16 +29,17 @@ interface SelectedClass {
 //     message: string;
 // }
 
-    const ClassCart: React.FC = () => {
+const ClassCart: React.FC = () => {
     
     const [selectedClasses, setSelectedClasses] = useState<SelectedClass[]>([]);
-    const [membershipType, setMembershipType] = useState<string>("");
+    const [allPlans, setAllPlans] = useState<IPlanGroup[]>([]);
+    const [currentPlan, setCurrentPlan] = useState<IPlanGroup | null>(null);
+
     const [redirect, setRedirect] = useState<boolean>(false);
     // const [error, setError] = useState<errorState>({
     //     error: false,
     //     message: "",
     // });
-
     const navigate = useNavigate();
 
     async function loadSelectedClasses() {
@@ -50,20 +53,41 @@ interface SelectedClass {
     }
     useEffect(() => {
         loadSelectedClasses();
+        const fetchPlans = async () => {
+            try {
+                const plans = await membershipPriceService.getCurrentPrices();
+                console.log("Planes recibidos del backend:", plans);
+                const sortedPlans = [...plans].sort((a, b) => a.numOfClasses - b.numOfClasses);
+                console.log("Planes ordenados:", sortedPlans);
+                setAllPlans(sortedPlans);
+            } catch (error) {
+                console.error("Error al cargar los planes", error);
+            }
+        };
+        fetchPlans();
     }, []);
 
     useEffect(() => {
         const count = selectedClasses.length;
-        if (count <= 2) setMembershipType("Membresía Básica (1-2 clases)");
-        else if (count <= 4) setMembershipType("Membresía tipo 1 (2-4 clases)");
-        else setMembershipType("Membresía Full (4-6 clases)");
-    }, [selectedClasses]);
+        if (count === 0 || allPlans.length === 0) {
+            setCurrentPlan(null);
+            return;
+        }
+        console.log(`Calculando plan para ${count} clases...`);
+        const plan = allPlans.find(p => count <= p.numOfClasses);
+        console.log("Plan encontrado:", plan);
+        if (plan) {
+            setCurrentPlan(plan);
+        } else {
+            setCurrentPlan(allPlans[allPlans.length - 1]);
+        }
+    }, [selectedClasses, allPlans]);
 
-
-    const total = "$6000";
 
     const handleRemove = (id: number) => {
-        setSelectedClasses(selectedClasses.filter((c) => c.id !== id));
+        const updatedClasses = selectedClasses.filter((c) => c.id !== id);
+        setSelectedClasses(updatedClasses);
+        localStorage.setItem("clases", JSON.stringify(updatedClasses));
     };
 
     const handleClickCompra = async() => {
@@ -84,7 +108,7 @@ interface SelectedClass {
         <button 
             onClick={() => {
                 window.history.back();
-                localStorage.removeItem("clases");
+                //localStorage.removeItem("clases");
                 }} 
             className="btn-back">
             Volver
@@ -113,7 +137,7 @@ interface SelectedClass {
                         <div>Hora: {clase.time.startTime}hs</div>
                         <div>Aula: {clase.room.name}</div>
                     </td>
-                    {selectedClasses.length > 1 && (
+                    {selectedClasses.length > 0 && (
                         <td className="remove-col">
                         <button
                             aria-label={`Eliminar ${clase.name}`}
@@ -136,20 +160,30 @@ interface SelectedClass {
             <hr className="summary-line" />
 
             <div className="summary-info">
-                <p>
-                <strong>{membershipType}</strong>
-                </p>
-                <p>{selectedClasses.length} clases al mes</p>
+                {currentPlan ? (
+                    <>
+                        <p>
+                            <strong>{currentPlan.description}</strong>
+                        </p>
+                        <p>{selectedClasses.length} clases al mes</p>
+                    </>
+                ) : (
+                    <p>
+                        {selectedClasses.length > 0 ? "Calculando membresía..." : "No hay clases seleccionadas."}
+                    </p>
+                )}
             </div>
 
             <hr className="summary-line" />
 
             <div className="summary-total">
                 <p className="summary-total-label">Total:</p>
-                <div className="summary-total-box">{total}</div>
+                <div className="summary-total-box">
+                    {currentPlan ? `$${currentPlan.price}` : "$0"}
+                </div>
             </div>
 
-            <button onClick={handleClickCompra} className="summary-btn">Aceptar</button>
+            <button onClick={handleClickCompra} className="summary-btn" disabled={!currentPlan}>Aceptar</button>
             </div>
         </div>
             {redirect && (

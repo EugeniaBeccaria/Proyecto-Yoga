@@ -6,6 +6,7 @@ export interface IPlanGroup {
     id: number;
     description: string;
     price: number;
+    numOfClasses: number;
 }
 
 const getCurrentPrices = async (): Promise<IPlanGroup[]> => {

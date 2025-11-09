@@ -11,9 +11,9 @@ const GROUP_TO_TYPE_MAP: Record<number, number[]> = {
 };
 
 const GROUPS_DATA = [
-    { id: 1, description: 'Membresía Básica (1-2 clases por semana)', typeIds: [1, 2] },
-    { id: 2, description: 'Membresía tipo 1 (2-4 clases por semana)', typeIds: [3, 4] },
-    { id: 3, description: 'Membresía Full (4-6 clases por semana)', typeIds: [5, 6] },
+    { id: 1, description: 'Membresía Básica (1-2 clases por semana)', typeIds: [1, 2], numOfClasses: 2 },
+    { id: 2, description: 'Membresía tipo 1 (2-4 clases por semana)', typeIds: [3, 4], numOfClasses: 4 },
+    { id: 3, description: 'Membresía Full (4-6 clases por semana)', typeIds: [5, 6], numOfClasses: 6 },
 ]
 
 export class MembershipPriceError extends Error {
@@ -67,7 +67,8 @@ async function findCurrentGrouped() {
     return {
         id: group.id,
         description: group.description,
-        price: latestPrice?.price || 0
+        price: latestPrice?.price || 0,
+        numOfClasses: group.numOfClasses
     };
   });
 
