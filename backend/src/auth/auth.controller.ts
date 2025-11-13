@@ -9,21 +9,21 @@ async function login(req:Request,res:Response, next:NextFunction){
         const loginData = await authService.login(email,password)
         const { token, refreshToken, user: userValidation } = loginData;
 
-         // Configurar las cookies        
-        res.cookie('refreshToken',refreshToken,{
-            httpOnly:true,
-            sameSite: 'strict',
+         // Configurar las cookies
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'lax',
             path: '/',
-            maxAge: 1 * 24 * 60 * 60 * 1000, //1 dia
-            secure:true            
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+            secure: process.env.NODE_ENV === 'production'
         })
 
-        res.cookie('accessToken',token,{
+        res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'lax',
             path: '/',
-            maxAge: 60 * 60 * 1000, //1 hora
-            secure:true
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
+            secure: process.env.NODE_ENV === 'production'
         })
 
         res.json({success: true, 
@@ -44,7 +44,6 @@ async function login(req:Request,res:Response, next:NextFunction){
             res.status(500).json({message:'Error en el servidor'})
         }
     }
-
 }
 
 async function loginWithGoogle(req: Request, res: Response, next: NextFunction) {
@@ -53,20 +52,20 @@ async function loginWithGoogle(req: Request, res: Response, next: NextFunction) 
         const loginData = await authService.loginWithGoogle(code);
         const { token, refreshToken, user: userValidation } = loginData;
 
-        res.cookie('refreshToken', refreshToken, {
+        res.cookie('token', token, {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'lax',
             path: '/',
-            maxAge: 1 * 24 * 60 * 60 * 1000, //1 dia
-            secure: true
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+            secure: process.env.NODE_ENV === 'production'
         })
 
-        res.cookie('accessToken', token, {
+        res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'lax',
             path: '/',
-            maxAge: 60 * 60 * 1000, //1 hora
-            secure: true
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
+            secure: process.env.NODE_ENV === 'production'
         })
 
         res.json({
@@ -92,17 +91,16 @@ async function loginWithGoogle(req: Request, res: Response, next: NextFunction) 
 
 async function logout(req:Request,res:Response){
     try{
+        // Opciones consistentes
+        const cookieOptions = {
+            httpOnly: true,
+            sameSite: 'lax' as const,
+            path: '/',
+            secure: process.env.NODE_ENV === 'production'
+        };
 
-        res.clearCookie('accessToken', {
-            httpOnly: true,
-            sameSite: 'strict',
-            path: '/'
-        });
-        res.clearCookie('refreshToken', {
-            httpOnly: true,
-            sameSite: 'strict',
-            path: '/'
-        });
+        res.clearCookie('token', cookieOptions);
+        res.clearCookie('refreshToken', cookieOptions);
         
         res.status(200).json({success:true,message:'Sesión cerrada'})
     }

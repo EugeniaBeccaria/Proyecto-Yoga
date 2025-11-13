@@ -6,5 +6,11 @@ import svgr from 'vite-plugin-svgr'
 export default defineConfig({
   plugins: [react(), svgr()],
   base: '/',
-  appType: 'spa' 
+  appType: 'spa' ,
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3000',
+      '/auth': 'http://localhost:3000'
+    }
+  }
 })

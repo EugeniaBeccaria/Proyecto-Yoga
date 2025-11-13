@@ -2,6 +2,7 @@ import { Entity, Property, ManyToMany, Cascade, ManyToOne, Rel, BeforeCreate, Co
 import { BaseEntity } from '../shared/DB/baseEntity.entity.js'
 import { Taller } from '../taller/taller.entity.js'
 import { Classs } from '../classs/classs.entity.js'
+import bcrypt from 'bcrypt';
 
 @Entity()
 export class User extends BaseEntity {
@@ -14,10 +15,9 @@ export class User extends BaseEntity {
     @Property({ nullable: true })
     birthdate?: Date
 
-    @Property({ nullable: false })
+   @Property({ nullable: false, unique: true })
     email!: string
     
-    // se cambian phone y dni a string ya que son numeros demasiado grandes para tratar como enteros
     @Property({ nullable: true })
     phone?: string
 
@@ -27,8 +27,11 @@ export class User extends BaseEntity {
     @Property({ nullable: true })
     role?: string = 'client'
 
-    @Property({ nullable: false, hidden: true })
-    password!: string;
+    @Property({ nullable: true, hidden: true })
+    password?: string;
+
+    @Property({ nullable: true, unique: true }) // para usuarios que se registren con Google
+    googleId?: string;
 
     @ManyToMany(() => Taller, (taller) => taller.users)
     talleres = new Collection<Taller>(this)
@@ -38,5 +41,9 @@ export class User extends BaseEntity {
 
     @ManyToMany(() => Classs, (classs) => classs.users)
     classes = new Collection<Classs>(this);
+
+    async setPassword(password: string): Promise<void> {
+        this.password = await bcrypt.hash(password, 12);
+    }
 
     }

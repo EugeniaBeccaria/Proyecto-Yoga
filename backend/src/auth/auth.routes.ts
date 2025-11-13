@@ -12,7 +12,7 @@ authRouter.post('/login',[
     ],
 verifyResult, login)
 
-authRouter.post('/google/login', [
+authRouter.post('/google-login', [
     check('code', 'El código de Google es obligatorio').notEmpty()
 ],
     verifyResult, loginWithGoogle)

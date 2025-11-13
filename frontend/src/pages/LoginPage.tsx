@@ -118,28 +118,37 @@ const handleGoogleLogin = useGoogleLogin({
             setSuccess(false);
 
             try {
-                const response = await axios.post("http://localhost:3000/auth/google/login",
+                const response = await axios.post("http://localhost:3000/auth/google-login",
                     {
                         code: codeResponse.code
                     },
-                    { withCredentials: true });
+                    { 
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    });
 
-                const userData = response.data.user;
-                if (response.status !== 200) {
+                if (response.status === 200) {
+                    const userData = response.data.user;
+                    console.log('Usuario logueado con Google, nombre: ', userData.name);
+                    
+                    // Guardar en localStorage
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    
+                    // lo mismo que el login normal
+                    setLoading(false);
+                    setSuccess(true);
+                    setTimeout(() => {
+                        login(userData); //  Del AuthContext
+                        setUserLogin(true);
+                    }, 1300);
+                } else {
                     setLoading(false);
                     setError(true);
                     throw new Error(response.data.message || 'Error al iniciar sesión con Google');
                 }
-
-                console.log('Usuario logueado con Google, nombre: ', userData.name);
-                
-                // lo mismo que el login normal
-                setLoading(false);
-                setSuccess(true);
-                setTimeout(() => {
-                    login(userData); //  Del AuthContext
-                    setUserLogin(true);
-                }, 1300);
 
             } catch (err) {
                 setLoading(false);

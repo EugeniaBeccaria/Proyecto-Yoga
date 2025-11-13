@@ -1,5 +1,5 @@
 ### (Prueba 1) Verificar que el servidor responde
-GET http://localhost:3000/api/classes
+GET http://localhost:3000/api/users
 
 
 ### (Prueba 2) Crear la clase para el profesor Zarah

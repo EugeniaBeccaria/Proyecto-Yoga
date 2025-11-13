@@ -31,7 +31,7 @@ export async function verifyCookie(req:Request, res:Response,next:NextFunction){
     if(!refreshJwtSecret)
         throw new Error('REFRESH_JWT_SECRET no está definido en las variables de entorno');
 
-    const cookie = req.cookies.accessToken;
+    const cookie = req.cookies.token;
     const refreshCookie = req.cookies.refreshToken
 
     if (!cookie && !refreshCookie){
@@ -53,20 +53,20 @@ export async function verifyCookie(req:Request, res:Response,next:NextFunction){
                 jwtSecret,
                 { expiresIn: '1h'});
                 
-            res.cookie('refreshToken',refreshToken,{
-                httpOnly:true,
-                sameSite: 'strict',
+            res.cookie('token', token, {
+                httpOnly: true,
+                sameSite: 'lax',
                 path: '/',
-                maxAge: 7 * 24 * 60 * 60 * 1000, //7dias
-                secure:true            
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+                secure: process.env.NODE_ENV === 'production'
             })
         
-            res.cookie('accessToken',token,{
+            res.cookie('refreshToken', refreshToken, {
                 httpOnly: true,
-                sameSite: 'strict',
+                sameSite: 'lax',
                 path: '/',
-                maxAge: 60 * 60 * 1000, //1 hora
-                secure:true
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
+                secure: process.env.NODE_ENV === 'production'
             })
             req.user = userRefresh;
             return next();

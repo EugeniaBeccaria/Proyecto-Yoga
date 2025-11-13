@@ -7,7 +7,6 @@ import {FaUser, FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
-import googleLogo from '/LogoGoogle.png';
 import { AuthContext } from "../context/AuthContext.tsx";
 
 
@@ -104,26 +103,33 @@ const handleGoogleLogin = useGoogleLogin({
             setSuccess(false);
 
             try {
-                const response = await axios.post("http://localhost:3000/auth/google/login",
-                    {
-                        code: codeResponse.code
-                    },
-                    { withCredentials: true });
+                const response = await axios.post("http://localhost:3000/auth/google-login",
+                    { code: codeResponse.code },
+                    { 
+                        withCredentials: true,
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    });
 
-                const userData = response.data.user;
-                if (response.status !== 200) {
+                if (response.status === 200) {
+                    const userData = response.data.user;
+                    console.log('Usuario logueado/registrado con Google, nombre: ', userData.name);
+                    
+                    // Guardar en localStorage
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                    setLoading(false);
+                    setSuccess(true);
+                    setTimeout(() => {
+                        login(userData); 
+                    }, 1300);
+                } else {
                     setLoading(false);
                     setError({ act: true, message: response.data.message || 'Error con Google' }); 
                     throw new Error(response.data.message || 'Error al iniciar sesión con Google');
                 }
-
-                console.log('Usuario logueado/registrado con Google, nombre: ', userData.name);
-
-                setLoading(false);
-                setSuccess(true);
-                setTimeout(() => {
-                    login(userData); 
-                }, 1300);
 
             } catch (err) {
                 setLoading(false);
