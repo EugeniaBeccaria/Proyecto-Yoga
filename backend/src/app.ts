@@ -20,10 +20,19 @@ import cookieParser from 'cookie-parser';
 
 const app = express()
 app.use(express.json())
+
+// Configure CORS with credentials
 app.use(cors({
   origin: 'http://localhost:5173', // URL de frontend
   credentials: true 
 }));
+
+// Configure COOP and COEP headers to allow OAuth popups
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
+  next();
+});
 
 app.use(cookieParser())
 
