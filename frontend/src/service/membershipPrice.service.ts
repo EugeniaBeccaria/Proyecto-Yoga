@@ -1,13 +1,7 @@
 import axios from 'axios';
+import type { IPlanGroup } from '../types/class.type';
 
 const API_URL = "http://localhost:3000/api/membershipPrice";
-
-export interface IPlanGroup {
-    id: number;
-    description: string;
-    price: number;
-    numOfClasses: number;
-}
 
 const getCurrentPrices = async (): Promise<IPlanGroup[]> => {
     try {
