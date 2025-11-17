@@ -4,6 +4,7 @@ import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import ScrollToTop from './components/ScrollToTop';
 
 /*
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -20,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <BrowserRouter>
-        <App />
+        <ScrollToTop />
+          <App />
+        <ScrollToTop />
       </BrowserRouter>
     </GoogleOAuthProvider>
   </React.StrictMode>,
