@@ -50,10 +50,21 @@ async function getClasses(){
     }
 }
 
+async function getMyClasses() {
+    try {
+        const response = await axios('http://localhost:3000/api/classes/professor/classes', { withCredentials: true });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching professor classes:', error);
+        throw error;
+    }
+}
+
 export const classService = {
     getProfessors,
     getRooms,
     getDays,
     getTimes,
-    getClasses
+    getClasses,
+    getMyClasses
 };
