@@ -4,8 +4,10 @@ import "../../styles/ClassCart.css";
 import { HashLink } from "react-router-hash-link";
 import { membershipPriceService } from "../../service/membershipPrice.service";
 import { registrationService } from "../../service/registration.service";
+import { membershipService } from "../../service/membership.service";
 import type { IPlanGroup } from "../../types/class.type";
 import type { SelectedClass } from "../../types/class.type";
+import type { Error } from "../../types/error.type";
 // import { useStripe } from "@stripe/react-stripe-js";
 
 // interface errorState {
@@ -18,7 +20,7 @@ const ClassCart: React.FC = () => {
     const [selectedClasses, setSelectedClasses] = useState<SelectedClass[]>([]);
     const [allPlans, setAllPlans] = useState<IPlanGroup[]>([]);
     const [currentPlan, setCurrentPlan] = useState<IPlanGroup | null>(null);
-
+    const [error, setError] = useState<Error | null>(null);
     const [redirect, setRedirect] = useState<boolean>(false);
     // const [error, setError] = useState<errorState>({
     //     error: false,
@@ -74,6 +76,7 @@ const ClassCart: React.FC = () => {
         setSelectedClasses(updatedClasses);
         localStorage.setItem("clases", JSON.stringify(updatedClasses));
     };
+
     // sin useStripe
     const handleClickCompra = async() => {
         const user = localStorage.getItem("user");
@@ -82,14 +85,21 @@ const ClassCart: React.FC = () => {
             console.log("Usuario no autenticado, redirigiendo al login...");
             return;
         }
+
         try {
-            const userParsed = await JSON.parse(user);
+            const userParsed = JSON.parse(user);
+            
+            const hasMembership = await membershipService.searchUserMembership(userParsed.id);
+            if(hasMembership){
+                setError({error: true, message: 'El usuario ya tiene una membresía activa'});
+                console.log("El usuario ya tiene una membresía activa.");
+                return;
+            }
             const checkoutData = await registrationService.prepareCheckoutData(selectedClasses, currentPlan!, userParsed);
             console.log("Checkout data received:", checkoutData);
             const session = checkoutData.session;
 
             if (session && session.url) {
-                // Redirect using the Checkout Session URL returned by the backend
                 window.location.assign(session.url);
             } else {
                 console.error("No Checkout Session URL available for redirect:", session);
@@ -212,6 +222,9 @@ const ClassCart: React.FC = () => {
             <button onClick={handleClickCompra} className="summary-btn" disabled={!currentPlan}>Aceptar</button>
             </div>
         </div>
+            {error?.error && (
+                <p className="error-message-cart">{error.message}</p>
+            )}
             {redirect && (
                 <div className="redirect">
                     <p className="text-redirect">Inicia Sesión para completar la compra,</p>

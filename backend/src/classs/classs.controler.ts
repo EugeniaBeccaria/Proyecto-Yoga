@@ -6,8 +6,7 @@ import { Room } from '../room/room.entity.js'
 import { Day } from './day.entity.js'
 import { Time } from './time.entity.js'
 
-
-const em = orm.em
+const em = orm.em.fork();
 
 function sanitizeClasssInput(req: Request, res: Response, next: NextFunction) {
     req.body.sanitizedInput = {
@@ -42,6 +41,26 @@ async function findAll(req: Request, res: Response) {
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
+}
+
+async function findAvailableClasses(req: Request, res: Response) {
+  try {
+    // const classes = await em.find(Classs, { $where:'capacity_limit > enrolled_count' } as any, { populate: ['day', 'time', 'room'] })
+    const classes = await em.createQueryBuilder(Classs, 'c') // c es el alias
+    .select('*')
+    .where('c.capacity_limit > c.enrolled_count') 
+    
+    .leftJoinAndSelect('c.day', 'day')
+    .leftJoinAndSelect('c.time', 'time')
+    .leftJoinAndSelect('c.room', 'room')
+    .leftJoinAndSelect('c.professor', 'professor')
+    .getResult();
+    
+    res.status(200).json({ message: 'found all classes', data: classes })
+  } 
+  catch (error: any) {
+    res.status(500).json({ message: error.message })
+  } 
 }
 
 async function findOne(req: Request, res: Response) {
@@ -173,4 +192,4 @@ async function findClassesByProfessorId(req: Request, res: Response) {
   }
 }
 
-export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId}
+export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId, findAvailableClasses}

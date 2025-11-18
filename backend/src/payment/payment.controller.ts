@@ -14,7 +14,7 @@ export async function checkoutSession(req: Request, res: Response, next: NextFun
     const classes = req.body.classes
     const plan = req.body.plan;
     const user = req.body.user;
-
+    const idClasses = classes.map((c: any) => c.id);
     //validar que el alumno no este inscripto en esa clase y que haya cupo en cada una
 
     // console.log(classes, user, plan);
@@ -22,7 +22,7 @@ export async function checkoutSession(req: Request, res: Response, next: NextFun
         const metadata : Stripe.MetadataParam = {
             userId: user.id,
             plan: plan.numOfClasses.toString(),
-            classes: JSON.stringify(classes)
+            classes: JSON.stringify(idClasses)
         }
 
         const session = await stripeClient.checkout.sessions.create({
@@ -44,6 +44,7 @@ export async function checkoutSession(req: Request, res: Response, next: NextFun
                 }
             ],
             mode: 'subscription',
+            // implementar pagina de carga para el success del front, que realice una peticion para verificar si la membresia se creo correctamente
             success_url: 'http://localhost:5173/myClassesPage',
             cancel_url: 'http://localhost:5173/ClassCart',
             metadata: metadata

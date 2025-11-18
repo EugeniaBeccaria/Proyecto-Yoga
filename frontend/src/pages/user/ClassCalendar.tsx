@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../../styles/ClassCalendar.css'; 
+import { classService } from '../../service/class.service.js';
 import { useNavigate } from 'react-router-dom';
+import type { Error } from '../../types/error.type.js';
 
 interface ClaseHorario {
     id: number;
@@ -23,10 +24,6 @@ interface ClaseHorario {
     };
 }
 
-interface errorState {
-    error: boolean;
-    message: string;
-}
 
 const FRANJAS_HORARIAS_MAÑANA = [
     { label: '07:00 a 08:00', horaInicio: '07:00' },
@@ -59,17 +56,23 @@ export default function ClassCalendar() {
     const [clases, setClases] = useState<ClaseHorario[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<ClaseHorario[]>([]);
     const [turnoMañana, setTurnoMañana] = useState<boolean>(true);
-    const [error, setError] = useState<errorState>({error: false, message: ''});
-
+    const [error, setError] = useState<Error | null>(null);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {fetchClases()}, []);
 
     const fetchClases = async () => {
     try {
-        const response = await axios('http://localhost:3000/api/classes',{withCredentials: true});
-        console.log('Datos de clases recibidos:', response.data.data);
-        setClases(response.data.data);
+        const user = localStorage.getItem("user");
+        if (user){
+            const userParsed = await JSON.parse(user);
+            if(userParsed.role === 'admin') setIsAdmin(true)
+            else setIsAdmin(false);
+        }
+
+        const response = await classService.getAvailableClasses();
+        setClases(response);
     }
     catch (error) {
         console.error('Error al cargar las clases:', error);
@@ -131,13 +134,13 @@ export default function ClassCalendar() {
                 </select>
             <div className="footer-calendar">
                 <button 
-                className={selectedClasses.length > 0 ? "btn-agregar" : "btn-agregar disabled"} 
-                onClick={selectedClasses.length > 0 ? handleSendClasses : undefined}>
+                className={(selectedClasses.length > 0 && !isAdmin) ? "btn-agregar" : "btn-agregar disabled"} 
+                onClick={(selectedClasses.length > 0 && !isAdmin) ? handleSendClasses : undefined}>
                     Agregar Clases
                 </button>
             </div>
         </div>
-        {error.error && <p className="error-message-calendar">{error.message}</p>}
+        {error?.error && <p className="error-message-calendar">{error.message}</p>}
         <div className="horario-grid">
             <div className="celda-header celda-hora">HORA</div>
             {DIAS_SEMANA.map((dia) => (

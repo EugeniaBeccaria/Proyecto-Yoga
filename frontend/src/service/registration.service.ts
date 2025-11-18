@@ -5,7 +5,6 @@ import type { SelectedClass } from "../types/class.type";
 
 const prepareCheckoutData = async (selectedClasses: SelectedClass[], currentPlan: IPlanGroup, user: string) => {
     try{
-        // const classIds = selectedClasses.map((cls) => cls.id);
         console.log("Preparing checkout data with:", { selectedClasses, currentPlan, user });
         const response = await axios.post('http://localhost:3000/api/payment/create-checkout-session', {
             classes: selectedClasses,

@@ -41,6 +41,17 @@ async function findOne(req: Request, res: Response) {
   }
 }
 
+async function findOneByUserId(req: Request, res: Response) {
+  try {
+    const userId = Number.parseInt(req.params.userId)
+    const membership = await em.findOneOrFail(Membership, { user: userId }, { populate: ['membershipType'] })
+    res.status(200).json({ message: 'found membership', data: membership })
+  }
+  catch (error: any) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
 async function add(req: Request, res: Response) {
   try {
     const membership = em.create(Membership, req.body.sanitizedInput)
@@ -77,4 +88,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeMembershipInput, findAll, findOne, add, update, remove}
+export {sanitizeMembershipInput, findAll, findOne, add, update, remove, findOneByUserId}

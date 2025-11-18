@@ -273,3 +273,14 @@
     background-color: #b56565;
     transform: translateY(-1px);
 }
+
+.error-message-cart {
+    background-color:#b56565 ;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+}
