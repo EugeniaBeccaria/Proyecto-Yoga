@@ -6,5 +6,11 @@ import svgr from 'vite-plugin-svgr'
 export default defineConfig({
   plugins: [react(), svgr()],
   base: '/',
-  appType: 'spa' 
+  appType: 'spa' ,
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+      'Cross-Origin-Embedder-Policy': 'unsafe-none'
+    }
+  }
 })

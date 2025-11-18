@@ -30,6 +30,9 @@ export class User extends BaseEntity {
     @Property({ nullable: false, hidden: true })
     password!: string;
 
+    @Property({ nullable: true, unique: true }) // para usuarios que se registren con Google
+    googleId?: string;
+
     @ManyToMany(() => Taller, (taller) => taller.users)
     talleres = new Collection<Taller>(this)
 
