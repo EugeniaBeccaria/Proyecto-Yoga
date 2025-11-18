@@ -1,0 +1,90 @@
+.profile {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+}
+
+.profile h1 {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.profile-form label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-weight: 500;
+  color: #444;
+}
+
+.profile-form input {
+  margin-top: 6px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  transition: border 0.2s;
+}
+
+.profile-form input:focus {
+  outline: none;
+  border-color: #8e5cff;
+  background: #fff;
+}
+
+/* Botones */
+.button {
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  background: #8e5cff;
+  color: white;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.button:hover {
+  background: #7a35ff;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+/* Mensaje de error */
+.error-message {
+  margin-top: 12px;
+  color: #c62828;
+  font-weight: 600;
+  background: #fde8e8;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #f5b4b4;
+}
+
+@media (max-width: 480px) {
+  .profile {
+    padding: 20px;
+  }
+
+  .profile h1 {
+    font-size: 1.5rem;
+  }
+}
