@@ -49,7 +49,6 @@ async function getClasses(){
         throw error;
     }
 }
-
 async function getMyClasses() {
     try {
         const response = await axios('http://localhost:3000/api/classes/professor/classes', { withCredentials: true });
@@ -59,7 +58,6 @@ async function getMyClasses() {
         throw error;
     }
 }
-
 export const classService = {
     getProfessors,
     getRooms,
@@ -67,4 +65,5 @@ export const classService = {
     getTimes,
     getClasses,
     getMyClasses
+
 };

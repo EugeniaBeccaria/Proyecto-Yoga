@@ -25,3 +25,30 @@ export interface Time {
     id: number;
     startTime: string;
 }
+
+export interface SelectedClass {
+    id: number;
+    name: string; 
+    description: string;
+    capacityLimit: number;
+    room: {
+        id: number;
+        name: string;
+        };
+    day: { 
+        id: number;
+        name: string;
+    };
+    professor: number;
+    time: { 
+        id: number;
+        startTime: string;
+    };
+}
+
+export interface IPlanGroup {
+    id: number;
+    description: string;
+    price: number;
+    numOfClasses: number;
+}

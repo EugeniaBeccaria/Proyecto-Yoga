@@ -16,6 +16,9 @@ export class Classs extends BaseEntity {
     @Property({ nullable: true })
     capacityLimit?: number
 
+    @Property({ nullable: true })
+    enrolledCount?: number = 0
+    
     // Relacion con alumnos (users)
     @ManyToMany(() => User, (user) => user.classes, {cascade: [Cascade.ALL], owner: true,})
     users = new Collection <User> (this)

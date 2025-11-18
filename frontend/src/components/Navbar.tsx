@@ -30,7 +30,7 @@ function Navbar() {
     <>
     <header className="navbar">
       <div className="nav-left">
-        <HashLink smooth to="/#top">
+        <HashLink smooth to="/">
           <LogoIcon size={100} className="logo" />
         </HashLink>
       </div>

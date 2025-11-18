@@ -23,7 +23,7 @@ function HomePage(){
   return (
     <>
         <main>
-          <section className="hero" id="top">
+          <section className="hero">
             <h1 className="hero-title">
               <span className="shanti">SHANTI</span>
               <span className="yoga">yoga</span>
@@ -112,7 +112,7 @@ function HomePage(){
             </div>
 
             <div className="acciones-catalogo">
-              <a className="btn-outline" href="/clases">Ver calendario de clases</a>
+              <HashLink className="btn-outline" to="/classCalendar">Ver calendario de clases</HashLink>
             </div>
           </section>
 
@@ -154,7 +154,7 @@ function HomePage(){
             </div>
 
             <div className="acciones-catalogo">
-              <a className="btn-outline" href="/talleres">Ver calendario de talleres</a>
+              <HashLink className="btn-outline" to="/talleres">Ver calendario de talleres</HashLink>
             </div>
           </section>
 
@@ -195,7 +195,7 @@ function HomePage(){
                 <p className="reseña-texto">
                   “Lo que más me gusta de Shanti Yoga son los talleres. Cada vez aprendo algo nuevo sobre 
                   meditación, respiración y posturas. El ambiente es tranquilo, positivo y sin presión. Es un espacio donde 
-                  realmente puedo desconectarme del estrés diario y reconectar conmigo mismo."”
+                  realmente puedo desconectarme del estrés diario y reconectar conmigo mismo.”
                 </p>
                 <div className="reseña-user">
                   <img src="/Persona2.jpg" alt="Martín López" />

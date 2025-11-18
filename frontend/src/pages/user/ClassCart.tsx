@@ -1,29 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/ClassCart.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { membershipPriceService } from "../../service/membershipPrice.service.ts";
-import type { IPlanGroup } from "../../service/membershipPrice.service";
+import { membershipPriceService } from "../../service/membershipPrice.service";
+import { registrationService } from "../../service/registration.service";
+import type { IPlanGroup } from "../../types/class.type";
+import type { SelectedClass } from "../../types/class.type";
+// import { useStripe } from "@stripe/react-stripe-js";
 
-interface SelectedClass {
-    id: number;
-    name: string; 
-    description: string;
-    capacityLimit: number;
-    room: {
-        id: number;
-        name: string;
-        };
-    day: { 
-        id: number;
-        name: string;
-    };
-    professor: number;
-    time: { 
-        id: number;
-        startTime: string;
-    };
-}
 // interface errorState {
 //     error: boolean;
 //     message: string;
@@ -40,7 +24,8 @@ const ClassCart: React.FC = () => {
     //     error: false,
     //     message: "",
     // });
-    const navigate = useNavigate();
+    // const stripe = useStripe();
+    // const navigate = useNavigate();
 
     async function loadSelectedClasses() {
         const storedClasses = localStorage.getItem("clases");
@@ -89,7 +74,7 @@ const ClassCart: React.FC = () => {
         setSelectedClasses(updatedClasses);
         localStorage.setItem("clases", JSON.stringify(updatedClasses));
     };
-
+    // sin useStripe
     const handleClickCompra = async() => {
         const user = localStorage.getItem("user");
         if(!user){
@@ -97,12 +82,53 @@ const ClassCart: React.FC = () => {
             console.log("Usuario no autenticado, redirigiendo al login...");
             return;
         }
-        if (user){
-            alert("Compra realizada con éxito");
-            localStorage.removeItem("clases");
-            navigate("/MyClassesPage");
+        try {
+            const userParsed = await JSON.parse(user);
+            const checkoutData = await registrationService.prepareCheckoutData(selectedClasses, currentPlan!, userParsed);
+            console.log("Checkout data received:", checkoutData);
+            const session = checkoutData.session;
+
+            if (session && session.url) {
+                // Redirect using the Checkout Session URL returned by the backend
+                window.location.assign(session.url);
+            } else {
+                console.error("No Checkout Session URL available for redirect:", session);
+            }
+        }
+        catch (error) {
+            console.error("Error during checkout process:", error);
         }
     }
+
+    //con useStripe
+    //     const handleClickCompra = async() => {
+    //     const user = localStorage.getItem("user");
+    //     if(!user){
+    //         setRedirect(true);
+    //         console.log("Usuario no autenticado, redirigiendo al login...");
+    //         return;
+    //     }
+    //     try {
+    //         const userParsed = await JSON.parse(user);
+    //         const checkoutData = await registrationService.prepareCheckoutData(selectedClasses, currentPlan!, userParsed);
+    //         console.log("Checkout data received:", checkoutData);
+    //         const session = checkoutData.session;
+
+    //         if(!stripe){
+    //             console.error("Stripe no está cargado aún.");
+    //             return;
+    //         }
+    //         const {error} = await useStripe().redirectToCheckout({
+    //             sessionId: session.id,
+    //         });
+    //         if (error) {
+    //             console.error("Error redirecting to checkout:", error);
+    //         }
+    //     }
+    //     catch (error) {
+    //         console.error("Error during checkout process:", error);
+    //     }
+    // }
     return (
         <div className="container">
         <button 

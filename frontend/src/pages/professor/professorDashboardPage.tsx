@@ -28,7 +28,7 @@ function ProfessorDashboardPage() {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const classes = await classService.getClasses();        
+        const classes = await classService.getMyClasses();        
         setClasses(classes);
       } catch (error) {
         console.error("Error al obtener las clases:", error);

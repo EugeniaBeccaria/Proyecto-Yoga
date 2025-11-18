@@ -1,6 +1,18 @@
 import '../styles/Footer.css';
+import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 
 function Footer() {
+    const handleSamePageLinkClick = (path: string) => {
+    if (location.pathname === path) {
+        document.body.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+    };
+
+
     return (
     <footer className="footer">
         
@@ -32,10 +44,10 @@ function Footer() {
             <div className="footer-section">
                 <h4>Navegación</h4>
                 <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/nosotros">Sobre Nosotros</a></li>
-                    <li><a href="/class">Clases</a></li>
-                    <li><a href="/talleres">Talleres</a></li>
+                    <li><Link to="/" onClick={() => handleSamePageLinkClick('/')}>Inicio</Link></li>
+                    <li><HashLink smooth to="/#nosotros">Sobre nosotros</HashLink></li>
+                    <li><Link to="/ClassCalendar" onClick={() => handleSamePageLinkClick('/ClassCalendar')}>Clases</Link></li>
+                    <li><Link to="/talleres" onClick={() => handleSamePageLinkClick('/talleres')}>Talleres</Link></li>
                     
                 </ul>
             </div>

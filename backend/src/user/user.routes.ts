@@ -8,7 +8,7 @@ import { verifyEmail } from '../helpers/validators-helpers.js'
 
 export const userRouter = Router()
 
-userRouter.get('/' ,findAll)
+userRouter.get('/',verifyCookie ,findAll)
 userRouter.get('/:id', verifyCookie, findOne)
 userRouter.put('/:id', verifyCookie, update )
 userRouter.delete('/:id', verifyCookie, remove)
