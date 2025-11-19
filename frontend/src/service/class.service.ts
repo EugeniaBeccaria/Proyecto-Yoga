@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { IEnrolledClass } from '../types/class.type.ts';
 
 async function getProfessors(){
     try {
@@ -69,6 +70,17 @@ async function getMyClasses() {
         throw error;
     }
 }
+
+async function getMyEnrolledClasses(): Promise<IEnrolledClass[]> {
+    try {
+        const response = await axios('http://localhost:3000/api/classes/my-enrolled', { withCredentials: true });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching enrolled classes:', error);
+        throw error;
+    }
+}
+
 export const classService = {
     getProfessors,
     getRooms,
@@ -76,5 +88,6 @@ export const classService = {
     getTimes,
     getClasses,
     getMyClasses,
-    getAvailableClasses
+    getAvailableClasses,
+    getMyEnrolledClasses
 };

@@ -1,7 +1,14 @@
-export default function MyClassesPage(){
-    return(
-        <div>
-            <h1>My Classes Page</h1>
-        </div>
-    )
-}
+import React from 'react';
+import ClasesAlumno from '../components/ClasesAlumno.tsx';
+
+const MyClassesPage: React.FC = () => {
+  return (
+    <div>
+      {/* Otros elementos de la página del alumno, como un menú de navegación */}
+      <ClasesAlumno />
+      {/* Más contenido */}
+    </div>
+  );
+};
+
+export default MyClassesPage;

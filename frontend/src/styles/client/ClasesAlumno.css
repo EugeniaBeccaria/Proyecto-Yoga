@@ -1,0 +1,88 @@
+.alumno-clases-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+
+.alumno-clases-titulo {
+  font-size: 2.2em;
+  color: #6a996a;
+  text-align: center;
+  margin-bottom: 35px;
+  letter-spacing: 0.5px;
+}
+
+.clases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+
+.clase-card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.clase-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.clase-card-nombre {
+  font-size: 1.6em;
+  color: #5b875b;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+
+.clase-card-detalle {
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+
+.clase-card-descripcion {
+  font-size: 0.9em;
+  color: #666;
+  line-height: 1.6;
+  margin-top: 15px;
+}
+
+
+.no-clases-mensaje {
+  text-align: center;
+  font-size: 1.1em;
+  color: #777;
+  padding: 30px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+  .alumno-clases-container {
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .alumno-clases-titulo {
+    font-size: 1.8em;
+  }
+
+  .clases-grid {
+    grid-template-columns: 1fr;
+  }
+}

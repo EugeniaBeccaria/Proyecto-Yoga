@@ -52,3 +52,11 @@ export interface IPlanGroup {
     price: number;
     numOfClasses: number;
 }
+
+export interface IEnrolledClass {
+    id: string | number;
+    name: string;
+    professorName: string;
+    schedule: string;
+    description: string;
+}

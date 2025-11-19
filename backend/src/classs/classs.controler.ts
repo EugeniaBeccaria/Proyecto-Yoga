@@ -192,4 +192,38 @@ async function findClassesByProfessorId(req: Request, res: Response) {
   }
 }
 
-export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId, findAvailableClasses}
+async function findMyEnrolledClasses(req: Request, res: Response) {
+    try {
+        const userId = Number(req.user?.id);
+        if (!userId || isNaN(userId)) {
+            return res.status(400).json({ message: 'ID de usuario inválido en el token' });
+        }
+
+        const userWithClasses = await em.findOne(User, { id: userId }, {
+            populate: ['classes.professor'],
+        });
+        
+        if (!userWithClasses) {
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+        
+        const enrolledClasses = userWithClasses.classes.getItems().map(cls => ({
+            id: cls.id,
+            name: cls.name,
+            description: cls.description,
+            professorName: cls.professor.name, 
+            schedule: `${cls.day?.name || ''} ${cls.time?.startTime || ''} - Room: ${cls.room?.name || ''}`, 
+        }));
+        
+        res.status(200).json({ 
+            message: 'Clases inscritas encontradas', 
+            data: enrolledClasses 
+        });
+
+    } catch (error: any) {
+        console.error('Error al buscar clases inscritas:', error);
+        res.status(500).json({ message: error.message || 'Error interno del servidor.' });
+    }
+}
+
+export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId, findAvailableClasses, findMyEnrolledClasses}
