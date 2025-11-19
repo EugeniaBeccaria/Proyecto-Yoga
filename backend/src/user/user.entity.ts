@@ -14,7 +14,7 @@ export class User extends BaseEntity {
     @Property({ nullable: true })
     birthdate?: Date
 
-    @Property({ nullable: false })
+    @Property({ nullable: false, unique: true })
     email!: string
     
     // se cambian phone y dni a string ya que son numeros demasiado grandes para tratar como enteros

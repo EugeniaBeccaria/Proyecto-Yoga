@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 ); */
 
-const stripePromise = loadStripe('pk_test_51SU8dqIASuqUzULXtHSfuAycNRNVmvdRPEnkj24g5XHdtjnCm6C9vPQixcGMwD0e7WfSjKODtSAzE3vrpXDbqq0m00k5iz47ax')
+const stripePromise = loadStripe('pk_test_51SUxNVGdJddZij7d0mpJIpPTDtwA8C1F7zfYZTPHhm5Q2di4Osza9f9yMO7dG8Fwzu5DHk70JZviuf8nGsfE7lZl00ZUwoawzU')
 const GOOGLE_CLIENT_ID = "961050182079-4g53a5gj6nongdd867t2medgqq1mcqun.apps.googleusercontent.com"; 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
