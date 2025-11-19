@@ -63,6 +63,10 @@ async function findOne(req: Request, res: Response) {
 async function add(req: Request, res: Response) {
   try {
       const {name, lastname, email, phone, dni, password} = req.body
+      const existingUser = await em.findOne(User, { email })
+      if (existingUser) {
+        return res.status(409).json({ message: 'El email ya está registrado.' })
+      }
       const role = (req.query.role) as string;
       const registerDataUser = await userService.register(name, lastname, email, phone, dni, password, role)
 

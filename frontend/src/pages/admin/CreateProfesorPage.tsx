@@ -58,11 +58,18 @@ const handleSubmit = async (e: React.FormEvent) => {
     catch(error){
         if (axios.isAxiosError(error)){
             if (error.response){
-                if(error.response.status === 400){
-                    setMessageError({error:true,message:'Ya existe una cuenta con este email'})
-                    }
-                if(error.response.status === 500){
+                if(error.response.status === 409){
+                    const errorMessage = error.response.data?.message || 'Ya existe una cuenta con este email';
+                    setMessageError({error:true, message: errorMessage})
+                }
+                else if(error.response.status === 400){
+                    setMessageError({error:true, message: 'Datos de entrada inválidos. Por favor, verifica el formulario.'})
+                }
+                else if(error.response.status === 500){
                     setMessageError({error:true,message:'Error de servidor'})
+                }
+                else {
+                    setMessageError({error:true, message: error.response.data?.message || 'Error desconocido.'})
                 }
             }
         }
@@ -164,6 +171,7 @@ return (
                     className="crear-profesor-input"
                     required
                 />
+                <p className="password-hint">La contraseña debe contener al menos una mayúscula.</p>
                 </div>
             </div>
 
