@@ -17,15 +17,21 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
         event = stripe.webhooks.constructEvent(req.body, sig, secretWebhookKey!);
         switch (event.type) {
             case 'checkout.session.completed':
+                console.log(`Evento recibido: ${event.type}`);
                 const session = event.data.object as Stripe.Checkout.Session;
                 const dataWebhook = await membershipService.handleCheckoutSessionCompleted(session);
                 console.log(`Membresía creada para el usuario ${dataWebhook.user.email} con tipo de membresía: ${dataWebhook.membership.membershipType.description}.`);
                 break;
+            case 'checkout.session.expired':
+                console.log('La sesión de pago expiró sin completarse.');
+                break;
+            default:
+                console.log(`Evento no manejado: ${event.type}`);
         }
-        res.status(200).json({ received: true });
+        res.status(200).json({ received: true }); // Responder a Stripe que el webhook se recibió correctamente para que no siga intenando reenviar el evento.
     } 
     catch (err) {
         res.status(400).send(`Webhook Error: ${err}`);
-        console.log(`⚠️  Webhook signature verification failed.`, err);
+        console.log(`Webhook signature verification failed.`, err);
     }
 }

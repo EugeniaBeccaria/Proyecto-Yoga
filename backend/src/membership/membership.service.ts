@@ -6,6 +6,8 @@ import { MembershipType } from '../membership/membershipType.entity.js';
 import { Classs } from '../classs/classs.entity.js';
 
 async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
+    // esta funcion es llamada desde webhook.controller cuando se recibe el evento checkout.session.completed de Stripe, lo que indica que el pago se realizo correctamente.
+
     const em = orm.em.fork(); // create a new EntityManager instance
 
     try {
@@ -16,11 +18,12 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         const userId = metadata.userId;
         const numOfClasses = metadata.plan;
         const idClasses = JSON.parse(metadata.classes);
+        const idSession = session.id;
 
         const classEntities = await em.find(Classs, { id: { $in: idClasses.map((id: number) => id) } });
         const user = await em.findOne(User , { id: parseInt(userId) });
         const membershipType = await em.findOne(MembershipType, { numOfClasses: parseInt(numOfClasses) });
-
+        console.log('User found:', user);
         if (!user || !membershipType) {
             throw new Error(`User with ID ${userId} not found or MembershipType with numOfClasses ${numOfClasses} not found.`);
         }
@@ -35,6 +38,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         membership.status = 'active';
         membership.user = user;
         membership.membershipType = membershipType;
+        membership.stripeSessionId = idSession;
         em.persist(membership);
         
         if(!classEntities || classEntities.length === 0){

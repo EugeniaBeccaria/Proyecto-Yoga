@@ -1,11 +1,12 @@
 .container-calendar{
-    min-height: 90vh;
+    /* min-height: 90vh; */
     color: #d08383;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
     flex-grow: 1;
-    padding-bottom: 50px;}
+    /* padding-bottom: 50px; */
+}
 
 .titulo-clases {
     font-family: "Playfair Display", serif;

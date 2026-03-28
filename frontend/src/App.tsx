@@ -19,6 +19,7 @@ import ClassCart from "./pages/user/ClassCart.tsx";
 import CreateProfesorPage from './pages/admin/CreateProfesorPage.tsx';
 import ClassCalendar from './pages/user/ClassCalendar.tsx';
 import { AuthProvider } from './context/AuthProvider.tsx';
+import CheckoutStatus from './pages/user/checkout-status.tsx';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path="/talleres" element={<TalleresPage />} />
               <Route path="/ClassCart" element={<ClassCart />} />
               <Route path="/ClassCalendar" element={<ClassCalendar />} />
+              <Route path="/checkout-status" element={<CheckoutStatus />} />
               <Route
                 path="/MyClassesPage"
                 element={

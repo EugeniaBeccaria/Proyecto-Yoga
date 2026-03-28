@@ -4,10 +4,11 @@ import "../../styles/ClassCart.css";
 import { HashLink } from "react-router-hash-link";
 import { membershipPriceService } from "../../service/membershipPrice.service";
 import { registrationService } from "../../service/registration.service";
-import { membershipService } from "../../service/membership.service";
+import { membershipService } from "../../service/membershipServiceFront";
 import type { IPlanGroup } from "../../types/class.type";
 import type { SelectedClass } from "../../types/class.type";
 import type { Error } from "../../types/error.type";
+import { useSearchParams } from "react-router-dom";
 // import { useStripe } from "@stripe/react-stripe-js";
 
 // interface errorState {
@@ -28,6 +29,9 @@ const ClassCart: React.FC = () => {
     // });
     // const stripe = useStripe();
     // const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const cancel = searchParams.get("error");
+
 
     async function loadSelectedClasses() {
         const storedClasses = localStorage.getItem("clases");
@@ -37,22 +41,26 @@ const ClassCart: React.FC = () => {
             console.log("Clases cargadas desde el almacenamiento local:", parsedClasses);
         }
         else console.log("No hay clases seleccionadas en el almacenamiento local.");
-    }
-    useEffect(() => {
-        loadSelectedClasses();
-        const fetchPlans = async () => {
-            try {
-                const plans = await membershipPriceService.getCurrentPrices();
-                console.log("Planes recibidos del backend:", plans);
-                const sortedPlans = [...plans].sort((a, b) => a.numOfClasses - b.numOfClasses);
-                console.log("Planes ordenados:", sortedPlans);
-                setAllPlans(sortedPlans);
-            } catch (error) {
-                console.error("Error al cargar los planes", error);
-            }
-        };
+        }
+        useEffect(() => {
+            if (cancel === "payment_cancelled") {
+                setError({error: true, message: "El pago fue cancelado. Por favor, intenta nuevamente."});
+                console.log("El pago fue cancelado por el usuario.");
+                }
+            loadSelectedClasses();
+            const fetchPlans = async () => {
+                try {
+                    const plans = await membershipPriceService.getCurrentPrices();
+                    console.log("Planes recibidos del backend:", plans);
+                    const sortedPlans = [...plans].sort((a, b) => a.numOfClasses - b.numOfClasses);
+                    console.log("Planes ordenados:", sortedPlans);
+                    setAllPlans(sortedPlans);
+                } catch (error) {
+                    console.error("Error al cargar los planes", error);
+                }
+            };
         fetchPlans();
-    }, []);
+        }, []);
 
     useEffect(() => {
         const count = selectedClasses.length;
@@ -100,7 +108,7 @@ const ClassCart: React.FC = () => {
             const session = checkoutData.session;
 
             if (session && session.url) {
-                window.location.assign(session.url);
+                window.location.assign(session.url); //Redirecciona a la URL de Stripe Checkout
             } else {
                 console.error("No Checkout Session URL available for redirect:", session);
             }

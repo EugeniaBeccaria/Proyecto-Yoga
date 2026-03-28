@@ -1,0 +1,106 @@
+/* Contenedor principal para centrar el contenido en la pantalla */
+.status-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ocupa todo el alto de la pantalla */
+    /* background-color: #f9fafb; /* Un gris muy claro de fondo */
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilos para el mensaje de espera debajo del Spinner */
+.waiting-message {
+    text-align: center;
+    margin-top: 2rem;
+    color: #4b5563;
+    animation: pulse 2s infinite; /* Animación suave de pulsado */
+}
+
+.waiting-message h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+/* Tarjeta base para los estados (éxito, timeout, error) */
+.status-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    border-top: 6px solid #e5e7eb; /* Borde por defecto */
+    animation: slideUp 0.4s ease-out;
+}
+
+/* Iconos grandes (emojis) */
+.status-card .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Variaciones de colores según el estado */
+.status-card.success {
+  border-top-color: #10b981; /* Verde esmeralda */
+}
+
+.status-card.timeout {
+  border-top-color: #f59e0b; /* Ámbar/Naranja */
+}
+
+.status-card.error {
+  border-top-color: #ef4444; /* Rojo */
+}
+
+/* Estilo para el Session ID (importante para soporte) */
+.session-id {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f3f4f6;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #6b7280;
+    word-break: break-all; /* Para que no rompa el diseño si el ID es largo */
+    margin: 15px 0;
+    border: 1px border #e5e7eb;
+}
+
+.home-btn {
+    background-color: #6366f1; 
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.home-btn:hover {
+    background-color: #4f46e5;
+    transform: translateY(-1px);
+}
+
+/* --- ANIMACIONES --- */
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}

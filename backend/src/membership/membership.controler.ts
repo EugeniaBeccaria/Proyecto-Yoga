@@ -20,6 +20,17 @@ function sanitizeMembershipInput(req: Request, res: Response, next: NextFunction
   next()
 }
 
+async function findOneBySessionId(req: Request, res: Response) {
+  try {
+    const sessionId = req.params.sessionId;
+    const membership = await em.findOneOrFail(Membership, { stripeSessionId: sessionId }, { populate: ['membershipType'] })
+    res.status(200).json({ message: 'found membership', data: membership })
+  }
+  catch (error: any) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
 async function findAll(req: Request, res: Response) {
   try {
     const memberships = await em.find(Membership, {}, { populate: ['membershipType'] })
@@ -88,4 +99,4 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeMembershipInput, findAll, findOne, add, update, remove, findOneByUserId}
+export {sanitizeMembershipInput, findAll, findOne, add, update, remove, findOneByUserId, findOneBySessionId}

@@ -7,12 +7,15 @@ import { MembershipType}  from '../membership/membershipType.entity.js'
 export class Membership extends BaseEntity {
     @Property({ nullable: false , type: 'date' })
     startDate!: Date
-  
+
     @Property({ nullable: false , type: 'date' })
     endDate!: Date
 
     @Property({ nullable: false })
     status!: string
+
+    @Property({ nullable: true })
+    stripeSessionId?: string;
 
     @ManyToOne(() => User)
     user!: Rel<User>;
