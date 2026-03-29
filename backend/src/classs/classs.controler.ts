@@ -49,7 +49,7 @@ async function findAvailableClasses(req: Request, res: Response) {
     const classes = await em.createQueryBuilder(Classs, 'c') // c es el alias
     .select('*')
     .where('c.capacity_limit > c.enrolled_count') 
-    
+    .andWhere('c.deleted_at IS NULL') // Excluir clases eliminadas
     .leftJoinAndSelect('c.day', 'day')
     .leftJoinAndSelect('c.time', 'time')
     .leftJoinAndSelect('c.room', 'room')
@@ -134,7 +134,6 @@ async function add(req: Request, res: Response) {
       time: timeEntity,
     })
     //posteriormente se usara add() para agregar alumnos a la clase
-    // a consultar -- se tendrian 
     console.log(classs)
     await em.persistAndFlush(classs)
 
@@ -161,10 +160,16 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const classs = em.getReference(Classs, id)
-    await em.removeAndFlush(classs)
-    res.status(200).send({ message: 'class deleted' })
-  } 
+    console.log("ID de la clase a eliminar:", id); // ej:ID de la clase a eliminar: 22
+    const classToRemove = await em.findOneOrFail(Classs, { id })
+    console.log("Clase encontrada para eliminar:", classToRemove);
+    if (classToRemove.enrolledCount && classToRemove.enrolledCount > 0) {
+      return res.status(400).json({ message: 'No se puede eliminar una clase con alumnos inscritos' });
+    }
+    classToRemove.deletedAt = new Date();
+    await em.flush()
+    res.status(200).json({ message: 'class deleted', data: classToRemove })
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }

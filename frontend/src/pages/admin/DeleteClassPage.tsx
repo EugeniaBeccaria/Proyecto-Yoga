@@ -8,6 +8,8 @@ interface ClaseHorario {
     name: string; 
     description: string;
     capacityLimit: number;
+    enrolledCount: number;
+    deletedAt: Date | null;
     room: {
         id: number;
         name: string;
@@ -69,7 +71,9 @@ export function DeleteClassPage(){
     try {
         const response = await axios('http://localhost:3000/api/classes',{withCredentials: true});
         console.log('Datos de clases recibidos:', response.data.data);
-        setClases(response.data.data);
+        const allClasses: ClaseHorario[] = response.data.data;
+        const availableClasses = allClasses.filter(clase => clase.deletedAt === null); 
+        setClases(availableClasses);
     }
     catch (error) {
         console.error('Error al cargar las clases:', error);
@@ -77,70 +81,48 @@ export function DeleteClassPage(){
     };
 
 
-    async function handleDeleteClasses(){
-        if(selectedClasses.length === 0) return;
+    async function handleDeleteClasses() {
+    if (selectedClasses.length === 0) return;
 
-        const confirmDelete = window.confirm(`¿Estás seguro de que deseas eliminar ${selectedClasses.length} clase(s)?`);
+    const confirmDelete = window.confirm(`¿Estás seguro de que deseas eliminar ${selectedClasses.length} clase(s)?`);
+    if (!confirmDelete) return;
 
-        if (!confirmDelete) return;
+    try {
+        // se ejecutan todas las eliminaciones en paralelo
+        const deletePromises = selectedClasses.map(clase => 
+            axios.delete(`http://localhost:3000/api/classes/${clase.id}`, { withCredentials: true })
+        );
 
-        try {
-            //Eliminar cada clase seleccionada
-            for (const clase of selectedClasses) {
-                await axios.delete(`http://localhost:3000/api/classes/${clase.id}`, 
-                    { withCredentials: true }
-                );
-            }
+        const results = await Promise.allSettled(deletePromises);
 
-            alert('Clases eliminadas con éxito');
-
-            // Refrescar la lista de clases después de eliminarlas
-            fetchClases();
-            setSelectedClasses([]);
-
-        } catch (error) {
-            console.error('Error al eliminar las clases:', error);
-            alert('Hubo un error al eliminar las clases. Por favor, intenta nuevamente.');
+        const rejected = results.filter(r => r.status === 'rejected');
+        
+        if (rejected.length > 0) {
+            const firstError = rejected[0].reason.response?.data?.message || "Error desconocido";
+            alert(`Se eliminaron algunas clases, pero ${rejected.length} fallaron. Motivo principal: ${firstError}`);
+        } else {
+            alert('Todas las clases seleccionadas fueron dadas de baja con éxito');
         }
+
+        fetchClases();
+        setSelectedClasses([]);
+
+    } catch (error) {
+        console.error('Error crítico en el proceso de eliminación:', error);
+        alert('Hubo un error inesperado al procesar la eliminación.');
     }
-
-
+}
 
     function handleSelectClass(clase: ClaseHorario) {
+        if (clase.enrolledCount > 0) return;
         const exist = selectedClasses?.find((c)=> c.id === clase.id)
         if (exist){
             setSelectedClasses(selectedClasses?.filter((c)=> c.id !== clase.id ) || null)
         }
         if(!exist && selectedClasses){
             setSelectedClasses([...selectedClasses,clase])
-        }}
-
-    {/*function handleSendClasses(){
-        const hasArray = new Set<string>();
-        let hasConflict = false;
-        for(const clase of selectedClasses){
-            if(hasArray.has(`${clase.day.id}-${clase.time.id}`)){
-                setError({error: true, message: 'No se pueden seleccionar dos clases en el mismo día y horario'});
-                hasConflict = true;
-                break;
-            }
-            else{
-                hasArray.add(`${clase.day.id}-${clase.time.id}`);
-            }
         }
-        if(hasConflict) return;
-        else setError({error: false, message: ''});
-
-        if(selectedClasses.length > 6){
-            setError({error: true, message: 'No se pueden seleccionar más de 6 clases'});
-            return;
-        }
-        setError({error: false, message: ''});
-        console.log('Clases seleccionadas para agregar:', selectedClasses);
-        localStorage.setItem('clases',JSON.stringify(selectedClasses));
-        setSelectedClasses([]);
-        navigate('/ClassCart');
-    }*/}
+    }
 
     // filtra las clases que coinciden con una celda (día y hora)
     const getClasesParaCelda = (diaId: number, horaInicio: string) => {
@@ -183,24 +165,27 @@ export function DeleteClassPage(){
                     {DIAS_SEMANA.map((dia) => {
                         const clasesEnCelda = getClasesParaCelda(dia.id, franja.horaInicio);
 
-                        //IMPORTANTE --- HAY QUE MOSTRAR SOLO LAS CLASES QUE SIGAN TENIENDO CAPACIDAD DISPONIBLE
                         return ( 
                             <div key={dia.id} className="celda-clase">
                                 {clasesEnCelda?.length > 0 && (
                                     <div className="lista-clases">
                                         {clasesEnCelda?.map((clase) => {
-                                            // verifica si la clase está seleccionada
                                             const isSelected = selectedClasses.find(item => item.id === clase.id);
+                                            const isDisabled = clase.enrolledCount > 0; 
+
                                             return (
                                                 <div 
-                                                key={clase.id} 
-                                                // asignacion de clase condicional para resaltar la seleccion
-                                                className={`clase-item ${isSelected ? 'selected' : ''}`} 
-                                                onClick={() => handleSelectClass(clase)}>
-                                                {clase.name}
+                                                    key={clase.id} 
+                                                    className={`clase-item ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled-grey' : ''}`} 
+                                                    onClick={() => handleSelectClass(clase)}
+                                                    title={isDisabled ? "No se puede eliminar: tiene alumnos inscriptos" : ""}
+                                                    style={isDisabled ? { cursor: 'not-allowed', opacity: 0.6 } : {}}
+                                                >
+                                                    {clase.name}
+                                                    {isDisabled && <span style={{ marginLeft: '5px' }}></span>}
                                                 </div>
                                             );
-                                            })}
+                                        })}
                                     </div>
                                 )}
                             </div>
@@ -210,7 +195,7 @@ export function DeleteClassPage(){
             ))}
         </div>
         <p className="tableDescription">
-            Seleccioná el nombre de la clase que quieres eliminar y hacé clic en el botón <strong>“Eliminar”</strong> para eliminarla.
+            Seleccioná el nombre de la clase que quieres eliminar y hacé clic en el botón <strong>“Eliminar”</strong> para eliminarla. <span style={{color: 'red'}}>Las clases que tienen alumnos inscriptos no pueden ser eliminadas.</span>
         </p>
     </div>
     )  

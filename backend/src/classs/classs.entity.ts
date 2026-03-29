@@ -18,6 +18,9 @@ export class Classs extends BaseEntity {
 
     @Property({ nullable: true })
     enrolledCount?: number = 0
+
+    @Property({ nullable: true })
+    deletedAt?: Date
     
     // Relacion con alumnos (users)
     @ManyToMany(() => User, (user) => user.classes, {cascade: [Cascade.ALL], owner: true,})
