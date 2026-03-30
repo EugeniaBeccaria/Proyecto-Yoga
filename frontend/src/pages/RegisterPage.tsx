@@ -8,7 +8,7 @@ import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
 import SocialButton from '../components/SocialButton';
 import { useGoogleLogin } from '@react-oauth/google';
-import googleLogo from '/LogoGoogle.png';
+// import googleLogo from '/LogoGoogle.png';
 
 import type { Error } from "../types/error.type";
 
@@ -218,7 +218,7 @@ const handleGoogleLogin = useGoogleLogin({
                                         />
                                 </div>
                             </div>
-
+                        <div className="password-info">La contraseña debe tener al menos 6 caracteres, incluyendo una letra mayuscula y un número.</div>
                         </div>
                         <button type='submit'>Sign up</button>
                         {loading &&

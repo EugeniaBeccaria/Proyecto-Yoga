@@ -66,7 +66,7 @@ async function findAvailableClasses(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const classs = await em.findOneOrFail(Classs, { id }, { populate: ['day', 'time', 'room'] })
+    const classs = await em.findOneOrFail(Classs, { id }, { populate: ['day', 'time', 'room','users'] })
     res.status(200).json({ message: 'found class', data: classs })
   } 
   catch (error: any) {
@@ -135,7 +135,8 @@ async function add(req: Request, res: Response) {
     })
     //posteriormente se usara add() para agregar alumnos a la clase
     console.log(classs)
-    await em.persistAndFlush(classs)
+    em.persist(classs)
+    await em.flush()
 
     res.status(201).json({ message: 'class created', data: classs })
   } 
@@ -160,13 +161,17 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    console.log("ID de la clase a eliminar:", id); // ej:ID de la clase a eliminar: 22
-    const classToRemove = await em.findOneOrFail(Classs, { id })
-    console.log("Clase encontrada para eliminar:", classToRemove);
-    if (classToRemove.enrolledCount && classToRemove.enrolledCount > 0) {
+    console.log("ID de la clase a eliminar:", id); 
+    const classToRemove = await em.findOneOrFail(Classs, { id }, { populate: ['users'] })
+    const usersClass = classToRemove.users.getItems();
+    if (usersClass.length > 0) {
       return res.status(400).json({ message: 'No se puede eliminar una clase con alumnos inscritos' });
     }
+    // if (classToRemove.enrolledCount && classToRemove.enrolledCount > 0) {
+    //   return res.status(400).json({ message: 'No se puede eliminar una clase con alumnos inscritos' });
+    // }
     classToRemove.deletedAt = new Date();
+    
     await em.flush()
     res.status(200).json({ message: 'class deleted', data: classToRemove })
   }
@@ -184,7 +189,7 @@ async function findClassesByProfessorId(req: Request, res: Response) {
       return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
     }
 
-    const classes = await orm.em.find(Classs, { professor: professorId }, 
+    const classes = await em.find(Classs, { professor: professorId }, 
       { populate: ['day', 'time', 'room', 'users'] });
 
     // Devolvemos siempre un 200 OK con la estructura de "sobre",

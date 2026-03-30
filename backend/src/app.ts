@@ -22,6 +22,9 @@ import { seedInitialData } from './scripts/seedInitialData.js';
 import { doesNotReject } from 'assert';
 import cors from 'cors'; 
 import cookieParser from 'cookie-parser';
+import { membershipChecker } from './jobs/membership.checker.js';
+
+membershipChecker();
 
 const app = express()
 app.use(cors({

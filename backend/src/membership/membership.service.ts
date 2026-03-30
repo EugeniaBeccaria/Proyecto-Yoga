@@ -31,7 +31,9 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         const today = new Date();
         const endDate = new Date();
         endDate.setMonth(endDate.getMonth() + 1);
-        
+        endDate.setDate(endDate.getDate() + 1); // sumo un dia mas para que la membresia expire a las 23:59 del dia correspondiente
+        // endDate.setMinutes(endDate.getMinutes() - 5);
+
         const membership = new Membership();
         membership.startDate = today;
         membership.endDate = endDate;

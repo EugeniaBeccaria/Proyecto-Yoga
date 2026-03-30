@@ -2,8 +2,11 @@ import axios from "axios";
 
 async function searchUserMembership(userId: number) {
     try {
-        await axios(`http://localhost:3000/api/membership/user/${userId}`, { withCredentials: true })
-        return true
+        const response = await axios(`http://localhost:3000/api/membership/user/${userId}`, { withCredentials: true });
+        if (response.status === 200) { // encontro una membresia activa para el usuario
+            console.log("Membresía encontrada para el usuario:", response.data.data);
+            return true;
+        }
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.status === 404) {
             return false;

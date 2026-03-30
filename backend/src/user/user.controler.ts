@@ -93,8 +93,9 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
-    const user = em.getReference(User, id)  //podria ser findOneOrfail
-    await em.removeAndFlush(user)
+    const user = await em.findOneOrFail(User, { id })  //podria ser findOneOrfail
+    em.remove(user)
+    await em.flush()
     res.status(200).send({ message: 'user deleted' })
   } 
   catch (error: any) {

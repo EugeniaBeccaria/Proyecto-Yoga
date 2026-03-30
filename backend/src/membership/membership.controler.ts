@@ -24,6 +24,7 @@ async function findOneBySessionId(req: Request, res: Response) {
   try {
     const sessionId = req.params.sessionId;
     const membership = await em.findOneOrFail(Membership, { stripeSessionId: sessionId }, { populate: ['membershipType'] })
+    
     res.status(200).json({ message: 'found membership', data: membership })
   }
   catch (error: any) {
@@ -53,14 +54,14 @@ async function findOne(req: Request, res: Response) {
 }
 
 async function findOneByUserId(req: Request, res: Response) {
-  try {
     const userId = Number.parseInt(req.params.userId)
-    const membership = await em.findOneOrFail(Membership, { user: userId }, { populate: ['membershipType'] })
-    res.status(200).json({ message: 'found membership', data: membership })
-  }
-  catch (error: any) {
-    res.status(404).json({ message: error.message })
-  }
+    const membership = await em.findOne(Membership, { user: userId,status:'active' }, { populate: ['membershipType'] })
+    if(membership) {
+      res.status(200).json({ message: 'found membership', data: membership })
+    }
+    else {      
+      res.status(404).json({ message: 'No active membership found for this user' })
+    }
 }
 
 async function add(req: Request, res: Response) {
@@ -91,7 +92,8 @@ async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id)
     const membership = em.getReference(Membership, id)  
-    await em.removeAndFlush(membership)
+    em.remove(membership)
+    await em.flush()
     res.status(200).send({ message: 'membership deleted' })
   } 
   catch (error: any) {

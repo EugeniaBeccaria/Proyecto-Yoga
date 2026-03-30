@@ -18,7 +18,8 @@ async function register(name: string, lastname: string, email: string, phone: st
     role: role,
     password: hashPassword
     });
-    await em.persistAndFlush(user);
+    em.persist(user);
+    await em.flush();
 
     return user;
 }
