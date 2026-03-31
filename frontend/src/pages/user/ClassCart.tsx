@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/ClassCart.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { membershipPriceService } from "../../service/membershipPrice.service";
 import { registrationService } from "../../service/registration.service";
@@ -28,26 +28,26 @@ const ClassCart: React.FC = () => {
     //     message: "",
     // });
     // const stripe = useStripe();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const cancel = searchParams.get("error");
 
-
-    async function loadSelectedClasses() {
-        const storedClasses = localStorage.getItem("clases");
-        if (storedClasses) {
-            const parsedClasses: SelectedClass[] = JSON.parse(storedClasses);
-            setSelectedClasses(parsedClasses);
-            console.log("Clases cargadas desde el almacenamiento local:", parsedClasses);
-        }
-        else console.log("No hay clases seleccionadas en el almacenamiento local.");
-        }
         useEffect(() => {
             if (cancel === "payment_cancelled") {
                 setError({error: true, message: "El pago fue cancelado. Por favor, intenta nuevamente."});
                 console.log("El pago fue cancelado por el usuario.");
-                }
-            loadSelectedClasses();
+            }
+
+            const storedClasses = localStorage.getItem("clases");
+            if (storedClasses) {
+                const parsedClasses: SelectedClass[] = JSON.parse(storedClasses);
+                setSelectedClasses(parsedClasses);
+                console.log("Clases cargadas desde el almacenamiento local:", parsedClasses);
+            }
+            else {
+                console.log("No hay clases seleccionadas en el almacenamiento local.");
+            }
+
             const fetchPlans = async () => {
                 try {
                     const plans = await membershipPriceService.getCurrentPrices();
@@ -60,7 +60,7 @@ const ClassCart: React.FC = () => {
                 }
             };
         fetchPlans();
-        }, []);
+        }, [cancel]);
 
     useEffect(() => {
         const count = selectedClasses.length;
@@ -152,7 +152,7 @@ const ClassCart: React.FC = () => {
         <button 
             onClick={() => {
                 window.history.back();
-                //localStorage.removeItem("clases");
+                navigate('/ClassCalendar');
                 }} 
             className="btn-back">
             Volver

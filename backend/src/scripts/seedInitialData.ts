@@ -7,7 +7,9 @@ import { Day } from '../classs/day.entity.js';
 import { Time } from '../classs/time.entity.js';
 import { MembershipType } from '../membership/membershipType.entity.js';
 import bcrypt, { genSalt, hash } from 'bcrypt'
+import 'dotenv/config'
 
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 async function seedInitialData() {
     console.log(' Iniciando seeder...');
@@ -20,7 +22,7 @@ async function seedInitialData() {
             email: 'admin@yoga.com'})
         if(!existingAdmin){
             const salt = await genSalt()
-            const hashPassword = await bcrypt.hash('admin123',salt)
+            const hashPassword = await bcrypt.hash(ADMIN_PASSWORD,salt)
 
             const userAdmin = em.create(User, {
                 email:'admin@yoga.com',

@@ -67,6 +67,37 @@
     margin-bottom: 14px;
 }
 
+.row input {
+    border: none;
+    background: transparent;
+    text-align: right; 
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    color: #1b4d3e;
+    font-weight: 500;
+    width: 60%; 
+    outline: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.row input:focus {
+    color: #63a080;
+    border-bottom: 1px solid #63a080;
+}
+
+.row input::placeholder {
+    color: #c0ccc6;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.row input[type="date"] {
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 12px; 
+}
+
 .label {
     font-size: 14px;
     color: #8a9a92;
@@ -78,21 +109,53 @@
     font-weight: 500;
 }
 
-/* Botón cerrar sesión */
-.logout-btn {
-    margin-top: 40px;
+#btn-save {
+    margin-top: 14px;
     padding: 10px 18px;
     border-radius: 12px;
-    background-color: #1b4d3e;
+    background-color: #63a080;
     color: white;
     border: none;
     cursor: pointer;
     font-weight: 600;
     transition: 0.2s;;
+    margin-left: 0.8rem;
+    font-family: "Montserrat", sans-serif;
+}
+
+.logout-btn {
+    margin-top: 14px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    background-color: #e57373;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    font-family: "Montserrat", sans-serif;
+}
+
+#btn-save:hover {
+    background-color: #2f5b46;
+    transform: translateY(-2px);
 }
 
 .logout-btn:hover {
-    transform: translateY(2px);
+    transform: translateY(-2px);
+}
+
+.success-message {
+    margin-top: 14px;
+    color: #2f5b46;
+    font-weight: 600;
+}
+
+.error-text {
+    display:block;
+    color: #b15252;
+    font-size: 16px;
+    margin-top: 4px;
 }
 
 /* Animación */

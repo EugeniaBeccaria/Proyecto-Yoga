@@ -1,98 +1,167 @@
-/* Contenedor principal para centrar el contenido en la pantalla */
+:root {
+    --status-green: #2f5b46;
+    --status-green-soft: #e8f1ec;
+    --status-rose: #d08383;
+    --status-rose-soft: #fceff0;
+    --status-ink: #2d2f31;
+    --status-muted: #5f6468;
+}
+
 .status-page-container {
+    position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Ocupa todo el alto de la pantalla */
-    /* background-color: #f9fafb; /* Un gris muy claro de fondo */
-    padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: calc(100vh - var(--navbar-height));
+    padding: 24px;
+    background:
+        radial-gradient(circle at 20% 15%, rgba(208, 131, 131, 0.2), transparent 48%),
+        radial-gradient(circle at 85% 80%, rgba(47, 91, 70, 0.24), transparent 52%),
+        linear-gradient(140deg, #fffaf8 0%, #f3f7f4 45%, #ffffff 100%);
+    overflow: hidden;
 }
 
-/* Estilos para el mensaje de espera debajo del Spinner */
-.waiting-message {
-    text-align: center;
-    margin-top: 2rem;
-    color: #4b5563;
-    animation: pulse 2s infinite; /* Animación suave de pulsado */
+.status-bg-shape {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(4px);
+    z-index: 0;
+    pointer-events: none;
 }
 
-.waiting-message h2 {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-    color: #000000;
+.shape-left {
+    width: 280px;
+    height: 280px;
+    left: -90px;
+    top: 100px;
+    background: rgba(208, 131, 131, 0.14);
 }
 
-/* Tarjeta base para los estados (éxito, timeout, error) */
+.shape-right {
+    width: 340px;
+    height: 340px;
+    right: -120px;
+    bottom: 70px;
+    background: rgba(47, 91, 70, 0.14);
+}
+
 .status-card {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    max-width: 450px;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(2px);
+    padding: 34px 30px;
+    border-radius: 24px;
+    box-shadow: 0 18px 40px rgba(47, 91, 70, 0.13);
+    max-width: 520px;
     width: 100%;
     text-align: center;
-    border-top: 6px solid #e5e7eb; /* Borde por defecto */
-    animation: slideUp 0.4s ease-out;
+    border: 1px solid rgba(47, 91, 70, 0.1);
+    border-top: 8px solid #d9e4dd;
+    animation: card-enter 0.45s ease-out;
 }
 
-/* Iconos grandes (emojis) */
-.status-card .icon {
-    font-size: 4rem;
+.status-card h2 {
+    margin: 4px 0 12px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.65rem, 3vw, 2.05rem);
+    color: var(--status-ink);
+}
+
+.status-card p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--status-muted);
+    font-family: "Open Sans", sans-serif;
+}
+
+.status-chip {
+    display: inline-block;
     margin-bottom: 20px;
-    display: block;
+    padding: 7px 16px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    color: var(--status-green);
+    background: var(--status-green-soft);
 }
 
-/* Variaciones de colores según el estado */
+.status-card .icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+    display: block;
+    line-height: 1;
+}
+
 .status-card.success {
-  border-top-color: #10b981; /* Verde esmeralda */
+    border-top-color: #4e9d73;
 }
 
 .status-card.timeout {
-  border-top-color: #f59e0b; /* Ámbar/Naranja */
+    border-top-color: #cf8a8a;
+}
+
+.status-card.timeout .status-chip,
+.status-card.error .status-chip {
+    color: #9b5d5d;
+    background: var(--status-rose-soft);
 }
 
 .status-card.error {
-  border-top-color: #ef4444; /* Rojo */
+    border-top-color: #b15252;
 }
 
-/* Estilo para el Session ID (importante para soporte) */
+.status-card.loading {
+    border-top-color: #2f5b46;
+}
+
+.waiting-message {
+    text-align: center;
+    margin-top: 1.4rem;
+    animation: pulse 2.2s infinite;
+}
+
+.waiting-message h2 {
+    margin-bottom: 8px;
+}
+
 .session-id {
-    font-family: 'Courier New', Courier, monospace;
-    background: #f3f4f6;
+    font-family: "Courier New", Courier, monospace;
+    background: #f7f7f7;
     padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: #6b7280;
-    word-break: break-all; /* Para que no rompa el diseño si el ID es largo */
-    margin: 15px 0;
-    border: 1px border #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    color: #5e6266;
+    word-break: break-all;
+    margin: 18px 0;
+    border: 1px solid #e4e6e8;
 }
 
 .home-btn {
-    background-color: #6366f1; 
-    color: white;
+    background-color: var(--status-green);
+    color: #fff;
     border: none;
     padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 999px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 10px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    margin-top: 12px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .home-btn:hover {
-    background-color: #4f46e5;
-    transform: translateY(-1px);
+    background-color: #264b3a;
+    transform: translateY(-2px);
 }
 
-/* --- ANIMACIONES --- */
-
-@keyframes slideUp {
+@keyframes card-enter {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(24px);
     }
     to {
         opacity: 1;
@@ -101,6 +170,26 @@
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 640px) {
+    .status-page-container {
+        padding: 18px;
+    }
+
+    .status-card {
+        padding: 28px 22px;
+        border-radius: 20px;
+    }
+
+    .shape-left,
+    .shape-right {
+        opacity: 0.65;
+    }
 }

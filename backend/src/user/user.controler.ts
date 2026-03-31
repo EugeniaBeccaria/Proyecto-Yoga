@@ -60,6 +60,21 @@ async function findOne(req: Request, res: Response) {
   }
 }
 
+async function findMe(req: Request, res: Response) {
+  try {
+    const id = Number(req.user?.id)
+    if (!id) {
+      return res.status(400).json({ message: 'ID del usuario no encontrado en el token' })
+    }
+
+    const user = await em.findOneOrFail(User, { id })
+    res.status(200).json({ message: 'found current user', data: user })
+  }
+  catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 async function add(req: Request, res: Response) {
   try {
       const {name, lastname, email, phone, dni, password} = req.body
@@ -79,12 +94,22 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = Number(req.user?.id)
+    if (!id) {
+      return res.status(400).json({ message: 'ID del usuario no encontrado en el token' });
+    }
     const userToUpdate = await em.findOneOrFail(User, { id })
-    em.assign(userToUpdate, req.body.sanitizedInput)
+    console.log(req.body)
+    const {name, birthdate, email, phone, dni} = req.body
+    if(name) userToUpdate.name = name
+    if(birthdate) userToUpdate.birthdate = birthdate
+    if(email) userToUpdate.email = email
+    if(phone) userToUpdate.phone = phone
+    if(dni) userToUpdate.dni = dni
+    em.persist(userToUpdate) // no es necesario usar persist para entidades ya existentes
     await em.flush()
     res.status(200).json({ message: 'user updated', data: userToUpdate })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -104,4 +129,4 @@ async function remove(req: Request, res: Response) {
 }
 
 
-export {sanitizeUserInput, findAll, findOne, add, update, remove}
+export {sanitizeUserInput, findAll, findOne, findMe, add, update, remove}

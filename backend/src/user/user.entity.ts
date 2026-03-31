@@ -11,8 +11,8 @@ export class User extends BaseEntity {
     @Property({ nullable: true })
     lastname?: string
 
-    @Property({ nullable: true })
-    birthdate?: Date
+    @Property({ type: 'date', nullable: true })
+    birthdate?: string
 
     @Property({ nullable: false, unique: true })
     email!: string

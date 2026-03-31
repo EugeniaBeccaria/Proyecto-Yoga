@@ -1,3 +1,7 @@
+:root {
+    --navbar-height: 96px;
+}
+
 html, body, #root {
     height: 100%;
     margin: 0;
@@ -6,11 +10,10 @@ html, body, #root {
 
 .app-layout {
     display: flex;
-    flex-direction: column; 
-    min-height: 100vh;     
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.main-page{
-    flex-grow: 1;
-    min-height: 100vh;
+.main-page {
+    min-height: calc(100vh - var(--navbar-height));
 }

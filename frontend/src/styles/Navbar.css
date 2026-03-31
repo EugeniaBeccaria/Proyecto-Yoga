@@ -12,11 +12,13 @@ html{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2px 40px; /* antes era 2px 40px */
+  min-height: var(--navbar-height);
+  padding: 2px 40px;
   background: #ffffff;
   position: relative;
   width: 100%;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 

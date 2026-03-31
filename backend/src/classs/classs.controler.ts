@@ -189,7 +189,7 @@ async function findClassesByProfessorId(req: Request, res: Response) {
       return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
     }
 
-    const classes = await em.find(Classs, { professor: professorId }, 
+    const classes = await em.find(Classs, { professor: professorId, deletedAt: null }, 
       { populate: ['day', 'time', 'room', 'users'] });
 
     // Devolvemos siempre un 200 OK con la estructura de "sobre",

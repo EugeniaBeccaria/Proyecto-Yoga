@@ -60,6 +60,16 @@
   transition: background 0.2s, transform 0.1s;
 }
 
+.button-save {
+  background: #5e9c5e;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
 .button:hover {
   background: #7a35ff;
 }
@@ -67,6 +77,8 @@
 .button:active {
   transform: scale(0.97);
 }
+
+
 
 /* Mensaje de error */
 .error-message {

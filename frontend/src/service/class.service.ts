@@ -62,7 +62,7 @@ async function getAvailableClasses(){
 }
 
 async function getMyClasses() {
-    try {
+    try {// tiene que traer solo las clases del profesor logueado (el id del profesor viaja en la cookie que contiene el jwt) y que deletedAt sea null
         const response = await axios('http://localhost:3000/api/classes/professor/classes', { withCredentials: true });
         return response.data.data;
     } catch (error) {

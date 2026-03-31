@@ -1,12 +1,14 @@
-import '../styles/LoadingSpinner.css'; 
+import '../styles/LoadingSpinner.css';
 
-const Spinner = () => {
+type SpinnerProps = {
+    inline?: boolean;
+};
+
+const Spinner = ({ inline = false }: SpinnerProps) => {
     return (
-    <div className="spinner-overlay">
-        <div className="yoga-spinner">
-            {}
+        <div className={`spinner-overlay ${inline ? 'inline' : ''}`}>
+            <div className="yoga-spinner"></div>
         </div>
-    </div>
     );
 };
 

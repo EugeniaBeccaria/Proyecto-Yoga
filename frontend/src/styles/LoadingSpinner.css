@@ -5,20 +5,29 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(255, 255, 255, 0.247); 
+    background-color: rgba(255, 255, 255, 0.247);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
+.spinner-overlay.inline {
+    position: static;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    z-index: auto;
+    margin-bottom: 14px;
+}
+
 .yoga-spinner {
-    border: 6px solid #f3f3f3; 
-    border-top: 6px solid #a5b4fc; 
+    border: 6px solid #e8f1ec;
+    border-top: 6px solid #d08383;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1.5s linear infinite; 
+    width: 52px;
+    height: 52px;
+    animation: spin 1.2s linear infinite;
 }
 
 @keyframes spin {

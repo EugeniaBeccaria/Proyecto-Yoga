@@ -58,14 +58,15 @@ export default function Login(){
         }
     }
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-        setLoading(true)
-        e.preventDefault()
-        const formElements = e.currentTarget.elements;
-        const email = (formElements.namedItem('email') as HTMLInputElement).value;
-        const password = (formElements.namedItem('password') as HTMLInputElement).value;
-        if(email && password) 
-            sendForm(email,password)       
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setLoading(true);
+        
+        if (formData.email && formData.password) {
+            sendForm(formData.email, formData.password);
+        } else {
+            setLoading(false);
+        }
     }
 
     async function sendForm(email:string,password:string){
@@ -156,12 +157,12 @@ const handleGoogleLogin = useGoogleLogin({
     return(
         <>
             <div id="top" className="form-box-login">
-                <form className="form login" onSubmit={handleSubmit}>
-                    {userLogin?
-                        <div className="profile">
-                            <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
-                        </div>
-                    :<>
+                {userLogin?
+                    <div className="profile">
+                        <Profile error = {errCloseSession} handleClick = {handleClickCloseSession}/>
+                    </div>
+                :<>
+                    <form className="form login" onSubmit={handleSubmit}>
                             <img src="/logo-verde.png" alt="Logo Shanti Yoga" className="login-logo" />
                             <span className="title">INICIAR SESIÓN</span>
                             <span className="subtitle">Ingrese a su cuenta para acceder a sus clases y talleres</span>
@@ -228,8 +229,8 @@ const handleGoogleLogin = useGoogleLogin({
                             <div className="form-section">
                                 <p>¿No tienes una cuenta? <HashLink smooth to = "/RegisterPage">Registrarse</HashLink></p>
                             </div>
-                    </>}
-                </form>
+                    </form>
+                </>}
             </div>
         </>
         )

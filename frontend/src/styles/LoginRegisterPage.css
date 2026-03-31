@@ -230,7 +230,6 @@
   text-decoration: underline;
 }
 
-/* Para que el formulario no quede tapado por el Navbar */
 .form-box-login {
   display: flex;
   justify-content: center;   
@@ -240,7 +239,7 @@
   margin: 0;                 
   padding-top: 40px;           
   box-sizing: border-box;
-  margin-bottom: 80px;
+  /* margin-bottom: 80px; */
 }
 
 .form-box-register {
@@ -252,7 +251,7 @@
   margin: 0;
   padding-top: 40px;           
   box-sizing: border-box;
-  margin-bottom: 80px;         
+  /* margin-bottom: 80px;          */
 }
 
 
