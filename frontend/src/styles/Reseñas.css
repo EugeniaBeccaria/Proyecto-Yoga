@@ -1,102 +1,87 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-
-
-    .reseñas {
+/* Mobile First */
+.reseñas {
+    padding: 60px 20px;
     background-color: #fff;
-    padding: 100px 0;
     text-align: center;
-    }
+}
 
-    .titulo-reseñas {
+.titulo-reseñas {
     font-family: "Playfair Display", serif;
-    font-size: 45px;
-    font-weight: 700;
+    font-size: 32px;
     color: #2f5b46;
-    margin-bottom: 60px;
-    }
+    margin-bottom: 40px;
+}
 
-    /*  CONTENEDOR SCROLL HORIZONTAL  */
-    .contenedor-reseñas {
+.contenedor-reseñas {
     display: flex;
-    justify-content: center;
-    gap: 35px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 0 40px;
-    scrollbar-width: none;
-    }
-    .contenedor-reseñas::-webkit-scrollbar {
-    display: none;
-    }
+    flex-direction: column;
+    gap: 25px;
+}
 
-    /*  TARJETAS  */
-    .reseña-card {
-    flex: 0 0 310px;
+.reseña-card {
     background-color: #fdfdfd;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    padding: 45px 35px 35px 35px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 340px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 35px 25px;
+}
+
+/* Desktop Original */
+@media (min-width: 1024px) {
+    .reseñas {
+        padding: 100px 0;
+    }
+
+    .titulo-reseñas {
+        font-size: 45px;
+        margin-bottom: 60px;
+    }
+
+    .contenedor-reseñas {
+        flex-direction: row;
+        justify-content: center;
+        gap: 35px;
+        overflow-x: auto;
+        padding: 0 40px;
+        scrollbar-width: none;
+    }
+
+    .contenedor-reseñas::-webkit-scrollbar {
+        display: none;
+    }
+
+    .reseña-card {
+        flex: 0 0 310px;
+        min-height: 340px;
+        padding: 45px 35px 35px 35px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .reseña-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
     }
 
-    /*  ESTRELLAS */
     .stars {
-    color: #cf8a8a;
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    justify-content: center;
+        color: #cf8a8a;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
     }
 
-    /*  TEXTO DE LA RESEÑA  */
     .reseña-texto {
-    font-family: "Open Sans", sans-serif;
-    font-size: 15.5px;
-    line-height: 1.7;
-    color: #333;
-    margin-bottom: 30px;
-    position: relative;
+        font-family: "Open Sans", sans-serif;
+        font-size: 15.5px;
+        line-height: 1.7;
+        color: #333;
+        margin-bottom: 30px;
     }
 
-    /*  PERFIL  */
     .reseña-user {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: auto;
     }
-
-    .reseña-user img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    object-fit: cover;
-    }
-
-    .reseña-user h3 {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: #2f5b46;
-    margin: 0;
-    }
-
-    .reseña-user span {
-    display: block;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    color: #888;
-    margin-top: 3px;
-    }
+}   

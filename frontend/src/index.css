@@ -18,3 +18,8 @@ html, body, #root {
     flex: 1;
     min-height: calc(100vh - var(--navbar-height));
 }
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}

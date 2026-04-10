@@ -1,87 +1,153 @@
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Chango&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
-
-
-.clases {
-    background-color: #ffffff;
-    min-height: 100vh;
-    padding: 30px;
+/* ==========================================================================
+   MOBILE-FIRST (Estilos para Celular)
+   ========================================================================== */
+.reseñas {
+    background-color: #fff;
+    padding: 60px 20px;
     text-align: center;
-    color: #d08383;
-    justify-content: center;
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
 }
 
-.tableDescription {
-    font-family: "Open Sans", sans-serif;
-    font-size: 1rem;
+.titulo-reseñas {
+    font-family: "Playfair Display", serif;
+    font-size: 32px;
+    font-weight: 700;
     color: #2f5b46;
-    margin: 10px auto 25px;
-    max-width: 900px; 
-    line-height: 1.4;
+    margin-bottom: 40px;
+}
+
+.contenedor-reseñas {
+    display: flex;
+    flex-direction: column;
+    /* Lista vertical en mobile */
+    gap: 30px;
+    padding: 0;
+}
+
+.reseña-card {
+    background-color: #fdfdfd;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px 20px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centra contenido en mobile */
+}
+
+.stars {
+    color: #cf8a8a;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.reseña-texto {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* CORRECCIÓN DE IMÁGENES EN MOBILE */
+.reseña-user {
+    display: flex;
+    flex-direction: column;
+    /* Foto arriba del nombre en mobile */
+    align-items: center;
+    gap: 10px;
+}
+
+.reseña-user img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    /* Asegura que sea un círculo */
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+}
+
+.reseña-user h3 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2f5b46;
+    margin: 0;
+}
+
+.reseña-user span {
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    color: #888;
+}
+
+/* ==========================================================================
+   DESKTOP (Tu código original restaurado al 100%)
+   ========================================================================== */
+@media (min-width: 1024px) {
+    .reseñas {
+        padding: 100px 0;
     }
 
+    .titulo-reseñas {
+        font-size: 45px;
+        margin-bottom: 60px;
+    }
 
-table {
-    width: 80%;
-    border-collapse: collapse;
-    background: white;
-    color: #2f5b46;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 0 auto;
+    .contenedor-reseñas {
+        flex-direction: row;
+        /* Vuelve a ser fila horizontal */
+        justify-content: center;
+        gap: 35px;
+        overflow-x: auto;
+        padding: 0 40px;
+        scrollbar-width: none;
+    }
+
+    .contenedor-reseñas::-webkit-scrollbar {
+        display: none;
+    }
+
+    .reseña-card {
+        flex: 0 0 310px;
+        min-height: 340px;
+        padding: 45px 35px 35px 35px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .reseña-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .stars {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .reseña-texto {
+        font-size: 15.5px;
+        line-height: 1.7;
+        margin-bottom: 30px;
+    }
+
+    /* Restauramos el layout horizontal del usuario para Desktop */
+    .reseña-user {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        margin-top: auto;
+        text-align: left;
+    }
+
+    .reseña-user img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .reseña-user h3 {
+        font-size: 16px;
+    }
 }
-
-thead th {
-    background: #ffffff;
-    padding: 10px;
-    font-weight: bold;
-    color: #2f5b46;
-    font-family: "Open Sanz";
-    font-size: 1.2rem;
-}
-
-td, th {
-    border: 1px solid #ccc;
-    padding: 12px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-td {
-    font-family: "Montserrat";
-    font-size: 0.9rem;
-}
-
-.horario {
-    font-weight: bold;
-}
-
-/*.horario-dia {
-    font-size: 0.9rem;
-    color: black;
-}
-
-.horario-dia:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}*/
-
-.clase {
-    display: block;
-    font-size: 0.9rem;
-    margin: 3px 0;
-    border-bottom: 1px dashed #bbb;
-    font-family: "Montserrat";
-    color: black;
-}
-
-.clase:hover {
-    text-decoration: underline;
-    cursor: pointer;
-    color:#2f5b46
-}
-

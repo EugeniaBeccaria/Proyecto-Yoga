@@ -1,268 +1,435 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-html, body {
+/* ==========================================================================
+   MOBILE-FIRST (Estilos para Celular)
+   ========================================================================== */
+html,
+body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    height: 100vh;
 }
 
-    .hero {
+@media (max-width: 1023px) {
+    .rosado .btn-outline:active {
+        background-color: #d08383;
+        color: #fff;
+        transform: scale(0.95);
+    }
+}
+
+.hero {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 90vh;
+    height: 85vh;
     position: relative;
     background-image: url(/PaginaPrincipalFondo.webp);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     text-align: center;
-    overflow: hidden;
-    }
+}
 
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.7); /* capa blanca translúcida */
+    background-color: rgba(255, 255, 255, 0.7);
     z-index: 0;
-    }
+}
 
 .hero-title {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
-    line-height: 1;
-    color: #CF8A8A;
-    margin: 0;
     z-index: 2;
-    text-align: center;
-    }
+    color: #CF8A8A;
+}
 
 .hero-title .shanti {
-    align-self: center; 
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
+    font-size: 3.8rem;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    font-size: 9rem;
-    margin: 0 0 -0.35em 0; 
-    }
-
+    margin-bottom: -10px;
+}
 
 .hero-title .yoga {
-    align-self: flex-end; 
     font-family: "Playfair Display", serif;
-    font-weight: 400;
+    font-size: 3.2rem;
     font-style: italic;
     text-transform: lowercase;
-    letter-spacing: 2px;
-    font-size: 8rem;
-    margin: 0;
-    }
+}
 
 .hero-subtitle {
-    margin-top: 4.5rem;
-    font-size: 1.6rem;
-    color: #2f5b46; 
+    margin-top: 2.5rem;
+    font-size: 1.1rem;
+    color: #2f5b46;
     z-index: 2;
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
-    text-align: center;
-    }
+    padding: 0 20px;
+}
 
-/* ====== FLECHA VERDE DEBAJO ====== */
 .scroll-arrow {
-    margin-top: 17px; 
-    width: 38px;
-    height: 38px;
+    margin-top: 25px;
+    width: 32px;
+    height: 32px;
     border-left: 3px solid #2f5b46;
     border-bottom: 3px solid #2f5b46;
     transform: rotate(-45deg);
-    opacity: 0.9;
     animation: bounce 2.2s infinite ease-in-out;
-    transition: all 0.3s ease;
     z-index: 2;
-    background: none;
-    box-shadow: none;
-    }
+}
 
-    .scroll-arrow:hover {
-    opacity: 1;
-    transform: rotate(-45deg) scale(1.08);
-    }
-
-    /* animación rebote suave */
-    @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: rotate(-45deg) translateY(0);
-    }
-    40% {
-        transform: rotate(-45deg) translateY(-6px);
-    }
-    60% {
-        transform: rotate(-45deg) translateY(-3px);
-    }
-    }
-
-    /* ==== SECCIONES DE CLASES Y TALLERES ==== */
-    .seccion-catalogo {
+.seccion-catalogo {
+    padding: 60px 20px;
     text-align: center;
-    background-color: #fff;
-    padding: 100px 0;
-    }
+}
 
-    .titulo-seccion {
+.verde .titulo-seccion {
     font-family: "Playfair Display", serif;
-    font-size: 46px;
     font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-    }
-
-    .titulo-seccion .flor-icono {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: contain;
-    margin-bottom: 10px;
-    }
-
-    .verde .titulo-seccion {
     color: #2f5b46;
-    }
+}
 
-    .rosado .titulo-seccion {
-    color: #d08383;
-    }
-
-    .subtitulo-seccion {
-    font-family: "Open Sans", sans-serif;
-    color: #000;
-    font-size: 17px;
-    max-width: 800px;
-    margin: 0 auto 60px;
-    line-height: 1.6;
-    }
-
-    /* GRID DE TARJETAS */
-    .grid-cards {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 35px;
-    }
-
-    /* TARJETAS */
-    .card-catalogo {
-    width: 300px;
-    border-radius: 25px;
-    padding: 40px 25px;
-    background-color: #eef3ef; /* verde claro */
-    text-align: center;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .card-catalogo.rosado {
-    background-color: #fce9ea; /* rosa claro */
-    }
-
-    .card-catalogo:hover {
-    transform: translateY(-6px);
-    }
-
-    .badge {
-    background-color: #fff;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 15px;
-    }
-
-    .badge img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    }
-
-    /* TÍTULOS Y TEXTOS DENTRO DE TARJETAS */
-    .card-catalogo h3 {
+.card-catalogo.verde h3 {
     font-family: "Playfair Display", serif;
+    font-weight: 700;
+    color: #2f5b46;
     font-size: 20px;
-    font-weight: 700;
     margin-bottom: 10px;
-    }
+}
 
-    .card-catalogo.verde h3 {
-    color: #2f5b46;
-    }
-
-    .card-catalogo.rosado h3 {
-    color: #d08383;
-    }
-
-    .card-catalogo p {
+.card-catalogo.verde p {
     font-family: "Open Sans", sans-serif;
     color: #000;
     font-size: 15px;
-    line-height: 1.6;
-    }
+}
 
-    /* === BOTONES DE CATALOGO === */
-    .acciones-catalogo {
-    margin-top: 60px;
-    }
-
-    .btn-outline {
-    display: inline-block;
+.verde .btn-outline {
     font-family: "Open Sans", sans-serif;
     font-size: 17px;
     font-weight: 600;
     color: #2f5b46;
     border: 2px solid #2f5b46;
-    border-radius: 30px;
-    padding: 12px 36px;
-    background-color: transparent;
-    text-decoration: none;
+    padding: 12px 30px;
     transition: all 0.3s ease;
+}
+
+.verde .btn-outline:active {
+    background-color: #2f5b46;
+    color: #fff;
+    transform: scale(0.95);
+}
+
+.rosado .titulo-seccion {
+    color: #d08383;
+}
+
+.card-catalogo.rosado h3 {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    color: #d08383;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card-catalogo.rosado p {
+    font-family: "Open Sans", sans-serif;
+    color: #000;
+    font-size: 15px;
+}
+
+.titulo-seccion {
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.subtitulo-seccion {
+    font-family: "Open Sans", sans-serif;
+    color: #000;
+    font-size: 15px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+.grid-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.card-catalogo {
+    width: 100%;
+    max-width: 310px;
+    padding: 30px 20px;
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+.verde .card-catalogo {
+    background-color: #eef3ef;
+}
+
+.rosado .card-catalogo {
+    background-color: #fce9ea;
+}
+
+.badge {
+    background-color: #fff;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge img {
+    width: 35px;
+    height: 35px;
+}
+
+.btn-outline {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 2px solid #2f5b46;
+    border-radius: 30px;
+    color: #2f5b46;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.rosado .btn-outline {
+    font-family: "Open Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #d08383;
+    border: 2px solid #d08383;
+    padding: 12px 30px;
+    transition: all 0.3s ease;
+}
+
+.rosado .btn-outline:active {
+    background-color: #d08383;
+    color: #fff;
+    transform: scale(0.95);
+}
+
+
+
+@media (min-width: 1024px) {
+    .hero {
+        height: 90vh;
+    }
+
+    .hero-title {
+        display: inline-flex;
+        line-height: 1;
+    }
+
+    .hero-title .shanti {
+        align-self: center;
+        font-size: 9rem;
+        letter-spacing: 4px;
+        margin: 0 0 -0.35em 0;
+    }
+
+    .hero-title .yoga {
+        align-self: flex-end;
+        font-size: 8rem;
+        letter-spacing: 2px;
+        margin: 0;
+    }
+
+    .hero-subtitle {
+        margin-top: 4.5rem;
+        font-size: 1.6rem;
+    }
+
+    .scroll-arrow {
+        margin-top: 17px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .scroll-arrow:hover {
+        opacity: 1;
+        transform: rotate(-45deg) scale(1.08);
+    }
+
+    .seccion-catalogo {
+        padding: 100px 0;
+    }
+
+    .titulo-seccion {
+        font-size: 46px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .subtitulo-seccion {
+        font-size: 17px;
+        max-width: 800px;
+        margin: 0 auto 60px;
+        line-height: 1.6;
+    }
+
+    .grid-cards {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 35px;
+    }
+
+    .card-catalogo {
+        width: 300px;
+        padding: 40px 25px;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-catalogo:hover {
+        transform: translateY(-6px);
+    }
+
+    .badge {
+        width: 80px;
+        height: 80px;
+    }
+
+    .badge img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn-outline {
+        font-size: 17px;
+        padding: 12px 36px;
+        transition: all 0.3s ease;
     }
 
     .btn-outline:hover {
-    background-color: #2f5b46;
-    color: #fff;
-    transform: translateY(-2px);
-    }
-
-    .rosado .btn-outline {
-    border-color: #d08383;
-    color: #d08383;
+        background-color: #2f5b46;
+        color: #fff;
+        transform: translateY(-2px);
     }
 
     .rosado .btn-outline:hover {
-    background-color: #d08383;
-    color: #fff;
+        background-color: #d08383;
+        color: #fff;
     }
 
+    /* Específico para la sección de Clases */
+    .verde .titulo-seccion {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        color: #2f5b46;
+    }
 
+    .card-catalogo.verde h3 {
+        color: #2f5b46;
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
 
-/*.imagenPortada {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}*/
+    .verde .card-catalogo {
+        background-color: #eef3ef;
+        font-family: "Open Sans", sans-serif;
+        color: #000;
+    }
+
+    .verde .btn-outline {
+        display: inline-block;
+        font-family: "Open Sans", sans-serif;
+        font-size: 17px;
+        font-weight: 600;
+        color: #2f5b46;
+        border: 2px solid #2f5b46;
+        border-radius: 30px;
+        padding: 12px 36px;
+        background-color: transparent;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .verde .btn-outline:hover {
+        background-color: #2f5b46;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    /* Específico para la sección de Talleres */
+    .rosado .titulo-seccion {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        color: #d08383;
+    }
+
+    .card-catalogo.rosado h3 {
+        color: #d08383;
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .rosado .card-catalogo {
+        font-family: "Open Sans", sans-serif;
+        color: #000;
+        background-color: #fce9ea;
+    }
+
+    /* Botones con sus respectivos colores */
+    .rosado .btn-outline {
+        display: inline-block;
+        font-family: "Open Sans", sans-serif;
+        font-size: 17px;
+        font-weight: 600;
+        color: #d08383;
+        border: 2px solid #d08383;
+        border-radius: 30px;
+        padding: 12px 36px;
+        background-color: transparent;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .rosado .btn-outline:hover {
+        background-color: #d08383;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: rotate(-45deg) translateY(0);
+    }
+
+    40% {
+        transform: rotate(-45deg) translateY(-6px);
+    }
+
+    60% {
+        transform: rotate(-45deg) translateY(-3px);
+    }
+}
