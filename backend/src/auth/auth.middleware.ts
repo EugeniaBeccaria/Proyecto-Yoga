@@ -1,6 +1,7 @@
 import { Request,Response,NextFunction } from "express";
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv' //libreria para variables de entorno
+import axios from "axios";
 
 dotenv.config()
 
@@ -94,4 +95,28 @@ export async function isProfessor(req:Request, res:Response, next:NextFunction){
         next();
     else return res.status(403).json({ error: 'No autorizado' });
     
+}
+
+export async function validateCaptcha(req:Request, res:Response, next:NextFunction){
+    const captchaToken = req.body.captchaToken;
+    if (!captchaToken) {
+        return res.status(400).json({ error: 'Captcha token is required' });
+    }
+    try {
+        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+        if (!secretKey) {
+            throw new Error('RECAPTCHA_SECRET_KEY no está definido en las variables de entorno');
+        }
+        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`);
+
+        if (response.data.success) {
+        next();
+        }
+        else {
+        return res.status(400).json({ error: 'Captcha verification failed' });
+        }
+    } catch (error) {
+        console.error('Error verifying captcha:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 }

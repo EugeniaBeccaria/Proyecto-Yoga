@@ -5,6 +5,7 @@ import { User } from '../user/user.entity.js'
 import { Room } from '../room/room.entity.js'
 import { Day } from './day.entity.js'
 import { Time } from './time.entity.js'
+import { Membership } from '../membership/membership.entity.js'
 
 const em = orm.em.fork();
 
@@ -210,7 +211,7 @@ async function findMyEnrolledClasses(req: Request, res: Response) {
         }
 
         const userWithClasses = await em.findOne(User, { id: userId }, {
-            populate: ['classes.professor'],
+            populate: ['classes.professor']
         });
         
         if (!userWithClasses) {

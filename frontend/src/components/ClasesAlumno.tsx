@@ -17,7 +17,7 @@ const ClasesAlumno: React.FC = () => {
                 setError(null);
                 
                 const classes = await classService.getMyEnrolledClasses();
-
+                console.log("Clases inscritas obtenidas:", classes);
                 setClasesInscritas(classes);
 
             } catch (err) {

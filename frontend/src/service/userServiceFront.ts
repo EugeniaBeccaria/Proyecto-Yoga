@@ -31,6 +31,7 @@ async function saveProfileData(userData: UserUpdate, setFieldErrors: (errors: Re
     try {
         const res = await axios.put('http://localhost:3000/api/users/update',{
             name: userData.name,
+            lastname: userData.lastname,
             birthdate: (userData.birthdate) ,
             email: userData.email,
             phone: userData.phone,

@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import SocialButton from '../components/SocialButton';
 import { useGoogleLogin } from '@react-oauth/google';
 // import googleLogo from '/LogoGoogle.png';
+import ReCAPTCHA from "react-google-recaptcha";
 
 import type { Error } from "../types/error.type";
 
 interface User {
     name: string;
+    lastname: string;
     email: string;
     password: string;
     passwordRepeat:string;
@@ -26,12 +28,16 @@ function Register(){
     const [success, setSuccess] = useState<boolean>(false)
     const [user, setUser] = useState<User>({
         name:'',
+        lastname:'',
         email:'',
         password:'',
         passwordRepeat:''
     })
+    const [token, setToken] = useState<string | null>(null);
     
     const Navigate = useNavigate()
+
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;// || '6LevS60sAAAAAC_rFtowYLlD7LnktuS4u3bA-yzU'    ;
 
 function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -40,30 +46,35 @@ function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 
         const form = e.target as HTMLFormElement;
         const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+        const lastname = (form.elements.namedItem('lastname') as HTMLInputElement).value;
         const email = (form.elements.namedItem('email') as HTMLInputElement).value;
         const password = (form.elements.namedItem('password') as HTMLInputElement).value;
         const passwordRepeat = (form.elements.namedItem('passwordRepeat') as HTMLInputElement).value;
         setUser({
             name: name,
+            lastname: lastname,
             email: email,
             password: password,
             passwordRepeat: passwordRepeat
         });
         
         if (password === passwordRepeat) { 
-            sendFormRegister(name, email, password) 
+            sendFormRegister(name, lastname, email, password) 
         } else {
             setError({ error: true, message: 'Las contraseñas no coinciden' })
             setLoading(false); 
         }
     }
 
-async function sendFormRegister(name:string, email:string, password:string) {
+async function sendFormRegister(name:string, lastname:string, email:string, password:string) {
         try {
             const response = await axios.post("http://localhost:3000/api/users?role=client", {
                 name: name,
+                lastname: lastname,
                 email: email,
-                password: password
+                password: password,
+                captchaToken: token
+
             })
 
             setLoading(false)
@@ -87,6 +98,7 @@ async function sendFormRegister(name:string, email:string, password:string) {
             setLoading(false)
             setUser({
                 name: '',
+                lastname: '',
                 email: '',
                 password: '',
                 passwordRepeat: ''
@@ -136,6 +148,9 @@ const handleGoogleLogin = useGoogleLogin({
         }
     });
 
+    function handleChangeCaptcha(value: string | null) {
+        setToken(value);
+    }
     return(
         <>
             <div id="top" className="login-register">
@@ -156,20 +171,36 @@ const handleGoogleLogin = useGoogleLogin({
                         }
                         <div className="form-container">
                             <div className="login-input">
-                                <label>NOMBRE COMPLETO</label>
+                                <label>NOMBRE</label>
                                 <div className='caja-input'>
                                     <FaUser className="icon"/>
                                     <input 
                                         type="text"
                                         name='name' 
                                         className="input" 
-                                        placeholder="Nombre completo"
+                                        placeholder="Nombre"
                                         value={user.name}
                                         onChange={(e) => setUser({...user, name: e.target.value})}
                                         required
                                     />  
                                 </div>
                             </div>   
+
+                            <div className="login-input">
+                                <label>APELLIDO</label>
+                                <div className='caja-input'>
+                                    <FaUser className="icon"/>
+                                    <input 
+                                        type="text"
+                                        name='lastname' 
+                                        className="input" 
+                                        placeholder="Apellido"
+                                        value={user.lastname}
+                                        onChange={(e) => setUser({...user, lastname: e.target.value})}
+                                        required
+                                    />  
+                                </div>
+                            </div>
 
                             <div className="login-input">   
                                 <label>USUARIO</label>
@@ -220,6 +251,13 @@ const handleGoogleLogin = useGoogleLogin({
                             </div>
                         <div className="password-info">La contraseña debe tener al menos 6 caracteres, incluyendo una letra mayuscula y un número.</div>
                         </div>
+
+                        <ReCAPTCHA
+                            className="recaptcha"
+                            sitekey= {siteKey}
+                            onChange= {handleChangeCaptcha}
+                        />
+
                         <button type='submit'>Sign up</button>
                         {loading &&
                             <div className='loading-message'>
@@ -231,24 +269,15 @@ const handleGoogleLogin = useGoogleLogin({
                         <p>¿Ya tienes una cuenta? <HashLink smooth to = "/LoginPage">Iniciar sesión</HashLink></p>
                     </div>
                     
-                        <div className="linea">
-                        <span>O</span>
-                    </div>
+                    {/* <div className="linea">
+                    <span>O</span>
+                    </div> */}
+
                     <div className="otros-inicios-sesion">
                         <SocialButton 
                                 platform="google" 
                                 logoSrc="/LogoGoogle.png" 
                                 onClick={() => handleGoogleLogin()} // <-- SOLUCIÓN AL ERROR
-                            />
-                            <SocialButton 
-                                platform="facebook" 
-                                logoSrc="LogoFacebook.png" 
-                                onClick={() => alert('Facebook no implementado')} // <-- Añadido para evitar error
-                            />
-                            <SocialButton 
-                                platform="apple" 
-                                logoSrc="/LogoApple.png" 
-                                onClick={() => alert('Apple no implementado')} // <-- Añadido para evitar error
                             />
                     </div>
                     </form>

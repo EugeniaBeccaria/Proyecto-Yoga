@@ -100,8 +100,9 @@ async function update(req: Request, res: Response) {
     }
     const userToUpdate = await em.findOneOrFail(User, { id })
     console.log(req.body)
-    const {name, birthdate, email, phone, dni} = req.body
+    const {name, lastname, birthdate, email, phone, dni} = req.body
     if(name) userToUpdate.name = name
+    if(lastname) userToUpdate.lastname = lastname
     if(birthdate) userToUpdate.birthdate = birthdate
     if(email) userToUpdate.email = email
     if(phone) userToUpdate.phone = phone

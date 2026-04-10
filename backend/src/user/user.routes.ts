@@ -20,12 +20,13 @@ userRouter.put('/update',verifyCookie,[
     ],verifyResult,update)
 
 userRouter.get('/:id', verifyCookie, findOne)
-userRouter.delete('/:id', verifyCookie, remove)
+userRouter.delete('/:id', remove)
 
 userRouter.post('/',[
     check('email','Email inválido').isEmail(),
     check('email').custom(verifyEmail),
     check('password','La contraseña debe tener al menos 6 caracteres').isLength({min:6}),
     check('name','El nombre es obligatorio').notEmpty(),
+    check('lastname','El apellido es obligatorio').notEmpty(),
     check('password', 'La contraseña debe tener al menos una mayúscula y un numero').matches(/^(?=.*[A-Z])(?=.*[0-9]).*$/)
 ] , verifyResult, add)

@@ -15,6 +15,7 @@ interface profileProps{
 }
 export interface UserUpdate {
     name: string ;
+    lastname?: string;
     birthdate?: string;
     email: string;
     phone?: string ;
@@ -43,6 +44,7 @@ function formatBirthdateForInput(value?: string | Date): string {
 export default function ProfilePage({ handleClick, error}: profileProps) {
     const [userData, setUserData] = useState<UserUpdate>({
         name:  '',
+        lastname: '',
         birthdate: '',
         email: '',
         phone: '',
@@ -60,6 +62,7 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
             const parsedUser = JSON.parse(userProfile);
             setUserData({
                 name: parsedUser.name || '',
+                lastname: parsedUser.lastname || '',
                 email: parsedUser.email || '',
                 role: parsedUser.role || '',
                 birthdate: '',
@@ -76,6 +79,7 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
                 setUserData((prev) => ({
                     ...prev,
                     name: currentUser.name || prev.name,
+                    lastname: currentUser.lastname || prev.lastname || '',
                     email: currentUser.email || prev.email,
                     role: currentUser.role || prev.role,
                     birthdate: formatBirthdateForInput(currentUser.birthdate),
@@ -88,6 +92,7 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
                     localStorage.setItem('user', JSON.stringify({
                         id: currentUser.id,
                         name: currentUser.name || '',
+                        lastname: currentUser.lastname || '',
                         email: currentUser.email || '',
                         role: currentUser.role || ''
                     }));
@@ -136,14 +141,18 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
                     <img src="/perfilUsuario.webp" alt="avatar" />
                 </div>
 
-                <h2>{userData.name}</h2>
+                <h2>{`${userData.name} ${userData.lastname || ''}`.trim()}</h2>
                 <p>{userData.email}</p>
 
                 <div className="profile-data">
                     <div className="row">
-                        <span className="label">Nombre Completo</span>
+                        <span className="label">Nombre</span>
                         <span className="value">{userData.name}</span>
                     </div>
+                    <div className="row">
+                        <span className="label">Apellido</span>
+                        <span className="value">{userData.lastname || ''}</span>
+                    </div>                    
 
                     <div className="row">
                         <span className="label">Fecha de nacimiento</span>

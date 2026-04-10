@@ -9,10 +9,13 @@ import { MembershipType } from '../membership/membershipType.entity.js';
 import bcrypt, { genSalt, hash } from 'bcrypt'
 import 'dotenv/config'
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 async function seedInitialData() {
     console.log(' Iniciando seeder...');
+    
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+    if(!ADMIN_PASSWORD)
+        throw new Error('ADMIN_PASSWORD no está definido en las variables de entorno');
     
     const em = orm.em.fork() // la defini aca arriba y la saque del try del admin para poder usarla en todo el seeder
 
@@ -38,28 +41,28 @@ async function seedInitialData() {
     } catch (error) {
         console.error('Error:', error);
     }
-    // ================== USUARIO PROFESSOR ==================
-    try {
-        const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
-        if (!existingProfessor) {
-        const salt = await bcrypt.genSalt();
-        const hashPassword = await bcrypt.hash('profe001', salt);
+    // // ================== USUARIO PROFESSOR ==================
+    // try {
+    //     const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
+    //     if (!existingProfessor) {
+    //     const salt = await bcrypt.genSalt();
+    //     const hashPassword = await bcrypt.hash('profe001', salt);
 
-        const userProfessor = em.create(User, {
-            email: 'profezarah@yoga.com',
-            name: 'Zarah',
-            password: hashPassword,
-            role: 'professor',
-        });
+    //     const userProfessor = em.create(User, {
+    //         email: 'profezarah@yoga.com',
+    //         name: 'Zarah',
+    //         password: hashPassword,
+    //         role: 'professor',
+    //     });
 
-        await em.persistAndFlush(userProfessor);
-        console.log(' Usuario profesor creado exitosamente');
-        } else {
-        console.log(' Ese profesor ya existe, se omite su creación.');
-        }
-    } catch (error) {
-        console.error(' Error creando profesor:', error);
-    }
+    //     await em.persistAndFlush(userProfessor);
+    //     console.log(' Usuario profesor creado exitosamente');
+    //     } else {
+    //     console.log(' Ese profesor ya existe, se omite su creación.');
+    //     }
+    // } catch (error) {
+    //     console.error(' Error creando profesor:', error);
+    // }
 
     // ================== ROOMS ==================
     try {

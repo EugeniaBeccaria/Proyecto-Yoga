@@ -4,6 +4,7 @@ import { AuthContext } from './AuthContext';
 
 interface User {
     name: string;
+    lastname?: string;
     email: string;
     role: string;
 }
@@ -35,6 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const login = (userData: User) => {
         setUser({
             name:userData.name, 
+            lastname:userData.lastname,
             email:userData.email, 
             role:userData.role
         }); // al cambiar el estado los componentes suscriptos(que leen el contexto) se re-renderizan. En este caso el Navbar

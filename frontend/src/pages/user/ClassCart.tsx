@@ -151,7 +151,7 @@ const ClassCart: React.FC = () => {
         <div className="container">
         <button 
             onClick={() => {
-                window.history.back();
+                // window.history.back();
                 navigate('/ClassCalendar');
                 }} 
             className="btn-back">

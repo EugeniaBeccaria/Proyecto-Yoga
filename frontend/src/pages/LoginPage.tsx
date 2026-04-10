@@ -12,6 +12,8 @@ import googleLogo from '/LogoGoogle.png';
 import axios from 'axios';
 import type { Error } from "../types/error.type";
 
+import ReCAPTCHA from "react-google-recaptcha";
+
 interface User {
     email: string;
     password: string;
@@ -29,12 +31,16 @@ export default function Login(){
     const [error, setError] = useState<Error | null>(null)
     const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
 
+    const [token, setToken] = useState<string | null>(null);
+
     useEffect(() => {
         const userStoraged = localStorage.getItem('user')
         if(userStoraged){
             setUserLogin(true)
         }
     }, [])
+
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;// || '6LevS60sAAAAAC_rFtowYLlD7LnktuS4u3bA-yzU'    ;
 
     function handleClickCloseSession(){
         setErrCloseSession(false)
@@ -73,20 +79,24 @@ export default function Login(){
         try{
             setSuccess(false)
             setError(null)
+
+            if (!token) {
+                setLoading(false);
+                setError({ error: true, message: 'Por favor, completa el reCAPTCHA' });
+                return;
+            }
+
             const response = await axios.post("http://localhost:3000/auth/login", 
             {
             email: email,  
-            password: password
+            password: password,
+            captchaToken: token
             },
             { withCredentials: true })
 
-            const userData = response.data.user
-            // if (response.status !== 200){
-            //     setLoading(false)
-            //     setError(true)
-            //     throw new Error(response.data.message || 'Error al iniciar sesión')}        
+            const userData = response.data.user  
             
-                console.log('Usuario logueado, nombre: ',userData.name)
+            console.log('Usuario logueado, nombre: ',userData.name)
             
             setLoading(false)
             setSuccess(true)
@@ -119,7 +129,9 @@ const handleGoogleLogin = useGoogleLogin({
             try {
                 const response = await axios.post("http://localhost:3000/auth/google/login",
                     {
-                        code: codeResponse.code
+                        code: codeResponse.code,
+                        captchaToken : token
+
                     },
                     { withCredentials: true });
 
@@ -154,6 +166,10 @@ const handleGoogleLogin = useGoogleLogin({
         }
     });    
         
+    function handleChangeCaptcha(value: string | null) {
+        setToken(value);
+    }
+
     return(
         <>
             <div id="top" className="form-box-login">
@@ -209,6 +225,13 @@ const handleGoogleLogin = useGoogleLogin({
                                     </div>
                                 </div>
                             </div>
+
+                            <ReCAPTCHA
+                                className="recaptcha"
+                                sitekey= {siteKey}
+                                onChange= {handleChangeCaptcha}
+                            />
+
                             <button>Sign in</button>
                             {loading &&
                                 <div className='loading-message'>

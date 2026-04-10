@@ -15,5 +15,6 @@ html, body, #root {
 }
 
 .main-page {
+    flex: 1;
     min-height: calc(100vh - var(--navbar-height));
 }
