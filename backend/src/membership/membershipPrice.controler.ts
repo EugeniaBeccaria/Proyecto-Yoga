@@ -7,7 +7,7 @@ import { membershipPriceService, MembershipPriceError } from './membershipPrice.
 const em = orm.em
 
 interface MembershipPriceInput {
-  membershipTypeId: number;
+  membershipTypeId: string;
   price: number;
 }
 
@@ -37,7 +37,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipPrice = await em.findOneOrFail(MembershipPrice, { id }, { populate: ['membershipType'] })
     res.status(200).json({ message: 'found membershipPrice', data: membershipPrice })
   } 
@@ -69,7 +69,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipPriceToUpdate = await em.findOneOrFail(MembershipPrice, { id })
     em.assign(membershipPriceToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -82,7 +82,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipPrice = em.getReference(MembershipPrice, id)  
     await em.removeAndFlush(membershipPrice)
     res.status(200).send({ message: 'membershipPrice deleted' })

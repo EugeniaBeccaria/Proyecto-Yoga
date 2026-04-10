@@ -4,13 +4,13 @@ import type { Day, Time, Rooms } from "../../types/class.type";
 import { classService } from "../../service/class.service";
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
 }
 
 interface Classs {
-  id: number;
+  id: string;
   name: string;
   description: string;
   capacityLimit: number;
@@ -24,7 +24,7 @@ function ProfessorDashboardPage() {
 
   const [classes, setClasses] = useState<Classs[]>([]);
   const [isLoading, setIsLoading] = useState(true); 
-  const [expandedClassId, setExpandedClassId] = useState<number | null>(null);
+  const [expandedClassId, setExpandedClassId] = useState<string | null>(null);
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -40,7 +40,7 @@ function ProfessorDashboardPage() {
     fetchClasses();
   }, []); 
   
-  const handleToggleStudents = (classId: number) => {
+  const handleToggleStudents = (classId: string) => {
   if (expandedClassId === classId) {
     setExpandedClassId(null);
   } else {

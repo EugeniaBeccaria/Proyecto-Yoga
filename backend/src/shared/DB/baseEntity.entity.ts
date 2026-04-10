@@ -1,8 +1,9 @@
 import { PrimaryKey } from "@mikro-orm/core";
+import { v4 } from 'uuid';
 
 export abstract class BaseEntity {
-    @PrimaryKey()
-    id?: number //extiende para todas las entidades un id autoincremental
+    @PrimaryKey({ type: 'uuid' })
+    id?: string = v4();
 
     /*
   @Property({ type: DateTimeType })

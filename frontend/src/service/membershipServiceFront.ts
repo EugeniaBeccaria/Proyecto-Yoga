@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function searchUserMembership(userId: number) {
+async function searchUserMembership(userId: string) {
     try {
         const response = await axios(`http://localhost:3000/api/membership/user/${userId}`, { withCredentials: true });
         if (response.status === 200) { // encontro una membresia activa para el usuario

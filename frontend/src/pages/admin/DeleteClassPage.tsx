@@ -4,21 +4,21 @@ import '../../styles/ClassCalendar.css';
 // import { useNavigate } from 'react-router-dom';
 
 interface ClaseHorario {
-    id: number;
+    id: string;
     name: string; 
     description: string;
     capacityLimit: number;
     enrolledCount: number;
     deletedAt: Date | null;
     room: {
-        id: number;
+        id: string;
         name: string;
         };
     day: { 
-        id: number;
+        id: string;
         name: string;
     };
-    professor: number;
+    professor: string;
     time: { 
         id: number;
         startTime: string;
@@ -49,11 +49,11 @@ const FRANJAS_HORARIAS_TARDE = [
 ];
 
 const DIAS_SEMANA = [
-    { nombre: 'LUNES', id: 1 },
-    { nombre: 'MARTES', id: 2 },
-    { nombre: 'MIÉRCOLES', id: 3 },
-    { nombre: 'JUEVES', id: 4 },
-    { nombre: 'VIERNES', id: 5 },
+    { nombre: 'LUNES' },
+    { nombre: 'MARTES' },
+    { nombre: 'MIÉRCOLES'},
+    { nombre: 'JUEVES' },
+    { nombre: 'VIERNES' },
 ];
 
 
@@ -88,7 +88,6 @@ export function DeleteClassPage(){
     if (!confirmDelete) return;
 
     try {
-        // se ejecutan todas las eliminaciones en paralelo
         const deletePromises = selectedClasses.map(clase => 
             axios.delete(`http://localhost:3000/api/classes/${clase.id}`, { withCredentials: true })
         );
@@ -124,9 +123,16 @@ export function DeleteClassPage(){
         }
     }
 
-    // filtra las clases que coinciden con una celda (día y hora)
-    const getClasesParaCelda = (diaId: number, horaInicio: string) => {
-        return clases.filter((clase) => clase.day.id === diaId && clase.time.startTime === horaInicio);
+    const getClasesParaCelda = (diaNombre: string, horaInicio: string) => {
+        return clases.filter((clase) => {
+            const normalizedClaseDay = clase.day.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const normalizedGridDay = diaNombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const matchDay = normalizedClaseDay === normalizedGridDay;
+            const horaClase = clase.time.startTime.substring(0, 5); 
+            const matchTime = horaClase === horaInicio;
+
+            return matchDay && matchTime;
+        });
     };
 
     return (
@@ -153,7 +159,7 @@ export function DeleteClassPage(){
         <div className="horario-grid">
             <div className="celda-header celda-hora">HORA</div>
             {DIAS_SEMANA.map((dia) => (
-                <div key={dia.id} className="celda-header">
+                <div key={dia.nombre} className="celda-header">
                     {dia.nombre}
                 </div>
             ))}
@@ -163,10 +169,10 @@ export function DeleteClassPage(){
                     <div className="celda-hora">{franja.label}</div>
 
                     {DIAS_SEMANA.map((dia) => {
-                        const clasesEnCelda = getClasesParaCelda(dia.id, franja.horaInicio);
+                        const clasesEnCelda = getClasesParaCelda(dia.nombre, franja.horaInicio);
 
                         return ( 
-                            <div key={dia.id} className="celda-clase">
+                            <div key={dia.nombre} className="celda-clase">
                                 {clasesEnCelda?.length > 0 && (
                                     <div className="lista-clases">
                                         {clasesEnCelda?.map((clase) => {

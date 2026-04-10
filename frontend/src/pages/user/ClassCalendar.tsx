@@ -5,21 +5,21 @@ import { useNavigate } from 'react-router-dom';
 import type { Error } from '../../types/error.type.js';
 
 interface ClaseHorario {
-    id: number;
+    id: string;
     name: string; 
     description: string;
     capacityLimit: number;
     room: {
-        id: number;
+        id: string;
         name: string;
         };
     day: { 
-        id: number;
+        id: string;
         name: string;
     };
-    professor: number;
+    professor: string;
     time: { 
-        id: number;
+        id: string;
         startTime: string;
     };
 }
@@ -44,11 +44,11 @@ const FRANJAS_HORARIAS_TARDE = [
 ];
 
 const DIAS_SEMANA = [
-    { nombre: 'LUNES', id: 1 },
-    { nombre: 'MARTES', id: 2 },
-    { nombre: 'MIÉRCOLES', id: 3 },
-    { nombre: 'JUEVES', id: 4 },
-    { nombre: 'VIERNES', id: 5 },
+    { nombre: 'LUNES' },
+    { nombre: 'MARTES' },
+    { nombre: 'MIÉRCOLES' },
+    { nombre: 'JUEVES' },
+    { nombre: 'VIERNES' },
 ];
 
 
@@ -115,9 +115,16 @@ export default function ClassCalendar() {
         navigate('/ClassCart');
     }
 
-    // filtra las clases que coinciden con una celda (día y hora)
-    const getClasesParaCelda = (diaId: number, horaInicio: string) => {
-        return clases.filter((clase) => clase.day.id === diaId && clase.time.startTime === horaInicio);
+    const getClasesParaCelda = (diaNombre: string, horaInicio: string) => {
+        return clases.filter((clase) => {
+            const normalizedClaseDay = clase.day.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const normalizedGridDay = diaNombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const matchDay = normalizedClaseDay === normalizedGridDay;
+            const horaClase = clase.time.startTime.substring(0, 5); 
+            const matchTime = horaClase === horaInicio;
+
+            return matchDay && matchTime;
+        });
     };
 
     return (
@@ -144,7 +151,7 @@ export default function ClassCalendar() {
         <div className="horario-grid">
             <div className="celda-header celda-hora">HORA</div>
             {DIAS_SEMANA.map((dia) => (
-                <div key={dia.id} className="celda-header">
+                <div key={dia.nombre} className="celda-header">
                     {dia.nombre}
                 </div>
             ))}
@@ -154,11 +161,11 @@ export default function ClassCalendar() {
                     <div className="celda-hora">{franja.label}</div>
 
                     {DIAS_SEMANA.map((dia) => {
-                        const clasesEnCelda = getClasesParaCelda(dia.id, franja.horaInicio);
+                        const clasesEnCelda = getClasesParaCelda(dia.nombre, franja.horaInicio);
 
                         //IMPORTANTE --- HAY QUE MOSTRAR SOLO LAS CLASES QUE SIGAN TENIENDO CAPACIDAD DISPONIBLE
                         return ( 
-                            <div key={dia.id} className="celda-clase">
+                            <div key={dia.nombre} className="celda-clase">
                                 {clasesEnCelda?.length > 0 && (
                                     <div className="lista-clases">
                                         {clasesEnCelda?.map((clase) => {

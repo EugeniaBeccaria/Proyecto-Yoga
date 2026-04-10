@@ -31,7 +31,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const time = await em.findOneOrFail(Time, { id })
     res.status(200).json({ message: 'found time', data: time })
   } 
@@ -53,7 +53,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const timeToUpdate = await em.findOneOrFail(Time, { id })
     em.assign(timeToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -66,7 +66,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const time = em.getReference(Time, id) 
     await em.removeAndFlush(time)
     res.status(200).send({ message: 'time deleted' })

@@ -14,7 +14,7 @@ export class tallerError extends Error {
     }
 }
 
-async function add(name: string, description: string, cupo: number, datetime: string, room: number, price: number, profesor: number) {
+async function add(name: string, description: string, cupo: number, datetime: string, room: string, price: number, profesor: string) {
 
     const roomEntity = await em.findOne(Room, { id: room });
     const professorEntity = await em.findOne(User, { id: profesor });

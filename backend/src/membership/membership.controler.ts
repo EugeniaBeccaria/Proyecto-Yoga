@@ -44,7 +44,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membership = await em.findOneOrFail(Membership, { id }, { populate: ['membershipType'] })
     res.status(200).json({ message: 'found membership', data: membership })
   } 
@@ -54,7 +54,7 @@ async function findOne(req: Request, res: Response) {
 }
 
 async function findOneByUserId(req: Request, res: Response) {
-    const userId = Number.parseInt(req.params.userId)
+    const userId = req.params.userId
     const membership = await em.findOne(Membership, { user: userId,status:'active' }, { populate: ['membershipType'] })
     if(membership) {
       res.status(200).json({ message: 'found membership', data: membership })
@@ -77,7 +77,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipToUpdate = await em.findOneOrFail(Membership, { id })
     em.assign(membershipToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -90,7 +90,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membership = em.getReference(Membership, id)  
     em.remove(membership)
     await em.flush()

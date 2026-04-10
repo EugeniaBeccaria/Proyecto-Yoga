@@ -64,10 +64,10 @@ function CreateClassPage() {
     const name  = (classFormData.namedItem("nombreClase") as HTMLInputElement).value;
     const description = (classFormData.namedItem("descripcion") as HTMLInputElement).value;
     const capacityLimit = parseInt((classFormData.namedItem("capacityLimit") as HTMLInputElement).value);
-    const idDay = Number((classFormData.namedItem("dia") as HTMLInputElement).value);
-    const idTime = Number((classFormData.namedItem("hora") as HTMLInputElement).value);
-    const idRoom = Number((classFormData.namedItem("salon") as HTMLInputElement).value);
-    const idProfessor = Number((classFormData.namedItem("profesor") as HTMLInputElement).value);
+    const idDay = (classFormData.namedItem("dia") as HTMLInputElement).value;
+    const idTime = (classFormData.namedItem("hora") as HTMLInputElement).value;
+    const idRoom = (classFormData.namedItem("salon") as HTMLInputElement).value;
+    const idProfessor = (classFormData.namedItem("profesor") as HTMLInputElement).value;
 
     const classData: Class = ({
       name: name,

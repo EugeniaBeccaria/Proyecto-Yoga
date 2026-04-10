@@ -79,7 +79,7 @@ const ClassCart: React.FC = () => {
     }, [selectedClasses, allPlans]);
 
 
-    const handleRemove = (id: number) => {
+    const handleRemove = (id: string) => {
         const updatedClasses = selectedClasses.filter((c) => c.id !== id);
         setSelectedClasses(updatedClasses);
         localStorage.setItem("clases", JSON.stringify(updatedClasses));

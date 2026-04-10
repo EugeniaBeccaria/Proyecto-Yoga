@@ -49,7 +49,7 @@ app.use((req, res, next)=>{
 })
 
 await syncSchema()
-// await seedInitialData();
+//await seedInitialData();
 
 app.use('/api/users', userRouter)
 app.use('/api/talleres', tallerRouter)

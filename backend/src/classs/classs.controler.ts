@@ -28,10 +28,10 @@ interface ClassInput {
   name: string;
   description: string;
   capacityLimit: number;
-  day: number;
-  time: number;
-  room: number; 
-  professor: number;
+  day: string;
+  time: string;
+  room: string; 
+  professor: string;
 }
 
 async function findAll(req: Request, res: Response) {
@@ -66,7 +66,7 @@ async function findAvailableClasses(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const classs = await em.findOneOrFail(Classs, { id }, { populate: ['day', 'time', 'room','users'] })
     res.status(200).json({ message: 'found class', data: classs })
   } 
@@ -148,7 +148,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const classsToUpdate = await em.findOneOrFail(Classs, { id })
     em.assign(classsToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -161,7 +161,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     console.log("ID de la clase a eliminar:", id); 
     const classToRemove = await em.findOneOrFail(Classs, { id }, { populate: ['users'] })
     const usersClass = classToRemove.users.getItems();
@@ -184,7 +184,7 @@ async function remove(req: Request, res: Response) {
 
 async function findClassesByProfessorId(req: Request, res: Response) {
   try {
-    const professorId = Number(req.user?.id);
+    const professorId = req.user?.id;
 
     if (!professorId) {
       return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
@@ -205,8 +205,8 @@ async function findClassesByProfessorId(req: Request, res: Response) {
 
 async function findMyEnrolledClasses(req: Request, res: Response) {
     try {
-        const userId = Number(req.user?.id);
-        if (!userId || isNaN(userId)) {
+        const userId = req.user?.id;
+        if (!userId) {
             return res.status(400).json({ message: 'ID de usuario inválido en el token' });
         }
 

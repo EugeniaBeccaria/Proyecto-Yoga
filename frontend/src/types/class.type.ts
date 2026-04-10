@@ -1,53 +1,53 @@
 import type { User } from "./user.type.ts";
 
 export interface Class {
-    id?: number;
+    id?: string;
     name?: string;
     description?: string;
     capacityLimit?: number;
     users?: User[];
-    room?: number;
-    day?: number;
-    professor?: number;
-    time?: number;
+    room?: string;
+    day?: string;
+    professor?: string;
+    time?: string;
 }
 
 export interface Rooms {
-    id: number;
+    id: string;
     name: string;
 }
 
 export interface Day {
-    id: number;
+    id: string;
     name: string;
 }
 export interface Time {
-    id: number;
+    id: string;
     startTime: string;
 }
 
 export interface SelectedClass {
-    id: number;
+    id: string;
     name: string; 
     description: string;
     capacityLimit: number;
     room: {
-        id: number;
+        id: string;
         name: string;
         };
     day: { 
-        id: number;
+        id: string;
         name: string;
     };
-    professor: number;
+    professor: string;
     time: { 
-        id: number;
+        id: string;
         startTime: string;
     };
 }
 
 export interface IPlanGroup {
-    id: number;
+    id: string;
     description: string;
     price: number;
     numOfClasses: number;

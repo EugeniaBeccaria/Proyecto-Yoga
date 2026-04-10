@@ -37,7 +37,7 @@ function MembershipPage() {
     loadPrices();
   }, []);
 
-  const handlePriceChange = (id:number, newPriceString:string) => {
+  const handlePriceChange = (id:string, newPriceString:string) => {
     const newPrice = Number(newPriceString); 
     if (isNaN(newPrice)) {
       return;

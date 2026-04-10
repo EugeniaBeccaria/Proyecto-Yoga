@@ -60,8 +60,8 @@ export default function CrearTaller() {
             price: formData.price,
             description: formData.description,
             cupo: formData.cupo,
-            roomId: parseInt(formData.roomId, 10) as number,
-            profesorId: parseInt(formData.profesorId, 10) as number
+            roomId: formData.roomId,
+            profesorId: formData.profesorId
         };
         console.log("Taller Data to submit:", tallerData);
         setFormData({

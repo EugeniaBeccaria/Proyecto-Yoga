@@ -31,7 +31,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipType = await em.findOneOrFail(MembershipType, { id }, { populate: ['membershipPrices'] })
     res.status(200).json({ message: 'found membershipType', data: membershipType })
   } 
@@ -53,7 +53,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipTypeToUpdate = await em.findOneOrFail(MembershipType, { id })
     em.assign(membershipTypeToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -66,7 +66,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const membershipType = em.getReference(MembershipType, id)  
     await em.removeAndFlush(membershipType)
     res.status(200).send({ message: 'membershipType deleted' })

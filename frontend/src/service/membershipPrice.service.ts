@@ -14,7 +14,7 @@ const getCurrentPrices = async (): Promise<IPlanGroup[]> => {
 };
 
 
-const updatePriceForGroup = async (groupId: number, newPrice: number) => {
+const updatePriceForGroup = async (groupId: string, newPrice: number) => {
     try {
         const response = await axios.post(
             `${API_URL}/group-update`,

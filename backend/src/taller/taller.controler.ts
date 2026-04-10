@@ -4,7 +4,6 @@ import { orm } from '../shared/DB/orm.js'
 import { Room } from '../room/room.entity.js' 
 import { Day } from '../classs/day.entity.js' 
 import { Time } from '../classs/time.entity.js'
-import { parse } from 'path'
 import { User } from '../user/user.entity.js'
 import { tallerService } from './taller.service.js'
 
@@ -16,9 +15,9 @@ interface TallerInput {
   description: string;
   cupo: number;
   datetime: string;
-  roomId: number;
+  roomId: string;
   price: number;
-  profesorId: number;
+  profesorId: string;
 }
 
 function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
@@ -51,7 +50,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const taller = await em.findOneOrFail(Taller, { id }, { populate: ['users'] })
     res.status(200).json({ message: 'found taller', data: taller })
   } 
@@ -84,7 +83,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const tallerToUpdate = await em.findOneOrFail(Taller, { id })
     em.assign(tallerToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -97,7 +96,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const taller = em.getReference(Taller, id)
     await em.removeAndFlush(taller)
     res.status(200).send({ message: 'taller deleted' })

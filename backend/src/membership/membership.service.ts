@@ -20,8 +20,8 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         const idClasses = JSON.parse(metadata.classes);
         const idSession = session.id;
 
-        const classEntities = await em.find(Classs, { id: { $in: idClasses.map((id: number) => id) } });
-        const user = await em.findOne(User , { id: parseInt(userId) });
+        const classEntities = await em.find(Classs, { id: { $in: idClasses as string[] } });        
+        const user = await em.findOne(User , { id: userId });        
         const membershipType = await em.findOne(MembershipType, { numOfClasses: parseInt(numOfClasses) });
         console.log('User found:', user);
         if (!user || !membershipType) {

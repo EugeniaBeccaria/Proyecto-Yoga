@@ -30,7 +30,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const room = await em.findOneOrFail(Room, { id })
     res.status(200).json({ message: 'found room', data: room })
   } 
@@ -52,7 +52,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const roomToUpdate = await em.findOneOrFail(Room, { id })
     em.assign(roomToUpdate, req.body.sanitizedInput)
     await em.flush()
@@ -65,7 +65,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const room = em.getReference(Room, id) 
     await em.removeAndFlush(room)
     res.status(200).send({ message: 'room deleted' })

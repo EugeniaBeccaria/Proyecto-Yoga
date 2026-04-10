@@ -51,7 +51,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const user = await em.findOneOrFail(User, { id }, { populate: ['talleres', 'classes'] })
     res.status(200).json({ message: 'found user', data: user })
   } 
@@ -62,7 +62,7 @@ async function findOne(req: Request, res: Response) {
 
 async function findMe(req: Request, res: Response) {
   try {
-    const id = Number(req.user?.id)
+    const id = req.user?.id
     if (!id) {
       return res.status(400).json({ message: 'ID del usuario no encontrado en el token' })
     }
@@ -94,7 +94,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number(req.user?.id)
+    const id = req.user?.id
     if (!id) {
       return res.status(400).json({ message: 'ID del usuario no encontrado en el token' });
     }
@@ -118,7 +118,7 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const user = await em.findOneOrFail(User, { id })  //podria ser findOneOrfail
     em.remove(user)
     await em.flush()

@@ -1,20 +1,20 @@
 import { MembershipType } from "./membershipType.entity.js";
-import { MembershipPrice } from './membershipPrice.entity.js'
-import { orm } from '../shared/DB/orm.js'
+import { MembershipPrice } from './membershipPrice.entity.js';
+import { orm } from '../shared/DB/orm.js';
 
-const em = orm.em
+const em = orm.em;
 
-const GROUP_TO_TYPE_MAP: Record<number, number[]> = {
+const GROUP_TO_CLASSES_MAP: Record<number, number[]> = {
   1: [1, 2],
   2: [3, 4],
   3: [5, 6],
 };
 
 const GROUPS_DATA = [
-    { id: 1, description: 'Membresía Básica (1-2 clases por semana)', typeIds: [1, 2], numOfClasses: 2 },
-    { id: 2, description: 'Membresía tipo 1 (2-4 clases por semana)', typeIds: [3, 4], numOfClasses: 4 },
-    { id: 3, description: 'Membresía Full (4-6 clases por semana)', typeIds: [5, 6], numOfClasses: 6 },
-]
+  { id: 1, description: 'Membresía Básica (1-2 clases por semana)', classes: [1, 2], numOfClasses: 2 },
+  { id: 2, description: 'Membresía tipo 1 (2-4 clases por semana)', classes: [3, 4], numOfClasses: 4 },
+  { id: 3, description: 'Membresía Full (4-6 clases por semana)', classes: [5, 6], numOfClasses: 6 },
+];
 
 export class MembershipPriceError extends Error {
   constructor(message: string) {
@@ -23,10 +23,10 @@ export class MembershipPriceError extends Error {
   }
 }
 
-async function add(price: number, membershipType: number) {
-  const membershipTypeEntity = await em.findOne(MembershipType, { id: membershipType });
+async function add(price: number, membershipTypeId: string) {
+  const membershipTypeEntity = await em.findOne(MembershipType, { id: membershipTypeId });
   if (!membershipTypeEntity) {
-    throw new Error('Invalid foreign key reference: MembershipType con id ${membershipType} no existe');
+    throw new Error(`Invalid foreign key reference: MembershipType con id ${membershipTypeId} no existe`);
   }
 
   const currentDate = new Date();
@@ -40,15 +40,21 @@ async function add(price: number, membershipType: number) {
 }
 
 async function updateByGroup(groupId: number, price: number) {
-  const typeIds = GROUP_TO_TYPE_MAP[groupId];
+  const classesForGroup = GROUP_TO_CLASSES_MAP[groupId];
 
-  if (!typeIds || typeIds.length === 0) {
+  if (!classesForGroup || classesForGroup.length === 0) {
     throw new MembershipPriceError(`El groupId ${groupId} no es válido`);
   }
 
   try {
+    const typesToUpdate = await em.find(MembershipType, { numOfClasses: { $in: classesForGroup } } as any);
+
+    if (typesToUpdate.length === 0) {
+      throw new MembershipPriceError(`No se encontraron tipos de membresía para el grupo ${groupId}`);
+    }
+
     await Promise.all(
-      typeIds.map(typeId => add(price, typeId))
+      typesToUpdate.map(type => add(price, type.id!))
     );
     return { message: `Grupo ${groupId} actualizado con éxito a $${price}` };
   } catch (error: any) {
@@ -58,11 +64,18 @@ async function updateByGroup(groupId: number, price: number) {
 
 async function findCurrentGrouped() {
   const pricePromises = GROUPS_DATA.map(async (group) => {
-    const latestPrice = await em.findOne(
-      MembershipPrice,
-      { membershipType: { id: { $in: group.typeIds } } },
-      { orderBy: { priceDate: 'DESC' } }
-    );
+    const membershipTypes = await em.find(MembershipType, { numOfClasses: { $in: group.classes } } as any);
+    const typeIds = membershipTypes.map(mt => mt.id); 
+
+    let latestPrice = null;
+
+    if (typeIds.length > 0) {
+       latestPrice = await em.findOne(
+         MembershipPrice,
+         { membershipType: { $in: typeIds } } as any,
+         { orderBy: { priceDate: 'DESC' } }
+       );
+    }
 
     return {
         id: group.id,
@@ -72,8 +85,8 @@ async function findCurrentGrouped() {
     };
   });
 
-    const groupedPrices = await Promise.all(pricePromises);
-    return groupedPrices;
+  const groupedPrices = await Promise.all(pricePromises);
+  return groupedPrices;
 }
 
 export const membershipPriceService = {
