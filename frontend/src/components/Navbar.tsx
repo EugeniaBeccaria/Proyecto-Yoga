@@ -84,9 +84,14 @@ function Navbar() {
         }
         {/* PROFESSOR MENU */}
         {isProfessor &&
+        <>
           <HashLink smooth to="/professor/dashboard#top" onClick={closeMenu}>
             MI PANEL
           </HashLink>
+          <HashLink smooth to="/professor/passwordChange#top" onClick={closeMenu}>
+            CAMBIAR CONTRASEÑA
+          </HashLink>
+        </>
         }
 
         {/* CLIENT MENU (default menu will also be showed)*/}

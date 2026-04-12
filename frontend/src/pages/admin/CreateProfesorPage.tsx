@@ -171,7 +171,7 @@ return (
                     className="crear-profesor-input"
                     required
                 />
-                <p className="password-hint">La contraseña debe contener al menos una mayúscula.</p>
+                <p className="password-hint">La contraseña debe tener al menos 6 caracteres, una mayúscula y un número.</p>
                 </div>
             </div>
 

@@ -4,6 +4,7 @@ import { verifyCookie } from '../auth/auth.middleware.js'
 import { check } from 'express-validator'
 import verifyResult from '../validation/validation.middleware.js'
 import { verifyEmail } from '../helpers/validators-helpers.js'
+import { changePassword } from './user.controler.js'
 
 
 export const userRouter = Router()
@@ -30,3 +31,10 @@ userRouter.post('/',[
     check('lastname','El apellido es obligatorio').notEmpty(),
     check('password', 'La contraseña debe tener al menos una mayúscula y un numero').matches(/^(?=.*[A-Z])(?=.*[0-9]).*$/)
 ] , verifyResult, add)
+
+userRouter.put('/change-password', verifyCookie, 
+    [
+        check('currentPassword', 'La contraseña actual es obligatoria').notEmpty(),
+        check('newPassword', 'La nueva contraseña debe tener al menos 6 caracteres').isLength({ min: 6 }),
+        check('newPassword', 'La nueva contraseña debe tener al menos una mayúscula y un numero').matches(/^(?=.*[A-Z])(?=.*[0-9]).*$/)
+    ], verifyResult, changePassword)

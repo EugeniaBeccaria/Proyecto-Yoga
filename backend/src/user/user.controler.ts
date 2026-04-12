@@ -129,5 +129,34 @@ async function remove(req: Request, res: Response) {
   }
 }
 
+// Cambio de contraseña
+export const changePassword = async (req: Request, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const userId = req.user?.id;
+    const user = await em.findOneOrFail(User, { id: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Contraseña actual incorrecta' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    await em.persistAndFlush(user);
+
+    return res.status(200).json({ message: 'Contraseña actualizada con éxito' });
+
+  } catch (error) {
+    return res.status(500).json({ message: 'Error del servidor. Inténtalo de nuevo más tarde.' });
+  }
+};
+
 
 export {sanitizeUserInput, findAll, findOne, findMe, add, update, remove}

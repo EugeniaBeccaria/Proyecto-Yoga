@@ -32,7 +32,7 @@ function Footer() {
                     </li>
                     <li>
                         <img src="/emailTransparente.png" className="footer-icon" />
-                        <span>betianasebben@gmail.com</span>
+                        <span>shantiyoga@gmail.com</span>
                     </li>
                     <li>
                         <img src="/locacionTransparente.png" className="footer-icon" />

@@ -20,6 +20,7 @@ import CreateProfesorPage from './pages/admin/CreateProfesorPage.tsx';
 import ClassCalendar from './pages/user/ClassCalendar.tsx';
 import { AuthProvider } from './context/AuthProvider.tsx';
 import CheckoutStatus from './pages/user/checkout-status.tsx';
+import PasswordChange from './pages/professor/passwordChange.tsx';
 
 
 function App() {
@@ -97,6 +98,15 @@ function App() {
                 element={
                   <ProfessorRoutes>
                     <ProfessorDashboardPage />
+                  </ProfessorRoutes>
+                }
+              />
+
+              <Route
+                path="/professor/passwordChange"
+                element={
+                  <ProfessorRoutes>
+                    <PasswordChange />
                   </ProfessorRoutes>
                 }
               />
