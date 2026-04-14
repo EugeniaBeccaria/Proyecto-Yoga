@@ -1,286 +1,256 @@
-    /* CONTENEDOR PRINCIPAL */
-    .container {
+/* --- ESTILOS BASE (MOBILE FIRST) --- */
+
+.container-cart {
     max-width: 1100px;
-    margin: 2rem auto;
-    padding: 2rem;
+    margin: 1rem auto;
+    padding: 1.5rem;
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* TÍTULO */
-    .page-title{
-    text-align: left;
-    margin-bottom: 1rem;
-    color: #2f5233;
-    font-family: "Playfair Display", serif;
-    font-size: 3rem;
-    font-weight: 700;
-    }
-
-    /* CABECERA IZQUIERDA */
-    .membership-header {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10.5rem;
-    font-family: "Playfair Display", serif;
-    font-weight: 600;
-    color: #2f5233;
-    font-size: 1.6rem;
-    margin-top: 1rem;
-    transform: translateY(20px); /* baja solo las palabras */
 }
 
-    .divider {
-    border: none;
-    border-bottom: 1px solid #a5b49a;
-    margin: 0.6rem 0 1.5rem;
-    }
+.cart-nav {
+    margin-bottom: 1rem;
+}
 
-    /* TABLA IZQUIERDA */
-    .membership-table {
-    width: 100%;
-    border-collapse: collapse;
+.page-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
     color: #2f5233;
     font-family: "Playfair Display", serif;
-    margin-top: -1.5rem;
-    }
+    font-size: 2.2rem;
+    font-weight: 700;
+}
 
-    .membership-table th {
-    text-align: left;
-    font-weight: 400;
-    font-size: 1.1rem;
-    padding-bottom: 0.5rem;
-    color: #2f5233;
-    }
+/* Estructura de contenido apilada en mobile */
+.membership-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1rem;
+}
 
-    .membership-table td {
-    padding: 1.3rem 0;
-    vertical-align: middle;
+.membership-left {
+    width: 100%;
+}
+
+/* Cabecera oculta en mobile para usar formato tarjeta */
+.membership-header-cart {
+    display: none;
+}
+
+.divider {
+    border: none;
     border-bottom: 1px solid #a5b49a;
-    }
+    margin: 0.6rem 0 1rem;
+}
 
-    .membership-table td,
-    .membership-table th {
-    border-right: 1px solid #ffffff;
-    border-left: 1px solid #ffffff;
-    }
+/* Items como tarjetas en mobile */
+.cart-item {
+    display: grid;
+    grid-template-areas:
+        "name remove"
+        "info info";
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #a5b49a;
+    position: relative;
+}
 
-    .membership-table th,
-    .membership-table td {
-    text-align: left;
-    }
-
-    .membership-table tr:first-child td {
-    border-top: none;
-    }
-
-    .membership-table th:first-child,
-    .membership-table td:first-child {
-    border-left: 1px solid #ffffff;
-    }
-
-    /* CONTENIDO CELDAS */
-    .class-name {
-    width: 37%;
+.class-name-cart {
+    grid-area: name;
     font-weight: 600;
     text-transform: capitalize;
     font-family: "Raleway", sans-serif;
-    }
-
-    .class-info {
-    width: 60%;
-    font-weight: 400;
-    font-family: "Raleway", sans-serif;
-    padding-left: 3rem;
-    }
-
-    .remove-col {
-    width: 1%;
-    text-align: left;
-    padding-left: 0;
-    }
-
-    .remove-col button {
-    border: none;
-    background: none;
     color: #2f5233;
-    font-size: 1.1rem;
-    cursor: pointer;
+}
+
+.class-info-cart {
+    grid-area: info;
     font-weight: 400;
+    font-size: 0.9rem;
     font-family: "Raleway", sans-serif;
-    transition: color 0.2s ease;
-    }
+    color: #2f5233;
+    line-height: 1.5;
+}
 
-    .remove-col button:hover {
-    color: #52784a;
-    }
-
-    /* ESTRUCTURA GENERAL (2 COLUMNAS) */
-    .membership-content {
+.remove-col-cart {
+    grid-area: remove;
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    gap: 4rem;
-    margin-top: 2rem;
-    margin-bottom: 4rem;
-    }
+}
 
+.remove-col-cart button {
+    border: 1px solid #a5b49a;
+    background: #fff;
+    color: #b56565;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-    .membership-left {
-    flex: 2;
-    }
-
-    .membership-summary {
-    flex: 1;
+/* BLOQUE RESUMEN */
+.membership-summary {
+    width: 100%;
     font-family: "Raleway", sans-serif;
     color: #2f5233;
     background-color: rgba(47, 82, 51, 0.08);
-    padding: 1.30rem;
+    padding: 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
+    box-sizing: border-box;
+}
 
-    /* BLOQUE DERECHO */
-    .membership-summary h3 {
+.membership-summary h3 {
     font-family: "Playfair Display", serif;
     font-weight: 600;
-    font-size: 1.6rem;
-    margin-bottom: 0.1rem;
-    color: #2f5233;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
     text-align: center;
-    transform: translateY(15px);
-    }
+}
 
-    .summary-line {
+.summary-line {
     border: none;
     border-bottom: 1px solid #a5b49a;
-    margin: 2rem 0 2rem;
-    }
+    margin: 1rem 0;
+}
 
-    .summary-info {
-    font-family: "Raleway", sans-serif;
-    font-size: 0.95rem;
-    color: #2f5233;
-    line-height: 1.3;
-    }
+.summary-info {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
 
-    .summary-info p {
-        margin: 0.2rem 0;
-        font-weight: 800;
-        letter-spacing: 0;
-        font-family: "Raleway", sans-serif;
-    }
-
-    .summary-total {
+.summary-total {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(47, 82, 51, 0.08);
-    padding: 0.3rem 1rem;
-    margin-top: -1rem;
-    margin-bottom: 1rem;
-    border-radius: 0; 
-    width: 100%; 
-    box-sizing: border-box;
-    }
+    padding: 1rem 0;
+}
 
-    .summary-total-label {
+.summary-total-label {
     font-weight: 400;
-    font-size: 0.95rem;
-    color: #2f5233;
-    font-family: "Raleway", sans-serif;
-    }
-
-    .summary-total-box {
-    font-weight: 600;
     font-size: 1.1rem;
-    color: #2f5233;
-    background: none; /* saca fondo */
-    padding: 0;
-    border-radius: 0;
-    }
+}
 
+.summary-total-box {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
 
-    /* BOTÓN ACEPTAR */
-    .summary-btn {
+.summary-btn {
     display: block;
     width: 100%;
-    text-align: center;
     background-color: #2f5233;
     color: #ffffff;
     border: none;
-    border-radius: 6px;
-    padding: 0.8rem 0;
+    border-radius: 8px;
+    padding: 1rem;
     cursor: pointer;
-    font-family: "Raleway", sans-serif;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    }
+    transition: all 0.3s ease;
+}
 
-    .summary-btn:hover {
-    background-color: #3d6b40;
-    transform: translateY(-1px);
-    }
+.summary-btn:disabled {
+    background-color: #a5b49a;
+    cursor: not-allowed;
+}
 
-    .summary-info p:last-child {
-    margin-top: 1.5rem; 
-    }
-
-    .btn-back {
-    margin-top: 1rem;
+.btn-back {
     background-color: #d08383;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 15px;
+    padding: 8px 16px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-back:hover {
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    background-color: #b56565;
-    transform: translateY(-2px);
-}
-
-.redirect {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-    align-items: center;
-    background-color: #e9e9e9;
-    padding: 20px;
-    border-radius: 10px;
-    font-family: "Raleway", sans-serif;
-}
-.text-redirect {
-    font-size: 1rem;
-    color: #2f5233;
-}
-.link-redirect {
-    background-color: #d08383;
-    font-size: 1rem;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 10px;
-}
-.link-redirect:hover {
-    background-color: #b56565;
-    transform: translateY(-1px);
 }
 
 .error-message-cart {
-    background-color:#b56565 ;
-    color: #ffffff;
-    padding: 10px;
+    background-color: #b56565;
+    color: #fff;
+    padding: 12px;
     border-radius: 8px;
-    font-family: "Raleway", sans-serif;
-    font-size: 1rem;
     text-align: center;
     margin-top: 1rem;
+}
+
+.redirect {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* --- ESTILOS ESCRITORIO (768px+) --- */
+
+@media (min-width: 768px) {
+    .container-cart {
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .page-title {
+        text-align: left;
+        font-size: 3rem;
+    }
+
+    .membership-content {
+        flex-direction: row;
+        gap: 4rem;
+    }
+
+    .membership-left {
+        flex: 2;
+    }
+
+    .membership-header-cart {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10.5rem;
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        color: #2f5233;
+        font-size: 1.6rem;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        grid-template-areas: none;
+    }
+
+    .class-name-cart {
+        width: 37%;
+    }
+
+    .class-info-cart {
+        width: 60%;
+        padding-left: 3rem;
+        font-size: 1rem;
+    }
+
+    .remove-col-cart {
+        width: 30px;
+    }
+
+    .remove-col-cart button {
+        border: none;
+        background: none;
+        font-size: 1.1rem;
+        border-radius: 0;
+    }
+
+    .membership-summary {
+        flex: 1;
+        padding: 1.3rem;
+    }
+
+    .membership-summary h3 {
+        transform: translateY(15px);
+    }
 }

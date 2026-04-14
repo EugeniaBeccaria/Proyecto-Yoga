@@ -24,7 +24,6 @@ interface ClaseHorario {
     };
 }
 
-
 const FRANJAS_HORARIAS_MAÑANA = [
     { label: '07:00 a 08:00', horaInicio: '07:00' },
     { label: '08:00 a 09:00', horaInicio: '08:00' },
@@ -50,7 +49,6 @@ const DIAS_SEMANA = [
     { nombre: 'JUEVES' },
     { nombre: 'VIERNES' },
 ];
-
 
 export default function ClassCalendar() {
     const [clases, setClases] = useState<ClaseHorario[]>([]);
@@ -109,7 +107,6 @@ export default function ClassCalendar() {
             return;
         }
         setError({error: false, message: ''});
-        console.log('Clases seleccionadas para agregar:', selectedClasses);
         localStorage.setItem('clases',JSON.stringify(selectedClasses));
         setSelectedClasses([]);
         navigate('/ClassCart');
@@ -129,9 +126,9 @@ export default function ClassCalendar() {
 
     return (
         <div className="container-calendar">
-        <h1 className="titulo-clases">Calendario de Clases</h1>
+            <h1 className="titulo-clases">Calendario de Clases</h1>
 
-        <div className="container-elements-calendar">
+            <div className="container-elements-calendar">
                 <select
                     className='select-turno' 
                     value={turnoMañana ? "mañana" : "tarde"} 
@@ -139,60 +136,68 @@ export default function ClassCalendar() {
                     <option value="mañana">Mañana</option>
                     <option value="tarde">Tarde</option>
                 </select>
-            <div className="footer-calendar">
-                <button 
-                className={(selectedClasses.length > 0 && !isAdmin) ? "btn-agregar" : "btn-agregar disabled"} 
-                onClick={(selectedClasses.length > 0 && !isAdmin) ? handleSendClasses : undefined}>
-                    Agregar Clases
-                </button>
-            </div>
-        </div>
-        {error?.error && <p className="error-message-calendar">{error.message}</p>}
-        <div className="horario-grid">
-            <div className="celda-header celda-hora">HORA</div>
-            {DIAS_SEMANA.map((dia) => (
-                <div key={dia.nombre} className="celda-header">
-                    {dia.nombre}
+                
+                <div className="footer-calendar">
+                    <button 
+                    className={(selectedClasses.length > 0 && !isAdmin) ? "btn-agregar" : "btn-agregar disabled"} 
+                    onClick={(selectedClasses.length > 0 && !isAdmin) ? handleSendClasses : undefined}>
+                        {selectedClasses.length > 0 ? `Agregar (${selectedClasses.length})` : "Agregar Clases"}
+                    </button>
                 </div>
-            ))}
-            {(
-                turnoMañana ? FRANJAS_HORARIAS_MAÑANA : FRANJAS_HORARIAS_TARDE).map((franja) => (
-                <React.Fragment key={franja.horaInicio}>
-                    <div className="celda-hora">{franja.label}</div>
+            </div>
 
-                    {DIAS_SEMANA.map((dia) => {
-                        const clasesEnCelda = getClasesParaCelda(dia.nombre, franja.horaInicio);
+            {/* Contenedor del mensaje de error modificado */}
+            {error?.error && (
+                <div className="container-error-message">
+                    <p className="error-message-calendar">{error.message}</p>
+                </div>
+            )}
+            
+            <div className="horario-grid">
+                <div className="celda-header celda-hora">HORA</div>
+                {DIAS_SEMANA.map((dia) => (
+                    <div key={dia.nombre} className="celda-header">
+                        {dia.nombre}
+                    </div>
+                ))}
 
-                        //IMPORTANTE --- HAY QUE MOSTRAR SOLO LAS CLASES QUE SIGAN TENIENDO CAPACIDAD DISPONIBLE
-                        return ( 
-                            <div key={dia.nombre} className="celda-clase">
-                                {clasesEnCelda?.length > 0 && (
+                {(turnoMañana ? FRANJAS_HORARIAS_MAÑANA : FRANJAS_HORARIAS_TARDE).map((franja) => (
+                    <React.Fragment key={franja.horaInicio}>
+                        <div className="celda-hora">{franja.label}</div>
+
+                        {DIAS_SEMANA.map((dia) => {
+                            const clasesEnCelda = getClasesParaCelda(dia.nombre, franja.horaInicio);
+
+                            return ( 
+                                <div key={dia.nombre} className="celda-clase">
+                                    <span className="mobile-day-label">{dia.nombre}</span>
                                     <div className="lista-clases">
-                                        {clasesEnCelda?.map((clase) => {
-                                            // verifica si la clase está seleccionada
-                                            const isSelected = selectedClasses.find(item => item.id === clase.id);
-                                            return (
-                                                <div 
-                                                key={clase.id} 
-                                                // asignacion de clase condicional para resaltar la seleccion
-                                                className={`clase-item ${isSelected ? 'selected' : ''}`} 
-                                                onClick={() => handleSelectClass(clase)}>
-                                                {clase.name}
-                                                </div>
-                                            );
-                                            })}
+                                        {clasesEnCelda?.length > 0 ? (
+                                            clasesEnCelda.map((clase) => {
+                                                const isSelected = selectedClasses.find(item => item.id === clase.id);
+                                                return (
+                                                    <div 
+                                                        key={clase.id} 
+                                                        className={`clase-item ${isSelected ? 'selected' : ''}`} 
+                                                        onClick={() => handleSelectClass(clase)}>
+                                                        {clase.name}
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <span className="no-clases-text">-</span>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        );
-                    })}
-                </React.Fragment>
-            ))}
+                                </div>
+                            );
+                        })}
+                    </React.Fragment>
+                ))}
+            </div>
+            
+            <p className="tableDescription">
+                Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito.
+            </p>
         </div>
-        <p className="tableDescription">
-            Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito. Una vez agregada,
-            podrás ver el detalle antes de confirmar tu inscripción.
-        </p>
-    </div>
-    )  
-};
+    );
+}

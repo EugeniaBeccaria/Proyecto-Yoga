@@ -1,162 +1,277 @@
-.container-calendar{
-    /* min-height: 90vh; */
+/* --- ESTILOS BASE (MOBILE FIRST) --- */
+
+.container-calendar {
     color: #d08383;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     flex-grow: 1;
-    /* padding-bottom: 50px; */
+    padding: 10px;
+    padding-bottom: 80px;
+    /* Espacio para que el botón flotante no tape contenido */
 }
 
 .titulo-clases {
     font-family: "Playfair Display", serif;
     text-align: center;
-    font-size: 2.2rem;
-    /* font-weight: bold; */
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
 .tableDescription {
     font-family: "Open Sans", sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #2f5b46;
-    margin: 25px auto;
-    max-width: 900px; 
+    margin: 20px auto;
+    max-width: 900px;
     line-height: 1.4;
     text-align: center;
+}
+
+.container-elements-calendar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+/* MENSAJE DE ERROR FLOTANTE EN MOBILE */
+.container-error-message {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 2000;
+    /* Por encima de todo */
+    pointer-events: none;
+}
+
+.error-message-calendar {
+    pointer-events: auto;
+    background-color: #d9534f;
+    padding: 12px 20px;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.9rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
     }
 
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* BOTÓN FLOTANTE EN MOBILE */
+.footer-calendar {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.btn-agregar {
+    pointer-events: auto;
+    background-color: #d08383;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 350px;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.btn-agregar.disabled {
+    display: none;
+}
+
+.btn-agregar:active {
+    transform: scale(0.95);
+}
+
 .horario-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px; 
-    overflow: hidden;
-    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: Arial, sans-serif;
 }
-
-.horario-grid > div {
-    padding: 8px;
-    border-bottom: 1px solid #e0e0e0;
-    border-left: 1px solid #e0e0e0;
-}
-
-.horario-grid > div:nth-child(6n + 1) {
-    border-left: none;
-}
-.horario-grid > div:nth-last-child(-n + 6) {
-    border-bottom: none;
-}
-
 
 .celda-header {
-    font-weight: bold;
-    text-align: center;
-    background-color: #f9f9f9; 
-    color: #2f5b46;
-    font-size: 0.9em;
-    text-transform: uppercase;
+    display: none;
 }
 
 .celda-hora {
+    background-color: #2f5b46;
+    color: #fff;
+    padding: 10px;
     font-weight: bold;
-    font-size: 0.9em;
-    color: #2f5b46;
-    background-color: #fcfcfc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 8px;
     text-align: center;
 }
 
 .celda-clase {
-    min-height: 70px; 
-    padding: 10px; 
     background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-day-label {
+    font-weight: bold;
+    color: #2f5b46;
+    font-size: 0.8rem;
+    text-transform: uppercase;
 }
 
 .lista-clases {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    align-items: flex-end;
 }
 
 .clase-item {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: #444;
-    border-left: 2px solid #d1a3a3; 
-    padding-left: 8px;
-    line-height: 1.4;
-    cursor: pointer; 
+    border-right: 3px solid #d1a3a3;
+    padding: 5px 10px;
+    background-color: #fcfcfc;
 }
 
-.clase-item:hover {
-    color: #966b8f;
-}
 .clase-item.selected {
-    border: none;
-    transition: background-color 0.3s ease;
     background-color: #f0e0e0;
-    border-left: 2px solid #d08383; 
-    border-radius: 4px;
-}
-
-
-.btn-agregar {
-    background-color: #d08383;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    font-size: 1rem;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.btn-agregar:hover {
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    background-color: #b56565;
-    transform: translateY(-1px);
-}
-
-.btn-agregar.disabled {
-    background-color: #e0e0e0;
-    color: #a0a0a0;
-    cursor:text;
-}
-
-.container-elements-calendar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin: 20px 0;
-}
-
-.toggle-turno {
-    font-family: "Open Sans", sans-serif;
-    font-size: 1rem;
-    color: #2f5b46;
+    border-right: 3px solid #d08383;
 }
 
 .select-turno {
-    padding: 8px 12px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #333;
-    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
 }
 
-.error-message-calendar {
-    font-family: "Open Sans", sans-serif;
-    font-size: 1rem;
-    background-color: #d9534f;
-    margin: 0 auto 1rem;
-    color: #ffffff;
-    text-align: center;
-    max-width: 30rem;
+/* --- ESTILOS ESCRITORIO --- */
+
+@media (min-width: 768px) {
+    .container-calendar {
+        padding: 20px;
+        padding-bottom: 20px;
+    }
+
+    .container-elements-calendar {
+        flex-direction: row;
+        gap: 40px;
+    }
+
+    /* Restauramos el error a su posición original en escritorio */
+    .container-error-message {
+        position: static;
+        margin-bottom: 1rem;
+        z-index: auto;
+    }
+
+    .error-message-calendar {
+        width: 100%;
+        max-width: 30rem;
+        box-shadow: none;
+        animation: none;
+        margin: 0 auto;
+    }
+
+    .footer-calendar {
+        position: static;
+        width: auto;
+        box-shadow: none;
+        pointer-events: auto;
+    }
+
+    .btn-agregar {
+        width: auto;
+        border-radius: 25px;
+        padding: 12px 24px;
+        box-shadow: none;
+    }
+
+    .btn-agregar.disabled {
+        display: block;
+        background-color: #e0e0e0;
+        color: #a0a0a0;
+        cursor: text;
+    }
+
+    .horario-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
+        border: 1px solid #e0e0e0;
+    }
+
+    .celda-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f9f9f9;
+        color: #2f5b46;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+    }
+
+    .celda-hora {
+        background-color: #fcfcfc;
+        color: #2f5b46;
+        border-bottom: 1px solid #e0e0e0;
+        border-radius: 0;
+    }
+
+    .celda-clase {
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        min-height: 70px;
+        flex-direction: column;
+        border-radius: 0;
+    }
+
+    .mobile-day-label {
+        display: none;
+    }
+
+    .lista-clases {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .clase-item {
+        border-right: none;
+        border-left: 2px solid #d1a3a3;
+        width: 100%;
+        background-color: transparent;
+    }
+
+    .clase-item.selected {
+        border-left: 2px solid #d08383;
+    }
 }
