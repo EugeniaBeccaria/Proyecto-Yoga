@@ -1,88 +1,85 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Bevan:ital@0;1&family=Leckerli+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nerko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rouge+Script&family=Rubik+Dirt&family=Story+Script&display=swap');
 
-
+/* ESTILOS BASE (MOBILE FIRST) */
 .footer {
   background-color: #625d5d !important;
-  padding: 3re, 2rem 1.5rem;
+  padding: 3rem 2rem 1.5rem;
   color: #d2d2d2;
-  font-family: "Montserrat";
-  /* position: relative;
-  z-index: 10; */
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  /* Centrado para móvil */
 }
 
 .footer-top {
   margin-top: 20px;
-  text-align: center;
-  margin-bottom: 3rem;
-  margin-bottom: 4px;
+  margin-bottom: 2rem;
 }
 
 .footer-logo {
-  width: 90px;
-  margin-bottom: 0.005rem;
+  width: 80px;
+  margin-bottom: 0.5rem;
 }
 
 .footer-title {
   font-size: 1.3rem;
-  font-family: "Playfair Display", serif;;
+  font-family: "Playfair Display", serif;
   margin-top: 2px;
   margin-bottom: 0.4rem;
   font-weight: 600;
 }
 
-/*}.footer-subtitle {
-  font-size: 1rem;
-  margin: 0;
-  font-weight: 300;
-  opacity: 0.85;
-}*/
-
 .footer-bottom-sections {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
+  /* Apilado vertical en móvil */
   gap: 2rem;
   max-width: 1100px;
   margin: auto;
 }
 
-.footer-section h4{
+.footer-section h4 {
   margin-bottom: 1rem;
   font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.footer-section ul{
+.footer-section ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.footer-section li{
+.footer-section li {
   font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  /* Centra los items de contacto en móvil */
+  align-items: center;
+  margin-bottom: 0.8rem;
 }
 
-.footer-section ul li {
-  display: flex;
-  align-items: center;
-  margin-bottom: .5rem;
+.footer-section ul li a {
+  color: #d2d2d2;
+  text-decoration: none;
 }
 
 .footer-icon {
-  width: 22px;
-  margin-right: .6rem;
-}
-
-.footer-brand {
-  text-align: left;
+  width: 20px;
+  margin-right: 0.6rem;
 }
 
 .footer-socials {
   display: flex;
-  gap: 0.8rem;
+  justify-content: center;
+  /* Centra iconos sociales en móvil */
+  gap: 1.5rem;
 }
 
 .footer-socials img {
-  width: 26px;
+  width: 28px;
   cursor: pointer;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .footer-socials img:hover {
@@ -91,9 +88,46 @@
 
 .footer-bottom {
   text-align: center;
-  margin: 2rem;
+  margin-top: 3rem;
   border-top: 1px solid #555;
-  padding-top: 1rem;
-  font-size: .9rem;
-  opacity: .8;
+  padding-top: 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* MEDIA QUERY PARA ESCRITORIO (RESTAURAR DISEÑO ORIGINAL) */
+@media (min-width: 768px) {
+  .footer {
+    text-align: left;
+  }
+
+  .footer-top {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .footer-logo {
+    width: 90px;
+  }
+
+  .footer-bottom-sections {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columnas en escritorio */
+    text-align: left;
+  }
+
+  .footer-section li {
+    justify-content: flex-start;
+    /* Alinea a la izquierda en escritorio */
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-socials {
+    justify-content: flex-start;
+  }
+
+  .footer-bottom {
+    margin: 2rem;
+  }
 }

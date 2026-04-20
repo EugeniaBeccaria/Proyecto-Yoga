@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect  } from 'react';
 import '../../styles/admin/MembershipPage.css';
 import { membershipPriceService } from '../../service/membershipPrice.service.ts';
-import type { IPlanGroup } from '../../service/membershipPrice.service.ts';
+import type { IPlanGroup } from '../../types/class.type';
 import type { Error } from "../../types/error.type";
 import axios from 'axios';
 
