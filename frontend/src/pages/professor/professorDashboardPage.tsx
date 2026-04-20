@@ -25,6 +25,7 @@ function ProfessorDashboardPage() {
   const [classes, setClasses] = useState<Classs[]>([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [expandedClassId, setExpandedClassId] = useState<string | null>(null);
+  
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -41,14 +42,14 @@ function ProfessorDashboardPage() {
   }, []); 
   
   const handleToggleStudents = (classId: string) => {
-  if (expandedClassId === classId) {
-    setExpandedClassId(null);
-  } else {
-    setExpandedClassId(classId);
-  }
-    };
+    if (expandedClassId === classId) {
+      setExpandedClassId(null);
+    } else {
+      setExpandedClassId(classId);
+    }
+  };
 
-return (
+  return (
     <div className="dashboard-prof-container"> 
       
       <div className="dashboard-prof-header">

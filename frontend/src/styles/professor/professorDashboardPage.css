@@ -1,5 +1,7 @@
+/* --- ESTILOS BASE (MOBILE FIRST) --- */
 .dashboard-prof-container {
-  padding: 2.5rem;
+  padding: 1rem;
+  /* Reducido para móviles */
   background-color: #fcfbf8;
   min-height: 100vh;
 }
@@ -7,17 +9,18 @@
 .dashboard-prof-header {
   background-color: #FCF6F5;
   border-radius: 8px;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  max-width: 1200px;
+  width: 100%;
 }
 
 .dashboard-prof-title {
   color: #333;
   text-align: left;
   margin: 0 0 0.5rem 0;
-  font-size: 2.25rem;
+  font-size: 1.75rem;
+  /* Más pequeño en móvil */
   font-weight: 700;
 }
 
@@ -26,15 +29,14 @@
   text-align: left;
   margin: 0;
   font-weight: 400;
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 .classes-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  max-width: 1200px;
-  margin: 0;
+  gap: 1rem;
+  width: 100%;
 }
 
 .class-list-item {
@@ -42,41 +44,39 @@
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
+  padding: 1.25rem;
   width: 100%;
   transition: box-shadow 0.3s ease;
-}
-
-.class-list-item:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .class-item-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  /* Apilado en móvil */
   gap: 1rem;
 }
 
 .class-item-info {
-  flex: 3;
-  min-width: 200px;
+  width: 100%;
 }
 
 .class-item-info h3 {
   margin: 0 0 0.25rem 0;
   color: #333;
+  font-size: 1.2rem;
 }
 
 .class-item-info p {
   margin: 0;
   color: #666;
   font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .class-item-details {
-  flex: 1;
-  text-align: right;
+  text-align: left;
+  /* Alineado a la izquierda en móvil */
   font-size: 0.9rem;
   color: #555;
 }
@@ -87,8 +87,7 @@
 }
 
 .class-item-actions {
-  flex: 1;
-  text-align: right;
+  width: 100%;
 }
 
 .toggle-students-btn {
@@ -96,24 +95,24 @@
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 0.6rem 1rem;
+  padding: 0.75rem 1rem;
+  /* Botón más grande para táctil */
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s ease;
-}
-
-.toggle-students-btn:hover {
-  background-color: #3a7556;
+  width: 100%;
+  /* Ancho completo en móvil */
 }
 
 .student-list {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 1px solid #eee;
 }
 
 .student-list h4 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
 }
 
 .student-list ul {
@@ -122,14 +121,18 @@
 }
 
 .student-list li {
-  padding: 0.25rem 0;
+  padding: 0.5rem 0;
+  /* Más espacio para leer en móvil */
   color: #444;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f9f9f9;
 }
 
 .loading-message {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #777;
+  padding: 2rem;
 }
 
 .empty-classes-message {
@@ -138,6 +141,80 @@
   background-color: #fff;
   border: 1px dashed #ddd;
   border-radius: 8px;
-  max-width: 600px;
-  margin: 2rem auto;
+  margin: 1rem auto;
+}
+
+/* --- MEDIA QUERIES (DESKTOP) --- */
+@media (min-width: 1024px) {
+  .dashboard-prof-container {
+    padding: 2.5rem;
+  }
+
+  .dashboard-prof-header {
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .dashboard-prof-title {
+    font-size: 2.25rem;
+  }
+
+  .dashboard-prof-subtitle {
+    font-size: 1.15rem;
+  }
+
+  .classes-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 1.5rem;
+  }
+
+  .class-list-item {
+    padding: 1.5rem;
+  }
+
+  .class-list-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .class-item-header {
+    flex-direction: row;
+    /* Horizontal en escritorio */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .class-item-info {
+    flex: 3;
+    min-width: 200px;
+  }
+
+  .class-item-details {
+    flex: 1;
+    text-align: right;
+    /* Alineado a la derecha en escritorio */
+  }
+
+  .class-item-actions {
+    flex: 1;
+    text-align: right;
+  }
+
+  .toggle-students-btn {
+    width: auto;
+    /* Ancho automático en escritorio */
+    padding: 0.6rem 1rem;
+  }
+
+  .student-list li {
+    border-bottom: none;
+  }
+
+  .empty-classes-message {
+    max-width: 600px;
+    margin: 2rem auto;
+  }
 }
