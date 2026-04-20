@@ -76,7 +76,7 @@
     font-size: 14px;
     color: #1b4d3e;
     font-weight: 500;
-    width: 60%; 
+    width: 100%; 
     outline: none;
     transition: all 0.2s ease;
     border-bottom: 1px solid transparent;
@@ -169,7 +169,7 @@
     }
 
     .row input {
-        width: 55%;
+        width: 100%;
         font-size: 13px;
     }
 }

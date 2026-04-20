@@ -1,130 +1,145 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
-    .crearProfesor {
+/* DISEÑO BASE: MOBILE FIRST */
+.crearProfesor {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: #fff;
+    background-color: #f9f9f9;
     font-family: "Montserrat", sans-serif;
-    padding-top: 60px;
-    padding-bottom: 40px;    
+    padding: 40px 20px;
+    box-sizing: border-box;
 }
 
-    .crear-profesor-titulo {
+.crear-profesor-titulo {
     color: #d08383;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 25px;
-    }
+}
 
-    .crear-profesor-form {
+.crear-profesor-form {
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 40px 50px;
-    width: 90%;
-    max-width: 500px;
+    padding: 30px 25px;
+    width: 100%;
+    max-width: 900px;
+    /* Aumentamos un poco el máximo para que respire mejor */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    }
+    gap: 20px;
+    box-sizing: border-box;
+}
 
-    .crear-profesor-form label {
+.crear-profesor-form label {
     font-weight: 600;
     color: #2f5b46;
     font-size: 0.95rem;
-    width: 100%;
+    margin-bottom: 5px;
     display: block;
-    margin-bottom: 4px;
-    font-family: "Montserrat", sans-serif;
-    text-align: left;
-    }
+}
 
-    .crear-profesor-input {
+/* El input ahora siempre intentará ocupar el 100% de su contenedor padre */
+.crear-profesor-input {
     width: 100%;
-    padding: 10px 14px;
+    padding: 14px 16px;
     border-radius: 8px;
     border: 1px solid #a9b8aa;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-family: "Montserrat", sans-serif;
     color: #2f5b46;
-    outline: none;
-    transition: all 0.2s ease;
+    background-color: #fff;
     box-sizing: border-box;
-    }
+    transition: all 0.2s ease;
+    outline: none;
+}
 
-    .crear-profesor-input:focus {
+.crear-profesor-input:focus {
     border-color: #2f5b46;
-    box-shadow: 0 0 4px rgba(47, 91, 70, 0.25);
-    }
+    box-shadow: 0 0 0 3px rgba(47, 91, 70, 0.2);
+}
 
-    .crear-profesor-form label[for="name"],
-    .crear-profesor-form label[for="lastname"] {
-        padding-left: 54px; 
-    }
-
-    .crear-profesor-form input[name="name"],
-    .crear-profesor-form input[name="lastname"] {
-    max-width: 450px;
-    width: 90%;
-    align-self: center;
-    }
-
-    .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 15px;
-    width: 100%;
-    max-width: 450px;
-    }
-
-    .row .field {
+/* Estructura de filas y campos */
+.row {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    }
-
-    .password-hint {
-    font-size: 0.80rem; 
-    color: #d08383; 
-    margin-top: 5px;
-    text-align: left;
+    gap: 20px;
     width: 100%;
-    padding-left: 5px; 
-    }
+}
 
-    .crear-profesor-button {
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* En móvil cada campo ocupa todo el ancho */
+}
+
+.password-hint {
+    font-size: 0.80rem;
+    color: #d08383;
+    margin-top: 5px;
+    line-height: 1.3;
+}
+
+.crear-profesor-button {
     background-color: #2f5b46;
     color: #fff;
     font-weight: 600;
-    font-size: 1rem;
-    padding: 12px 25px;
+    font-size: 1.1rem;
+    padding: 16px 30px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
-    align-self: center;
-    }
+    width: 100%;
+}
 
-    .crear-profesor-button:hover {
+.crear-profesor-button:hover {
     background-color: #234a39;
     transform: translateY(-2px);
-    }
+}
 
-    .message-error {
+.message-error {
     background-color: rgb(196, 85, 85);
     color: white;
-    border-radius: 6px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 12px;
     text-align: center;
     font-size: 0.9rem;
-    margin-bottom: 15px;
-    width: 90%;
-    max-width: 500px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* MEDIA QUERY PARA ESCRITORIO */
+@media (min-width: 768px) {
+    .crear-profesor-form {
+        padding: 50px;
     }
+
+    .row {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 30px;
+        /* Espacio generoso entre columnas */
+    }
+
+    /* FORZAMOS que cada campo ocupe el 50% del renglón menos el gap */
+    .row .field {
+        flex: 1;
+        /* Esto hace que se estiren equitativamente */
+        width: auto;
+    }
+
+    .crear-profesor-button {
+        width: 300px;
+        /* Tamaño fijo y centrado en escritorio */
+        align-self: center;
+    }
+}

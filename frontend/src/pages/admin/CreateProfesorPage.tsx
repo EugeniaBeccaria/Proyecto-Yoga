@@ -28,7 +28,6 @@ export default function CreateProfesor() {
         password: ''
     });
 
-
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     setProfesorData({...ProfesorData, [name]: value});
@@ -87,98 +86,105 @@ return (
             </div>
         }
         <form onSubmit={handleSubmit} className="crear-profesor-form">
-            <label htmlFor="name">Nombre:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Nombre"
-                value={ProfesorData.name}
-                onChange={handleChange}
-                className="crear-profesor-input"
-                required
-            />
-
             
-            <label htmlFor="lastname">Apellido:</label>
-            <input
-                type="text"
-                id="lastname"
-                name="lastname"
-                placeholder="Apellido"
-                value={ProfesorData.lastname}
-                onChange={handleChange}
-                className="crear-profesor-input"
-                required
-            />
-
-            
+            {/* Fila de Nombre y Apellido */}
             <div className="row">
                 <div className="field">
-                <label htmlFor="email">Correo electrónico:</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Correo electrónico"
-                    value={ProfesorData.email}
-                    onChange={handleChange}
-                    className="crear-profesor-input"
-                    required
-                />
+                    <label htmlFor="name">Nombre:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Nombre"
+                        value={ProfesorData.name}
+                        onChange={handleChange}
+                        className="crear-profesor-input"
+                        required
+                    />
                 </div>
 
                 <div className="field">
-                <label htmlFor="phone">Teléfono:</label>
-                <input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    placeholder="Teléfono"
-                    value={ProfesorData.phone}
-                    onChange={handleChange}
-                    className="crear-profesor-input"
-                    required
-                />
+                    <label htmlFor="lastname">Apellido:</label>
+                    <input
+                        type="text"
+                        id="lastname"
+                        name="lastname"
+                        placeholder="Apellido"
+                        value={ProfesorData.lastname}
+                        onChange={handleChange}
+                        className="crear-profesor-input"
+                        required
+                    />
                 </div>
             </div>
 
-            
+            {/* Fila de Email y Teléfono */}
             <div className="row">
                 <div className="field">
-                <label htmlFor="dni">DNI:</label>
-                <input
-                    type="text"
-                    id="dni"
-                    name="dni"
-                    placeholder="DNI"
-                    value={ProfesorData.dni}
-                    onChange={handleChange}
-                    className="crear-profesor-input"
-                    required
-                />
+                    <label htmlFor="email">Correo electrónico:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Correo electrónico"
+                        value={ProfesorData.email}
+                        onChange={handleChange}
+                        className="crear-profesor-input"
+                        required
+                    />
                 </div>
 
                 <div className="field">
-                <label htmlFor="password">Contraseña:</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    value={ProfesorData.password}
-                    onChange={handleChange}
-                    className="crear-profesor-input"
-                    required
-                />
-                <p className="password-hint">La contraseña debe tener al menos 6 caracteres, una mayúscula y un número.</p>
+                    <label htmlFor="phone">Teléfono:</label>
+                    <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        placeholder="Teléfono"
+                        value={ProfesorData.phone}
+                        onChange={handleChange}
+                        className="crear-profesor-input"
+                        required
+                    />
+                </div>
+            </div>
+
+            {/* Fila de DNI y Contraseña */}
+            <div className="row">
+                <div className="field">
+                    <label htmlFor="dni">DNI:</label>
+                    <input
+                        type="text"
+                        id="dni"
+                        name="dni"
+                        placeholder="DNI"
+                        value={ProfesorData.dni}
+                        onChange={handleChange}
+                        className="crear-profesor-input"
+                        required
+                    />
+                </div>
+
+                <div className="field">
+                    <label htmlFor="password">Contraseña:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        value={ProfesorData.password}
+                        onChange={handleChange}
+                        className="crear-profesor-input"
+                        required
+                    />
+                    <p className="password-hint">La contraseña debe tener al menos 6 caracteres, una mayúscula y un número.</p>
                 </div>
             </div>
 
             <button type="submit" className="crear-profesor-button">
                 Crear Profesor
             </button>
-            </form>
+        </form>
     </section>
 )
 }
