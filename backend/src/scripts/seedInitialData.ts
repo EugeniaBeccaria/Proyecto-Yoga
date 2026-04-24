@@ -143,4 +143,4 @@ async function seedInitialData() {
 }
 
 export { seedInitialData }
-// seedInitialData();
+seedInitialData();

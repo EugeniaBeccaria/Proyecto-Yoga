@@ -50,6 +50,20 @@ const DIAS_SEMANA = [
     { nombre: 'VIERNES' },
 ];
 
+const ROOM_COLORS: Record<string, string> = {
+    '1': '#c8e6c9',
+    '2': '#bbdefb',
+    '3': '#ffe0b2',
+};
+
+const getRoomColor = (roomName: string): string => {
+    const colors = Object.values(ROOM_COLORS);
+    const keys = Object.keys(ROOM_COLORS);
+    const index = keys.indexOf(roomName);
+    return index >= 0 ? colors[index] : '#e0e0e0';
+};
+
+
 export default function ClassCalendar() {
     const [clases, setClases] = useState<ClaseHorario[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<ClaseHorario[]>([]);
@@ -179,8 +193,11 @@ export default function ClassCalendar() {
                                                     <div 
                                                         key={clase.id} 
                                                         className={`clase-item ${isSelected ? 'selected' : ''}`} 
+                                                        style={{ backgroundColor: getRoomColor(clase.room.name) }}
                                                         onClick={() => handleSelectClass(clase)}>
                                                         {clase.name}
+                                                        <span className="room-tag">{clase.room.name}
+                                                    </span>
                                                     </div>
                                                 );
                                             })
