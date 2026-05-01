@@ -21,6 +21,7 @@ import ClassCalendar from './pages/user/ClassCalendar.tsx';
 import { AuthProvider } from './context/AuthProvider.tsx';
 import CheckoutStatus from './pages/user/checkout-status.tsx';
 import PasswordChange from './pages/professor/passwordChange.tsx';
+import ListAlumnosPage from './pages/admin/ListAlumnosPage.tsx';
 
 
 function App() {
@@ -89,6 +90,14 @@ function App() {
                 element={
                   <AdminRoutes>
                     <CreateProfesorPage />
+                  </AdminRoutes>
+                }
+              />
+              <Route
+                path="/ListAlumnosPage"
+                element={
+                  <AdminRoutes>
+                    <ListAlumnosPage />
                   </AdminRoutes>
                 }
               />

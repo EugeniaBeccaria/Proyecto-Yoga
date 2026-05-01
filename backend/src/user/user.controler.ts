@@ -4,6 +4,7 @@ import { User } from './user.entity.js'
 import { IntegerType, ValidationError } from '@mikro-orm/core'
 import bcrypt, { genSalt } from 'bcrypt'
 import { userService } from './user.service.js'
+import { Membership } from '../membership/membership.entity.js'
 
 const em = orm.em;
 
@@ -158,5 +159,28 @@ export const changePassword = async (req: Request, res: Response) => {
   }
 };
 
+//Listado Alumnos
+async function getStudents(req: Request, res: Response) {
+  try {
+    const students = await em.find(User, { role: 'client' }, { populate: ['talleres', 'classes'] });
+    
+    const memberships = await em.find(Membership, {}, { populate: ['user', 'membershipType'] });
 
-export {sanitizeUserInput, findAll, findOne, findMe, add, update, remove}
+    const studentsWithMemberships = students.map((student) => { const membership = memberships.find((m) => m.user.id === student.id && m.status.toLowerCase() === 'active');
+
+    return {
+      ...student,
+      membership: membership
+      ? membership.membershipType.description
+      : 'Sin membresía activa'
+    };
+  });
+
+    res.status(200).json({ message: 'Listado de Alumnos', data: students });
+
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export {sanitizeUserInput, findAll, findOne, findMe, add, update, remove, getStudents}

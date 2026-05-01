@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { findAll, findOne, findMe, add, update, remove } from './user.controler.js'
+import { findAll, findOne, findMe, add, update, remove, getStudents } from './user.controler.js'
 import { verifyCookie } from '../auth/auth.middleware.js'
 import { check } from 'express-validator'
 import verifyResult from '../validation/validation.middleware.js'
@@ -11,6 +11,7 @@ export const userRouter = Router()
 
 userRouter.get('/' ,findAll)
 userRouter.get('/me', verifyCookie, findMe)
+userRouter.get('/students', verifyCookie, getStudents)
 
 userRouter.put('/update',verifyCookie,[
     check('birthdate','Fecha de nacimiento inválida').optional({ values: 'falsy' }).isISO8601(),

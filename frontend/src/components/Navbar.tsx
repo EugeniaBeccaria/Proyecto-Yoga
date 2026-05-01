@@ -64,7 +64,7 @@ function Navbar() {
                 </HashLink>                
                 <HashLink id="bottom" smooth to="/DeleteClassPage" onClick={closeMenu}>
                   ELIMINAR CLASES
-                </HashLink>   
+                </HashLink> 
               </div>
             )}
           </div>
@@ -78,6 +78,9 @@ function Navbar() {
           <HashLink smooth to="/CreateProfesorPage#top" onClick={closeMenu}>
             CREAR PROFESOR
           </HashLink>
+          <HashLink smooth to="/ListAlumnosPage" onClick={closeMenu}>
+            VER ALUMNOS
+          </HashLink>  
 
 
         </>)
