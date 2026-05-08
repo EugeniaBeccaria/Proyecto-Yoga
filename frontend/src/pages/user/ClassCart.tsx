@@ -99,7 +99,6 @@ const ClassCart: React.FC = () => {
             <h2 className="page-title">Mi membresía</h2>
 
             <div className="membership-content">
-                {/* COLUMNA IZQUIERDA (LISTA DE CLASES) */}
                 <div className="membership-left">
                     <div className="membership-header-cart">
                         <p className="header-clases">Clases</p>
@@ -141,7 +140,7 @@ const ClassCart: React.FC = () => {
                         {currentPlan ? (
                             <>
                                 <p><strong>{currentPlan.description}</strong></p>
-                                <p>{selectedClasses.length} clases al mes</p>
+                                <p>{selectedClasses.length} clases a la semana</p>
                             </>
                         ) : (
                             <p>

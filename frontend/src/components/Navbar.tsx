@@ -14,6 +14,10 @@ function Navbar() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+  const closeDropdown = () => {
+    setShowed(false);
+    setIsMenuOpen(false);
+  };
   
   let isAdmin = false
   let isProfessor = false
@@ -39,30 +43,26 @@ function Navbar() {
         </HashLink>
       </div>
 
-      {/* BOTÓN HAMBURGUESA: Solo se verá en mobile vía CSS */}
       <button className="menu-toggle" onClick={toggleMenu}>
         {isMenuOpen ? <FaTimes size={30} /> : <FaBars size={30} />}
       </button>
 
-      {/* Agregué la clase dinámica 'open' para controlar la visibilidad en mobile */}
       <nav className={`nav-right ${isMenuOpen ? 'open' : ''}`}>
-        {/* ADMIN MENU */}
         {isAdmin && (
           <>
           <div className="paste-button">
             <HashLink className="button" onClick = {()=>{setShowed(!showed)}}>
               ▼ GESTIONAR CLASES 
             </HashLink>
-            {/* Agregué renderizado condicional simple para el dropdown en mobile */}
             {(showed) && (
               <div className="dropdown-content" style={{display: 'block'}}>
-                <HashLink smooth to="/ClassCalendar" onClick={closeMenu}>
+                <HashLink smooth to="/ClassCalendar" onClick={closeDropdown}>
                   VER CLASES
                 </HashLink>
-                <HashLink id="top" smooth to="/CreateClassPage" onClick={closeMenu}>
+                <HashLink id="top" smooth to="/CreateClassPage" onClick={closeDropdown}>
                     CREAR CLASES
                 </HashLink>                
-                <HashLink id="bottom" smooth to="/DeleteClassPage" onClick={closeMenu}>
+                <HashLink id="bottom" smooth to="/DeleteClassPage" onClick={closeDropdown}>
                   ELIMINAR CLASES
                 </HashLink> 
               </div>
@@ -85,7 +85,7 @@ function Navbar() {
 
         </>)
         }
-        {/* PROFESSOR MENU */}
+
         {isProfessor &&
         <>
           <HashLink smooth to="/professor/dashboard#top" onClick={closeMenu}>
@@ -97,23 +97,19 @@ function Navbar() {
         </>
         }
 
-        {/* CLIENT MENU (default menu will also be showed)*/}
         {isClient &&
             <>
               <HashLink smooth to="/MyClassesPage" onClick={closeMenu}>MIS CLASES</HashLink>
-              {/* FALTA IMPLEMENTAR */}
-              {/* <HashLink smooth to="/MyMembershipPage#top" className="link-membresia">MI MEMBRESÍA</HashLink>*/}
+              
             </>
         }
 
-
-            {/* DEFAULT MENU */}
             {dft && (
               <>
                 <HashLink smooth to="/#nosotros" onClick={closeMenu}>NOSOTROS</HashLink>
+                <HashLink smooth to="/#reseñas" onClick={closeMenu}>RESEÑAS</HashLink>
                 <HashLink smooth to="/ClassCalendar" onClick={closeMenu}>CLASES</HashLink>
                 <HashLink smooth to="/talleres" onClick={closeMenu}>TALLERES</HashLink>
-                <HashLink smooth to="/#reseñas" onClick={closeMenu}>RESEÑAS</HashLink>
               </>
             )}
 

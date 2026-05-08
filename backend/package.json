@@ -14,10 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mikro-orm/core": "^6.6.12",
-    "@mikro-orm/migrations": "^6.6.12",
-    "@mikro-orm/mysql": "^6.6.12",
-    "@mikro-orm/reflection": "^6.6.12",
+    "@mikro-orm/core": "^6.6.14",
+    "@mikro-orm/migrations": "^6.6.14",
+    "@mikro-orm/mysql": "^6.6.14",
+    "@mikro-orm/reflection": "^6.6.14",
     "@mikro-orm/sql-highlighter": "1.0.1",
     "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.15.0",
@@ -38,7 +38,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "^6.6.12",
+    "@mikro-orm/cli": "^6.6.14",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
