@@ -13,12 +13,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "overrides": {
+    "ajv": "^8.18.0"
+  },
   "dependencies": {
     "@mikro-orm/core": "^6.6.14",
     "@mikro-orm/migrations": "^6.6.14",
     "@mikro-orm/mysql": "^6.6.14",
     "@mikro-orm/reflection": "^6.6.14",
     "@mikro-orm/sql-highlighter": "1.0.1",
+    "@rushstack/ts-command-line": "^5.3.9",
     "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.15.0",
     "bcrypt": "^6.0.0",

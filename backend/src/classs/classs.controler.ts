@@ -120,9 +120,13 @@ async function add(req: Request, res: Response) {
     
     const existingClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, room: roomEntity });
     if (existingClass) {
-      return res.status(409).json({ message: 'Class with the same day, time, and room already exists' });
+      return res.status(409).json({ message: 'Ya existe una clase con el mismo día, hora y salón' });
     }
 
+    const existingProfessorClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, professor: professorEntity });
+    if (existingProfessorClass) {
+      return res.status(409).json({ message: 'El profesor ya está asignado a otra clase en el mismo día y hora' });
+    }
 
     const classs = em.create(Classs, {
       name: name,

@@ -8,17 +8,17 @@
     padding: 10px;
     padding-bottom: 80px;
     /* Espacio para que el botón flotante no tape contenido */
+    font-family: "Open Sans", sans-serif;
 }
 
 .titulo-clases {
-    font-family: "Playfair Display", serif;
+    /* font-family: "Playfair Display", serif; */
     text-align: center;
     font-size: 1.8rem;
     margin-bottom: 10px;
 }
 
 .tableDescription {
-    font-family: "Open Sans", sans-serif;
     font-size: 0.9rem;
     color: #2f5b46;
     margin: 20px auto;

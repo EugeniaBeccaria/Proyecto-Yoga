@@ -49,6 +49,7 @@ function CreateClassPage() {
           times: times,
           professors: professors
         });
+        console.log(rooms, days, times, professors);
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -109,7 +110,7 @@ function CreateClassPage() {
             setMessageError({error:true,message:'Error de servidor'})
           }
           if(error.response.status === 409){
-            setMessageError({error:true,message:'Clase existente'})
+            setMessageError({error:true,message:error.response.data.message})
           }
         }
       }

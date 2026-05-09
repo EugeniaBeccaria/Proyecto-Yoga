@@ -21,7 +21,7 @@ function sanitizeTimeInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const times = await em.find(Time, {})
+    const times = await em.find(Time, {}, { orderBy: { startTime: 'ASC' } })
     res.status(200).json({ message: 'found all times', data: times })
   } 
   catch (error: any) {
