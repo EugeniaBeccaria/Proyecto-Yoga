@@ -42,7 +42,9 @@ async function add(name: string, description: string, cupo: number, datetime: st
         price:price,
         professor:professorEntity
     })
-    await em.persistAndFlush(taller);
+    em.persist(taller)
+    await em.flush()
+    
     return taller;
 }
 

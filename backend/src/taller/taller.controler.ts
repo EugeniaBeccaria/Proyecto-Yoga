@@ -72,6 +72,8 @@ async function add(req: Request, res: Response) {
       } = req.body as TallerInput;
 
   try {
+    // hay que validar que el profesor elegido en el taller no tenga una clase en ese 
+    // horario o que no haya una clase en ese salon y horario
     const tallerAddData = await tallerService.add(name, description, cupo, datetime, roomId, price, profesorId);
 
     res.status(201).json({ message: 'taller created', data: tallerAddData })

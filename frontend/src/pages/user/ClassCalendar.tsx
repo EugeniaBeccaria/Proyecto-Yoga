@@ -121,6 +121,7 @@ export default function ClassCalendar() {
             return;
         }
         setError({error: false, message: ''});
+        localStorage.removeItem('talleres');
         localStorage.setItem('clases',JSON.stringify(selectedClasses));
         setSelectedClasses([]);
         navigate('/ClassCart');
@@ -160,7 +161,6 @@ export default function ClassCalendar() {
                 </div>
             </div>
 
-            {/* Contenedor del mensaje de error modificado */}
             {error?.error && (
                 <div className="container-error-message">
                     <p className="error-message-calendar">{error.message}</p>
