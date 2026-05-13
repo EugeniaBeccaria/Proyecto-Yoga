@@ -30,7 +30,7 @@ async function login(email:string,password:string){
     const userValidation = await em.findOne(User,{email:email})
     if (!userValidation)
         throw new AuthError('Error durante login');
-
+    
     const correctLogin = await bcrypt.compare(password,userValidation.password)
     if(!correctLogin) 
         throw new AuthError('Error durante login');

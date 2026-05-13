@@ -41,28 +41,30 @@ async function seedInitialData() {
     } catch (error) {
         console.error('Error:', error);
     }
-    // // ================== USUARIO PROFESSOR ==================
-    // try {
-    //     const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
-    //     if (!existingProfessor) {
-    //     const salt = await bcrypt.genSalt();
-    //     const hashPassword = await bcrypt.hash('profe001', salt);
+    // ================== USUARIO PROFESSOR ==================
+    try {
+        const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
+        if (!existingProfessor) {
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash('profe001', salt);
 
-    //     const userProfessor = em.create(User, {
-    //         email: 'profezarah@yoga.com',
-    //         name: 'Zarah',
-    //         password: hashPassword,
-    //         role: 'professor',
-    //     });
+        const userProfessor = em.create(User, {
+            email: 'profezarah@yoga.com',
+            name: 'Zarah',
+            password: hashPassword,
+            role: 'professor',
+        });
 
-    //     await em.persistAndFlush(userProfessor);
-    //     console.log(' Usuario profesor creado exitosamente');
-    //     } else {
-    //     console.log(' Ese profesor ya existe, se omite su creación.');
-    //     }
-    // } catch (error) {
-    //     console.error(' Error creando profesor:', error);
-    // }
+
+        // ----- - - - - - - - -- - --  
+        await em.persistAndFlush(userProfessor);
+        console.log(' Usuario profesor creado exitosamente');
+        } else {
+        console.log(' Ese profesor ya existe, se omite su creación.');
+        }
+    } catch (error) {
+        console.error(' Error creando profesor:', error);
+    }
 
     // ================== ROOMS ==================
     try {

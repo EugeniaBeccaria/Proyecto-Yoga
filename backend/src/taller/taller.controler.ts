@@ -11,13 +11,14 @@ import { tallerService } from './taller.service.js'
 const em = orm.em
 
 interface TallerInput {
-  name: string; 
+  name: string;
   description: string;
   cupo: number;
   datetime: string;
   roomId: string;
   price: number;
   profesorId: string;
+  timeId: string;
 }
 
 function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
@@ -40,9 +41,9 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const talleres = await em.find(Taller, {}, { populate: ['users'] })
+    const talleres = await em.find(Taller, {}, { populate: ['users', 'time'] })
     res.status(200).json({ message: 'found all talleres', data: talleres })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -51,9 +52,9 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const taller = await em.findOneOrFail(Taller, { id }, { populate: ['users'] })
+    const taller = await em.findOneOrFail(Taller, { id }, { populate: ['users', 'time'] })
     res.status(200).json({ message: 'found taller', data: taller })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -68,16 +69,18 @@ async function add(req: Request, res: Response) {
           datetime,
           roomId,
           price,
-          profesorId
+          profesorId,
+          timeId
       } = req.body as TallerInput;
 
   try {
-    // hay que validar que el profesor elegido en el taller no tenga una clase en ese 
+    // hay que validar que el profesor elegido en el taller no tenga una clase en ese
     // horario o que no haya una clase en ese salon y horario
-    const tallerAddData = await tallerService.add(name, description, cupo, datetime, roomId, price, profesorId);
+
+    const tallerAddData = await tallerService.add(name, description, cupo, datetime, roomId, price, profesorId, timeId);
 
     res.status(201).json({ message: 'taller created', data: tallerAddData })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }

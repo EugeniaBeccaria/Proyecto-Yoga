@@ -14,12 +14,13 @@ export class tallerError extends Error {
     }
 }
 
-async function add(name: string, description: string, cupo: number, datetime: string, room: string, price: number, profesor: string) {
+async function add(name: string, description: string, cupo: number, datetime: string, room: string, price: number, profesor: string, timeId: string) {
 
     const roomEntity = await em.findOne(Room, { id: room });
     const professorEntity = await em.findOne(User, { id: profesor });
+    const timeEntity = await em.findOne(Time, { id: timeId });
 
-    if (!roomEntity || !professorEntity) {
+    if (!roomEntity || !professorEntity || !timeEntity) {
         throw new Error('Invalid foreign key references');
     }
 
@@ -32,7 +33,7 @@ async function add(name: string, description: string, cupo: number, datetime: st
     if (professorConflict) {
         throw new tallerError('El profesor ya tiene un taller asignado en esa fecha y hora');
     }
-    
+
     const taller = em.create(Taller, {
         name:name,
         description:description,
@@ -40,11 +41,12 @@ async function add(name: string, description: string, cupo: number, datetime: st
         datetime:datetime,
         room:roomEntity,
         price:price,
-        professor:professorEntity
+        professor:professorEntity,
+        time:timeEntity
     })
     em.persist(taller)
     await em.flush()
-    
+
     return taller;
 }
 

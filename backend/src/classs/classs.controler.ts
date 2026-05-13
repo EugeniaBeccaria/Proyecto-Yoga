@@ -172,9 +172,7 @@ async function remove(req: Request, res: Response) {
     if (usersClass.length > 0) {
       return res.status(400).json({ message: 'No se puede eliminar una clase con alumnos inscritos' });
     }
-    // if (classToRemove.enrolledCount && classToRemove.enrolledCount > 0) {
-    //   return res.status(400).json({ message: 'No se puede eliminar una clase con alumnos inscritos' });
-    // }
+    
     classToRemove.deletedAt = new Date();
     
     await em.flush()

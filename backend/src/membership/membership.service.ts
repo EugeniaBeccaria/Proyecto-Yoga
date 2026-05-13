@@ -24,6 +24,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         const user = await em.findOne(User , { id: userId });        
         const membershipType = await em.findOne(MembershipType, { numOfClasses: parseInt(numOfClasses) });
         console.log('User found:', user);
+        
         if (!user || !membershipType) {
             throw new Error(`User with ID ${userId} not found or MembershipType with numOfClasses ${numOfClasses} not found.`);
         }

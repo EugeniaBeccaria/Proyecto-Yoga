@@ -12,8 +12,8 @@ tallerRouter.post('/', verifyCookie, isAdmin,
     [
     check('name','El nombre es obligatorio').notEmpty(),
     check('description','La descripción es obligatoria').notEmpty(),
-    check('roomId','El salón es obligatorio').isInt({min:1}),
-    check('profesorId','El profesor es obligatorio').isInt({min:1}),
+    check('roomId','El salón es obligatorio').notEmpty(),
+    check('profesorId','El profesor es obligatorio').notEmpty(),
     check('datetime','La fecha y hora son obligatorias').notEmpty(),
     check('datetime','La fecha y hora deben ser mayores a la fecha actual').custom((value) => {
         const inputDate = new Date(value);

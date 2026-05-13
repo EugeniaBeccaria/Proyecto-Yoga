@@ -4,7 +4,7 @@ import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import ScrollToTop from './components/ScrollToTop';
+// import ScrollToTop from './components/ScrollToTop';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
@@ -25,9 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Elements stripe={stripePromise}>
         <BrowserRouter>
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
             <App />
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
         </BrowserRouter>
       </Elements>
     </GoogleOAuthProvider>

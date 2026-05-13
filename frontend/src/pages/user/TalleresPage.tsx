@@ -43,9 +43,7 @@ function TalleresPage() {
             weekday: 'long',
             day: '2-digit',
             month: 'long',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+            year: 'numeric'
         });
     };
     
@@ -112,15 +110,15 @@ function TalleresPage() {
                             <img src={'/public/logo-verde.png'} alt={taller.name} />
                             <h2>{taller.name}</h2>
                             <p>{taller.description}</p>
-                            <p>{formatDate(taller.datetime)}</p>
+                            <p>{formatDate(taller.datetime)} {taller.time && `- ${taller.time.startTime}`}</p>
                             <p>Precio: ${taller.price.toFixed(2)}</p>
 
-                            <button 
+                            <button
                                     className={seleccionados.includes(taller.id) ? "btn-agregado" : "btn-agregar"}
                                     onClick={() => toggleTaller(taller.id)}
                                 >
                                     {seleccionados.includes(taller.id) ? "✓ Agregado" : "Agregar"}
-                            </button>                        
+                            </button>
                         </div>
                     ))}
                 </section>

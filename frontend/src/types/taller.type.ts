@@ -4,4 +4,8 @@ export interface TallerApi {
     description: string;
     datetime: string;
     price: number;
+    time?: {
+        id: string;
+        startTime: string;
+    };
 }

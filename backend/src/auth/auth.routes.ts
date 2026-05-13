@@ -18,7 +18,7 @@ authRouter.post('/google/login', [
     check('code', 'El código de Google es obligatorio').notEmpty()
 ],
     verifyResult
-    , validateCaptcha
+    // , validateCaptcha
     , loginWithGoogle)
 
 authRouter.post('/logout',logout)

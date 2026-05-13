@@ -4,22 +4,15 @@ import axios from "axios";
 import type { Rooms } from "../../types/class.type";
 import type { User } from "../../types/user.type";
 import type { Error } from "../../types/error.type";
+import type { Time } from "../../types/time.type";
+import type { TallerForm } from "../../types/tallerForm.type";
 import { classService } from "../../service/class.service";
-
-type TallerForm = {
-    name: string;
-    datetime: string;
-    price: number;
-    description: string;
-    cupo: number ;
-    roomId: string;
-    profesorId: string;
-}
 
 export default function CrearTaller() {
     const [formData, setFormData] = useState<TallerForm> ({
         name: "",
         datetime: "",
+        timeId: "",
         price: 0,
         description: "",
         cupo: 0,
@@ -30,14 +23,17 @@ export default function CrearTaller() {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [rooms, setRooms] = useState<Rooms[]>([]);
     const [professors, setProfessors] = useState<User[]>([]);
+    const [times, setTimes] = useState<Time[]>([]);
 
     useEffect(() => {
         const loadData = async () => {
             try{
                 const rooms = await classService.getRooms();
                 const professors = await classService.getProfessors();
+                const times = await classService.getTimes();
                 setRooms(rooms);
                 setProfessors(professors);
+                setTimes(times);
             } catch (error) {
                 console.error("Error al cargar los datos:", error);
             }
@@ -57,6 +53,7 @@ export default function CrearTaller() {
         const tallerData = {
             name: formData.name,
             datetime: formData.datetime,
+            timeId: formData.timeId,
             price: formData.price,
             description: formData.description,
             cupo: formData.cupo,
@@ -67,6 +64,7 @@ export default function CrearTaller() {
         setFormData({
             name: "",
             datetime: "",
+            timeId: "",
             price: 0,
             description: "",
             cupo: 0,
@@ -75,7 +73,7 @@ export default function CrearTaller() {
         });
         try {
             const response = await axios.post('http://localhost:3000/api/talleres', tallerData, { withCredentials: true });
-            
+
             console.log("Taller creado con éxito:", response.data);
             setSuccessMessage("Taller creado con éxito");
             setErrors(null);
@@ -108,15 +106,36 @@ export default function CrearTaller() {
                 required
             />
 
-            <label>Fecha y hora:</label>
-            <input
-                type="datetime-local"
-                name="datetime"
-                value={formData.datetime}
-                onChange={handleChange}
-                className="crear-taller-input"
-                required
-            />
+            <div className="crear-taller-row">
+                <div className="crear-taller-column">
+                    <label>Fecha:</label>
+                    <input
+                        type="date"
+                        name="datetime"
+                        value={formData.datetime}
+                        onChange={handleChange}
+                        className="crear-taller-input"
+                        required
+                    />
+                </div>
+                <div className="crear-taller-column">
+                    <label>Horario:</label>
+                    <select
+                        name="timeId"
+                        value={formData.timeId}
+                        onChange={handleChange}
+                        className="crear-taller-select"
+                        required
+                    >
+                        <option value="">Seleccione un horario</option>
+                        {times.map((time) => (
+                            <option key={time.id} value={time.id}>
+                                {time.startTime}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
 
             <label>Profesor:</label>
             <select
