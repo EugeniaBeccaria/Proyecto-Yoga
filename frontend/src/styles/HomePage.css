@@ -3,9 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-/* ==========================================================================
-   MOBILE-FIRST (Estilos para Celular)
-   ========================================================================== */
 html,
 body {
     margin: 0;
@@ -59,7 +56,7 @@ body {
 }
 
 .hero-title .yoga {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 3.2rem;
     font-style: italic;
     text-transform: lowercase;
@@ -92,13 +89,13 @@ body {
 }
 
 .verde .titulo-seccion {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     color: #2f5b46;
 }
 
 .card-catalogo.verde h3 {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     color: #2f5b46;
     font-size: 20px;
@@ -106,13 +103,13 @@ body {
 }
 
 .card-catalogo.verde p {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: #000;
     font-size: 15px;
 }
 
 .verde .btn-outline {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 17px;
     font-weight: 600;
     color: #2f5b46;
@@ -132,7 +129,7 @@ body {
 }
 
 .card-catalogo.rosado h3 {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     color: #d08383;
     font-size: 20px;
@@ -140,19 +137,19 @@ body {
 }
 
 .card-catalogo.rosado p {
-    font-family: "Open Sans", sans-serif;
+    font-family:"Montserrat", sans-serif;
     color: #000;
     font-size: 15px;
 }
 
 .titulo-seccion {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 30px;
     margin-bottom: 15px;
 }
 
 .subtitulo-seccion {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: #000;
     font-size: 15px;
     margin-bottom: 40px;
@@ -210,7 +207,7 @@ body {
 }
 
 .rosado .btn-outline {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 17px;
     font-weight: 600;
     color: #d08383;
@@ -331,16 +328,16 @@ body {
         color: #fff;
     }
 
-    /* Específico para la sección de Clases */
+    
     .verde .titulo-seccion {
-        font-family: "Playfair Display", serif;
+        font-family:"Montserrat", sans-serif;
         font-weight: 700;
         color: #2f5b46;
     }
 
     .card-catalogo.verde h3 {
         color: #2f5b46;
-        font-family: "Playfair Display", serif;
+        font-family: "Montserrat", sans-serif;
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 10px;
@@ -348,13 +345,13 @@ body {
 
     .verde .card-catalogo {
         background-color: #eef3ef;
-        font-family: "Open Sans", sans-serif;
+        font-family: "Montserrat", sans-serif;
         color: #000;
     }
 
     .verde .btn-outline {
         display: inline-block;
-        font-family: "Open Sans", sans-serif;
+        font-family: "Montserrat", sans-serif;
         font-size: 17px;
         font-weight: 600;
         color: #2f5b46;
@@ -372,31 +369,30 @@ body {
         transform: translateY(-2px);
     }
 
-    /* Específico para la sección de Talleres */
+    
     .rosado .titulo-seccion {
-        font-family: "Playfair Display", serif;
+        font-family: "Montserrat", sans-serif;
         font-weight: 700;
         color: #d08383;
     }
 
     .card-catalogo.rosado h3 {
         color: #d08383;
-        font-family: "Playfair Display", serif;
+        font-family: "Montserrat", sans-serif;
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 10px;
     }
 
     .rosado .card-catalogo {
-        font-family: "Open Sans", sans-serif;
+        font-family: "Montserrat", sans-serif;
         color: #000;
         background-color: #fce9ea;
     }
 
-    /* Botones con sus respectivos colores */
     .rosado .btn-outline {
         display: inline-block;
-        font-family: "Open Sans", sans-serif;
+        font-family: "Montserrat", sans-serif;
         font-size: 17px;
         font-weight: 600;
         color: #d08383;

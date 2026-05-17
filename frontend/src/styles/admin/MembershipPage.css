@@ -1,26 +1,21 @@
-/* --- ESTILOS BASE (MOBILE FIRST) --- */
 .page-background {
   min-height: 100vh;
   display: flex;
   justify-content: flex-start;
-  /* Cambiado de center para que no se corte arriba en móviles */
   align-items: center;
   background-color: #ffffff;
   flex-direction: column;
   padding-top: 40px;
-  /* Ajuste para dar espacio arriba en móvil */
-  font-family: "Raleway", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .membresias-window {
   margin: 20px;
-  /* Margen reducido para móviles */
   background-color: #ffffff;
   border-radius: 15px;
   padding: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   width: 90%;
-  /* Ocupa casi todo el ancho en móvil */
 }
 
 .membresias-header-wrapper {
@@ -36,14 +31,11 @@
   margin: 0;
   padding: 10px;
   font-size: 1.8rem;
-  /* Un poco más pequeño para móviles */
-  font-family: "Playfair Display", serif;
 }
 
 .membresias-grid {
   display: flex;
   flex-direction: column;
-  /* Columna única en móvil */
   align-items: center;
   gap: 20px;
   width: 100%;
@@ -62,7 +54,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* Las tarjetas ocupan el ancho del contenedor */
   max-width: 300px;
 }
 
@@ -88,14 +79,11 @@
   justify-content: center;
   gap: 5px;
   flex-wrap: wrap;
-  /* Evita desbordamiento si el texto es largo */
 }
 
 .price-input {
   width: 70px;
-  /* Un poco más ancho para facilitar el toque en móvil */
   padding: 8px;
-  /* Padding mayor para mejor UX táctil */
   background-color: rgba(251, 205, 213, 0.864);
   border: 1px solid #2b462d;
   border-radius: 5px;
@@ -117,7 +105,6 @@
   color: #fff;
   font-weight: 600;
   padding: 12px 40px;
-  /* Más área de clic para móvil */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -149,8 +136,7 @@
   background-color: rgb(85, 196, 109);
 }
 
-/* --- MEDIA QUERIES (ESCRITORIO) --- */
-/* Restauramos el diseño original para pantallas de más de 768px */
+
 @media (min-width: 768px) {
   .page-background {
     justify-content: center;
@@ -171,14 +157,12 @@
 
   .membresias-grid {
     flex-direction: row;
-    /* Volvemos a grid horizontal */
     justify-content: center;
     max-width: 900px;
   }
 
   .membresia-card {
     width: auto;
-    /* Ancho automático basado en contenido */
   }
 
   .membresia-card h2 {

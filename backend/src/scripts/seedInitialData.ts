@@ -20,7 +20,7 @@ async function seedInitialData() {
     const em = orm.em.fork() // la defini aca arriba y la saque del try del admin para poder usarla en todo el seeder
 
     // ================== USUARIO ADMIN ==================
-    try {
+    /*try {
         const existingAdmin = await em.findOne(User, { 
             email: 'admin@yoga.com'})
         if(!existingAdmin){
@@ -41,8 +41,9 @@ async function seedInitialData() {
     } catch (error) {
         console.error('Error:', error);
     }
+        */
     // ================== USUARIO PROFESSOR ==================
-    try {
+    /*try {
         const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
         if (!existingProfessor) {
         const salt = await bcrypt.genSalt();
@@ -55,8 +56,6 @@ async function seedInitialData() {
             role: 'professor',
         });
 
-
-        // ----- - - - - - - - -- - --  
         await em.persistAndFlush(userProfessor);
         console.log(' Usuario profesor creado exitosamente');
         } else {
@@ -64,7 +63,7 @@ async function seedInitialData() {
         }
     } catch (error) {
         console.error(' Error creando profesor:', error);
-    }
+    }*/
 
     // ================== ROOMS ==================
     try {

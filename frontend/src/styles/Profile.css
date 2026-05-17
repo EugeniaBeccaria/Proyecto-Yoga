@@ -1,4 +1,4 @@
-/* Fondo general: blanco, centrado, limpio */
+
 .profile-container {
     width: 100%;
     display: flex;
@@ -8,7 +8,7 @@
     box-sizing: border-box;
 }
 
-/* Tarjeta principal */
+
 .profile-card {
     width: min(420px, 100%);
     background: #ffffff;
@@ -20,7 +20,6 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Avatar centrado */
 .avatar {
     display: flex;
     justify-content: center;

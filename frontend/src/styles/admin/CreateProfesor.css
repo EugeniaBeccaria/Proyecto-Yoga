@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
-/* DISEÑO BASE: MOBILE FIRST */
 .crearProfesor {
     min-height: 100vh;
     display: flex;
@@ -28,7 +27,6 @@
     padding: 30px 25px;
     width: 100%;
     max-width: 900px;
-    /* Aumentamos un poco el máximo para que respire mejor */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -43,7 +41,6 @@
     display: block;
 }
 
-/* El input ahora siempre intentará ocupar el 100% de su contenedor padre */
 .crear-profesor-input {
     width: 100%;
     padding: 14px 16px;
@@ -63,7 +60,6 @@
     box-shadow: 0 0 0 3px rgba(47, 91, 70, 0.2);
 }
 
-/* Estructura de filas y campos */
 .row {
     display: flex;
     flex-direction: column;
@@ -75,7 +71,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* En móvil cada campo ocupa todo el ancho */
 }
 
 .password-hint {
@@ -116,7 +111,6 @@
     max-width: 900px;
 }
 
-/* MEDIA QUERY PARA ESCRITORIO */
 @media (min-width: 768px) {
     .crear-profesor-form {
         padding: 50px;
@@ -127,19 +121,15 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 30px;
-        /* Espacio generoso entre columnas */
     }
 
-    /* FORZAMOS que cada campo ocupe el 50% del renglón menos el gap */
     .row .field {
         flex: 1;
-        /* Esto hace que se estiren equitativamente */
         width: auto;
     }
 
     .crear-profesor-button {
         width: 300px;
-        /* Tamaño fijo y centrado en escritorio */
         align-self: center;
     }
 }

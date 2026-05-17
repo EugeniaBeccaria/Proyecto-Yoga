@@ -7,7 +7,6 @@ html {
   scroll-padding-top: 80px;
 }
 
-/* --- ESTILOS BASE: MOBILE-FIRST --- */
 
 .navbar {
   display: flex;
@@ -69,7 +68,7 @@ html {
   padding: 20px 0;
   gap: 20px;
   align-items: center;
-  font-family: "Roboto";
+  font-family: "Montserrat", serif;
   font-size: 18px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
 }

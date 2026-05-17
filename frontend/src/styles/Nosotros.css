@@ -1,6 +1,4 @@
-/* ==========================================================================
-   ESTILOS COMPARTIDOS (OBLIGATORIOS PARA AMBOS)
-   ========================================================================== */
+
 .nosotros {
     background-color: #ffffff;
     display: flex;
@@ -10,7 +8,7 @@
 }
 
 .nosotros-texto h2 {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     color: #2f5b46;
 }
@@ -25,9 +23,6 @@
     object-fit: cover;
 }
 
-/* ==========================================================================
-   ESPECÍFICO PARA MOBILE (Pantallas chicas, hasta 1023px)
-   ========================================================================== */
 @media (max-width: 1023px) {
     .nosotros {
         padding: 50px 20px;
@@ -36,7 +31,6 @@
 
     .grid {
         display: none;
-        /* Oculto en mobile para limpiar el diseño */
     }
 
     .nosotros-contenido {
@@ -89,9 +83,7 @@
 
 }
 
-/* ==========================================================================
-   ESPECÍFICO PARA DESKTOP (Pantallas grandes, desde 1024px)
-   ========================================================================== */
+
 @media (min-width: 1024px) {
     .nosotros {
         min-height: 100vh;

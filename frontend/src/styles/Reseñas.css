@@ -1,4 +1,4 @@
-/* Mobile First */
+
 .reseñas {
     padding: 60px 20px;
     background-color: #fff;
@@ -6,7 +6,7 @@
 }
 
 .titulo-reseñas {
-    font-family: "Playfair Display", serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 32px;
     color: #2f5b46;
     margin-bottom: 40px;
