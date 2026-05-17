@@ -5,9 +5,11 @@ import { membershipService } from '../membership/membership.service.js';
 export async function stripeWebhookHandler(req: Request, res: Response) {
     const secretWebhookKey = process.env.STRIPE_WEBHOOK_SECRET;
     // la CLI de Stripe envia los eventos a este endpoint 
+    console.log('antes del if...');
     if (!secretWebhookKey) {
         return res.status(500).send('Stripe secret key not configured.');
     }
+    console.log('despues del if...');
     const sig = req.headers['stripe-signature'] as string;
     let event : Stripe.Event
     try 
@@ -17,7 +19,7 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
         event = stripe.webhooks.constructEvent(req.body, sig, secretWebhookKey!);
         switch (event.type) {
             case 'checkout.session.completed':
-                console.log(`Evento recibido: ${event.type}`);
+                console.log(`---------------------------------Evento recibido: ${event.type}`);
                 const session = event.data.object as Stripe.Checkout.Session;
                 const dataWebhook = await membershipService.handleCheckoutSessionCompleted(session);
                 console.log(`Membresía creada para el usuario ${dataWebhook.user.email} con tipo de membresía: ${dataWebhook.membership.membershipType.description}.`);

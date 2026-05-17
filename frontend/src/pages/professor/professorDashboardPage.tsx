@@ -6,6 +6,7 @@ import { classService } from "../../service/class.service";
 interface User {
   id: string;
   name: string;
+  lastname?: string;
   email: string;
 }
 
@@ -14,14 +15,13 @@ interface Classs {
   name: string;
   description: string;
   capacityLimit: number;
-  day: Day;       // Una clase tiene un objeto Día
+  day: Day;
   time: Time;     
   room: Rooms;
   users: User[];     
 }
 
 function ProfessorDashboardPage() {
-
   const [classes, setClasses] = useState<Classs[]>([]);
   const [isLoading, setIsLoading] = useState(true); 
   const [expandedClassId, setExpandedClassId] = useState<string | null>(null);
@@ -34,8 +34,8 @@ function ProfessorDashboardPage() {
       } catch (error) {
         console.error("Error al obtener las clases:", error);
       } finally {
-      setIsLoading(false); 
-    }
+        setIsLoading(false); 
+      }
     };
 
     fetchClasses();
@@ -53,20 +53,19 @@ function ProfessorDashboardPage() {
     <div className="dashboard-prof-container"> 
       
       <div className="dashboard-prof-header">
-        <h1 className="dashboard-prof-title"> Panel de Profesor</h1>
-        <h2 className="dashboard-prof-subtitle"> Mis Próximas Clases</h2>
+        <h1 className="dashboard-prof-title">Panel de Profesor</h1>
+        <h2 className="dashboard-prof-subtitle">Mis Próximas Clases</h2>
       </div>
       
-      <div> 
+      <div className="dashboard-prof-content"> 
         {isLoading ? (
-          <p className="loading-message"> Cargando tus clases...</p>
+          <p className="loading-text">Cargando tus clases...</p>
         ) : classes.length > 0 ? (
           <div className="classes-list">
             {classes.map((classItem) => (
               <div key={classItem.id} className="class-list-item">
                 
                 <div className="class-item-header">
-                  
                   <div className="class-item-info">
                     <h3>{classItem.name}</h3>
                     <p>{classItem.day.name} - {classItem.time.startTime} | Salón: {classItem.room.name}</p>
@@ -84,7 +83,7 @@ function ProfessorDashboardPage() {
                       className="toggle-students-btn" 
                       onClick={() => handleToggleStudents(classItem.id)}
                     >
-                      {expandedClassId === classItem.id ? 'Ocultar' : 'Ver Alumnos'}
+                      {expandedClassId === classItem.id ? 'Ocultar Alumnos' : 'Ver Alumnos'}
                     </button>
                   </div>
                 </div>
@@ -95,11 +94,14 @@ function ProfessorDashboardPage() {
                     {classItem.users.length > 0 ? (
                       <ul>
                         {classItem.users.map(user => (
-                          <li key={user.id}>{user.name} - ({user.email})</li>
+                          <li key={user.id}>
+                            <span className="student-name">{user.name} {user.lastname || ""}</span> 
+                            <span className="student-email">({user.email})</span>
+                          </li>
                         ))}
                       </ul>
                     ) : (
-                      <p>No hay alumnos inscriptos en esta clase.</p>
+                      <p className="no-students">No hay alumnos inscriptos en esta clase.</p>
                     )}
                   </div>
                 )} 

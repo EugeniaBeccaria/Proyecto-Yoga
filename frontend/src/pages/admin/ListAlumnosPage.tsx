@@ -10,6 +10,7 @@ type Clase = {
 type Alumno = {
     id: string;
     name: string;
+    lastname?: string;
     email: string;
     membership?: string;
     classes: Clase[];
@@ -37,10 +38,11 @@ export default function ListAlumnosPage() {
         fetchAlumnos();
     }, []);
 
-    const filteredAlumnos = alumnos.filter(alumno =>
-        alumno.name.toLowerCase().includes(search.toLowerCase()) ||
-        alumno.email.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredAlumnos = alumnos.filter(alumno => {
+        const fullName = `${alumno.name} ${alumno.lastname || ""}`.toLowerCase();
+        return fullName.includes(search.toLowerCase()) || 
+               alumno.email.toLowerCase().includes(search.toLowerCase());
+    });
 
     return (
         <div className="list-alumnos-container">
@@ -73,7 +75,7 @@ export default function ListAlumnosPage() {
                         <tbody>
                             {filteredAlumnos.map(alumno => (
                                 <tr key={alumno.id}>
-                                    <td>{alumno.name}</td>
+                                    <td>{alumno.name} {alumno.lastname || ""}</td>
                                     <td>{alumno.email}</td>
                                     <td>{alumno.membership || "Sin membresía activa"}</td>
                                     <td>
