@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Stripe from 'stripe';
 import { membershipService } from '../membership/membership.service.js';
+import { tallerService } from "../taller/taller.service.js";
 
 export async function stripeWebhookHandler(req: Request, res: Response) {
     const secretWebhookKey = process.env.STRIPE_WEBHOOK_SECRET;
@@ -21,8 +22,18 @@ export async function stripeWebhookHandler(req: Request, res: Response) {
             case 'checkout.session.completed':
                 console.log(`---------------------------------Evento recibido: ${event.type}`);
                 const session = event.data.object as Stripe.Checkout.Session;
-                const dataWebhook = await membershipService.handleCheckoutSessionCompleted(session);
-                console.log(`Membresía creada para el usuario ${dataWebhook.user.email} con tipo de membresía: ${dataWebhook.membership.membershipType.description}.`);
+                if (session.metadata?.plan && session.metadata?.classes) {
+                    const dataWebhook = await membershipService.handleCheckoutSessionCompleted(session);
+                    console.log(`Membresía creada para el usuario ${dataWebhook.user.email} con tipo de membresía: ${dataWebhook.membership.membershipType.description}.`);
+                    break;
+                }
+                if (session.metadata?.talleres) {
+                    console.log(session.metadata);
+                    console.log('Checkout de talleres completado. Pendiente de procesamiento posterior.');
+                    const dataWebhookTalleres = await tallerService.handleCheckoutSessionCompletedTalleres(session);
+                    break;
+                }
+                console.log('Checkout completado sin metadata esperada.');
                 break;
             case 'checkout.session.expired':
                 console.log('La sesión de pago expiró sin completarse.');

@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { checkoutSession } from "./payment.controller.js";
+import { checkoutSessionClasses, checkoutSessionTalleres } from "./payment.controller.js";
 
 export const paymentRouter = Router();
 
-paymentRouter.post('/create-checkout-session', checkoutSession)
+paymentRouter.post('/create-checkout-session-classes', checkoutSessionClasses)
+paymentRouter.post('/create-checkout-session-talleres', checkoutSessionTalleres)
 
 

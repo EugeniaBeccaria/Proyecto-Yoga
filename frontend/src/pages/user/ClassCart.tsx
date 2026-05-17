@@ -104,11 +104,6 @@ const ClassCart: React.FC = () => {
     };
 
     const handleClickCompra = async () => {
-        if (cartType === "talleres") {
-            setError({ error: true, message: "El checkout de talleres aun no esta disponible." });
-            return;
-        }
-
         const user = localStorage.getItem("user");
         if (!user) {
             setRedirect(true);
@@ -117,16 +112,27 @@ const ClassCart: React.FC = () => {
 
         try {
             const userParsed = JSON.parse(user);
-            const hasMembership = await membershipService.searchUserMembership(userParsed.id);
-            if (hasMembership) {
-                setError({ error: true, message: 'El usuario ya tiene una membresía activa' });
-                return;
-            }
-            const checkoutData = await registrationService.prepareCheckoutData(selectedClasses, currentPlan!, userParsed);
-            const session = checkoutData.session;
+            if (cartType === "classes") {
+                const hasMembership = await membershipService.searchUserMembership(userParsed.id);
+                if (hasMembership) {
+                    setError({ error: true, message: 'El usuario ya tiene una membresía activa' });
+                    return;
+                }
+                const checkoutData = await registrationService.prepareCheckoutDataClasses(selectedClasses, currentPlan!, userParsed);
+                const session = checkoutData.session;
 
-            if (session && session.url) {
-                window.location.assign(session.url);
+                if (session && session.url) {
+                    window.location.assign(session.url);
+                }
+            }
+
+            if (cartType === "talleres") {
+                const checkoutData = await registrationService.prepareCheckoutDataTalleres(talleres, userParsed);
+                const session = checkoutData.session;
+
+                if (session && session.url) {
+                    window.location.assign(session.url);
+                }
             }
         } catch (error) {
             console.error("Error during checkout process:", error);

@@ -4,6 +4,7 @@ import { Day } from '../classs/day.entity.js'
 import { Time } from '../classs/time.entity.js'
 import { orm } from '../shared/DB/orm.js'
 import { User } from '../user/user.entity.js'
+import Stripe from 'stripe'
 
 const em = orm.em
 // Servicio para manejar la lógica de negocio relacionada con Talleres
@@ -50,6 +51,48 @@ async function add(name: string, description: string, cupo: number, datetime: st
     return taller;
 }
 
+async function handleCheckoutSessionCompletedTalleres(session: Stripe.Checkout.Session) {
+    const em = orm.em.fork(); // create a new EntityManager instance
+    
+    try {
+        const metadata = session.metadata;
+        if (!metadata || !metadata.userId || !metadata.talleres) {
+            throw new Error('No metadata found in the session.');
+        }
+        const userId = metadata.userId;
+        const idTalleres = JSON.parse(metadata.talleres);
+
+        const user = await em.findOne(User, { id: userId });
+        if (!user) {
+            throw new Error(`User with ID ${userId} not found.`);
+        }
+
+        const talleres = await em.find(Taller, { id: { $in: idTalleres as string[] } }, { populate: ['users'] });
+        if (!talleres || talleres.length === 0) {
+            throw new Error('No se encontraron los talleres para asignar al usuario.');
+        }
+
+        talleres.forEach((taller) => {
+            if (taller.users.contains(user)) {
+                throw new tallerError(`El usuario ya está inscripto en el taller ${taller.name}.`);
+            }
+            const enrolledCount = taller.users.length;
+            if (enrolledCount >= taller.cupo) {
+                throw new tallerError(`El taller ${taller.name} no tiene cupos disponibles.`);
+            }
+
+            taller.users.add(user);
+        });
+
+        await em.flush();
+        return { talleres, user };
+    } catch (error) {
+        console.error('Error handling checkout session completed for talleres:', error);
+        throw error;
+    }
+}
+
 export const tallerService = {
-    add
+    add,
+    handleCheckoutSessionCompletedTalleres
 };

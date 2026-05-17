@@ -94,6 +94,26 @@
     color: #6a996a;
 }
 
+.membership-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.membership-badge.active {
+    background-color: rgba(47, 91, 70, 0.12);
+    color: #2f5b46;
+}
+
+.membership-badge.inactive {
+    background-color: rgba(208, 131, 131, 0.14);
+    color: #b35e5e;
+}
+
 .students-table tbody tr:last-child {
     border-bottom: none;
 }

@@ -24,6 +24,5 @@ tallerRouter.post('/', verifyCookie, isAdmin,
     check('price','El precio debe ser un número positivo').isFloat({min:0}),
     ],verifyResult, add)
 
-
 tallerRouter.put('/:id', verifyCookie, isAdmin, sanitizeTallerInput, update)
 tallerRouter.delete('/:id', verifyCookie, isAdmin, sanitizeTallerInput, remove)

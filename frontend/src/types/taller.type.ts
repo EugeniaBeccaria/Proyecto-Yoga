@@ -4,6 +4,9 @@ export interface TallerApi {
     description: string;
     datetime: string;
     price: number;
+    users?: Array<{
+        id: string;
+    }>;
     time?: {
         id: string;
         startTime: string;

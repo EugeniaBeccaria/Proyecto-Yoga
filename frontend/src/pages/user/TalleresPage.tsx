@@ -14,6 +14,8 @@ function TalleresPage() {
     const [checkoutNotice, setCheckoutNotice] = useState<string>("");
 
     const navigate = useNavigate();
+    const storedUser = localStorage.getItem("user");
+    const userId = storedUser ? JSON.parse(storedUser)?.id : undefined;
 
     useEffect(() => {
         const fetchTalleres = async () => {
@@ -57,9 +59,12 @@ function TalleresPage() {
     };
 
     const canContinueToPayment = seleccionados.length > 0;
+    const visibleTalleres = userId
+        ? talleres.filter((taller) => !taller.users?.some((user) => user.id === userId))
+        : talleres;
 
     const handleContinueToPayment = () => {
-        const talleresSeleccionados = talleres.filter((taller) =>
+        const talleresSeleccionados = visibleTalleres.filter((taller) =>
             seleccionados.includes(taller.id)
         );
         localStorage.removeItem("clases");
@@ -79,7 +84,7 @@ function TalleresPage() {
                     Cada taller ofrece una experiencia única de crecimiento personal.
                 </p>
             </section>
-            {!loading && !error && talleres.length > 0 && (
+            {!loading && !error && visibleTalleres.length > 0 && (
                 <div className="pago-container">
                     <button
                         className="btn-pago"
@@ -98,11 +103,11 @@ function TalleresPage() {
                 <p className="subtitulo">Cargando talleres...</p>
             ) : error ? (
                 <p className="subtitulo">{error.message}</p>
-            ) : talleres.length === 0 ? (
+            ) : visibleTalleres.length === 0 ? (
                 <p className="subtitulo">No hay talleres disponibles por ahora.</p>
             ) : (
-                <section className={`catalogo-grid ${talleres.length === 1 ? 'single' : ''}`}>
-                    {talleres.map((taller) => (
+                <section className={`catalogo-grid ${visibleTalleres.length === 1 ? 'single' : ''}`}>
+                    {visibleTalleres.map((taller) => (
                         <div
                             key={taller.id}
                             className={`card ${seleccionados.includes(taller.id) ? "seleccionada" : ""}`}

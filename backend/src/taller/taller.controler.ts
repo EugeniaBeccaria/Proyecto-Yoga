@@ -14,7 +14,8 @@ interface TallerInput {
   name: string;
   description: string;
   cupo: number;
-  datetime: string;
+  date?: string;
+  datetime?: string;
   roomId: string;
   price: number;
   profesorId: string;
@@ -26,7 +27,7 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
     name: req.body.name,
     description: req.body.description,
     cupo: req.body.cupo,
-    datetime: req.body.datetime,
+    date: req.body.date,
     price: req.body.price,
   }
 
@@ -63,26 +64,57 @@ async function add(req: Request, res: Response) {
   console.log("Cuerpo de la solicitud:", req.body);
 
   const {
-          name,
-          description,
-          cupo,
-          datetime,
-          roomId,
-          price,
-          profesorId,
-          timeId
-      } = req.body as TallerInput;
+    name,
+    description,
+    cupo,
+    date: dateFromBody,
+    datetime,
+    roomId,
+    price,
+    profesorId,
+    timeId
+  } = req.body as TallerInput;
+  const date = dateFromBody ?? datetime;
 
   try {
-    // hay que validar que el profesor elegido en el taller no tenga una clase en ese
-    // horario o que no haya una clase en ese salon y horario
+    if (!date) {
+      return res.status(400).json({ message: 'La fecha es obligatoria' });
+    }
 
-    const tallerAddData = await tallerService.add(name, description, cupo, datetime, roomId, price, profesorId, timeId);
+    const [year, month, day] = date.split("-").map(Number);
+    if (!year || !month || !day) {
+      return res.status(400).json({ message: 'La fecha proporcionada no es válida' });
+    }
 
-    res.status(201).json({ message: 'taller created', data: tallerAddData })
-  }
+    const dateObj = new Date(year, month - 1, day);
+
+    if (Number.isNaN(dateObj.getTime())) {
+      return res.status(400).json({ message: 'La fecha proporcionada no es válida' });
+    }
+
+    const dayOfWeek = dateObj.getDay();
+
+    if (dayOfWeek !== 6) {
+      return res.status(400).json({ 
+        message: 'Los talleres solo pueden programarse los días sábado.' 
+      });
+    }
+
+    const tallerAddData = await tallerService.add(
+      name, 
+      description, 
+      cupo, 
+      date, 
+      roomId, 
+      price, 
+      profesorId, 
+      timeId
+    );
+
+    res.status(201).json({ message: 'taller created', data: tallerAddData });
+  } 
   catch (error: any) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message });
   }
 }
 

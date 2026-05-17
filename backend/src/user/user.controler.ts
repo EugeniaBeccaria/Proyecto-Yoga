@@ -166,17 +166,18 @@ async function getStudents(req: Request, res: Response) {
     
     const memberships = await em.find(Membership, {}, { populate: ['user', 'membershipType'] });
 
-    const studentsWithMemberships = students.map((student) => { const membership = memberships.find((m) => m.user.id === student.id && m.status.toLowerCase() === 'active');
+    const studentsWithMemberships = students.map((student) => {
+      const membership = memberships.find((m) => m.user.id === student.id && m.status.toLowerCase() === 'active');
 
-    return {
-      ...student,
-      membership: membership
-      ? membership.membershipType.description
-      : 'Sin membresía activa'
-    };
-  });
+      return {
+        ...student,
+        membership: membership
+          ? membership.membershipType.description
+          : 'Sin membresía activa'
+      };
+    });
 
-    res.status(200).json({ message: 'Listado de Alumnos', data: students });
+    res.status(200).json({ message: 'Listado de Alumnos', data: studentsWithMemberships });
 
   } catch (error: any) {
     res.status(500).json({ message: error.message });

@@ -10,7 +10,7 @@ const stripeClient = new Stripe(process.env.STRIPE_API_KEY!, {
     apiVersion: '2025-10-29.clover',
 });
 
-export async function checkoutSession(req: Request, res: Response, next: NextFunction) {
+export async function checkoutSessionClasses(req: Request, res: Response, next: NextFunction) {
     const classes = req.body.classes
     const plan = req.body.plan;
     const user = req.body.user;
@@ -48,6 +48,49 @@ export async function checkoutSession(req: Request, res: Response, next: NextFun
         });
         res.status(200).json({ message: "Checkout session created", session });
     } 
+    catch (error) {
+        next(error);
+    }
+}
+
+export async function checkoutSessionTalleres(req: Request, res: Response, next: NextFunction) {
+    const talleres = req.body.talleres;
+    const user = req.body.user;
+
+    if (!talleres || !Array.isArray(talleres) || talleres.length === 0) {
+        return res.status(400).json({ message: "No se enviaron talleres para el checkout." });
+    }
+
+    try {
+        const idTalleres = talleres.map((t: any) => t.id);
+        const metadata: Stripe.MetadataParam = {
+            userId: user?.id?.toString(),
+            talleres: JSON.stringify(idTalleres)
+        };
+
+        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = talleres.map((taller: any) => ({
+            price_data: {
+                currency: 'usd',
+                unit_amount: Math.round(Number(taller.price) * 100),
+                product_data: {
+                    name: `Taller - ${taller.name}`,
+                    description: taller.description || undefined
+                },
+            },
+            quantity: 1
+        }));
+
+        const session = await stripeClient.checkout.sessions.create({
+            customer_email: user.email,
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: 'http://localhost:5173/talleres?payment=success',
+            cancel_url: 'http://localhost:5173/ClassCart?error=payment_cancelled_talleres',
+            metadata: metadata
+        });
+
+        res.status(200).json({ message: "Checkout session created", session });
+    }
     catch (error) {
         next(error);
     }

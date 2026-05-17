@@ -26,7 +26,7 @@ export default function ListAlumnosPage() {
         const fetchAlumnos = async () => {
             try {
                 const res = await axios.get("http://localhost:3000/api/users/students", { withCredentials: true });
-
+                console.log(res.data.data);
                 setAlumnos(res.data.data);
             } catch (error) {
                 console.error("Error al traer los alumnos", error);
@@ -34,15 +34,22 @@ export default function ListAlumnosPage() {
                 setLoading(false);
             }
         };
-
         fetchAlumnos();
     }, []);
 
     const filteredAlumnos = alumnos.filter(alumno => {
         const fullName = `${alumno.name} ${alumno.lastname || ""}`.toLowerCase();
         return fullName.includes(search.toLowerCase()) || 
-               alumno.email.toLowerCase().includes(search.toLowerCase());
+                alumno.email.toLowerCase().includes(search.toLowerCase());
     });
+
+    const getMembershipLabel = (membership?: string) => {
+        if (!membership || membership === "Sin membresía activa") {
+            return { text: "Sin membresía activa", variant: "inactive" };
+        }
+
+        return { text: `Activa: ${membership}`, variant: "active" };
+    };
 
     return (
         <div className="list-alumnos-container">
@@ -77,7 +84,17 @@ export default function ListAlumnosPage() {
                                 <tr key={alumno.id}>
                                     <td>{alumno.name} {alumno.lastname || ""}</td>
                                     <td>{alumno.email}</td>
-                                    <td>{alumno.membership || "Sin membresía activa"}</td>
+                                    <td>
+                                        {(() => {
+                                            const membership = getMembershipLabel(alumno.membership);
+
+                                            return (
+                                                <span className={`membership-badge ${membership.variant}`}>
+                                                    {membership.text}
+                                                </span>
+                                            );
+                                        })()}
+                                    </td>
                                     <td>
                                         {alumno.classes.length > 0 ? (
                                             alumno.classes.map(clase => clase.name).join(", ")
