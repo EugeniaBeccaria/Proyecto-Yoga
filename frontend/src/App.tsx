@@ -23,6 +23,7 @@ import { AuthProvider } from './context/AuthProvider.tsx';
 import CheckoutStatus from './pages/user/checkout-status.tsx';
 import PasswordChange from './pages/professor/passwordChange.tsx';
 import ListAlumnosPage from './pages/admin/ListAlumnosPage.tsx';
+import ListTalleresPage from "./pages/admin/ListTalleresPage";
 
 
 function App() {
@@ -106,6 +107,14 @@ function App() {
                 element={
                   <AdminRoutes>
                     <ListAlumnosPage />
+                  </AdminRoutes>
+                }
+              />
+              <Route
+                path="/ListTalleresPage"
+                element={
+                  <AdminRoutes>
+                    <ListTalleresPage />
                   </AdminRoutes>
                 }
               />

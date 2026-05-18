@@ -74,13 +74,19 @@ const TalleresAlumno: React.FC = () => {
                     {talleresInscritos.map(taller => (
                         <div key={taller.id} className="clase-card">
                             <h3 className="clase-card-nombre">{taller.name}</h3>
+                            <p className="clase-card-descripcion">{taller.description}</p>
                             <p className="clase-card-detalle">
-                                <strong>Fecha/Horario:</strong> {taller.datetime}
+                                <strong>Fecha y Hora:</strong> {taller.datetime} {taller.time ? `- ${taller.time.startTime}` : ""}
+                            </p>
+                            <p className="taller-schedule">
+                                <strong>Profesor:</strong> {taller.professor.name} {taller.professor.lastname}
+                            </p>
+                            <p className="taller-schedule">
+                                <strong>Salón:</strong> {taller.room.name}
                             </p>
                             <p className="clase-card-detalle">
                                 <strong>Precio:</strong> ${taller.price}
                             </p>
-                            <p className="clase-card-descripcion">{taller.description}</p>
                         </div>
                     ))}
                 </div>

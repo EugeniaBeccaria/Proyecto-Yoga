@@ -1,0 +1,248 @@
+.admin-talleres-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 60px 30px;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-talleres-header {
+  margin-bottom: 2rem;
+  text-align: left;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.admin-talleres-title {
+  color: #d08383;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.admin-talleres-subtitle {
+  color: #2f5b46;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.talleres-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.taller-list-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eef2f3;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.taller-list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.taller-item-header {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  gap: 1rem;
+}
+
+.taller-item-info h3 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.taller-item-info p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.taller-schedule {
+  font-size: 0.9rem;
+  color: #666 !important;
+  margin: 0 0 0.4rem 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.taller-schedule strong {
+  color: #34495e;
+  font-weight: 600;
+}
+
+.taller-item-details {
+  background-color: #f8f9fa;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.student-count {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+.student-count strong {
+  color: #27ae60;
+  font-size: 1rem;
+}
+
+.taller-item-actions {
+  width: 100%;
+}
+
+.toggle-students-btn {
+  width: 100%;
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-students-btn:hover {
+  background-color: #2980b9;
+}
+
+.student-list {
+  background-color: #fdfefe;
+  border-top: 1px solid #eef2f3;
+  padding: 1.25rem;
+}
+
+.student-list h4 {
+  font-size: 1rem;
+  color: #34495e;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.student-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.student-list li {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
+  border: 1px solid #eef2f3;
+  border-radius: 6px;
+  gap: 0.2rem;
+}
+
+.student-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.student-email {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.loading-text,
+.no-students {
+  font-size: 0.95rem;
+  color: #95a5a6;
+  font-style: italic;
+  margin: 0;
+}
+
+.empty-talleres-message {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  color: #7f8c8d;
+  border: 2px dashed #eef2f3;
+}
+
+.empty-talleres-message p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .admin-talleres-container {
+    padding: 2rem;
+  }
+
+  .admin-talleres-title {
+    font-size: 2.2rem;
+  }
+
+  .taller-item-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .taller-item-info {
+    flex: 100%;
+  }
+
+  .taller-item-details {
+    align-self: center;
+    background-color: transparent;
+    padding: 0;
+    text-align: right;
+    flex: 1;
+  }
+
+  .student-count {
+    font-size: 1rem;
+  }
+
+  .taller-item-actions {
+    width: auto;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .toggle-students-btn {
+    width: auto;
+    padding: 0.6rem 1.25rem;
+  }
+
+  .student-list li {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .student-email {
+    font-size: 0.9rem;
+  }
+}

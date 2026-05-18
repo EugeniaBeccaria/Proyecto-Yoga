@@ -8,14 +8,22 @@ import { useContext } from 'react';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [showed, setShowed] = useState<boolean>(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const {user} = useContext(AuthContext);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setActiveDropdown(null);
+  };
+
+  const toggleDropdown = (menuName: string) => {
+    setActiveDropdown(activeDropdown === menuName ? null : menuName);
+  };
+
   const closeDropdown = () => {
-    setShowed(false);
+    setActiveDropdown(null);
     setIsMenuOpen(false);
   };
   
@@ -51,16 +59,16 @@ function Navbar() {
         {isAdmin && (
           <>
           <div className="paste-button">
-            <HashLink className="button" onClick = {()=>{setShowed(!showed)}}>
+            <button className="button-link" onClick={() => toggleDropdown('clases')}>
               ▼ GESTIONAR CLASES 
-            </HashLink>
-            {(showed) && (
+            </button>
+            {activeDropdown === 'clases' && (
               <div className="dropdown-content" style={{display: 'block'}}>
                 <HashLink smooth to="/ClassCalendar" onClick={closeDropdown}>
                   VER CLASES
                 </HashLink>
                 <HashLink id="top" smooth to="/CreateClassPage" onClick={closeDropdown}>
-                    CREAR CLASES
+                  CREAR CLASES
                 </HashLink>                
                 <HashLink id="bottom" smooth to="/DeleteClassPage" onClick={closeDropdown}>
                   ELIMINAR CLASES
@@ -69,9 +77,22 @@ function Navbar() {
             )}
           </div>
 
-          <HashLink smooth to="/CreateTallerPage#crearTalleres" onClick={closeMenu}>
-            CREAR TALLERES
-          </HashLink>
+          <div className="paste-button">
+            <button className="button-link" onClick={() => toggleDropdown('talleres')}>
+              ▼ GESTIONAR TALLERES 
+            </button>
+            {activeDropdown === 'talleres' && (
+              <div className="dropdown-content" style={{display: 'block'}}>
+                <HashLink smooth to="/ListTalleresPage" onClick={closeDropdown}>
+                  VER TALLERES
+                </HashLink>
+                <HashLink id="top" smooth to="/CreateTallerPage#crearTalleres" onClick={closeDropdown}>
+                  CREAR TALLERES
+                </HashLink>
+              </div>
+            )}
+          </div>
+
           <HashLink smooth to="/MembershipPage#top" onClick={closeMenu}>
             GESTIONAR MEMBRESÍAS
           </HashLink>

@@ -42,7 +42,7 @@ function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-    const talleres = await em.find(Taller, {}, { populate: ['users', 'time'] })
+    const talleres = await em.find(Taller, {}, { populate: ['users', 'time', 'room', 'professor'] })
     res.status(200).json({ message: 'found all talleres', data: talleres })
   }
   catch (error: any) {
@@ -53,7 +53,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const taller = await em.findOneOrFail(Taller, { id }, { populate: ['users', 'time'] })
+    const taller = await em.findOneOrFail(Taller, { id }, { populate: ['users', 'time', 'room', 'professor'] })
     res.status(200).json({ message: 'found taller', data: taller })
   }
   catch (error: any) {
