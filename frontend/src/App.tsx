@@ -11,6 +11,7 @@ import MembershipPage from './pages/admin/MembershipPage.tsx';
 import PrivateRoutes from './components/PrivateRoutes.tsx';
 import AdminRoutes from './components/AdminRoutes.tsx';
 import MyClassesPage from './pages/MyClassesPage.tsx';
+import MyTalleresPage from './pages/user/MyTalleresPage.tsx';
 import ProfessorRoutes from './components/professorRoutes.tsx';
 import ProfessorDashboardPage from './pages/professor/professorDashboardPage.tsx';
 // import ClasesPage from './pages/user/ClasesPage.tsx';
@@ -47,7 +48,14 @@ function App() {
                   </PrivateRoutes>
                 }
               />
-
+              <Route
+                path="/MyTalleresPage"
+                element={
+                  <PrivateRoutes>
+                    <MyTalleresPage />
+                  </PrivateRoutes>
+                }
+              />
               <Route
                 path="/CreateClassPage"
                 element={

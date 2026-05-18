@@ -100,6 +100,7 @@ function Navbar() {
         {isClient &&
             <>
               <HashLink smooth to="/MyClassesPage" onClick={closeMenu}>MIS CLASES</HashLink>
+              <HashLink smooth to="/MyTalleresPage" onClick={closeMenu}>MIS TALLERES</HashLink>
               
             </>
         }
