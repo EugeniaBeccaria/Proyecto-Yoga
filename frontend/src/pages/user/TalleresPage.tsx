@@ -77,7 +77,7 @@ function TalleresPage() {
         <main className="catalogo">
             {/* <img className="flor-fondo" src="/FlorLogo.png" alt="Fondo Shanti" /> */}
 
-            <section className="catalogo-header">
+            <section className="catalogo-header" id="top">
                 <h1 className="titulo-principal">Nuestros Talleres</h1>
                 <p className="subtitulo">
                     Espacios especiales para aprender, compartir y conectar con otras personas.

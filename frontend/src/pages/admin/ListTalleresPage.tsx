@@ -41,7 +41,7 @@ function ListTalleresPage() {
   };
 
   return (
-    <div className="admin-talleres-container">
+    <div className="admin-talleres-container" id="top">
       <div className="admin-talleres-header">
         <h1 className="admin-talleres-title">Panel de Administración</h1>
         <h2 className="admin-talleres-subtitle">Gestión y Visualización de Talleres</h2>

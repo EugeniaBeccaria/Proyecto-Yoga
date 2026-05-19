@@ -7,6 +7,8 @@ import type { Error } from "../../types/error.type";
 import type { Time } from "../../types/time.type";
 import type { TallerForm } from "../../types/tallerForm.type";
 import { classService } from "../../service/class.service";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function CrearTaller() {
     const [formData, setFormData] = useState<TallerForm> ({
@@ -25,6 +27,29 @@ export default function CrearTaller() {
     const [professors, setProfessors] = useState<User[]>([]);
     const [times, setTimes] = useState<Time[]>([]);
 
+    const isSaturday = (date: Date) => {
+        return date.getDay() === 6;
+    };
+    const handleDateChange = (date: Date | null) => {
+        if (!date) {
+            setFormData({ ...formData, datetime: "" });
+            return;
+        }
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        
+        const stringDate = `${year}-${month}-${day}`;
+
+        setFormData({
+            ...formData,
+            datetime: stringDate
+        });
+    };
+    const selectedDate = formData.datetime 
+        ? new Date(`${formData.datetime}T00:00:00`) 
+        : null;
+
     useEffect(() => {
         const loadData = async () => {
             try{
@@ -41,13 +66,11 @@ export default function CrearTaller() {
         loadData();
     }, []);
 
-    // Handle form input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         setFormData({...formData, [name]: type === "number" ? (value === "" ? null : Number(value)) : value });
     };
 
-    // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const tallerData = {
@@ -109,12 +132,13 @@ export default function CrearTaller() {
             <div className="crear-taller-row">
                 <div className="crear-taller-column">
                     <label>Fecha:</label>
-                    <input
-                        type="date"
-                        name="datetime"
-                        value={formData.datetime}
-                        onChange={handleChange}
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        filterDate={isSaturday}
                         className="crear-taller-input"
+                        dateFormat="yyyy-MM-dd"
+                        placeholderText="Seleccione un día sábado"
                         required
                     />
                 </div>
@@ -178,7 +202,9 @@ export default function CrearTaller() {
                     required
                     >
                     <option value="">Seleccione un salón</option>
-                    {rooms.map((room) => (
+                    {rooms
+                    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+                    .map((room) => (
                         <option key={room.id} value={room.id}>
                             {room.name}
                         </option>

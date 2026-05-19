@@ -35,6 +35,16 @@ function CreateClassPage() {
   const [title, setTitle] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
+  const ordenDias: { [key: string]: number } = {
+    "Lunes": 1,
+    "Martes": 2,
+    "Miércoles": 3,
+    "Jueves": 4,
+    "Viernes": 5,
+    "Sábado": 6,
+    "Domingo": 7
+  };
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -156,9 +166,12 @@ function CreateClassPage() {
                 <select id="dia" name="dia"> 
                   <option value="">Seleccione un día</option>
                   {
-                    fetchData.days.map((day) => (
-                      <option key={day.id} value={day.id}>{day.name}</option>
-                    ))
+                    fetchData.days
+                      .filter((day) => day.name !== "Sábado")
+                      .sort((a, b) => (ordenDias[a.name] || 99) - (ordenDias[b.name] || 99))
+                      .map((day) => (
+                        <option key={day.id} value={day.id}>{day.name}</option>
+                      ))
                   }
                 </select>
               </div>
@@ -180,7 +193,9 @@ function CreateClassPage() {
                 <select id="salon" name="salon">
                   <option value="">Seleccione un salón</option>
                   {
-                    fetchData.rooms.map((room) =>{
+                    fetchData.rooms
+                    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+                    .map((room) =>{
                       return(
                         <option key={room.id} value={room.id}>{room.name}</option>
                       )

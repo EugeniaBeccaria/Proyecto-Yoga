@@ -1,8 +1,14 @@
 import '../styles/Footer.css';
 import { HashLink } from 'react-router-hash-link';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 function Footer() {
+    const location = useLocation();
+    
+    const { user } = useContext(AuthContext);
+
     const handleSamePageLinkClick = (path: string) => {
         if (location.pathname === path) {
             window.scrollTo({
@@ -11,6 +17,7 @@ function Footer() {
             });
         }
     };
+    const talleresPath = user?.role === 'admin' ? '/ListTalleresPage#top' : '/talleres#top';
 
     return (
         <footer className="footer">
@@ -44,7 +51,7 @@ function Footer() {
                         <li><Link to="/" onClick={() => handleSamePageLinkClick('/')}>Inicio</Link></li>
                         <li><HashLink smooth to="/#nosotros">Sobre nosotros</HashLink></li>
                         <li><Link to="/ClassCalendar" onClick={() => handleSamePageLinkClick('/ClassCalendar')}>Clases</Link></li>
-                        <li><Link to="/talleres" onClick={() => handleSamePageLinkClick('/talleres')}>Talleres</Link></li>
+                        <li><HashLink smooth to={talleresPath} onClick={() => handleSamePageLinkClick(talleresPath)}>Talleres</HashLink></li>
                     </ul>
                 </div>
 

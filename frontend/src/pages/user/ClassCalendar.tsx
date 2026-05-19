@@ -9,6 +9,7 @@ interface ClaseHorario {
     name: string; 
     description: string;
     capacityLimit: number;
+    enrolledCount?: number;
     room: {
         id: string;
         name: string;
@@ -17,7 +18,11 @@ interface ClaseHorario {
         id: string;
         name: string;
     };
-    professor: string;
+    professor: {
+        id: string;
+        name: string;
+        lastname: string;
+    };
     time: { 
         id: string;
         startTime: string;
@@ -152,13 +157,15 @@ export default function ClassCalendar() {
                     <option value="tarde">Tarde</option>
                 </select>
                 
-                <div className="footer-calendar">
-                    <button 
-                    className={(selectedClasses.length > 0 && !isAdmin) ? "btn-agregar" : "btn-agregar disabled"} 
-                    onClick={(selectedClasses.length > 0 && !isAdmin) ? handleSendClasses : undefined}>
-                        {selectedClasses.length > 0 ? `Agregar (${selectedClasses.length})` : "Agregar Clases"}
-                    </button>
-                </div>
+                {!isAdmin && (
+                    <div className="footer-calendar">
+                        <button 
+                            className={selectedClasses.length > 0 ? "btn-agregar" : "btn-agregar disabled"} 
+                            onClick={selectedClasses.length > 0 ? handleSendClasses : undefined}>
+                            {selectedClasses.length > 0 ? `Agregar (${selectedClasses.length})` : "Agregar Clases"}
+                        </button>
+                    </div>
+                )}
             </div>
 
             {error?.error && (
@@ -187,17 +194,21 @@ export default function ClassCalendar() {
                                     <span className="mobile-day-label">{dia.nombre}</span>
                                     <div className="lista-clases">
                                         {clasesEnCelda?.length > 0 ? (
-                                            clasesEnCelda.map((clase) => {
+                                            clasesEnCelda
+                                            .sort((a, b) => a.room.name.localeCompare(b.room.name, undefined, { numeric: true }))
+                                            .map((clase) => {
                                                 const isSelected = selectedClasses.find(item => item.id === clase.id);
                                                 return (
                                                     <div 
                                                         key={clase.id} 
                                                         className={`clase-item ${isSelected ? 'selected' : ''}`} 
                                                         style={{ backgroundColor: getRoomColor(clase.room.name) }}
-                                                        onClick={() => handleSelectClass(clase)}>
-                                                        {clase.name}
-                                                        <span className="room-tag">{clase.room.name}
-                                                    </span>
+                                                        onClick={!isAdmin ? () => handleSelectClass(clase) : undefined}>
+                                                        <strong>{clase.name}</strong>
+                                                        {isAdmin && (
+                                                            <div className="room-tag">Prof. {clase.professor?.name || 'Sin asignar'} {clase.professor?.lastname || ''}</div>
+                                                        )}
+                                                        <span className="room-tag">Salón {clase.room.name}{isAdmin && (<span style={{ float: 'right' }}>👤{clase.enrolledCount || 0} / {clase.capacityLimit}</span>)}</span>
                                                     </div>
                                                 );
                                             })
@@ -211,10 +222,11 @@ export default function ClassCalendar() {
                     </React.Fragment>
                 ))}
             </div>
-            
-            <p className="tableDescription">
-                Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito.
-            </p>
+            {!isAdmin && (
+                <p className="tableDescription">
+                    Seleccioná el nombre de la clase a la que querés asistir y hacé clic en el botón <strong>“Agregar”</strong> para sumarla a tu carrito.
+                </p>
+            )}
         </div>
     );
 }

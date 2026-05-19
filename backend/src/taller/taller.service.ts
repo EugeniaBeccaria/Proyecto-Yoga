@@ -25,12 +25,12 @@ async function add(name: string, description: string, cupo: number, datetime: st
         throw new Error('Invalid foreign key references');
     }
 
-    const existingTaller = await em.findOne(Taller, { datetime, room: roomEntity });
+    const existingTaller = await em.findOne(Taller, { datetime, room: roomEntity, time: timeEntity });
     if (existingTaller) {
-        throw new tallerError('Ya existe un taller en la misma fecha y sala');
+        throw new tallerError('Ya existe un taller en el mismo horario y sala');
     }
 
-    const professorConflict = await em.findOne(Taller, { datetime, professor: professorEntity });
+    const professorConflict = await em.findOne(Taller, { datetime, professor: professorEntity, time: timeEntity });
     if (professorConflict) {
         throw new tallerError('El profesor ya tiene un taller asignado en esa fecha y hora');
     }
