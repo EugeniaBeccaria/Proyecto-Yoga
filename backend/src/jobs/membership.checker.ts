@@ -8,7 +8,7 @@ export const membershipChecker = () => {
             const em = orm.em.fork();
             const today = new Date();
             const toExpire = await em.find(Membership, 
-                { endDate: { $lt: today }, status: 'active' },
+                { endDate: { $lte: today }, status: 'active' },
                 { populate: ['user.classes.users'] as any } 
             );
             //user --> trae al objeto usuario asociado a la membresía

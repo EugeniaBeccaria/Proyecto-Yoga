@@ -86,3 +86,34 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Tabs for workshops page */
+.talleres-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.taller-tab-btn {
+  padding: 10px 20px;
+  font-size: 1.05em;
+  font-weight: 600;
+  border: 2px solid transparent;
+  background-color: #f0f4f0;
+  color: #5b875b;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.taller-tab-btn:hover {
+  background-color: #e2ede2;
+  color: #4a6f4a;
+}
+
+.taller-tab-btn.active {
+  background-color: #6a996a;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(106, 153, 106, 0.3);
+}
