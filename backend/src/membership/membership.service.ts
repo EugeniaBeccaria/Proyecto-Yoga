@@ -20,18 +20,18 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         const idClasses = JSON.parse(metadata.classes);
         const idSession = session.id;
 
-        const classEntities = await em.find(Classs, { id: { $in: idClasses as string[] } });        
-        const user = await em.findOne(User , { id: userId });        
+        const classEntities = await em.find(Classs, { id: { $in: idClasses as string[] } });
+        const user = await em.findOne(User, { id: userId });
         const membershipType = await em.findOne(MembershipType, { numOfClasses: parseInt(numOfClasses) });
         console.log('User found:', user);
-        
+
         if (!user || !membershipType) {
             throw new Error(`User with ID ${userId} not found or MembershipType with numOfClasses ${numOfClasses} not found.`);
         }
-        
+
         const today = new Date();
         const endDate = new Date();
-        endDate.setMonth(endDate.getMonth() + 1);
+        endDate.setMonth(endDate.getMonth() - 1);
         endDate.setDate(endDate.getDate() + 1); // sumo un dia mas para que la membresia expire a las 23:59 del dia correspondiente
         // endDate.setMinutes(endDate.getMinutes() - 5);
 
@@ -43,8 +43,8 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         membership.membershipType = membershipType;
         membership.stripeSessionId = idSession;
         em.persist(membership);
-        
-        if(!classEntities || classEntities.length === 0){
+
+        if (!classEntities || classEntities.length === 0) {
             throw new Error('No se encontraron las clases para asignar a la membresía.');
         }
         //agregar al usuario a cada clase y aumentar el contador de alumnos en cada clase segun las metadata de la sesion
@@ -52,16 +52,16 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
             user.classes.add(classs);
             classs.enrolledCount = (classs.enrolledCount || 0) + 1;
         })
-        
-        console.log('...............',classEntities)
+
+        console.log('...............', classEntities)
         // Guardar los cambios en la bd para manejar todo como una transaccion
         await em.flush();
         return { membership, user };
-        } 
+    }
     catch (error) {
         console.error("Error activando la membresía:", error);
         throw error;
-        }
+    }
 }
 
 export const membershipService = {

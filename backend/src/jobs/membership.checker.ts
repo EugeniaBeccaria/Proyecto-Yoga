@@ -2,8 +2,9 @@ import nodeCron from "node-cron";
 import { Membership } from '../membership/membership.entity.js'
 import { orm } from "../shared/DB/orm.js";
 
+
 export const membershipChecker = () => {
-    nodeCron.schedule('0 0 * * *', async () => { 
+    nodeCron.schedule('0 * * * *', async () => { 
         try {
             const em = orm.em.fork();
             const today = new Date();

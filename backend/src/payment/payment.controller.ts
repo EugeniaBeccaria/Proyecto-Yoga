@@ -18,8 +18,8 @@ export async function checkoutSessionClasses(req: Request, res: Response, next: 
     //validar que el alumno no este inscripto en esa clase y que haya cupo en cada una
 
     // console.log(classes, user, plan);
-    try{
-        const metadata : Stripe.MetadataParam = {
+    try {
+        const metadata: Stripe.MetadataParam = {
             userId: user.id.toString(),
             plan: plan.numOfClasses.toString(),
             classes: JSON.stringify(idClasses)
@@ -31,11 +31,11 @@ export async function checkoutSessionClasses(req: Request, res: Response, next: 
             line_items: [
                 {
                     price_data: {
-                        currency: 'usd',
+                        currency: 'ars',
                         unit_amount: plan.price * 100,
                         product_data: {
-                            name: `Membership Plan - ${plan.name}`,
-                            description: `Access to ${plan.numOfClasses} classes per month`
+                            name: `${plan.description}`,
+                            description: `Accede a hasta ${plan.numOfClasses} clases por semana`
                         },
                     },
                     quantity: 1
@@ -47,7 +47,7 @@ export async function checkoutSessionClasses(req: Request, res: Response, next: 
             metadata: metadata
         });
         res.status(200).json({ message: "Checkout session created", session });
-    } 
+    }
     catch (error) {
         next(error);
     }

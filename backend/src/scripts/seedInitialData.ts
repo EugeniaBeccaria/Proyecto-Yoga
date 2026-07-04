@@ -12,36 +12,37 @@ import 'dotenv/config'
 
 async function seedInitialData() {
     console.log(' Iniciando seeder...');
-    
+
     const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-    if(!ADMIN_PASSWORD)
+    if (!ADMIN_PASSWORD)
         throw new Error('ADMIN_PASSWORD no está definido en las variables de entorno');
-    
+
     const em = orm.em.fork() // la defini aca arriba y la saque del try del admin para poder usarla en todo el seeder
 
     // ================== USUARIO ADMIN ==================
-    /*try {
-        const existingAdmin = await em.findOne(User, { 
-            email: 'admin@yoga.com'})
-        if(!existingAdmin){
+    try {
+        const existingAdmin = await em.findOne(User, {
+            email: 'admin@yoga.com'
+        })
+        if (!existingAdmin) {
             const salt = await genSalt()
-            const hashPassword = await bcrypt.hash(ADMIN_PASSWORD,salt)
+            const hashPassword = await bcrypt.hash(ADMIN_PASSWORD, salt)
 
             const userAdmin = em.create(User, {
-                email:'admin@yoga.com',
-                name:'administrador',
-                password : hashPassword,
-                role:'admin'
+                email: 'admin@yoga.com',
+                name: 'administrador',
+                password: hashPassword,
+                role: 'admin'
             })
-        em.persistAndFlush(userAdmin)
-        console.log('✅ Usuario admin creado exitosamente');
-        
+            em.persist(userAdmin)
+            await em.flush()
+            console.log('✅ Usuario admin creado exitosamente');
         }
-        else throw error('Ya existe un admin')
+        else console.log('Ya existe un admin')
     } catch (error) {
         console.error('Error:', error);
     }
-        */
+
     // ================== USUARIO PROFESSOR ==================
     /*try {
         const existingProfessor = await em.findOne(User, { email: 'profezarah@yoga.com' });
@@ -88,13 +89,13 @@ async function seedInitialData() {
     const existingDays = await em.find(Day, {});
     if (existingDays.length === 0) {
         const days = [
-        em.create(Day, { name: "Lunes" }),
-        em.create(Day, { name: "Martes" }),
-        em.create(Day, { name: "Miércoles" }),
-        em.create(Day, { name: "Jueves" }),
-        em.create(Day, { name: "Viernes" }),
-        em.create(Day, { name: "Sábado" })
-    ];
+            em.create(Day, { name: "Lunes" }),
+            em.create(Day, { name: "Martes" }),
+            em.create(Day, { name: "Miércoles" }),
+            em.create(Day, { name: "Jueves" }),
+            em.create(Day, { name: "Viernes" }),
+            em.create(Day, { name: "Sábado" })
+        ];
         await em.persistAndFlush(days);
         console.log("Days created successfully");
     } else {
@@ -105,38 +106,40 @@ async function seedInitialData() {
     const existingTimes = await em.find(Time, {});
     if (existingTimes.length === 0) {
         const days = [
-        em.create(Time, {startTime: "07:00"}),
-        em.create(Time, {startTime: "08:00"}),
-        em.create(Time, {startTime: "09:00"}),
-        em.create(Time, {startTime: "10:00"}),
-        em.create(Time, {startTime: "11:00"}),
-        em.create(Time, {startTime: "12:00"}),
-        em.create(Time, {startTime: "13:00"}),
-        em.create(Time, {startTime: "14:00"}),
-        em.create(Time, {startTime: "15:00"}),
-        em.create(Time, {startTime: "16:00"}),
-        em.create(Time, {startTime: "17:00"}),
-        em.create(Time, {startTime: "18:00"}),
-        em.create(Time, {startTime: "19:00"}),
-    ];
-        await em.persistAndFlush(days);
+            em.create(Time, { startTime: "07:00" }),
+            em.create(Time, { startTime: "08:00" }),
+            em.create(Time, { startTime: "09:00" }),
+            em.create(Time, { startTime: "10:00" }),
+            em.create(Time, { startTime: "11:00" }),
+            em.create(Time, { startTime: "12:00" }),
+            em.create(Time, { startTime: "13:00" }),
+            em.create(Time, { startTime: "14:00" }),
+            em.create(Time, { startTime: "15:00" }),
+            em.create(Time, { startTime: "16:00" }),
+            em.create(Time, { startTime: "17:00" }),
+            em.create(Time, { startTime: "18:00" }),
+            em.create(Time, { startTime: "19:00" }),
+        ];
+        await em.persist(days);
+        await em.flush()
         console.log("Times created successfully");
     } else {
         console.log("Times already created, skipping.");
     }
-    
+
     // ================== MEMBERSHIP TYPES ==================
     const existingMembershipTypes = await em.find(MembershipType, {});
     if (existingMembershipTypes.length === 0) {
         const membershipTypes = [
-            em.create(MembershipType, { numOfClasses:1, description: "Membresía Básica (1-2 clases por semana)" }),
-            em.create(MembershipType, { numOfClasses:2, description: "Membresía Básica (1-2 clases por semana)" }),
-            em.create(MembershipType, { numOfClasses:3, description: "Membresía tipo 1 (2-4 clases por semana)" }),
-            em.create(MembershipType, { numOfClasses:4, description: "Membresía tipo 1 (2-4 clases por semana)" }),
-            em.create(MembershipType, { numOfClasses:5, description: "Membresía Full (4-6 clases por semana)" }),
-            em.create(MembershipType, { numOfClasses:6, description: "Membresía Full (4-6 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses: 1, description: "Membresía Básica (1-2 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses: 2, description: "Membresía Básica (1-2 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses: 3, description: "Membresía tipo 1 (2-4 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses: 4, description: "Membresía tipo 1 (2-4 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses: 5, description: "Membresía Full (4-6 clases por semana)" }),
+            em.create(MembershipType, { numOfClasses: 6, description: "Membresía Full (4-6 clases por semana)" }),
         ];
-        await em.persistAndFlush(membershipTypes);
+        em.persist(membershipTypes);
+        await em.flush()
         console.log("Membership types created successfully");
     } else {
         console.log("Membership types already created, skipping.");
@@ -144,4 +147,4 @@ async function seedInitialData() {
 }
 
 export { seedInitialData }
-seedInitialData();
+// seedInitialData();

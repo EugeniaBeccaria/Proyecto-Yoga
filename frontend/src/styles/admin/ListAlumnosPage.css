@@ -117,3 +117,180 @@
 .students-table tbody tr:last-child {
     border-bottom: none;
 }
+
+.tabs-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1200px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    justify-content: center;
+}
+
+.tab-button {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #a9b8aa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    position: relative;
+    transition: color 0.2s ease-in-out;
+}
+
+.tab-button:hover {
+    color: #2f5b46;
+}
+
+.tab-button.active {
+    color: #2f5b46;
+}
+
+.tab-button.active::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #d08383;
+    border-radius: 2px;
+}
+
+.view-classes-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(47, 91, 70, 0.08);
+    color: #2f5b46;
+    border: 1px solid rgba(47, 91, 70, 0.15);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.view-classes-btn:hover {
+    background-color: #2f5b46;
+    color: #ffffff;
+    border-color: #2f5b46;
+}
+
+.view-classes-btn .chevron-icon {
+    font-size: 0.65rem;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.view-classes-btn .chevron-icon.open {
+    transform: rotate(180deg);
+}
+
+.classes-detail-row {
+    background-color: #fcfdfc;
+}
+
+.classes-detail-content {
+    padding: 20px 30px;
+    border-left: 4px solid #d08383;
+    animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.classes-detail-title {
+    color: #2f5b46;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.classes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    width: 100%;
+}
+
+.class-card {
+    background: #ffffff;
+    border: 1px solid rgba(47, 91, 70, 0.12);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.class-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 91, 70, 0.1);
+    border-color: rgba(47, 91, 70, 0.25);
+}
+
+.class-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 8px;
+}
+
+.class-icon {
+    font-size: 1.2rem;
+}
+
+.class-card-name {
+    color: #2f5b46;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.class-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.class-card-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+
+.info-icon {
+    font-size: 0.95rem;
+}
+
+.info-text {
+    font-weight: 500;
+}
+
+.no-classes-text {
+    color: #718096;
+    font-style: italic;
+    font-size: 0.9rem;
+}

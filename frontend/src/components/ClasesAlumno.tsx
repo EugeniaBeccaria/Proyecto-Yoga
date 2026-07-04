@@ -15,7 +15,7 @@ const ClasesAlumno: React.FC = () => {
             try {
                 setIsLoading(true);
                 setError(null);
-                
+
                 const classes = await classService.getMyEnrolledClasses();
                 console.log("Clases inscritas obtenidas:", classes);
                 setClasesInscritas(classes);
@@ -33,7 +33,7 @@ const ClasesAlumno: React.FC = () => {
         };
 
         fetchClasses();
-    }, []); 
+    }, []);
 
     // Manejo de estados de carga y error
     if (isLoading) {
@@ -62,9 +62,10 @@ const ClasesAlumno: React.FC = () => {
                         <div key={clase.id} className="clase-card">
                             {/* ¡Usamos name, schedule, professorName! */}
                             <h3 className="clase-card-nombre">{clase.name}</h3>
-                            <p className="clase-card-detalle"><strong>Horario:</strong> {clase.schedule}</p>
+                            <p className="clase-card-detalle"><strong>Horario:</strong> {clase.dayTime}</p>
+                            <p className="clase-card-detalle"><strong>Salon:</strong> {clase.room}</p>
                             <p className="clase-card-detalle"><strong>Profesor:</strong> {clase.professorName}</p>
-                            <p className="clase-card-descripcion">{clase.description}</p>
+                            <p className="clase-card-descripcion"><strong>Descripcion:</strong> {clase.description}</p>
                         </div>
                     ))}
                 </div>

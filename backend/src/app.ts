@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import 'reflect-metadata'
-import express  from 'express'
+import express from 'express'
 import { orm, syncSchema } from './shared/DB/orm.js';
 
 // import routes
@@ -16,11 +16,11 @@ import { timeRouter } from './classs/time.routes.js';
 import { dayRouter } from './classs/day.routes.js';
 import { paymentRouter } from './payment/payment.routes.js';
 import { webhookRouter } from './payment/webhook.routes.js';
-import { authRouter }  from './auth/auth.routes.js'
+import { authRouter } from './auth/auth.routes.js'
 
 import { seedInitialData } from './scripts/seedInitialData.js';
 import { doesNotReject } from 'assert';
-import cors from 'cors'; 
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { membershipChecker } from './jobs/membership.checker.js';
 
@@ -29,7 +29,7 @@ membershipChecker();
 const app = express()
 app.use(cors({
   origin: 'http://localhost:5173', // URL de frontend
-  credentials: true 
+  credentials: true
 }));
 // se importa antes de parsear a JSON para capturar el raw body
 app.use('/api/webhook', webhookRouter); // Ruta para el webhook de Stripe
@@ -44,12 +44,12 @@ app.use((req, res, next) => {
 
 app.use(cookieParser())
 
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
   RequestContext.create(orm.em, next);
 })
 
-await syncSchema()
-// await seedInitialData();
+// await syncSchema()
+await seedInitialData();
 
 app.use('/api/users', userRouter)
 app.use('/api/talleres', tallerRouter)
@@ -64,8 +64,8 @@ app.use('/auth', authRouter)
 app.use('/api/payment', paymentRouter)
 
 
-app.use((req,res)=> {
-  return res.status(404).send({message: 'Resource not found'})
+app.use((req, res) => {
+  return res.status(404).send({ message: 'Resource not found' })
 })
 
 app.listen(3000, () => {

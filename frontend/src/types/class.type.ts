@@ -28,19 +28,19 @@ export interface Time {
 
 export interface SelectedClass {
     id: string;
-    name: string; 
+    name: string;
     description: string;
     capacityLimit: number;
     room: {
         id: string;
         name: string;
-        };
-    day: { 
+    };
+    day: {
         id: string;
         name: string;
     };
     professor: string;
-    time: { 
+    time: {
         id: string;
         startTime: string;
     };
@@ -57,6 +57,7 @@ export interface IEnrolledClass {
     id: string | number;
     name: string;
     professorName: string;
-    schedule: string;
+    room: string;
+    dayTime: string;
     description: string;
 }

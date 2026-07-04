@@ -201,9 +201,10 @@ export default function ClassCalendar() {
                                                 return (
                                                     <div 
                                                         key={clase.id} 
-                                                        className={`clase-item ${isSelected ? 'selected' : ''}`} 
+                                                        className={`clase-item ${isSelected ? 'selected' : ''} ${isAdmin ? 'admin-view' : ''}`} 
                                                         style={{ backgroundColor: getRoomColor(clase.room.name) }}
                                                         onClick={!isAdmin ? () => handleSelectClass(clase) : undefined}>
+                                                        {isSelected && <span className="selected-check">✓</span>}
                                                         <strong>{clase.name}</strong>
                                                         {isAdmin && (
                                                             <div className="room-tag">Prof. {clase.professor?.name || 'Sin asignar'} {clase.professor?.lastname || ''}</div>

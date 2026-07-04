@@ -1,6 +1,6 @@
-import {Request, Response, NextFunction} from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { orm } from '../shared/DB/orm.js'
-import { Classs } from './classs.entity.js' 
+import { Classs } from './classs.entity.js'
 import { User } from '../user/user.entity.js'
 import { Room } from '../room/room.entity.js'
 import { Day } from './day.entity.js'
@@ -10,7 +10,7 @@ import { Membership } from '../membership/membership.entity.js'
 const em = orm.em.fork();
 
 function sanitizeClasssInput(req: Request, res: Response, next: NextFunction) {
-    req.body.sanitizedInput = {
+  req.body.sanitizedInput = {
     name: req.body.name,
     description: req.body.description,
     capacityLimit: req.body.capacityLimit
@@ -30,7 +30,7 @@ interface ClassInput {
   capacityLimit: number;
   day: string;
   time: string;
-  room: string; 
+  room: string;
   professor: string;
 }
 
@@ -38,7 +38,7 @@ async function findAll(req: Request, res: Response) {
   try {
     const classes = await em.find(Classs, {}, { populate: ['day', 'time', 'room'] }) //populate indica a MikroORM que haga joins con las tablas relacionadas
     res.status(200).json({ message: 'found all classes', data: classes })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -48,28 +48,28 @@ async function findAvailableClasses(req: Request, res: Response) {
   try {
     // const classes = await em.find(Classs, { $where:'capacity_limit > enrolled_count' } as any, { populate: ['day', 'time', 'room'] })
     const classes = await em.createQueryBuilder(Classs, 'c') // c es el alias
-    .select('*')
-    .where('c.capacity_limit > c.enrolled_count') 
-    .andWhere('c.deleted_at IS NULL') // Excluir clases eliminadas
-    .leftJoinAndSelect('c.day', 'day')
-    .leftJoinAndSelect('c.time', 'time')
-    .leftJoinAndSelect('c.room', 'room')
-    .leftJoinAndSelect('c.professor', 'professor')
-    .getResult();
-    
+      .select('*')
+      .where('c.capacity_limit > c.enrolled_count')
+      .andWhere('c.deleted_at IS NULL') // Excluir clases eliminadas
+      .leftJoinAndSelect('c.day', 'day')
+      .leftJoinAndSelect('c.time', 'time')
+      .leftJoinAndSelect('c.room', 'room')
+      .leftJoinAndSelect('c.professor', 'professor')
+      .getResult();
+
     res.status(200).json({ message: 'found all classes', data: classes })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
-  } 
+  }
 }
 
 async function findOne(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const classs = await em.findOneOrFail(Classs, { id }, { populate: ['day', 'time', 'room','users'] })
+    const classs = await em.findOneOrFail(Classs, { id }, { populate: ['day', 'time', 'room', 'users'] })
     res.status(200).json({ message: 'found class', data: classs })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -79,14 +79,14 @@ async function add(req: Request, res: Response) {
   try {
     console.log("Cuerpo de la solicitud:", req.body.classData);
     const {
-            name, 
-            description,
-            capacityLimit,
-            day, 
-            time, 
-            room, 
-            professor
-        } = req.body.classData as ClassInput; 
+      name,
+      description,
+      capacityLimit,
+      day,
+      time,
+      room,
+      professor
+    } = req.body.classData as ClassInput;
 
     if (!name || !description || !day || !time || !room || !professor || !capacityLimit) {
       return res.status(400).json({ message: 'Missing required fields' });
@@ -108,7 +108,7 @@ async function add(req: Request, res: Response) {
 
     // getReference crea un marcador de posición si no encuentra la entidad con el mismo id, esto puede causar errores con la CF
     console.log("Creating class with data:", {
-      name, 
+      name,
       description,
       capacityLimit,
       dayEntity,
@@ -117,13 +117,13 @@ async function add(req: Request, res: Response) {
       professorEntity
     });
 
-    
-    const existingClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, room: roomEntity });
+
+    const existingClass = await em.findOne(Classs, { day: dayEntity, time: timeEntity, room: roomEntity });
     if (existingClass) {
       return res.status(409).json({ message: 'Ya existe una clase con el mismo día, hora y salón' });
     }
 
-    const existingProfessorClass = await em.findOne(Classs, {day: dayEntity, time: timeEntity, professor: professorEntity });
+    const existingProfessorClass = await em.findOne(Classs, { day: dayEntity, time: timeEntity, professor: professorEntity });
     if (existingProfessorClass) {
       return res.status(409).json({ message: 'El profesor ya está asignado a otra clase en el mismo día y hora' });
     }
@@ -144,7 +144,7 @@ async function add(req: Request, res: Response) {
     await em.flush()
 
     res.status(201).json({ message: 'class created', data: classs })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -157,7 +157,7 @@ async function update(req: Request, res: Response) {
     em.assign(classsToUpdate, req.body.sanitizedInput)
     await em.flush()
     res.status(200).json({ message: 'class updated', data: classsToUpdate })
-  } 
+  }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -166,15 +166,15 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = req.params.id
-    console.log("ID de la clase a eliminar:", id); 
+    console.log("ID de la clase a eliminar:", id);
     const classToRemove = await em.findOneOrFail(Classs, { id }, { populate: ['users'] })
     const usersClass = classToRemove.users.getItems();
     if (usersClass.length > 0) {
       return res.status(400).json({ message: 'No se puede eliminar una clase con alumnos inscritos' });
     }
-    
+
     classToRemove.deletedAt = new Date();
-    
+
     await em.flush()
     res.status(200).json({ message: 'class deleted', data: classToRemove })
   }
@@ -192,7 +192,7 @@ async function findClassesByProfessorId(req: Request, res: Response) {
       return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
     }
 
-    const classes = await em.find(Classs, { professor: professorId, deletedAt: null }, 
+    const classes = await em.find(Classs, { professor: professorId, deletedAt: null },
       { populate: ['day', 'time', 'room', 'users'] });
 
     // Devolvemos siempre un 200 OK con la estructura de "sobre",
@@ -206,37 +206,38 @@ async function findClassesByProfessorId(req: Request, res: Response) {
 }
 
 async function findMyEnrolledClasses(req: Request, res: Response) {
-    try {
-        const userId = req.user?.id;
-        if (!userId) {
-            return res.status(400).json({ message: 'ID de usuario inválido en el token' });
-        }
-
-        const userWithClasses = await em.findOne(User, { id: userId }, {
-            populate: ['classes.professor']
-        });
-        
-        if (!userWithClasses) {
-            return res.status(404).json({ message: 'Usuario no encontrado.' });
-        }
-        
-        const enrolledClasses = userWithClasses.classes.getItems().map(cls => ({
-            id: cls.id,
-            name: cls.name,
-            description: cls.description,
-            professorName: cls.professor.name, 
-            schedule: `${cls.day?.name || ''} ${cls.time?.startTime || ''} - Room: ${cls.room?.name || ''}`, 
-        }));
-        
-        res.status(200).json({ 
-            message: 'Clases inscritas encontradas', 
-            data: enrolledClasses 
-        });
-
-    } catch (error: any) {
-        console.error('Error al buscar clases inscritas:', error);
-        res.status(500).json({ message: error.message || 'Error interno del servidor.' });
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(400).json({ message: 'ID de usuario inválido en el token' });
     }
+
+    const userWithClasses = await em.findOne(User, { id: userId }, {
+      populate: ['classes.professor', 'classes.day', 'classes.time', 'classes.room']
+    });
+
+    if (!userWithClasses) {
+      return res.status(404).json({ message: 'Usuario no encontrado.' });
+    }
+
+    const enrolledClasses = userWithClasses.classes.getItems().map(cls => ({
+      id: cls.id,
+      name: cls.name,
+      description: cls.description,
+      professorName: cls.professor?.name || '',
+      room: cls.room?.name,
+      dayTime: `${cls.day?.name || ''} ${cls.time?.startTime || ''}`
+    }));
+
+    res.status(200).json({
+      message: 'Clases inscritas encontradas',
+      data: enrolledClasses
+    });
+
+  } catch (error: any) {
+    console.error('Error al buscar clases inscritas:', error);
+    res.status(500).json({ message: error.message || 'Error interno del servidor.' });
+  }
 }
 
-export {sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId, findAvailableClasses, findMyEnrolledClasses}
+export { sanitizeClasssInput, findAll, findOne, add, update, remove, findClassesByProfessorId, findAvailableClasses, findMyEnrolledClasses }

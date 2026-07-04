@@ -42,7 +42,7 @@ async function findAll(req: Request, res: Response) {
         filterParameters.role = (userRoleFilter) as string;
       }
 
-    const users = await em.find(User, filterParameters, { populate: ['talleres', 'classes'] })
+    const users = await em.find(User, filterParameters, { populate: ['talleres', 'classes', 'taughtClasses.day', 'taughtClasses.time', 'taughtClasses.room'] })
     res.status(200).json({ message: 'found all users', data: users })
   } 
   catch (error: any) {
