@@ -1,11 +1,12 @@
 import {Router} from 'express'
-import { findAll, sanitizeTallerInput, findOne, add, update, remove } from './taller.controler.js'
-import { isAdmin, verifyCookie } from '../auth/auth.middleware.js'
+import { findAll, sanitizeTallerInput, findOne, add, update, remove, findTalleresByProfessorId } from './taller.controler.js'
+import { isAdmin, isProfessor, verifyCookie } from '../auth/auth.middleware.js'
 import { check } from 'express-validator'
 import verifyResult from '../validation/validation.middleware.js'
 
 export const tallerRouter = Router()
 
+tallerRouter.get('/professor/talleres', verifyCookie, isProfessor, findTalleresByProfessorId)
 tallerRouter.get('/', findAll)
 tallerRouter.get('/:id', findOne)
 tallerRouter.post('/', verifyCookie, isAdmin,

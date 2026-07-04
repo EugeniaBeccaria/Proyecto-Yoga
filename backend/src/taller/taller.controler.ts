@@ -143,4 +143,31 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove}
+async function findTalleresByProfessorId(req: Request, res: Response) {
+  try {
+    const professorId = req.user?.id;
+
+    if (!professorId) {
+      return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
+    }
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    const talleres = await em.find(Taller, { 
+      professor: professorId,
+      datetime: { $gte: todayStr }
+    }, { populate: ['time', 'room', 'users'] });
+
+    res.status(200).json({ message: 'Talleres del profesor encontrados', data: talleres });
+
+  } catch (error: any) {
+    console.error('Error al obtener talleres del profesor:', error);
+    return res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export {sanitizeTallerInput, findAll, findOne, add, update, remove, findTalleresByProfessorId}
