@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import { orm } from '../shared/DB/orm.js'
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
+import { User } from "../user/user.entity.js";
 
 dotenv.config();
 
@@ -42,7 +43,7 @@ export async function checkoutSessionClasses(req: Request, res: Response, next: 
                 }
             ],
             mode: 'payment',
-            success_url: 'http://localhost:5173/checkout-status?session_id={CHECKOUT_SESSION_ID}', // success_url a pagina intermedia de carga
+            success_url: 'http://localhost:5173/checkout-status?type=membership&session_id={CHECKOUT_SESSION_ID}', // success_url a pagina intermedia de carga
             cancel_url: 'http://localhost:5173/ClassCart?error=payment_cancelled', // con el aviso en el frontend de que el pago se cancelo
             metadata: metadata
         });
@@ -70,7 +71,7 @@ export async function checkoutSessionTalleres(req: Request, res: Response, next:
 
         const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = talleres.map((taller: any) => ({
             price_data: {
-                currency: 'usd',
+                currency: 'ars',
                 unit_amount: Math.round(Number(taller.price) * 100),
                 product_data: {
                     name: `Taller - ${taller.name}`,
@@ -84,7 +85,7 @@ export async function checkoutSessionTalleres(req: Request, res: Response, next:
             customer_email: user.email,
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'http://localhost:5173/talleres?payment=success',
+            success_url: 'http://localhost:5173/checkout-status?type=taller&session_id={CHECKOUT_SESSION_ID}',
             cancel_url: 'http://localhost:5173/ClassCart?error=payment_cancelled_talleres',
             metadata: metadata
         });
@@ -93,5 +94,36 @@ export async function checkoutSessionTalleres(req: Request, res: Response, next:
     }
     catch (error) {
         next(error);
+    }
+}
+
+export async function checkTallerPaymentStatus(req: Request, res: Response, next: NextFunction) {
+    //se llama a la api de stripe para recuperar la sesion y verificar que el user en los metadatos ya este inscripto en los talleres
+    try {
+        const sessionId = req.params.sessionId;
+        const session = await stripeClient.checkout.sessions.retrieve(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: "No se encontró la sesión de Stripe." });
+        }
+        const metadata = session.metadata;
+        if (!metadata || !metadata.userId || !metadata.talleres) {
+            return res.status(400).json({ message: "Metadatos de sesión no válidos o faltantes." });
+        }
+
+        const userId = metadata.userId;
+        const idTalleres = JSON.parse(metadata.talleres);
+
+        const user = await em.findOneOrFail(User, { id: userId }, { populate: ['talleres'] });
+        const enrolledTallerIds = user.talleres.getItems().map(t => t.id);
+
+        const allEnrolled = idTalleres.every((id: string) => enrolledTallerIds.includes(id));
+
+        if (allEnrolled) {
+            res.status(200).json({ message: "Compra de talleres verificada", enrolled: true });
+        } else {
+            res.status(404).json({ message: "El usuario aún no está inscrito en los talleres.", enrolled: false });
+        }
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
     }
 }

@@ -1,10 +1,15 @@
 :root {
     --status-green: #2f5b46;
+    --status-green-glow: rgba(47, 91, 70, 0.15);
     --status-green-soft: #e8f1ec;
     --status-rose: #d08383;
+    --status-rose-glow: rgba(208, 131, 131, 0.15);
     --status-rose-soft: #fceff0;
     --status-ink: #2d2f31;
     --status-muted: #5f6468;
+    --card-bg: rgba(255, 255, 255, 0.75);
+    --card-border: rgba(255, 255, 255, 0.5);
+    --card-shadow: 0 20px 50px rgba(47, 91, 70, 0.08);
 }
 
 .status-page-container {
@@ -15,153 +20,289 @@
     min-height: calc(100vh - var(--navbar-height));
     padding: 24px;
     background:
-        radial-gradient(circle at 20% 15%, rgba(208, 131, 131, 0.2), transparent 48%),
-        radial-gradient(circle at 85% 80%, rgba(47, 91, 70, 0.24), transparent 52%),
-        linear-gradient(140deg, #fffaf8 0%, #f3f7f4 45%, #ffffff 100%);
+        radial-gradient(circle at 10% 20%, rgba(208, 131, 131, 0.18), transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(47, 91, 70, 0.22), transparent 50%),
+        linear-gradient(135deg, #fffcfb 0%, #f4f8f5 50%, #fafcfa 100%);
     overflow: hidden;
 }
 
 .status-bg-shape {
     position: absolute;
-    border-radius: 999px;
-    filter: blur(4px);
+    border-radius: 50%;
+    filter: blur(80px);
     z-index: 0;
     pointer-events: none;
+    opacity: 0.65;
+    animation: float-bg 8s infinite alternate ease-in-out;
 }
 
 .shape-left {
-    width: 280px;
-    height: 280px;
-    left: -90px;
-    top: 100px;
-    background: rgba(208, 131, 131, 0.14);
+    width: 320px;
+    height: 320px;
+    left: -60px;
+    top: 10%;
+    background: rgba(208, 131, 131, 0.25);
 }
 
 .shape-right {
-    width: 340px;
-    height: 340px;
-    right: -120px;
-    bottom: 70px;
-    background: rgba(47, 91, 70, 0.14);
+    width: 380px;
+    height: 380px;
+    right: -80px;
+    bottom: 10%;
+    background: rgba(47, 91, 70, 0.25);
+    animation-delay: -3s;
+}
+
+@keyframes float-bg {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(30px, -20px) scale(1.08);
+    }
 }
 
 .status-card {
     position: relative;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(2px);
-    padding: 34px 30px;
-    border-radius: 24px;
-    box-shadow: 0 18px 40px rgba(47, 91, 70, 0.13);
-    max-width: 520px;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: 40px 36px;
+    border-radius: 28px;
+    box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.03),
+        var(--card-shadow);
+    max-width: 500px;
     width: 100%;
     text-align: center;
-    border: 1px solid rgba(47, 91, 70, 0.1);
-    border-top: 8px solid #d9e4dd;
-    animation: card-enter 0.45s ease-out;
+    border: 1px solid var(--card-border);
+    animation: card-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+.status-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    border-radius: 28px 28px 0 0;
+}
+
+.status-card.loading::before { background: var(--status-green); }
+.status-card.success::before { background: #4e9d73; }
+.status-card.timeout::before { background: #cf8a8a; }
+.status-card.error::before { background: #b15252; }
+
 .status-card h2 {
-    margin: 4px 0 12px;
+    margin: 12px 0 16px;
     font-family: "Playfair Display", serif;
-    font-size: clamp(1.65rem, 3vw, 2.05rem);
+    font-size: clamp(1.6rem, 3vw, 1.95rem);
+    font-weight: 700;
     color: var(--status-ink);
+    letter-spacing: -0.01em;
 }
 
 .status-card p {
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--status-muted);
     font-family: "Open Sans", sans-serif;
+    font-size: 0.98rem;
 }
 
 .status-chip {
     display: inline-block;
-    margin-bottom: 20px;
-    padding: 7px 16px;
-    border-radius: 999px;
-    letter-spacing: 0.06em;
+    margin-bottom: 24px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     font-family: "Montserrat", sans-serif;
     color: var(--status-green);
     background: var(--status-green-soft);
-}
-
-.status-card .icon {
-    font-size: 3.5rem;
-    margin-bottom: 16px;
-    display: block;
-    line-height: 1;
-}
-
-.status-card.success {
-    border-top-color: #4e9d73;
-}
-
-.status-card.timeout {
-    border-top-color: #cf8a8a;
+    box-shadow: 0 2px 10px var(--status-green-glow);
 }
 
 .status-card.timeout .status-chip,
 .status-card.error .status-chip {
-    color: #9b5d5d;
+    color: #b15252;
     background: var(--status-rose-soft);
+    box-shadow: 0 2px 10px var(--status-rose-glow);
 }
 
-.status-card.error {
-    border-top-color: #b15252;
+.status-icon-wrapper {
+    margin: 10px auto 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.status-card.loading {
-    border-top-color: #2f5b46;
+/* Success Checkmark Animation */
+.checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #4e9d73;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #4e9d73;
+    animation: fill-checkmark .4s ease-in-out .4s forwards, scale-up .3s ease-in-out .9s;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke-miterlimit: 10;
+    stroke: #4e9d73;
+    fill: none;
+    animation: stroke-anim 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: stroke-anim 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+/* Error Crossmark Animation */
+.crossmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #b15252;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #b15252;
+    animation: fill-crossmark .4s ease-in-out .4s forwards, scale-up .3s ease-in-out .9s;
+}
+
+.crossmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke-miterlimit: 10;
+    stroke: #b15252;
+    fill: none;
+    animation: stroke-anim 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.crossmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: stroke-anim 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+/* Hourglass Animation */
+.hourglass {
+    width: 72px;
+    height: 72px;
+    color: #cf8a8a;
+    display: block;
+    animation: rotateHourglass 3s infinite cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Spinner adjustment */
+.spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+@keyframes stroke-anim {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale-up {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+
+@keyframes fill-checkmark {
+    100% {
+        box-shadow: inset 0px 0px 0px 40px var(--status-green-soft);
+    }
+}
+
+@keyframes fill-crossmark {
+    100% {
+        box-shadow: inset 0px 0px 0px 40px var(--status-rose-soft);
+    }
+}
+
+@keyframes rotateHourglass {
+    0% { transform: rotate(0deg); }
+    40% { transform: rotate(180deg); }
+    50% { transform: rotate(180deg); }
+    90% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .waiting-message {
     text-align: center;
-    margin-top: 1.4rem;
-    animation: pulse 2.2s infinite;
-}
-
-.waiting-message h2 {
-    margin-bottom: 8px;
+    margin-top: 1.6rem;
 }
 
 .session-id {
-    font-family: "Courier New", Courier, monospace;
-    background: #f7f7f7;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 0.84rem;
-    color: #5e6266;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    color: #6c757d;
     word-break: break-all;
-    margin: 18px 0;
-    border: 1px solid #e4e6e8;
+    margin: 20px 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .home-btn {
     background-color: var(--status-green);
     color: #fff;
     border: none;
-    padding: 12px 24px;
-    border-radius: 999px;
+    padding: 14px 28px;
+    border-radius: 100px;
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     margin-top: 12px;
     font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 15px rgba(47, 91, 70, 0.2);
 }
 
 .home-btn:hover {
-    background-color: #264b3a;
+    background-color: #244636;
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(47, 91, 70, 0.3);
+}
+
+.home-btn:active {
+    transform: translateY(0);
 }
 
 @keyframes card-enter {
     from {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -169,27 +310,19 @@
     }
 }
 
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.7;
-    }
-}
-
 @media (max-width: 640px) {
     .status-page-container {
-        padding: 18px;
+        padding: 16px;
     }
 
     .status-card {
-        padding: 28px 22px;
-        border-radius: 20px;
+        padding: 32px 24px;
+        border-radius: 24px;
     }
 
     .shape-left,
     .shape-right {
-        opacity: 0.65;
+        opacity: 0.5;
+        filter: blur(50px);
     }
 }
