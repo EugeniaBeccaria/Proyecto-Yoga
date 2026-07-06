@@ -1,48 +1,9 @@
-import {Request, Response, NextFunction} from 'express'
-import { Taller } from './taller.entity.js'
-import { orm } from '../shared/DB/orm.js'
-import { Room } from '../room/room.entity.js' 
-import { Day } from '../classs/day.entity.js' 
-import { Time } from '../classs/time.entity.js'
-import { User } from '../user/user.entity.js'
-import { tallerService } from './taller.service.js'
-
-
-const em = orm.em
-
-interface TallerInput {
-  name: string;
-  description: string;
-  cupo: number;
-  date?: string;
-  datetime?: string;
-  roomId: string;
-  price: number;
-  profesorId: string;
-  timeId: string;
-}
-
-function sanitizeTallerInput(req: Request, res: Response, next: NextFunction) {
-  req.body.sanitizedInput = {
-    name: req.body.name,
-    description: req.body.description,
-    cupo: req.body.cupo,
-    date: req.body.date,
-    price: req.body.price,
-  }
-
-  Object.keys(req.body.sanitizedInput).forEach((key) => {
-    if (req.body.sanitizedInput[key] === undefined) {
-      delete req.body.sanitizedInput[key]
-    }
-  })
-  next()
-}
-
+import { Request, Response } from 'express'
+import { tallerService, tallerError } from './taller.service.js'
 
 async function findAll(req: Request, res: Response) {
   try {
-    const talleres = await em.find(Taller, {}, { populate: ['users', 'time', 'room', 'professor'] })
+    const talleres = await tallerService.findAll()
     res.status(200).json({ message: 'found all talleres', data: talleres })
   }
   catch (error: any) {
@@ -53,13 +14,14 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const taller = await em.findOneOrFail(Taller, { id }, { populate: ['users', 'time', 'room', 'professor'] })
+    const taller = await tallerService.findOne(id)
     res.status(200).json({ message: 'found taller', data: taller })
   }
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
 }
+
 async function add(req: Request, res: Response) {
   console.log("Cuerpo de la solicitud:", req.body);
 
@@ -73,33 +35,10 @@ async function add(req: Request, res: Response) {
     price,
     profesorId,
     timeId
-  } = req.body as TallerInput;
+  } = req.body;
   const date = dateFromBody ?? datetime;
 
   try {
-    if (!date) {
-      return res.status(400).json({ message: 'La fecha es obligatoria' });
-    }
-
-    const [year, month, day] = date.split("-").map(Number);
-    if (!year || !month || !day) {
-      return res.status(400).json({ message: 'La fecha proporcionada no es válida' });
-    }
-
-    const dateObj = new Date(year, month - 1, day);
-
-    if (Number.isNaN(dateObj.getTime())) {
-      return res.status(400).json({ message: 'La fecha proporcionada no es válida' });
-    }
-
-    const dayOfWeek = dateObj.getDay();
-
-    if (dayOfWeek !== 6) {
-      return res.status(400).json({ 
-        message: 'Los talleres solo pueden programarse los días sábado.' 
-      });
-    }
-
     const tallerAddData = await tallerService.add(
       name, 
       description, 
@@ -114,6 +53,9 @@ async function add(req: Request, res: Response) {
     res.status(201).json({ message: 'taller created', data: tallerAddData });
   } 
   catch (error: any) {
+    if (error instanceof tallerError) {
+      return res.status(error.status || 500).json({ message: error.message });
+    }
     res.status(500).json({ message: error.message });
   }
 }
@@ -121,12 +63,13 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const tallerToUpdate = await em.findOneOrFail(Taller, { id })
-    em.assign(tallerToUpdate, req.body.sanitizedInput)
-    await em.flush()
+    const tallerToUpdate = await tallerService.update(id, req.body)
     res.status(200).json({ message: 'taller updated', data: tallerToUpdate })
   } 
   catch (error: any) {
+    if (error instanceof tallerError) {
+      return res.status(error.status || 500).json({ message: error.message });
+    }
     res.status(500).json({ message: error.message })
   }
 }
@@ -134,8 +77,7 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = req.params.id
-    const taller = em.getReference(Taller, id)
-    await em.removeAndFlush(taller)
+    await tallerService.remove(id)
     res.status(200).send({ message: 'taller deleted' })
   } 
   catch (error: any) {
@@ -151,17 +93,7 @@ async function findTalleresByProfessorId(req: Request, res: Response) {
       return res.status(400).json({ message: 'ID del profesor no encontrado en el token' });
     }
 
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    const todayStr = `${yyyy}-${mm}-${dd}`;
-
-    const talleres = await em.find(Taller, { 
-      professor: professorId,
-      datetime: { $gte: todayStr }
-    }, { populate: ['time', 'room', 'users'] });
-
+    const talleres = await tallerService.findTalleresByProfessorId(professorId)
     res.status(200).json({ message: 'Talleres del profesor encontrados', data: talleres });
 
   } catch (error: any) {
@@ -170,4 +102,4 @@ async function findTalleresByProfessorId(req: Request, res: Response) {
   }
 }
 
-export {sanitizeTallerInput, findAll, findOne, add, update, remove, findTalleresByProfessorId}
+export { findAll, findOne, add, update, remove, findTalleresByProfessorId }

@@ -1,23 +1,8 @@
-import {Request, Response, NextFunction} from 'express'
+import { Request, Response } from 'express'
 import { orm } from '../shared/DB/orm.js'
-import { Time } from './time.entity.js'
-
+import { Time } from './time.entity.js' 
 
 const em = orm.em
-
-function sanitizeTimeInput(req: Request, res: Response, next: NextFunction) {
-    req.body.sanitizedInput = {
-    startDate: req.body.startDate,
-    endDate: req.body.endDate
-  }
-
-  Object.keys(req.body.sanitizedInput).forEach((key) => {
-    if (req.body.sanitizedInput[key] === undefined) {
-      delete req.body.sanitizedInput[key]
-    }
-  })
-  next()
-}
 
 async function findAll(req: Request, res: Response) {
   try {
@@ -40,40 +25,4 @@ async function findOne(req: Request, res: Response) {
   }
 }
 
-async function add(req: Request, res: Response) {
-  try {
-    const time = em.create(Time, req.body.sanitizedInput)
-    await em.flush()
-    res.status(201).json({ message: 'time created', data: time })
-  } 
-  catch (error: any) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-async function update(req: Request, res: Response) {
-  try {
-    const id = req.params.id
-    const timeToUpdate = await em.findOneOrFail(Time, { id })
-    em.assign(timeToUpdate, req.body.sanitizedInput)
-    await em.flush()
-    res.status(200).json({ message: 'user updated', data: timeToUpdate })
-  } 
-  catch (error: any) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-async function remove(req: Request, res: Response) {
-  try {
-    const id = req.params.id
-    const time = em.getReference(Time, id) 
-    await em.removeAndFlush(time)
-    res.status(200).send({ message: 'time deleted' })
-  } 
-  catch (error: any) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-export {sanitizeTimeInput, findAll, findOne, add, update, remove}
+export { findAll, findOne }

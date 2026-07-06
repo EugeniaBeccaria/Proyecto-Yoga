@@ -1,60 +1,13 @@
-import {Request, Response, NextFunction} from 'express'
-import { orm } from '../shared/DB/orm.js'
-import { User } from './user.entity.js'
-import { IntegerType, ValidationError } from '@mikro-orm/core'
-import bcrypt, { genSalt } from 'bcrypt'
-import { userService } from './user.service.js'
-import { Membership } from '../membership/membership.entity.js'
-
-const em = orm.em;
-
-function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
-    req.body.sanitizedInput = {
-    name: req.body.name,
-    lastname: req.body.lastname,
-    birthdate: req.body.birthdate,
-    email: req.body.email,
-    phone: req.body.phone,
-    dni: req.body.dni,
-    rol: req.body.rol,
-    password: req.body.password
-  }
-
-  Object.keys(req.body.sanitizedInput).forEach((key) => {
-    if (req.body.sanitizedInput[key] === undefined) {
-      delete req.body.sanitizedInput[key]
-    }
-  })
-  next()
-}
-
-interface FilterParameters {
-  role?: string;
-}
+import { Request, Response } from 'express'
+import { userService, UserError } from './user.service.js'
 
 async function findAll(req: Request, res: Response) {
   try {
-    const userRoleFilter = req.query.role;
+    const userRoleFilter = req.query.role as string | undefined;
     console.log("Filtro de rol recibido:", userRoleFilter);
-    const filterParameters: FilterParameters = {}; 
-
-      if (userRoleFilter) {
-        filterParameters.role = (userRoleFilter) as string;
-      }
-
-    const users = await em.find(User, filterParameters, { populate: ['talleres', 'classes', 'taughtClasses.day', 'taughtClasses.time', 'taughtClasses.room'] })
+    
+    const users = await userService.findAll(userRoleFilter)
     res.status(200).json({ message: 'found all users', data: users })
-  } 
-  catch (error: any) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-async function findOne(req: Request, res: Response) {
-  try {
-    const id = req.params.id
-    const user = await em.findOneOrFail(User, { id }, { populate: ['talleres', 'classes'] })
-    res.status(200).json({ message: 'found user', data: user })
   } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -68,7 +21,7 @@ async function findMe(req: Request, res: Response) {
       return res.status(400).json({ message: 'ID del usuario no encontrado en el token' })
     }
 
-    const user = await em.findOneOrFail(User, { id })
+    const user = await userService.findMe(id)
     res.status(200).json({ message: 'found current user', data: user })
   }
   catch (error: any) {
@@ -78,19 +31,18 @@ async function findMe(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-      const {name, lastname, email, phone, dni, password} = req.body
-      const existingUser = await em.findOne(User, { email })
-      if (existingUser) {
-        return res.status(409).json({ message: 'El email ya está registrado.' })
-      }
+      const { name, lastname, email, phone, dni, password } = req.body
       const role = (req.query.role) as string;
       const registerDataUser = await userService.register(name, lastname, email, phone, dni, password, role)
 
       res.status(201).json({ message: 'user created', data: registerDataUser })
-    } 
-    catch (error: any) {
+  } 
+  catch (error: any) {
+      if (error instanceof UserError) {
+        return res.status(error.status || 500).json({ message: error.message })
+      }
       res.status(500).json({ message: error.message })
-    }
+  }
 }
 
 async function update(req: Request, res: Response) {
@@ -99,32 +51,10 @@ async function update(req: Request, res: Response) {
     if (!id) {
       return res.status(400).json({ message: 'ID del usuario no encontrado en el token' });
     }
-    const userToUpdate = await em.findOneOrFail(User, { id })
     console.log(req.body)
-    const {name, lastname, birthdate, email, phone, dni} = req.body
-    if(name) userToUpdate.name = name
-    if(lastname) userToUpdate.lastname = lastname
-    if(birthdate) userToUpdate.birthdate = birthdate
-    if(email) userToUpdate.email = email
-    if(phone) userToUpdate.phone = phone
-    if(dni) userToUpdate.dni = dni
-    em.persist(userToUpdate) // no es necesario usar persist para entidades ya existentes
-    await em.flush()
+    const userToUpdate = await userService.update(id, req.body)
     res.status(200).json({ message: 'user updated', data: userToUpdate })
   }
-  catch (error: any) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-async function remove(req: Request, res: Response) {
-  try {
-    const id = req.params.id
-    const user = await em.findOneOrFail(User, { id })  //podria ser findOneOrfail
-    em.remove(user)
-    await em.flush()
-    res.status(200).send({ message: 'user deleted' })
-  } 
   catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -135,26 +65,17 @@ export const changePassword = async (req: Request, res: Response) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const userId = req.user?.id;
-    const user = await em.findOneOrFail(User, { id: userId });
-
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
+    if (!userId) {
+      return res.status(400).json({ message: 'ID del usuario no encontrado en el token' });
     }
 
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Contraseña actual incorrecta' });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    user.password = hashedPassword;
-    await em.persistAndFlush(user);
-
+    await userService.changePassword(userId, currentPassword, newPassword);
     return res.status(200).json({ message: 'Contraseña actualizada con éxito' });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error instanceof UserError) {
+      return res.status(error.status || 500).json({ message: error.message });
+    }
     return res.status(500).json({ message: 'Error del servidor. Inténtalo de nuevo más tarde.' });
   }
 };
@@ -162,26 +83,11 @@ export const changePassword = async (req: Request, res: Response) => {
 //Listado Alumnos
 async function getStudents(req: Request, res: Response) {
   try {
-    const students = await em.find(User, { role: 'client' }, { populate: ['talleres', 'classes'] });
-    
-    const memberships = await em.find(Membership, {}, { populate: ['user', 'membershipType'] });
-
-    const studentsWithMemberships = students.map((student) => {
-      const membership = memberships.find((m) => m.user.id === student.id && m.status.toLowerCase() === 'active');
-
-      return {
-        ...student,
-        membership: membership
-          ? membership.membershipType.description
-          : 'Sin membresía activa'
-      };
-    });
-
+    const studentsWithMemberships = await userService.getStudents();
     res.status(200).json({ message: 'Listado de Alumnos', data: studentsWithMemberships });
-
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 }
 
-export {sanitizeUserInput, findAll, findOne, findMe, add, update, remove, getStudents}
+export { findAll, findMe, add, update, getStudents }

@@ -1,69 +1,17 @@
-import Stripe from 'stripe';
 import { orm } from '../shared/DB/orm.js';
 import { Membership } from '../membership/membership.entity.js';
-import { User } from '../user/user.entity.js';
-import { MembershipType } from '../membership/membershipType.entity.js';
-import { Classs } from '../classs/classs.entity.js';
 
-async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
-    // esta funcion es llamada desde webhook.controller cuando se recibe el evento checkout.session.completed de Stripe, lo que indica que el pago se realizo correctamente.
+const em = orm.em;
 
-    const em = orm.em.fork(); // create a new EntityManager instance
+async function findOneBySessionId(sessionId: string) {
+  return await em.findOneOrFail(Membership, { stripeSessionId: sessionId }, { populate: ['membershipType'] });
+}
 
-    try {
-        const metadata = session.metadata;
-        if (!metadata || !metadata.userId || !metadata.plan || !metadata.classes) {
-            throw new Error('No metadata found in the session.');
-        }
-        const userId = metadata.userId;
-        const numOfClasses = metadata.plan;
-        const idClasses = JSON.parse(metadata.classes);
-        const idSession = session.id;
-
-        const classEntities = await em.find(Classs, { id: { $in: idClasses as string[] } });
-        const user = await em.findOne(User, { id: userId });
-        const membershipType = await em.findOne(MembershipType, { numOfClasses: parseInt(numOfClasses) });
-        console.log('User found:', user);
-
-        if (!user || !membershipType) {
-            throw new Error(`User with ID ${userId} not found or MembershipType with numOfClasses ${numOfClasses} not found.`);
-        }
-
-        const today = new Date();
-        const endDate = new Date();
-        endDate.setMonth(endDate.getMonth() - 1);
-        endDate.setDate(endDate.getDate() + 1); // sumo un dia mas para que la membresia expire a las 23:59 del dia correspondiente
-        // endDate.setMinutes(endDate.getMinutes() - 5);
-
-        const membership = new Membership();
-        membership.startDate = today;
-        membership.endDate = endDate;
-        membership.status = 'active';
-        membership.user = user;
-        membership.membershipType = membershipType;
-        membership.stripeSessionId = idSession;
-        em.persist(membership);
-
-        if (!classEntities || classEntities.length === 0) {
-            throw new Error('No se encontraron las clases para asignar a la membresía.');
-        }
-        //agregar al usuario a cada clase y aumentar el contador de alumnos en cada clase segun las metadata de la sesion
-        classEntities.forEach((classs: Classs) => {
-            user.classes.add(classs);
-            classs.enrolledCount = (classs.enrolledCount || 0) + 1;
-        })
-
-        console.log('...............', classEntities)
-        // Guardar los cambios en la bd para manejar todo como una transaccion
-        await em.flush();
-        return { membership, user };
-    }
-    catch (error) {
-        console.error("Error activando la membresía:", error);
-        throw error;
-    }
+async function findOneByUserId(userId: string) {
+  return await em.findOne(Membership, { user: userId, status: 'active' }, { populate: ['membershipType'] });
 }
 
 export const membershipService = {
-    handleCheckoutSessionCompleted,
+  findOneBySessionId,
+  findOneByUserId
 };

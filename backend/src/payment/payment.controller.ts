@@ -1,52 +1,13 @@
-import Stripe from "stripe";
-import { orm } from '../shared/DB/orm.js'
 import { Request, Response, NextFunction } from "express";
-import dotenv from "dotenv";
-import { User } from "../user/user.entity.js";
-
-dotenv.config();
-
-const em = orm.em
-const stripeClient = new Stripe(process.env.STRIPE_API_KEY!, {
-    apiVersion: '2025-10-29.clover',
-});
+import { paymentService, PaymentError } from "./payment.service.js";
 
 export async function checkoutSessionClasses(req: Request, res: Response, next: NextFunction) {
-    const classes = req.body.classes
+    const classes = req.body.classes;
     const plan = req.body.plan;
     const user = req.body.user;
-    const idClasses = classes.map((c: any) => c.id);
-    //validar que el alumno no este inscripto en esa clase y que haya cupo en cada una
 
-    // console.log(classes, user, plan);
     try {
-        const metadata: Stripe.MetadataParam = {
-            userId: user.id.toString(),
-            plan: plan.numOfClasses.toString(),
-            classes: JSON.stringify(idClasses)
-        }
-        // Creamos la sesion de pago con stripe y luego stripe manda el webhook a /api/webhook/stripe para validar la firma y llamar a la funcion 
-        // handleCheckoutSessionCompleted de membership.service que se encarga de crear la membresia
-        const session = await stripeClient.checkout.sessions.create({
-            customer_email: user.email,
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'ars',
-                        unit_amount: plan.price * 100,
-                        product_data: {
-                            name: `${plan.description}`,
-                            description: `Accede a hasta ${plan.numOfClasses} clases por semana`
-                        },
-                    },
-                    quantity: 1
-                }
-            ],
-            mode: 'payment',
-            success_url: 'http://localhost:5173/checkout-status?type=membership&session_id={CHECKOUT_SESSION_ID}', // success_url a pagina intermedia de carga
-            cancel_url: 'http://localhost:5173/ClassCart?error=payment_cancelled', // con el aviso en el frontend de que el pago se cancelo
-            metadata: metadata
-        });
+        const session = await paymentService.createCheckoutSessionClasses(classes, plan, user);
         res.status(200).json({ message: "Checkout session created", session });
     }
     catch (error) {
@@ -58,65 +19,22 @@ export async function checkoutSessionTalleres(req: Request, res: Response, next:
     const talleres = req.body.talleres;
     const user = req.body.user;
 
-    if (!talleres || !Array.isArray(talleres) || talleres.length === 0) {
-        return res.status(400).json({ message: "No se enviaron talleres para el checkout." });
-    }
-
     try {
-        const idTalleres = talleres.map((t: any) => t.id);
-        const metadata: Stripe.MetadataParam = {
-            userId: user?.id?.toString(),
-            talleres: JSON.stringify(idTalleres)
-        };
-
-        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = talleres.map((taller: any) => ({
-            price_data: {
-                currency: 'ars',
-                unit_amount: Math.round(Number(taller.price) * 100),
-                product_data: {
-                    name: `Taller - ${taller.name}`,
-                    description: taller.description || undefined
-                },
-            },
-            quantity: 1
-        }));
-
-        const session = await stripeClient.checkout.sessions.create({
-            customer_email: user.email,
-            line_items: lineItems,
-            mode: 'payment',
-            success_url: 'http://localhost:5173/checkout-status?type=taller&session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'http://localhost:5173/ClassCart?error=payment_cancelled_talleres',
-            metadata: metadata
-        });
-
+        const session = await paymentService.createCheckoutSessionTalleres(talleres, user);
         res.status(200).json({ message: "Checkout session created", session });
     }
-    catch (error) {
+    catch (error: any) {
+        if (error instanceof PaymentError) {
+            return res.status(error.status || 500).json({ message: error.message });
+        }
         next(error);
     }
 }
 
 export async function checkTallerPaymentStatus(req: Request, res: Response, next: NextFunction) {
-    //se llama a la api de stripe para recuperar la sesion y verificar que el user en los metadatos ya este inscripto en los talleres
     try {
         const sessionId = req.params.sessionId;
-        const session = await stripeClient.checkout.sessions.retrieve(sessionId);
-        if (!session) {
-            return res.status(404).json({ message: "No se encontró la sesión de Stripe." });
-        }
-        const metadata = session.metadata;
-        if (!metadata || !metadata.userId || !metadata.talleres) {
-            return res.status(400).json({ message: "Metadatos de sesión no válidos o faltantes." });
-        }
-
-        const userId = metadata.userId;
-        const idTalleres = JSON.parse(metadata.talleres);
-
-        const user = await em.findOneOrFail(User, { id: userId }, { populate: ['talleres'] });
-        const enrolledTallerIds = user.talleres.getItems().map(t => t.id);
-
-        const allEnrolled = idTalleres.every((id: string) => enrolledTallerIds.includes(id));
+        const allEnrolled = await paymentService.checkTallerPaymentStatus(sessionId);
 
         if (allEnrolled) {
             res.status(200).json({ message: "Compra de talleres verificada", enrolled: true });
@@ -124,6 +42,9 @@ export async function checkTallerPaymentStatus(req: Request, res: Response, next
             res.status(404).json({ message: "El usuario aún no está inscrito en los talleres.", enrolled: false });
         }
     } catch (error: any) {
+        if (error instanceof PaymentError) {
+            return res.status(error.status || 500).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
     }
 }

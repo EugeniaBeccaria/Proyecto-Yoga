@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { findAll, sanitizeTallerInput, findOne, add, update, remove, findTalleresByProfessorId } from './taller.controler.js'
+import { findAll, findOne, add, update, remove, findTalleresByProfessorId } from './taller.controler.js'
 import { isAdmin, isProfessor, verifyCookie } from '../auth/auth.middleware.js'
 import { check } from 'express-validator'
 import verifyResult from '../validation/validation.middleware.js'
@@ -25,5 +25,5 @@ tallerRouter.post('/', verifyCookie, isAdmin,
     check('price','El precio debe ser un número positivo').isFloat({min:0}),
     ],verifyResult, add)
 
-tallerRouter.put('/:id', verifyCookie, isAdmin, sanitizeTallerInput, update)
-tallerRouter.delete('/:id', verifyCookie, isAdmin, sanitizeTallerInput, remove)
+tallerRouter.put('/:id', verifyCookie, isAdmin, update)
+tallerRouter.delete('/:id', verifyCookie, isAdmin, remove)

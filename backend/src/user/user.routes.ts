@@ -1,11 +1,9 @@
 import {Router} from 'express'
-import { findAll, findOne, findMe, add, update, remove, getStudents } from './user.controler.js'
+import { findAll, findMe, add, update, getStudents, changePassword } from './user.controler.js'
 import { verifyCookie } from '../auth/auth.middleware.js'
 import { check } from 'express-validator'
 import verifyResult from '../validation/validation.middleware.js'
 import { verifyEmail } from '../helpers/validators-helpers.js'
-import { changePassword } from './user.controler.js'
-
 
 export const userRouter = Router()
 
@@ -20,9 +18,6 @@ userRouter.put('/update',verifyCookie,[
         .optional({ values: 'falsy' })
         .matches(/^\d{7,9}$/)
     ],verifyResult,update)
-
-userRouter.get('/:id', verifyCookie, findOne)
-userRouter.delete('/:id', remove)
 
 userRouter.post('/',[
     check('email','Email inválido').isEmail(),
