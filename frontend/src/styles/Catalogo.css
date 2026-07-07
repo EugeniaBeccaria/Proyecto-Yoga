@@ -283,6 +283,57 @@
     height: 16px;
 }
 
+/* Past workshops styling */
+.taller-card.pasado {
+    opacity: 0.75;
+}
+
+.taller-card.pasado:hover {
+    transform: none;
+    box-shadow: 0 10px 30px rgba(47, 91, 70, 0.04);
+    border-color: rgba(47, 91, 70, 0.08);
+}
+
+.taller-card.pasado .taller-card-image-wrapper {
+    background: #cbd5e1;
+}
+
+.taller-card.pasado:hover .taller-card-img {
+    transform: none;
+}
+
+.pasado-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #64748b;
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-pasado {
+    width: 100%;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #f1f5f9;
+    color: #94a3b8;
+    border: 2px solid #cbd5e1;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+}
+
 /* Sticky Payment Bottom Bar */
 .pago-sticky-bar {
     position: fixed;

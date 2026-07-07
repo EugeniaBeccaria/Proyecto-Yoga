@@ -12,6 +12,8 @@ userRouter.get('/me', verifyCookie, findMe)
 userRouter.get('/students', verifyCookie, getStudents)
 
 userRouter.put('/update',verifyCookie,[
+    check('name', 'El nombre es obligatorio').optional().notEmpty(),
+    check('lastname', 'El apellido es obligatorio').optional().notEmpty(),
     check('birthdate','Fecha de nacimiento inválida').optional({ values: 'falsy' }).isISO8601(),
     check('phone','Número de teléfono inválido').optional({ values: 'falsy' }).isMobilePhone('any'),
     check('dni','DNI inválido')

@@ -113,6 +113,15 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
         if (response === 200) {
             setSuccess(true);
             setFieldErrors({});
+            const currentStored = localStorage.getItem('user');
+            if (currentStored) {
+                const parsed = JSON.parse(currentStored);
+                localStorage.setItem('user', JSON.stringify({
+                    ...parsed,
+                    name: userData.name,
+                    lastname: userData.lastname,
+                }));
+            }
             setTimeout(() => setSuccess(false), 3000);
         }
         else {
@@ -147,11 +156,23 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
                 <div className="profile-data">
                     <div className="row">
                         <span className="label">Nombre</span>
-                        <span className="value">{userData.name}</span>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            placeholder="Añadir nombre"
+                            value={userData.name} 
+                            onChange={handleChange} 
+                        />
                     </div>
                     <div className="row">
                         <span className="label">Apellido</span>
-                        <span className="value">{userData.lastname || ''}</span>
+                        <input 
+                            type="text" 
+                            name="lastname" 
+                            placeholder="Añadir apellido"
+                            value={userData.lastname} 
+                            onChange={handleChange} 
+                        />
                     </div>                    
 
                     <div className="row">
@@ -197,6 +218,8 @@ export default function ProfilePage({ handleClick, error}: profileProps) {
                     </div>
             </div>
 
+            {fieldErrors.name && <span className="error-text">{fieldErrors.name}</span>}
+            {fieldErrors.lastname && <span className="error-text">{fieldErrors.lastname}</span>}
             {fieldErrors.dni && <span className="error-text">{fieldErrors.dni}</span>}
             {fieldErrors.phone && <span className="error-text">{fieldErrors.phone}</span>}
             {fieldErrors.birthdate && <span className="error-text">{fieldErrors.birthdate}</span>}

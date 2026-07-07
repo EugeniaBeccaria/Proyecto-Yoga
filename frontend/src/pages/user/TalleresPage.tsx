@@ -103,10 +103,17 @@ function TalleresPage() {
                     <section className={`catalogo-grid ${visibleTalleres.length === 1 ? 'single' : ''}`}>
                         {visibleTalleres.map((taller) => {
                             const isSelected = seleccionados.includes(taller.id);
+                            
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+                            const tallerDate = new Date(taller.datetime);
+                            tallerDate.setHours(0, 0, 0, 0);
+                            const isPast = tallerDate.getTime() < today.getTime();
+
                             return (
                                 <div
                                     key={taller.id}
-                                    className={`taller-card ${isSelected ? "seleccionada" : ""}`}
+                                    className={`taller-card ${isSelected ? "seleccionada" : ""} ${isPast ? "pasado" : ""}`}
                                 >
                                     <div className="taller-card-image-wrapper">
                                         <img src={'/public/logo-verde.png'} alt={taller.name} className="taller-card-img" />
@@ -118,6 +125,11 @@ function TalleresPage() {
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="badge-icon">
                                                     <polyline points="20 6 9 17 4 12"></polyline>
                                                 </svg>
+                                            </div>
+                                        )}
+                                        {isPast && (
+                                            <div className="pasado-badge">
+                                                Finalizado
                                             </div>
                                         )}
                                     </div>
@@ -147,27 +159,36 @@ function TalleresPage() {
                                         </div>
                                     </div>
                                     <div className="taller-card-footer">
-                                        <button
-                                            className={isSelected ? "btn-agregado" : "btn-agregar"}
-                                            onClick={() => toggleTaller(taller.id)}
-                                        >
-                                            {isSelected ? (
-                                                <>
-                                                    <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                                    </svg>
-                                                    Agregado
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                    </svg>
-                                                    Agregar
-                                                </>
-                                            )}
-                                        </button>
+                                        {isPast ? (
+                                            <button
+                                                className="btn-pasado"
+                                                disabled
+                                            >
+                                                Finalizado
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className={isSelected ? "btn-agregado" : "btn-agregar"}
+                                                onClick={() => toggleTaller(taller.id)}
+                                            >
+                                                {isSelected ? (
+                                                    <>
+                                                        <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                                        </svg>
+                                                        Agregado
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                        </svg>
+                                                        Agregar
+                                                    </>
+                                                )}
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             );
