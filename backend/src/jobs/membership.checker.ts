@@ -4,7 +4,7 @@ import { orm } from "../shared/DB/orm.js";
 
 
 export const membershipChecker = () => {
-    nodeCron.schedule('0 * * * *', async () => { 
+    nodeCron.schedule('* * * * *', async () => { 
         try {
             const em = orm.em.fork();
             const today = new Date();
@@ -23,6 +23,7 @@ export const membershipChecker = () => {
 
                     for (const c of enrolledClasses) { // por cada clase a la que el usuario está inscrito
                         c.users.remove(user);
+                        user.classes.remove(c); 
                         c.enrolledCount = Math.max((c.enrolledCount || 0) - 1, 0);
                     }
                     m.status = 'expired';

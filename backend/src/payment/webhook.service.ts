@@ -31,7 +31,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 
         const today = new Date();
         const endDate = new Date();
-        endDate.setMonth(endDate.getMonth() - 1);
+        endDate.setMonth(endDate.getMonth() + 1);
         endDate.setDate(endDate.getDate() + 1);
 
         const membership = new Membership();
@@ -46,7 +46,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         if (!classEntities || classEntities.length === 0) {
             throw new Error('No se encontraron las clases para asignar a la membresía.');
         }
-        
+
         classEntities.forEach((classs: Classs) => {
             user.classes.add(classs);
             classs.enrolledCount = (classs.enrolledCount || 0) + 1;
@@ -64,7 +64,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 
 async function handleCheckoutSessionCompletedTalleres(session: Stripe.Checkout.Session) {
     const em = orm.em.fork();
-    
+
     try {
         const metadata = session.metadata;
         if (!metadata || !metadata.userId || !metadata.talleres) {
