@@ -10,6 +10,7 @@ export interface TallerApi {
         name: string;
         lastname: string;
         email: string;
+        phone?: string;
     }>;
     time?: {
         id: string;
