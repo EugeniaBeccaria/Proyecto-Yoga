@@ -59,7 +59,44 @@ async function saveProfileData(userData: UserUpdate, setFieldErrors: (errors: Re
     }
 }
 
+async function getProfessors() {
+    {/*const res = await axios.get('http://localhost:3000/api/users/professors', {
+        withCredentials: true
+    });
+    return res.data.data;
+}*/}
+    try {
+            const res = await axios.get('http://localhost:3000/api/users/professors', {
+                withCredentials: true
+            });
+            // Soporta respuesta estructurada { data: [...] } o directa [...]
+            return res.data.data ?? res.data;
+        } catch (err) {
+            console.error("Error en getProfessors:", err);
+            throw err;
+        }
+    }
+
+async function deleteUser(id:string) {
+    {/*const res = await axios.delete(`http://localhost:3000/api/users/remove/${id}`, {
+        withCredentials: true
+    });
+    return res.data;
+}*/}
+    try {
+            const res = await axios.delete(`http://localhost:3000/api/users/remove/${id}`, {
+                withCredentials: true
+            });
+            return res.data;
+        } catch (err) {
+            console.error("Error en deleteUser:", err);
+            throw err;
+        }
+    }
+
 export const userService = {
     saveProfileData,
-    getCurrentUserProfile
+    getCurrentUserProfile,
+    getProfessors,
+    deleteUser
 };

@@ -1,0 +1,174 @@
+.historial-class-page {
+    background-color: rgb(255, 255, 255);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: "Montserrat", sans-serif;
+    padding: 10px 20px 40px;
+    box-sizing: border-box;
+}
+
+.historial-class-page .title-class-page {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #d08383;
+    margin-bottom: 5px;
+}
+
+.historial-class-page .list-class-description {
+    color: #2f5b46;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* CONTENEDOR DE LA TABLA */
+
+.historial-class-page .table-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    width: 95%;
+    max-width: 1400px;
+    margin: 10px auto 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+
+/* TABLA */
+
+.historial-class-page .classes-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+}
+
+/* ENCABEZADO */
+
+.historial-class-page .classes-table thead {
+    background-color: #2f5b46;
+    color: white;
+}
+
+.historial-class-page .classes-table th {
+    padding: 14px 12px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* FILAS */
+
+.historial-class-page .classes-table td {
+    padding: 13px 12px;
+    text-align: center;
+    color: #2f5b46;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e3e8e2;
+}
+
+.historial-class-page .classes-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.historial-class-page .classes-table tbody tr:hover {
+    background-color: #f3f7f4;
+}
+
+/* PRIMERA COLUMNA */
+
+.historial-class-page .classes-table td:first-child {
+    font-weight: 600;
+}
+
+/* FILAS DE CLASES DADAS DE BAJA */
+
+.historial-class-page .classes-table .class-deleted {
+    opacity: 0.7;
+}
+
+/* ESTADO */
+
+.historial-class-page .status-active,
+.historial-class-page .status-deleted {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.historial-class-page .status-active {
+    background-color: #dfeee5;
+    color: #2f5b46;
+}
+
+.historial-class-page .status-deleted {
+    background-color: #f5dddd;
+    color: #a33a3a;
+}
+
+/* FECHA DE BAJA */
+
+.historial-class-page .classes-table td:nth-child(8) {
+    color: #666;
+}
+
+/* MENSAJE DE ERROR */
+
+.historial-class-page .error-message-list-class {
+    background-color: #CF8A8A;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+/* SIN CLASES */
+
+.historial-class-page .empty-message-list-class {
+    color: #2f5b46;
+    font-size: 1rem;
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* CARGANDO */
+
+.historial-class-page > p {
+    color: #2f5b46;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .historial-class-page {
+        padding: 20px 10px 30px;
+    }
+
+    .historial-class-page .title-class-page {
+        font-size: 32px;
+    }
+
+    .historial-class-page .list-class-description {
+        font-size: 0.9rem;
+    }
+
+    .historial-class-page .table-container {
+        width: 100%;
+        padding: 12px;
+        border-radius: 15px;
+    }
+
+    .historial-class-page .classes-table {
+        min-width: 900px;
+    }
+}

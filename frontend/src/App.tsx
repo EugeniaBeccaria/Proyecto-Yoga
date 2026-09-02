@@ -24,6 +24,8 @@ import CheckoutStatus from './pages/user/checkout-status.tsx';
 import PasswordChange from './pages/professor/passwordChange.tsx';
 import ListAlumnosPage from './pages/admin/ListAlumnosPage.tsx';
 import ListTalleresPage from "./pages/admin/ListTalleresPage";
+import HistorialClassPage from "./pages/admin/HistorialClassPage.tsx";
+
 
 
 function App() {
@@ -74,6 +76,14 @@ function App() {
                   </AdminRoutes>
                 }
               />
+              <Route
+                path="/HistorialClassPage"
+                element={
+                  <AdminRoutes>
+                    <HistorialClassPage />
+                  </AdminRoutes>
+                }
+              />
 
               <Route
                 path="/CreateTallerPage"
@@ -102,6 +112,14 @@ function App() {
                   </AdminRoutes>
                 }
               />
+              {/*<Route
+                path="/DeleteProfessorPage"
+                element={
+                  <AdminRoutes>
+                    <DeleteProfessorPage />
+                  </AdminRoutes>
+                }
+              />*/}
               <Route
                 path="/ListAlumnosPage"
                 element={

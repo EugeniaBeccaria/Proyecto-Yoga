@@ -73,6 +73,9 @@ function Navbar() {
                     <HashLink id="bottom" smooth to="/DeleteClassPage" onClick={closeDropdown}>
                       ELIMINAR CLASES
                     </HashLink>
+                    <HashLink id="bottom" smooth to="/HistorialClassPage" onClick={closeDropdown}>
+                      HISTORIAL DE CLASES
+                    </HashLink>
                   </div>
                 )}
               </div>
@@ -96,16 +99,34 @@ function Navbar() {
               <HashLink smooth to="/MembershipPage#top" onClick={closeMenu}>
                 GESTIONAR MEMBRESÍAS
               </HashLink>
+              {/*<HashLink smooth to="/CreateProfesorPage#top" onClick={closeMenu}>
+                CREAR PROFESOR
+              </HashLink>
+              <div className="paste-button">
+                <button className="button-link" onClick={() => toggleDropdown('profesores')}>
+                  ▼ GESTIONAR PROFESORES
+                </button>
+                {activeDropdown === 'profesores' && (
+                  <div className="dropdown-content" style={{ display: 'block' }}>
+                    <HashLink id="top" smooth to="/CreateProfesorPage#crearProfesores" onClick={closeDropdown}>
+                      CREAR PROFESORES
+                    </HashLink>
+                    <HashLink id="bottom" smooth to="/DeleteProfessorPage#eliminarProfesores" onClick={closeDropdown}>
+                      ELIMINAR PROFESORES
+                    </HashLink>
+                  </div>
+                )}
+              </div>*/}
+
               <HashLink smooth to="/CreateProfesorPage#top" onClick={closeMenu}>
                 CREAR PROFESOR
               </HashLink>
+
               <HashLink smooth to="/ListAlumnosPage" onClick={closeMenu}>
                 VER USUARIOS
               </HashLink>
-
-
-            </>)
-          }
+            </>
+          )}
 
           {isProfessor &&
             <>
