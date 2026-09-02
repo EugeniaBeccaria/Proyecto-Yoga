@@ -7,6 +7,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import ScrollToTop from './components/ScrollToTop.tsx';
+import MensajeError from './components/MensajeError';
+import './service/axiosConfig';
 
 /*
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -27,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <BrowserRouter>
           <ScrollToTop />
           <App />
+          <MensajeError />
           <ScrollToTop />
         </BrowserRouter>
       </Elements>
