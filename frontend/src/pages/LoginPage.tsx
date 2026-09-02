@@ -1,9 +1,8 @@
 import "../styles/LoginRegisterPage.css"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { AuthContext } from "../context/AuthContext.tsx";
 
 import Profile from "../components/Profile";
-import { useState } from 'react'
 import {FaEnvelope, FaLock} from "react-icons/fa";
 import { HashLink } from "react-router-hash-link";
 import { useGoogleLogin } from '@react-oauth/google';
@@ -32,6 +31,7 @@ export default function Login(){
     const [errCloseSession, setErrCloseSession] = useState<boolean>(false)
 
     const [token, setToken] = useState<string | null>(null);
+    const recaptchaRef = useRef<ReCAPTCHA>(null);
 
     useEffect(() => {
         const userStoraged = localStorage.getItem('user')
@@ -48,6 +48,8 @@ export default function Login(){
         setSuccess(false)
         setUserLogin(false)
         setFormData({email: '', password: ''})
+        recaptchaRef.current?.reset();
+        setToken(null);
         logout()
     }
 
@@ -107,13 +109,23 @@ export default function Login(){
         }
         
         catch(err){
-            setLoading(false)
+            recaptchaRef.current?.reset();
+            setToken(null);
             if (axios.isAxiosError(err)) {
-                setError({ error: true, message: err.response?.data.message || err.response?.data.errors[0].msg || err.message});
+                const backendMessage = 
+                    err.response?.data?.message || 
+                    err.response?.data?.errors?.[0]?.msg || 
+                    err.message || 
+                    'Error al iniciar sesión';
+
+                setError({ error: true, message: backendMessage });
                 return;
-                }
+            } else {
+                setError({ error: true, message: 'Ocurrió un error inesperado al iniciar sesión' });
+            }
         }
         finally{
+            setLoading(false);
             setFormData({email: '',password: ''})
         }
     }
@@ -145,7 +157,6 @@ const handleGoogleLogin = useGoogleLogin({
                 console.log('Usuario logueado con Google, nombre: ', userData.name);
                 
                 // lo mismo que el login normal
-                setLoading(false);
                 setSuccess(true);
                 setTimeout(() => {
                     login(userData); //  Del AuthContext
@@ -154,15 +165,29 @@ const handleGoogleLogin = useGoogleLogin({
 
             } 
             catch(err){
-                setLoading(false)
+                recaptchaRef.current?.reset();
+                setToken(null);
                 if (axios.isAxiosError(err)) {
-                    setError({ error: true, message: err.response?.data.message || err.response?.data.errors[0].msg || err.message});
-                    return;}
+                    const backendMessage = 
+                        err.response?.data?.message || 
+                        err.response?.data?.errors?.[0]?.msg || 
+                        err.message || 
+                        'Error al iniciar sesión con Google';
+
+                    setError({ error: true, message: backendMessage });
+                } else {
+                    setError({ error: true, message: 'Error al iniciar sesión con Google' });
                 }
+            } finally {
+                setLoading(false);
+            }
         },
         onError: (error) => {
             console.error('Google login error:', error);
             setError({ error: true, message: 'Error al iniciar sesión con Google' });
+            recaptchaRef.current?.reset();
+            setToken(null);
+            setLoading(false);
         }
     });    
         
@@ -227,9 +252,11 @@ const handleGoogleLogin = useGoogleLogin({
                             </div>
 
                             <ReCAPTCHA
+                                ref={recaptchaRef}
                                 className="recaptcha"
                                 sitekey= {siteKey}
                                 onChange= {handleChangeCaptcha}
+                                onExpired={() => setToken(null)}
                             />
 
                             <button>Sign in</button>

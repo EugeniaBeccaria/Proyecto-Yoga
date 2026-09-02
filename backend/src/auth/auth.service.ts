@@ -30,6 +30,10 @@ async function login(email:string,password:string){
     const userValidation = await em.findOne(User,{email:email})
     if (!userValidation)
         throw new AuthError('Error durante login');
+
+    if (userValidation.deletedAt) {
+        throw new AuthError('Esta cuenta ha sido dada de baja');
+    }
     
     const correctLogin = await bcrypt.compare(password,userValidation.password)
     if(!correctLogin) 

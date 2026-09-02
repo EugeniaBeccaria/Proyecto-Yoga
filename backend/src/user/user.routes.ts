@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { findAll, findMe, add, update, getStudents, changePassword } from './user.controler.js'
+import { findAll, findMe, add, update, getStudents, changePassword, softDelete } from './user.controler.js'
 import { verifyCookie } from '../auth/auth.middleware.js'
 import { check } from 'express-validator'
 import verifyResult from '../validation/validation.middleware.js'
@@ -36,3 +36,5 @@ userRouter.put('/change-password', verifyCookie,
         check('newPassword', 'La nueva contraseña debe tener al menos 6 caracteres').isLength({ min: 6 }),
         check('newPassword', 'La nueva contraseña debe tener al menos una mayúscula y un numero').matches(/^(?=.*[A-Z])(?=.*[0-9]).*$/)
     ], verifyResult, changePassword)
+
+userRouter.delete('/:id', verifyCookie, softDelete)

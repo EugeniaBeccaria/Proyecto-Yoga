@@ -27,6 +27,9 @@ export class User extends BaseEntity {
     @Property({ nullable: true })
     role?: string = 'client'
 
+    @Property({ type: 'datetime', nullable: true })
+    deletedAt?: Date | null;
+
     @Property({ nullable: false, hidden: true })
     password!: string;
 

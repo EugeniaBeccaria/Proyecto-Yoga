@@ -45,6 +45,16 @@ async function add(req: Request, res: Response) {
   }
 }
 
+async function softDelete(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    await userService.softDelete(id);
+    return res.status(200).json({ message: 'Profesor dado de baja exitosamente' });
+  } catch (error: any) {
+    return res.status(400).json({ message: error.message });
+  }
+}
+
 async function update(req: Request, res: Response) {
   try {
     const id = req.user?.id
@@ -90,4 +100,4 @@ async function getStudents(req: Request, res: Response) {
   }
 }
 
-export { findAll, findMe, add, update, getStudents }
+export { findAll, findMe, add, update, getStudents, softDelete }

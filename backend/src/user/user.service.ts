@@ -36,6 +36,16 @@ async function register(name: string, lastname: string, email: string, phone: st
     return user;
 }
 
+async function softDelete(id: string) {
+    const user = await em.findOne(User, { id });
+    if (!user) {
+        throw new Error('Usuario no encontrado');
+    }
+    user.deletedAt = new Date();
+    await em.flush();
+    return user;
+}
+
 async function findAll(role?: string) {
     const filterParameters: any = {};
     if (role) {
@@ -100,5 +110,6 @@ export const userService = {
     findMe,
     update,
     changePassword,
-    getStudents
+    getStudents,
+    softDelete
 };

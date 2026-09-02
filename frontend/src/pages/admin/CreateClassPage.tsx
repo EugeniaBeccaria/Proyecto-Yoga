@@ -45,6 +45,8 @@ function CreateClassPage() {
     "Domingo": 7
   };
 
+  const profesoresActivos = fetchData.professors.filter((p) => !p.deletedAt);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -209,7 +211,7 @@ function CreateClassPage() {
                 <select id="profesor" name="profesor">
                   <option value="">Seleccione un profesor</option>
                   {
-                    fetchData.professors.map((professor) =>{
+                    profesoresActivos.map((professor) =>{
                       return(
                         <option key={professor.id} value={professor.id}>{professor.name}</option>
                       )

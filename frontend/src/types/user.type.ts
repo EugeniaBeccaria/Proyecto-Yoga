@@ -8,4 +8,5 @@ export interface User {
     role?: 'admin' | 'professor' | 'client';
     createdAt?: string;
     updatedAt?: string;
+    deletedAt?: string | null;
 }

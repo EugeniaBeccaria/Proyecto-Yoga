@@ -46,6 +46,9 @@ export default function CrearTaller() {
             datetime: stringDate
         });
     };
+
+    const profesoresActivos = professors.filter((p) => !p.deletedAt);
+
     const selectedDate = formData.datetime 
         ? new Date(`${formData.datetime}T00:00:00`) 
         : null;
@@ -170,7 +173,7 @@ export default function CrearTaller() {
                 required
             >
                 <option value="">Seleccione un profesor</option>
-                {professors.map((professor) => (
+                {profesoresActivos.map((professor) => (
                     <option key={professor.id} value={professor.id}>
                         {professor.name}
                     </option>

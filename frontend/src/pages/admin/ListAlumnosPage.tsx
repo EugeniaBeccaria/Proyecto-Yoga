@@ -1,6 +1,7 @@
 import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import "../../styles/admin/ListAlumnosPage.css";
+import { deleteProfesor } from "../../service/userServiceFront";
 
 type Clase = {
     id: string;
@@ -27,6 +28,7 @@ type Profesor = {
     phone?: string;
     dni?: string;
     taughtClasses: Clase[];
+    deletedAt?: string | null;
 };
 
 export default function ListAlumnosPage() {
@@ -42,6 +44,26 @@ export default function ListAlumnosPage() {
             ...prev,
             [profId]: !prev[profId]
         }));
+    };
+
+    const handleBajaProfesor = async (id: string) => {
+        const confirmacion = window.confirm('¿Estás seguro de que deseas dar de baja a este profesor?');
+        if (!confirmacion) return;
+
+        try {
+            await deleteProfesor(id);
+            alert('Profesor dado de baja correctamente');
+            setProfesores((prevProfesores) =>
+            prevProfesores.map((profesor) =>
+                profesor.id === id
+                ? { ...profesor, deletedAt: new Date().toISOString() }
+                : profesor
+            )
+            );
+        } catch (error) {
+            console.error('Error al dar de baja al profesor:', error);
+            alert('Ocurrió un error al intentar dar de baja al profesor.');
+        }
     };
 
     useEffect(() => {
@@ -93,166 +115,211 @@ export default function ListAlumnosPage() {
     };
 
     return (
-        <div className="list-alumnos-container">
-            <h1 className="list-alumnos-title">
-                {activeTab === "students" ? "Listado de Alumnos" : "Listado de Profesores"}
-            </h1>
+    <div className="list-alumnos-container">
+        <h1 className="list-alumnos-title">
+            {activeTab === "students" ? "Listado de Alumnos" : "Listado de Profesores"}
+        </h1>
 
-            <div className="tabs-container">
-                <button
-                    className={`tab-button ${activeTab === "students" ? "active" : ""}`}
-                    onClick={() => {
-                        setActiveTab("students");
-                        setSearch("");
-                    }}
-                >
-                    Alumnos
-                </button>
-                <button
-                    className={`tab-button ${activeTab === "professors" ? "active" : ""}`}
-                    onClick={() => {
-                        setActiveTab("professors");
-                        setSearch("");
-                    }}
-                >
-                    Profesores
-                </button>
-            </div>
+        <div className="tabs-container">
+            <button
+                className={`tab-button ${activeTab === "students" ? "active" : ""}`}
+                onClick={() => {
+                    setActiveTab("students");
+                    setSearch("");
+                }}
+            >
+                Alumnos
+            </button>
+            <button
+                className={`tab-button ${activeTab === "professors" ? "active" : ""}`}
+                onClick={() => {
+                    setActiveTab("professors");
+                    setSearch("");
+                }}
+            >
+                Profesores
+            </button>
+        </div>
 
-            <input
-                type="text"
-                placeholder={activeTab === "students" ? "Buscar por nombre o email de alumno" : "Buscar por nombre o email de profesor"}
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="search-input"
-            />
+        <input
+            type="text"
+            placeholder={activeTab === "students" ? "Buscar por nombre o email de alumno" : "Buscar por nombre o email de profesor"}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="search-input"
+        />
 
-            {loading ? (
-                <p className="loading-text">
-                    {activeTab === "students" ? "Cargando alumnos..." : "Cargando profesores..."}
-                </p>
-            ) : activeTab === "students" ? (
-                filteredAlumnos.length === 0 ? (
-                    <p className="loading-text">No se encontraron alumnos.</p>
-                ) : (
-                    <div className="table-container">
-                        <table className="students-table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre del Alumno</th>
-                                    <th>Email</th>
-                                    <th>Membresía</th>
-                                    <th>Clases Inscripto</th>
+        {loading ? (
+            <p className="loading-text">
+                {activeTab === "students" ? "Cargando alumnos..." : "Cargando profesores..."}
+            </p>
+        ) : activeTab === "students" ? (
+            filteredAlumnos.length === 0 ? (
+                <p className="loading-text">No se encontraron alumnos.</p>
+            ) : (
+                <div className="table-container">
+                    <table className="students-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Alumno</th>
+                                <th>Email</th>
+                                <th>Membresía</th>
+                                <th>Clases Inscripto</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {filteredAlumnos.map(alumno => (
+                                <tr key={alumno.id}>
+                                    <td>{alumno.name} {alumno.lastname || ""}</td>
+                                    <td>{alumno.email}</td>
+                                    <td>
+                                        {(() => {
+                                            const membership = getMembershipLabel(alumno.membership);
+
+                                            return (
+                                                <span className={`membership-badge ${membership.variant}`}>
+                                                    {membership.text}
+                                                </span>
+                                            );
+                                        })()}
+                                    </td>
+                                    <td>
+                                        {alumno.classes.length > 0 ? (
+                                            alumno.classes.map(clase => clase.name).join(", ")
+                                        ) : (
+                                            "No se inscribió en ninguna clase"
+                                        )}
+                                    </td>
                                 </tr>
-                            </thead>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        ) : (
+            filteredProfesores.length === 0 ? (
+                <p className="loading-text">No se encontraron profesores.</p>
+            ) : (
+                <div className="table-container">
+                    <table className="students-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Profesor</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>DNI</th>
+                                <th>Clases que Dicta</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
 
-                            <tbody>
-                                {filteredAlumnos.map(alumno => (
-                                    <tr key={alumno.id}>
-                                        <td>{alumno.name} {alumno.lastname || ""}</td>
-                                        <td>{alumno.email}</td>
+                        <tbody>
+                            {filteredProfesores.map(profe => (
+                                <Fragment key={profe.id}>
+                                    <tr style={{ opacity: profe.deletedAt ? 0.6 : 1 }}>
+                                        <td>{profe.name} {profe.lastname || ""}</td>
+                                        <td>{profe.email}</td>
+                                        <td>{profe.phone || "No especificado"}</td>
+                                        <td>{profe.dni || "No especificado"}</td>
                                         <td>
-                                            {(() => {
-                                                const membership = getMembershipLabel(alumno.membership);
-
-                                                return (
-                                                    <span className={`membership-badge ${membership.variant}`}>
-                                                        {membership.text}
-                                                    </span>
-                                                );
-                                            })()}
-                                        </td>
-                                        <td>
-                                            {alumno.classes.length > 0 ? (
-                                                alumno.classes.map(clase => clase.name).join(", ")
+                                            {profe.taughtClasses && profe.taughtClasses.length > 0 ? (
+                                                <button 
+                                                    className="view-classes-btn"
+                                                    onClick={() => toggleProfessorClasses(profe.id)}
+                                                >
+                                                    <span>{profe.taughtClasses.length} {profe.taughtClasses.length === 1 ? 'Clase' : 'Clases'}</span>
+                                                    <span className={`chevron-icon ${expandedProfessors[profe.id] ? 'open' : ''}`}>▼</span>
+                                                </button>
                                             ) : (
-                                                "No se inscribió en ninguna clase"
+                                                "No tiene clases asignadas"
+                                            )}
+                                        </td>
+                                        
+                                        {/* Columna Estado */}
+                                        <td>
+                                            {profe.deletedAt ? (
+                                                <span style={{ color: "#e74c3c", fontWeight: "bold" }}>Inactivo</span>
+                                            ) : (
+                                                <span style={{ color: "#27ae60", fontWeight: "bold" }}>Activo</span>
+                                            )}
+                                        </td>
+
+                                        {/* Columna Acciones */}
+                                        <td>
+                                            {profe.deletedAt ? (
+                                                <button
+                                                    disabled
+                                                    style={{
+                                                        backgroundColor: "#e0e0e0",
+                                                        color: "#777",
+                                                        border: "none",
+                                                        padding: "6px 12px",
+                                                        borderRadius: "4px",
+                                                        cursor: "not-allowed"
+                                                    }}
+                                                >
+                                                    Dado de baja
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => handleBajaProfesor(profe.id)}
+                                                    style={{
+                                                        backgroundColor: "#e74c3c",
+                                                        color: "#fff",
+                                                        border: "none",
+                                                        padding: "6px 12px",
+                                                        borderRadius: "4px",
+                                                        cursor: "pointer",
+                                                        fontWeight: "500"
+                                                    }}
+                                                >
+                                                    Dar de baja
+                                                </button>
                                             )}
                                         </td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )
-            ) : (
-                filteredProfesores.length === 0 ? (
-                    <p className="loading-text">No se encontraron profesores.</p>
-                ) : (
-                    <div className="table-container">
-                        <table className="students-table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre del Profesor</th>
-                                    <th>Email</th>
-                                    <th>Teléfono</th>
-                                    <th>DNI</th>
-                                    <th>Clases que Dicta</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {filteredProfesores.map(profe => (
-                                    <Fragment key={profe.id}>
-                                        <tr>
-                                            <td>{profe.name} {profe.lastname || ""}</td>
-                                            <td>{profe.email}</td>
-                                            <td>{profe.phone || "No especificado"}</td>
-                                            <td>{profe.dni || "No especificado"}</td>
-                                            <td>
-                                                {profe.taughtClasses && profe.taughtClasses.length > 0 ? (
-                                                    <button 
-                                                        className="view-classes-btn"
-                                                        onClick={() => toggleProfessorClasses(profe.id)}
-                                                    >
-                                                        <span>{profe.taughtClasses.length} {profe.taughtClasses.length === 1 ? 'Clase' : 'Clases'}</span>
-                                                        <span className={`chevron-icon ${expandedProfessors[profe.id] ? 'open' : ''}`}>▼</span>
-                                                    </button>
-                                                ) : (
-                                                    "No tiene clases asignadas"
-                                                )}
-                                            </td>
-                                        </tr>
-                                        {expandedProfessors[profe.id] && profe.taughtClasses && profe.taughtClasses.length > 0 && (
-                                            <tr className="classes-detail-row">
-                                                <td colSpan={5}>
-                                                    <div className="classes-detail-content">
-                                                        <h4 className="classes-detail-title">Clases Asignadas a {profe.name} {profe.lastname || ""}</h4>
-                                                        <div className="classes-grid">
-                                                            {profe.taughtClasses.map(clase => (
-                                                                <div key={clase.id} className="class-card">
-                                                                    <div className="class-card-header">
-                                                                        <span className="class-icon">🧘</span>
-                                                                        <h5 className="class-card-name">{clase.name}</h5>
+                                    {expandedProfessors[profe.id] && profe.taughtClasses && profe.taughtClasses.length > 0 && (
+                                        <tr className="classes-detail-row">
+                                            <td colSpan={7}>
+                                                <div className="classes-detail-content">
+                                                    <h4 className="classes-detail-title">Clases Asignadas a {profe.name} {profe.lastname || ""}</h4>
+                                                    <div className="classes-grid">
+                                                        {profe.taughtClasses.map(clase => (
+                                                            <div key={clase.id} className="class-card">
+                                                                <div className="class-card-header">
+                                                                    <span className="class-icon">🧘</span>
+                                                                    <h5 className="class-card-name">{clase.name}</h5>
+                                                                </div>
+                                                                <div className="class-card-body">
+                                                                    <div className="class-card-info-item">
+                                                                        <span className="info-icon">🗓️</span>
+                                                                        <span className="info-text">{clase.day?.name || "Sin día"}</span>
                                                                     </div>
-                                                                    <div className="class-card-body">
-                                                                        <div className="class-card-info-item">
-                                                                            <span className="info-icon">🗓️</span>
-                                                                            <span className="info-text">{clase.day?.name || "Sin día"}</span>
-                                                                        </div>
-                                                                        <div className="class-card-info-item">
-                                                                            <span className="info-icon">⏰</span>
-                                                                            <span className="info-text">{clase.time?.startTime || "Sin hora"} hs</span>
-                                                                        </div>
-                                                                        <div className="class-card-info-item">
-                                                                            <span className="info-icon">🚪</span>
-                                                                            <span className="info-text">Salón {clase.room?.name || "Sin salón"}</span>
-                                                                        </div>
+                                                                    <div className="class-card-info-item">
+                                                                        <span className="info-icon">⏰</span>
+                                                                        <span className="info-text">{clase.time?.startTime || "Sin hora"} hs</span>
+                                                                    </div>
+                                                                    <div className="class-card-info-item">
+                                                                        <span className="info-icon">🚪</span>
+                                                                        <span className="info-text">Salón {clase.room?.name || "Sin salón"}</span>
                                                                     </div>
                                                                 </div>
-                                                            ))}
-                                                        </div>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </Fragment>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )
-            )}
-        </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </Fragment>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        )}
+    </div>
     );
 }

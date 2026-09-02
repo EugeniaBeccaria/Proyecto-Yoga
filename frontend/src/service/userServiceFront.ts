@@ -100,3 +100,10 @@ export const userService = {
     getProfessors,
     deleteUser
 };
+
+export const deleteProfesor = async (id: string) => {
+    const response = await axios.delete(`http://localhost:3000/api/users/${id}`, {
+        withCredentials: true
+    });
+    return response.data;
+};
