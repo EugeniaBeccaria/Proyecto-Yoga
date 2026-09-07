@@ -93,7 +93,7 @@ function HistorialClassPage() {
     return (
         <div className="historial-class-page">
             <h1 className="title-class-page">Historial de Clases</h1>
-            <p className="list-class-description">Listado de clases eliminadas</p>
+            {/* <p className="list-class-description">Listado de clases eliminadas</p> */}
 
             {error && (
                 <p className="error-message-list-class">
