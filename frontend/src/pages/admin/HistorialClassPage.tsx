@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/admin/HistorialClassPage.css';
 
+interface Usuario {
+    id: string;
+    name: string;
+    lastname: string | null;
+}
+
 interface Clase {
     id: string;
     name: string;
@@ -29,12 +35,15 @@ interface Clase {
         id: number;
         startTime: string;
     };
+    
+    users: Usuario[];
 }
 
 function HistorialClassPage() {
     const [clases, setClases] = useState<Clase[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    // const [claseSeleccionada, setClaseSeleccionada] = useState<string | null>(null);
 
     useEffect(() => {
         fetchClases();
@@ -110,6 +119,7 @@ function HistorialClassPage() {
                                 <th>Salón</th>
                                 <th>Día</th>
                                 <th>Hora</th>
+                                <th>Alumnos Inscriptos</th>
                                 <th>Fecha de Baja</th>
                                 <th>Estado</th>
                             </tr>
@@ -129,6 +139,30 @@ function HistorialClassPage() {
                                     <td>{clase.room?.name ?? "-"}</td>
                                     <td>{clase.day?.name ?? "-"}</td>
                                     <td>{clase.time?.startTime.substring(0, 5) ?? "-"}</td>
+                                    <td>{clase.users && clase.users.length > 0 ? (
+                                                <div className="lista-alumnos">
+                                                    {clase.users.map(
+                                                        (usuario) => (
+                                                            <div
+                                                                key={usuario.id}
+                                                                className="alumno-historial"
+                                                            >
+                                                                <strong>
+                                                                    {usuario.name}
+                                                                    {usuario.lastname
+                                                                        ? ` ${usuario.lastname}`
+                                                                        : ""}
+                                                                </strong>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <span>
+                                                    Sin alumnos
+                                                </span>
+                                            )}
+                                    </td>
                                     <td>{formatFechaBaja(clase.deletedAt)}</td>
                                     <td>
                                         <span

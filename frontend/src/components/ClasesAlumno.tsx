@@ -22,6 +22,7 @@ const ClasesAlumno: React.FC = () => {
 
             } catch (err) {
                 console.error("Error al cargar las clases:", err);
+                
                 if (axios.isAxiosError(err) && err.response?.status === 401) {
                     setError("No autorizado. Por favor, inicia sesión de nuevo.");
                 } else {

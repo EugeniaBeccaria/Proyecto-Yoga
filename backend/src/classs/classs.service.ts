@@ -25,7 +25,7 @@ export interface ClassInput {
 }
 
 async function findAll() {
-  return await em.find(Classs, {}, { populate: ['day', 'time', 'room'] });
+  return await em.find(Classs, {}, { populate: ['day', 'time', 'room', 'users'] });
 }
 
 async function findAvailableClasses() {
