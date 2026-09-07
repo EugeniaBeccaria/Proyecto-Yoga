@@ -9,6 +9,7 @@ type Clase = {
     day?: { id: string; name: string };
     time?: { id: string; startTime: string };
     room?: { id: string; name: string };
+    deletedAt?: string | null;
 }
 
 type Alumno = {
@@ -38,7 +39,10 @@ export default function ListAlumnosPage() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
     const [expandedProfessors, setExpandedProfessors] = useState<Record<string, boolean>>({});
-
+    const [showModal, setShowModal] = useState(false);
+    const [profesorIdToDelete, setProfesorIdToDelete] = useState<string | null>(null);
+    const [infoModal, setInfoModal] = useState<{ title: string; message: string; isError?: boolean } | null>(null);
+    
     const toggleProfessorClasses = (profId: string) => {
         setExpandedProfessors(prev => ({
             ...prev,
@@ -46,23 +50,53 @@ export default function ListAlumnosPage() {
         }));
     };
 
-    const handleBajaProfesor = async (id: string) => {
-        const confirmacion = window.confirm('¿Estás seguro de que deseas dar de baja a este profesor?');
-        if (!confirmacion) return;
+    const handleOpenModal = (id: string) => {
+        const profesorSeleccionado = profesores.find(p => p.id === id);
+        
+        if (profesorSeleccionado && profesorSeleccionado.taughtClasses && profesorSeleccionado.taughtClasses.length > 0) {
+            setInfoModal({
+                title: "Acción no permitida",
+                message: "No se puede dar de baja al profesor porque tiene clases asignadas. Por favor, elimine sus clases primero.",
+                isError: true
+            });
+            return;
+        }
+
+        setProfesorIdToDelete(id);
+        setShowModal(true);
+    };
+    
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setProfesorIdToDelete(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!profesorIdToDelete) return;
 
         try {
-            await deleteProfesor(id);
-            alert('Profesor dado de baja correctamente');
+            await deleteProfesor(profesorIdToDelete);
             setProfesores((prevProfesores) =>
             prevProfesores.map((profesor) =>
-                profesor.id === id
+                profesor.id === profesorIdToDelete
                 ? { ...profesor, deletedAt: new Date().toISOString() }
                 : profesor
             )
             );
+            setInfoModal({
+                title: "Operación exitosa",
+                message: "Profesor dado de baja correctamente.",
+                isError: false
+            });
         } catch (error) {
             console.error('Error al dar de baja al profesor:', error);
-            alert('Ocurrió un error al intentar dar de baja al profesor.');
+            setInfoModal({
+                title: "Error",
+                message: "Ocurrió un error al intentar dar de baja al profesor.",
+                isError: true
+            });
+        } finally {
+            handleCloseModal();
         }
     };
 
@@ -70,7 +104,11 @@ export default function ListAlumnosPage() {
         const fetchAlumnos = async () => {
             try {
                 const res = await axios.get("http://localhost:3000/api/users/students", { withCredentials: true });
-                setAlumnos(res.data.data);
+                const alumnosFiltrados = res.data.data.map((alumno: Alumno) => ({
+                    ...alumno,
+                    classes: alumno.classes?.filter(clase => !clase.deletedAt) || []
+                }));
+                setAlumnos(alumnosFiltrados);
             } catch (error) {
                 console.error("Error al traer los alumnos", error);
             }
@@ -79,7 +117,11 @@ export default function ListAlumnosPage() {
         const fetchProfesores = async () => {
             try {
                 const res = await axios.get("http://localhost:3000/api/users?role=professor", { withCredentials: true });
-                setProfesores(res.data.data);
+                const profesoresFiltrados = res.data.data.map((profesor: Profesor) => ({
+                    ...profesor,
+                    taughtClasses: profesor.taughtClasses?.filter(clase => !clase.deletedAt) || []
+                }));
+                setProfesores(profesoresFiltrados);
             } catch (error) {
                 console.error("Error al traer los profesores", error);
             }
@@ -237,7 +279,6 @@ export default function ListAlumnosPage() {
                                             )}
                                         </td>
                                         
-                                        {/* Columna Estado */}
                                         <td>
                                             {profe.deletedAt ? (
                                                 <span style={{ color: "#e74c3c", fontWeight: "bold" }}>Inactivo</span>
@@ -246,7 +287,6 @@ export default function ListAlumnosPage() {
                                             )}
                                         </td>
 
-                                        {/* Columna Acciones */}
                                         <td>
                                             {profe.deletedAt ? (
                                                 <button
@@ -264,7 +304,7 @@ export default function ListAlumnosPage() {
                                                 </button>
                                             ) : (
                                                 <button
-                                                    onClick={() => handleBajaProfesor(profe.id)}
+                                                    onClick={() => handleOpenModal(profe.id)}
                                                     style={{
                                                         backgroundColor: "#e74c3c",
                                                         color: "#fff",
@@ -320,6 +360,39 @@ export default function ListAlumnosPage() {
                 </div>
             )
         )}
+    {showModal && (
+            <div className="modal-overlay" onClick={handleCloseModal}>
+                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <h3 style={{ color: "#2f5b46" }}>Confirmar Baja</h3>
+                    <p>¿Estás seguro que deseas dar de baja a este profesor? Esta acción modificará su estado a inactivo.</p>
+                    <div className="modal-buttons">
+                        <button className="btn-cancelar" onClick={handleCloseModal}>
+                            Cancelar
+                        </button>
+                        <button className="btn-confirmar" onClick={handleConfirmDelete}>
+                            Sí, dar de baja
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
+        {infoModal && (
+            <div className="modal-overlay" onClick={() => setInfoModal(null)}>
+                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <h3 style={{ color: infoModal.isError ? "#e74c3c" : "#2f5b46" }}>
+                        {infoModal.title}
+                    </h3>
+                    <p>{infoModal.message}</p>
+                    <div className="modal-buttons">
+                        <button className="btn-cancelar" onClick={() => setInfoModal(null)}>
+                            Entendido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
     </div>
     );
 }
