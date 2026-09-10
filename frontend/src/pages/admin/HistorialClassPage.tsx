@@ -6,6 +6,9 @@ interface Usuario {
     id: string;
     name: string;
     lastname: string | null;
+    email: string;
+    phone: string | null;
+    membershipActive: boolean;
 }
 
 interface Clase {
@@ -45,6 +48,9 @@ function HistorialClassPage() {
     const [error, setError] = useState("");
     // const [claseSeleccionada, setClaseSeleccionada] = useState<string | null>(null);
 
+    const [selectedClase, setSelectedClase] = useState<Clase | null>(null);
+    const [showModal, setShowModal] = useState(false);
+
     useEffect(() => {
         fetchClases();
     }, []);
@@ -67,6 +73,16 @@ function HistorialClassPage() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleOpenAlumnosModal = (clase: Clase) => {
+        setSelectedClase(clase);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedClase(null);
+        setShowModal(false);
     };
 
     const formatFechaBaja = (fecha: string | null) => {
@@ -93,7 +109,6 @@ function HistorialClassPage() {
     return (
         <div className="historial-class-page">
             <h1 className="title-class-page">Historial de Clases</h1>
-            {/* <p className="list-class-description">Listado de clases eliminadas</p> */}
 
             {error && (
                 <p className="error-message-list-class">
@@ -129,6 +144,8 @@ function HistorialClassPage() {
                             {clases.map((clase) => {
                                 const activa = clase.deletedAt === null;
 
+                                const totalInscriptos = clase.users ? clase.users.length : 0;
+
                             return (
                                 <tr key={clase.id}
                                 className={!activa ? "class-deleted" : ""}>
@@ -139,30 +156,7 @@ function HistorialClassPage() {
                                     <td>{clase.room?.name ?? "-"}</td>
                                     <td>{clase.day?.name ?? "-"}</td>
                                     <td>{clase.time?.startTime.substring(0, 5) ?? "-"}</td>
-                                    <td>{clase.users && clase.users.length > 0 ? (
-                                                <div className="lista-alumnos">
-                                                    {clase.users.map(
-                                                        (usuario) => (
-                                                            <div
-                                                                key={usuario.id}
-                                                                className="alumno-historial"
-                                                            >
-                                                                <strong>
-                                                                    {usuario.name}
-                                                                    {usuario.lastname
-                                                                        ? ` ${usuario.lastname}`
-                                                                        : ""}
-                                                                </strong>
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <span>
-                                                    Sin alumnos
-                                                </span>
-                                            )}
-                                    </td>
+                                    <td><button type="button" className="btn-ver-alumnos"onClick={() => handleOpenAlumnosModal(clase)}>Ver Alumnos ({totalInscriptos})</button></td>
                                     <td>{formatFechaBaja(clase.deletedAt)}</td>
                                     <td>
                                         <span
@@ -182,6 +176,62 @@ function HistorialClassPage() {
                     </table>
                 </div>
             )}
+
+            {showModal && selectedClase && (
+                <div className="modal-overlay" onClick={handleCloseModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <div className="modal-title-group">
+                                <h2>Alumnos inscriptos</h2>
+                                <span className="modal-clase-subtitle">{selectedClase.name}</span>
+                            </div>
+                            <button type="button" className="btn-close-modal" onClick={handleCloseModal} aria-label="Cerrar">
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="modal-body">
+                            {!selectedClase.users || selectedClase.users.length === 0 ? (
+                                <div className="modal-empty-state">
+                                    <p>No hay alumnos inscriptos en esta clase.</p>
+                                </div>
+                            ) : (
+                                <div className="modal-table-responsive">
+                                    <table className="modal-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th>Email</th>
+                                                <th>Teléfono</th>
+                                                <th>Membresía</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {selectedClase.users.map((usuario) => (
+                                                <tr key={usuario.id}>
+                                                    <td>{usuario.name}</td>
+                                                    <td>{usuario.lastname || ""}</td>
+                                                    <td>{usuario.email || "-"}</td>
+                                                    <td>{usuario.phone || "-"}</td>
+                                                    <td><span className={usuario.membershipActive ? "membership-active" : "membership-inactive"}>{usuario.membershipActive ? "Activa" : "Inactiva"}</span></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+                        
+                        <div className="modal-footer">
+                            <button type="button" className="btn-cerrar" onClick={handleCloseModal}>
+                                Cerrar
+                            </button>
+                        </div>
+                            
+                    </div>
+                </div>
+                )}
         </div>
     );
 }

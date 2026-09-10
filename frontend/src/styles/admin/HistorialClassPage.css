@@ -172,3 +172,49 @@
         min-width: 900px;
     }
 }
+
+.modal-clase-subtitle {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2c5243;
+  background-color: #edf3f0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.35rem;
+}
+
+.btn-ver-alumnos {
+    background-color: #edf4f1;
+    color: #315d4d;
+    border: 1px solid #d5e3de;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-ver-alumnos:hover {
+    background-color: #dfece7;
+}
+
+.membership-active {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #e4f3e9;
+    color: #2e7d4f;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.membership-inactive {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #fbe5e5;
+    color: #c94a4a;
+    font-weight: 600;
+    font-size: 14px;
+}
