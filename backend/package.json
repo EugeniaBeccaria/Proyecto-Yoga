@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
+    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/server.js\"",
     "db:up": "docker-compose up -d",
     "db:reset": "ts-node src/scripts/resetDatabase.ts",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.cjs",
