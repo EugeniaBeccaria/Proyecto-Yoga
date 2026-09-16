@@ -32,7 +32,7 @@ Regularidad:
 |:-|:-|
 |CRUD simple|1. CRUD User<br>2. CRUD Room<br>3. CRUD MembershipType<br>4. CRUD Class<br>5. CRUD Taller|
 |CRUD dependiente|1. CRUD Membership {depende de} CRUD MembershipType<br>2. CRUD MembershipPrice {depende de} CRUD MembershipType<br>3. CRUD Class {depende de} CRUD Room|
-|Listado<br>+<br>detalle|1. Listado de membresías activas, muestra nombre del alumno, tipo de membresía y fecha de inicio => detalle muestra duración restante, estado de pago y clases a las que está inscripto.<br>2. Listado de clases para un profesor determinado, muestra nombre de la clase, fecha, hora, salón y cantidad de inscriptos => detalle muestra los datos de los alumnos.|
+|Listado<br>+<br>detalle|1. Listado de clases históricas, muestra nombre, descripción, cupo, cantidad de inscriptos, nombre del profesor, salón, día, horario, estado activa o dada de baja y fecha de baja en el segundo caso. => detalle muestra los datos de los alumnos inscritos<br>2. Listado de clases para un profesor determinado, muestra nombre de la clase, fecha, hora, salón, cupo y cantidad de inscriptos => detalle muestra los datos de los alumnos.|
 |CUU/Epic|1. Inscribirse una nueva membresía<br>2. Crear usuario<br>3. Inscribir a un taller<br>4. Crear clases|
 
 
@@ -47,5 +47,4 @@ Adicionales para Aprobación
 
 |Req|Detalle|
 |:-|:-|
-|Listados |1. Listado de talleres programados, muestra nombre del taller, nombre del profesor, fecha, hora y salón asignado => detalle muestra el listado de alumnos inscriptos.<br>2. Listado de clases programadas, muestra nombre de la clase, fecha, hora, nombre del profesor y salón asignado => detalle muestra el listado de alumnos inscriptos.|
-|Otros|1. Envío de mensaje de inscripción exitosa a una clase o taller y su detalle por mail|
+|Listados |1. Listado de talleres programados, muestra nombre del taller, nombre del profesor, fecha, hora y salón asignado => detalle muestra el listado de alumnos inscriptos.<br>2. Listado de clases programadas, muestra nombre de la clase, fecha, hora, nombre del profesor y salón asignado => detalle muestra el listado de alumnos inscriptos.<br>3. Listado de alumnos, muestra nombre y apellido del alumno, mail, membresía activa o inactiva, tipo de membresía y clases a las que está inscripto.|
